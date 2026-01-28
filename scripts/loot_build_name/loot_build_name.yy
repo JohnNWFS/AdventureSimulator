@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"sim_resolve_combat",
+  "%Name":"loot_build_name",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"sim_resolve_combat",
+  "name":"loot_build_name",
   "parent":{
-    "name":"RESOLVE",
-    "path":"folders/SCRIPTS/RESOLVE.yy",
+    "name":"LOOT",
+    "path":"folders/SCRIPTS/LOOT.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"sim_resolve_combat",
+  "%Name":"loot_roll_pct",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"sim_resolve_combat",
+  "name":"loot_roll_pct",
   "parent":{
-    "name":"RESOLVE",
-    "path":"folders/SCRIPTS/RESOLVE.yy",
+    "name":"LOOT",
+    "path":"folders/SCRIPTS/LOOT.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

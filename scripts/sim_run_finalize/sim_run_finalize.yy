@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"sim_run_finalize",
   "parent":{
-    "name":"SCRIPTS",
-    "path":"folders/SCRIPTS.yy",
+    "name":"RUN",
+    "path":"folders/SCRIPTS/RUN.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
