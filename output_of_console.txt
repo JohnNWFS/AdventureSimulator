@@ -1,0 +1,330 @@
+**********************************.
+Entering main loop.
+**********************************.
+🧭 The party advances into the Dungeon.
+⚔ Slimes clash: Brann takes 2 damage. Mage hits for 14.
+💰 Loot: +6 gold.
+📦 Quen equips (consumable): Mana Vial.
+🧰 Chest: found Mana Vial.
+⚔ Slimes clash: Quen takes 8 damage.
+⚔ Slimes clash: Brann takes 5 damage. Mage hits for 18.
+🩹 Healer restores Quen +8 HP (32→40).
+💰 Loot: +4 gold.
+⚔ Slimes clash: Brann takes 15 damage. Mage hits for 31.
+🩹 Healer restores Brann +10 HP (48→58).
+💰 Loot: +6 gold.
+📦 Brann equips (trinket): Swift Boots.
+🧰 Chest: found Swift Boots.
+⚔ Skeletons clash: Brann takes 8 damage. Mage hits for 23.
+🩹 Healer restores Brann +8 HP (50→58).
+💰 Loot: +6 gold.
+⚔ Skeletons clash: Brann takes 16 damage. Mage hits for 35.
+🩹 Healer restores Brann +8 HP (42→50).
+💰 Loot: +4 gold.
+🕯 Relief: healing shrine. The party regroups.
+✨ Party heals +9 (group).
+🔷 Party restores MP +10 (group).
+⚔ Cultists clash: Brann takes 9 damage. Mage hits for 18.
+🩹 Healer restores Brann +12 HP (50→62).
+💰 Loot: +10 gold.
+Resizing swap chain to 1366 by 768...
+Setting viewport to 1366 by 768
+🧰 Chest: +21 gold.
+📦 Ravel equips (trinket): Swift Boots.
+🧰 Chest: found Swift Boots.
+🧿 Merchant: bought Armor Patch for 32 gold.
+🛡 Brann DEF increases to 7.
+⚔ Bandits clash: Brann takes 8 damage. Mage hits for 26.
+🩹 Healer restores Brann +7 HP (54→61).
+💰 Loot: +4 gold.
+⚔ Wolfpack clash: Brann takes 9 damage. Mage hits for 24.
+🩹 Healer restores Brann +7 HP (52→59).
+💰 Loot: +4 gold.
+🕯 Relief: campfire. The party regroups.
+✨ Party heals +10 (group).
+🔷 Party restores MP +4 (group).
+⚔ Cultists clash: Brann takes 7 damage. Mage hits for 20.
+💰 Loot: +11 gold.
+⚔ Slimes clash: Sel takes 2 damage.
+⚔ Slimes clash: Brann takes 8 damage. Mage hits for 18.
+🩹 Healer restores Brann +9 HP (54→63).
+💰 Loot: +8 gold.
+🕯 Relief: abandoned outpost. The party regroups.
+✨ Party heals +14 (group).
+🔷 Party restores MP +10 (group).
+⚔ Slimes clash: Quen takes 4 damage.
+⚔ Slimes clash: Brann takes 5 damage. Mage hits for 22.
+💰 Loot: +9 gold.
+🧰 Chest: +19 gold.
+⚔ Cultists clash: Sel takes 8 damage.
+⚔ Cultists clash: Brann takes 11 damage. Mage hits for 30.
+🩹 Healer restores Brann +12 HP (54→66).
+💰 Loot: +6 gold.
+🕯 Relief: healing shrine. The party regroups.
+✨ Party heals +10 (group).
+🔷 Party restores MP +6 (group).
+🧿 Merchant: bought Spell Scroll for 29 gold.
+📜 Quen ATK increases to 13.
+🧿 Merchant: bought Spell Scroll for 33 gold.
+📜 Quen ATK increases to 14.
+⚔ Bandits clash: Brann takes 9 damage. Mage hits for 22.
+💰 Loot: +12 gold.
+🧿 Merchant: bought Health Tonic for 29 gold.
+✨ Party heals +14 (group).
+⚔ Cultists clash: Quen takes 8 damage.
+⚔ Cultists clash: Brann takes 13 damage. Mage hits for 30.
+🩹 Healer restores Quen +8 HP (32→40).
+💰 Loot: +11 gold.
+⚔ Slimes clash: Sel takes 6 damage.
+⚔ Slimes clash: Brann takes 8 damage. Mage hits for 20.
+🩹 Healer restores Brann +12 HP (49→61).
+💰 Loot: +5 gold.
+📦 Quen equips (trinket): Blessed Wraps.
+🧰 Chest: found Blessed Wraps.
+🧿 Merchant: party browses, buys nothing.
+🧰 Chest: +25 gold.
+📦 Brann equips (trinket): Blessed Wraps.
+🧰 Chest: found Blessed Wraps.
+⚔ Slimes clash: Ravel takes 6 damage.
+⚔ Slimes clash: Brann takes 10 damage. Mage hits for 44 (CRIT!).
+🩹 Healer restores Brann +12 HP (51→63).
+💰 Loot: +9 gold.
+🧿 Merchant: bought Sharpening Stone for 27 gold.
+🗡 Ravel ATK increases to 11.
+⚔ Cultists clash: Ravel takes 4 damage.
+⚔ Cultists clash: Brann takes 13 damage. Mage hits for 28.
+🩹 Healer restores Brann +10 HP (50→60).
+💰 Loot: +10 gold.
+🕯 Relief: campfire. The party regroups.
+✨ Party heals +11 (group).
+🔷 Party restores MP +7 (group).
+📦 Quen equips (trinket): Swift Boots.
+🧰 Chest: found Swift Boots.
+⚔ Bandits clash: Brann takes 14 damage. Mage hits for 72 (CRIT!).
+🩹 Healer restores Brann +11 HP (56→67).
+💰 Loot: +12 gold.
+⚔ Slimes clash: Brann takes 20 damage. Mage hits for 36.
+🩹 Healer restores Brann +11 HP (47→58).
+💰 Loot: +5 gold.
+🕯 Relief: healing shrine. The party regroups.
+✨ Party heals +12 (group).
+🔷 Party restores MP +4 (group).
+🧰 Chest: it's a trap! Poison needles.
+☠ Splash damage hits party for ~7.
+🕯 Relief: healing shrine. The party regroups.
+✨ Party heals +8 (group).
+🔷 Party restores MP +10 (group).
+⚔ Bandits clash: Brann takes 15 damage. Mage hits for 35.
+🩹 Healer restores Brann +9 HP (55→64).
+💰 Loot: +10 gold.
+⚔ Bandits clash: Brann takes 13 damage. Mage hits for 27.
+🩹 Healer restores Brann +10 HP (51→61).
+💰 Loot: +9 gold.
+🕯 Relief: healing shrine. The party regroups.
+✨ Party heals +7 (group).
+🔷 Party restores MP +7 (group).
+⚔ Skeletons clash: Brann takes 22 damage. Mage hits for 40.
+🩹 Healer restores Brann +11 HP (46→57).
+💰 Loot: +6 gold.
+🕯 Relief: healing shrine. The party regroups.
+✨ Party heals +10 (group).
+🔷 Party restores MP +6 (group).
+⚔ Bandits clash: Quen takes 11 damage.
+⚔ Bandits clash: Brann takes 13 damage. Mage hits for 33.
+🩹 Healer restores Quen +11 HP (29→40).
+💰 Loot: +11 gold.
+⚔ Bandits clash: Sel takes 11 damage.
+⚔ Bandits clash: Brann takes 18 damage. Mage hits for 37.
+🩹 Healer restores Brann +8 HP (36→44).
+💰 Loot: +13 gold.
+🕯 Relief: campfire. The party regroups.
+✨ Party heals +6 (group).
+🔷 Party restores MP +10 (group).
+⚔ Bandits clash: Brann takes 13 damage. Mage hits for 31.
+🩹 Healer restores Brann +9 HP (37→46).
+💰 Loot: +10 gold.
+🕯 Relief: quiet corridor. The party regroups.
+✨ Party heals +11 (group).
+🔷 Party restores MP +5 (group).
+⚔ Cultists clash: Brann takes 22 damage. Mage hits for 43.
+🩹 Healer restores Brann +11 HP (35→46).
+💰 Loot: +7 gold.
+🕯 Relief: quiet corridor. The party regroups.
+✨ Party heals +11 (group).
+🔷 Party restores MP +8 (group).
+📦 Brann equips (consumable): Mana Vial.
+🧰 Chest: found Mana Vial.
+🧿 Merchant: bought Health Tonic for 32 gold.
+✨ Party heals +9 (group).
+📦 Quen equips (trinket): Ember Ring.
+🧰 Chest: RARE find! Ember Ring.
+⚔ Bandits clash: Brann takes 10 damage. Mage hits for 62 (CRIT!).
+🩹 Healer restores Brann +10 HP (56→66).
+💰 Loot: +11 gold.
+🧿 Merchant: party browses, buys nothing.
+⚔ Slimes clash: Quen takes 9 damage.
+⚔ Slimes clash: Brann takes 19 damage. Mage hits for 41.
+🩹 Healer restores Brann +15 HP (47→62).
+💰 Loot: +13 gold.
+🧰 Chest: +26 gold.
+⚔ Bandits clash: Brann takes 18 damage. Mage hits for 36.
+🩹 Healer restores Brann +11 HP (44→55).
+💰 Loot: +12 gold.
+🕯 Relief: campfire. The party regroups.
+✨ Party heals +13 (group).
+🔷 Party restores MP +4 (group).
+⚔ Skeletons clash: Brann takes 16 damage. Mage hits for 37.
+🩹 Healer restores Brann +11 HP (52→63).
+💰 Loot: +13 gold.
+🕯 Relief: healing shrine. The party regroups.
+✨ Party heals +7 (group).
+🔷 Party restores MP +10 (group).
+⚔ Skeletons clash: Ravel takes 10 damage.
+⚔ Skeletons clash: Brann takes 11 damage. Mage hits for 29.
+🩹 Healer restores Ravel +10 HP (35→45).
+💰 Loot: +9 gold.
+⚔ Skeletons clash: Brann takes 21 damage. Mage hits for 34.
+🩹 Healer restores Brann +13 HP (38→51).
+💰 Loot: +13 gold.
+🕯 Relief: healing shrine. The party regroups.
+✨ Party heals +10 (group).
+🔷 Party restores MP +4 (group).
+⚔ Skeletons clash: Brann takes 17 damage. Mage hits for 34.
+🩹 Healer restores Brann +11 HP (44→55).
+💰 Loot: +7 gold.
+🕯 Relief: abandoned outpost. The party regroups.
+✨ Party heals +9 (group).
+🔷 Party restores MP +9 (group).
+⚔ Bandits clash: Brann takes 24 damage. Mage hits for 47.
+🩹 Healer restores Brann +12 HP (40→52).
+💰 Loot: +14 gold.
+🕯 Relief: abandoned outpost. The party regroups.
+✨ Party heals +7 (group).
+🔷 Party restores MP +9 (group).
+🧿 Merchant: bought Armor Patch for 30 gold.
+🛡 Brann DEF increases to 8.
+🧰 Chest: it's a trap! Poison needles.
+☠ Splash damage hits party for ~7.
+⚔ Wolfpack clash: Sel takes 10 damage.
+⚔ Wolfpack clash: Brann takes 21 damage. Mage hits for 47.
+🩹 Healer restores Brann +8 HP (31→39).
+💰 Loot: +10 gold.
+🕯 Relief: campfire. The party regroups.
+✨ Party heals +14 (group).
+🔷 Party restores MP +4 (group).
+🧰 Chest: it's a trap! Poison needles.
+☠ Splash damage hits party for ~6.
+🧰 Chest: +22 gold.
+⚔ Wolfpack clash: Sel takes 11 damage.
+⚔ Wolfpack clash: Brann takes 20 damage. Mage hits for 39.
+🩹 Healer restores Brann +14 HP (27→41).
+💰 Loot: +13 gold.
+🕯 Relief: abandoned outpost. The party regroups.
+✨ Party heals +12 (group).
+🔷 Party restores MP +6 (group).
+🧰 Chest: it's a trap! Poison needles.
+☠ Splash damage hits party for ~4.
+⚔ Wolfpack clash: Brann takes 20 damage. Mage hits for 46.
+🩹 Healer restores Brann +13 HP (29→42).
+💰 Loot: +15 gold.
+🕯 Relief: healing shrine. The party regroups.
+✨ Party heals +6 (group).
+🔷 Party restores MP +4 (group).
+⚔ Bandits clash: Ravel takes 10 damage.
+⚔ Bandits clash: Brann takes 22 damage. Mage hits for 50.
+🩹 Healer restores Brann +8 HP (26→34).
+💰 Loot: +9 gold.
+🕯 Relief: campfire. The party regroups.
+✨ Party heals +13 (group).
+🔷 Party restores MP +4 (group).
+⚔ Gargoyles clash: Brann takes 23 damage. Mage hits for 49.
+🩹 Healer restores Brann +12 HP (24→36).
+💰 Loot: +13 gold.
+🕯 Relief: campfire. The party regroups.
+✨ Party heals +14 (group).
+🔷 Party restores MP +4 (group).
+⚔ Gargoyles clash: Brann takes 23 damage. Mage hits for 48.
+🩹 Healer restores Brann +8 HP (27→35).
+💰 Loot: +13 gold.
+🕯 Relief: quiet corridor. The party regroups.
+✨ Party heals +13 (group).
+🔷 Party restores MP +9 (group).
+🧰 Chest: +19 gold.
+⚔ Gargoyles clash: Brann takes 32 damage. Mage hits for 59.
+🩹 Healer restores Brann +8 HP (16→24).
+💰 Loot: +14 gold.
+🕯 Relief: abandoned outpost. The party regroups.
+✨ Party heals +7 (group).
+🔷 Party restores MP +4 (group).
+⚔ Sentinel Orbs clash: Ravel takes 13 damage.
+⚔ Sentinel Orbs clash: Brann takes 28 damage. Mage hits for 52.
+🩹 Healer restores Brann +16 HP (3→19).
+💰 Loot: +11 gold.
+⚔ Gargoyles clash: Brann takes 26 damage. Mage hits for 60.
+🩹 Healer restores Brann +14 HP (-7→7).
+💰 Loot: +9 gold.
+🚨 Near-death: Brann is under 20% HP!
+🕯 Relief: abandoned outpost. The party regroups.
+✨ Party heals +7 (group).
+🔷 Party restores MP +7 (group).
+⚔ Sentinel Orbs clash: Brann takes 24 damage. Mage hits for 92 (CRIT!).
+🩹 Healer restores Brann +16 HP (-10→6).
+💰 Loot: +13 gold.
+🕯 Relief: campfire. The party regroups.
+✨ Party heals +12 (group).
+🔷 Party restores MP +4 (group).
+⚔ Gargoyles clash: Brann takes 24 damage. Mage hits for 41.
+🩹 Healer restores Brann +15 HP (-6→9).
+💰 Loot: +12 gold.
+🕯 Relief: healing shrine. The party regroups.
+✨ Party heals +9 (group).
+🔷 Party restores MP +9 (group).
+⚔ Gargoyles clash: Brann takes 27 damage. Mage hits for 59.
+🩹 Healer restores Brann +9 HP (-9→0).
+💰 Loot: +12 gold.
+⚠ Brann collapses but is dragged onward (HP set to 1).
+🩸 Wounded: Brann gains a wound (1). DEF now 7.
+🕯 Relief: abandoned outpost. The party regroups.
+✨ Party heals +12 (group).
+🔷 Party restores MP +9 (group).
+🩺 Relief treatment: Brann recovers 1 wound. Wounds now 0, DEF now 8.
+⚔ Gargoyles clash: Quen takes 18 damage.
+⚔ Gargoyles clash: Brann takes 24 damage. Mage hits for 49.
+🩹 Healer restores Brann +13 HP (-11→2).
+💰 Loot: +14 gold.
+🕯 Relief: abandoned outpost. The party regroups.
+✨ Party heals +8 (group).
+🔷 Party restores MP +4 (group).
+⚔ Gargoyles clash: Brann takes 21 damage. Mage hits for 50.
+🩹 Healer restores Brann +13 HP (-11→2).
+💰 Loot: +11 gold.
+🕯 Relief: campfire. The party regroups.
+✨ Party heals +12 (group).
+🔷 Party restores MP +5 (group).
+📦 Quen equips (armor): Steel Helm.
+🧰 Chest: found Steel Helm.
+⚔ Knights clash: Brann takes 23 damage. Mage hits for 41.
+🩹 Healer restores Brann +17 HP (-9→8).
+💰 Loot: +10 gold.
+⚔ Gargoyles clash: Ravel takes 13 damage.
+⚔ Gargoyles clash: Brann takes 24 damage. Mage hits for 44.
+🩹 Healer restores Brann +15 HP (-16→-1).
+💰 Loot: +15 gold.
+⚠ Brann collapses but is dragged onward (HP set to 1).
+🩸 Wounded: Brann gains a wound (1). DEF now 7.
+🕯 Relief: quiet corridor. The party regroups.
+✨ Party heals +6 (group).
+🔷 Party restores MP +6 (group).
+🩺 Relief treatment: Brann recovers 1 wound. Wounds now 0, DEF now 8.
+👑 BOSS: Iron Warden emerges!
+⚔ Iron Warden smashes: Brann takes 49 damage (7→-42).
+☠ Splash damage hits party for ~3.
+🩹 Healer restores Brann +15 HP (-45→-30).
+⚠ Brann collapses but is dragged onward (HP set to 1).
+🩸 Wounded: Brann gains a wound (1). DEF now 7.
+📦 Brann equips (trinket): Warden's Sigil.
+🏆 Boss defeated! +75 gold. Trophy: Warden's Sigil.
+📺 Episode ends. Gold=489 | Chests=19 | Merchants=9 | Rares=1 | Near-deaths=1 | Boss=DEFEATED
+📊 Party avg HP%: 67%
+Pause event has been registered for this frame
+Pause event has been unregistered

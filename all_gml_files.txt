@@ -1,0 +1,810 @@
+﻿/// obj_sim_controller :: Create
+episode_beats_target = 120; // 120 beats â‰ˆ 10 minutes if you later map 1 beat â‰ˆ 5 sec
+auto_run = true;
+beats_per_step = 1;         // crank this up to 5/10 for turbo simulation
+ui_max_lines = 26;
+
+sim = {};                   // will hold run state + party
+sim_run_new(sim, episode_beats_target); // new seed, new run
+/// obj_sim_controller :: Draw GUI
+draw_set_font(-1);
+draw_set_halign(fa_left);
+draw_set_valign(fa_top);
+
+var gui_x = 16;
+var gui_y = 16;
+
+// Header
+var header =
+    "Seed: " + string(sim.seed) +
+    " | Beat: " + string(sim.beat) + "/" + string(sim.beats_target) +
+    " | Zone: " + string(sim.zone) +
+    " | Tension: " + string(sim.tension) +
+    " | Gold: " + string(sim.gold_total) +
+    (sim.finished ? " | FINISHED" : (auto_run ? " | RUNNING" : " | PAUSED"));
+
+draw_text(gui_x, gui_y, header);
+gui_y += 22;
+
+// Party HUD (simple)
+for (var i = 0; i < array_length(sim.party); i++) {
+    var p = sim.party[i];
+	var line = p.role + " " + p.name +
+    "  HP " + string(p.hp) + "/" + string(p.max_hp) +
+    "  MP " + string(p.mp) + "/" + string(p.max_mp) +
+    "  ATK " + string(p.atk) + " DEF " + string(p.def) +
+    "  Wounds " + string(p.wounds) +
+    "  W:" + (p.weapon == "" ? "-" : p.weapon) +
+    "  A:" + (p.armor == "" ? "-" : p.armor) +
+    "  T:" + (p.trinket == "" ? "-" : p.trinket);
+
+    draw_text(gui_x, gui_y, line);
+    gui_y += 18;
+}
+
+
+
+
+
+
+y += 8;
+draw_text(x, y, "Controls: ENTER=new seed | R=replay seed | SPACE=toggle run | N=step (when paused)");
+y += 22;
+
+// Log (last N lines)
+var start = max(0, array_length(sim.log) - ui_max_lines);
+for (var j = start; j < array_length(sim.log); j++) {
+    draw_text(x, y, sim.log[j]);
+    y += 16;
+}
+/// obj_sim_controller :: Step
+// Controls
+if (keyboard_check_pressed(vk_return)) {
+    sim_run_new(sim, episode_beats_target); // new seed
+}
+if (keyboard_check_pressed(ord("R"))) {
+    sim_run_restart_same_seed(sim);         // replay same seed
+}
+if (keyboard_check_pressed(vk_space)) {
+    auto_run = !auto_run;
+}
+if (!auto_run && keyboard_check_pressed(ord("N"))) {
+    beats_per_step = 1;
+    sim_run_step(sim);
+}
+
+// Auto-run
+if (auto_run && !sim.finished) {
+    for (var i = 0; i < beats_per_step; i++) {
+        if (sim.finished) break;
+        sim_run_step(sim);
+    }
+}
+
+// If finished, do nothing until rerun/new seed.
+function sim_apply_party_damage(sim, amount) {
+    sim_log_tag(sim, "SPLASH_BEGIN", "â˜  Splash damage begins (base ~" + string(amount) + ").");
+
+    for (var i = 0; i < array_length(sim.party); i++) {
+        var p = sim.party[i];
+
+        var mod1 = 0;
+        if (p.role == "Healer") mod1 = -1;
+        if (p.role == "Thief")  mod1 = -1;
+
+        var dmg = max(0, amount + mod1);
+        var before = p.hp;
+
+        p.hp -= dmg;
+
+        if (p.hp <= 0) p.downed_this_beat = true;
+
+        sim_log_tag(sim, "SPLASH_HIT",
+            "â˜  SPLASH â†’ " + p.name + " takes " + string(dmg) +
+            " (" + string(before) + "â†’" + string(p.hp) + ")."
+        );
+    }
+}
+function sim_auto_heal(sim) {
+    var healer = sim.party[3];
+    if (healer.mp < 3) return;
+
+    var best_i = -1;
+    var best_pct = 999;
+
+    for (var i = 0; i < array_length(sim.party); i++) {
+        var p = sim.party[i];
+
+        // Don't "heal through death" in the same beat
+        if (p.downed_this_beat) continue;
+
+        var pct = p.hp / p.max_hp;
+        if (pct < best_pct) {
+            best_pct = pct;
+            best_i = i;
+        }
+    }
+
+    if (best_i != -1 && best_pct < 0.85) {
+        var target = sim.party[best_i];
+
+        var heal_raw  = sim_rand_range(sim, 6, 14) + floor(sim.difficulty / 2);
+        var before_hp = target.hp;
+
+        target.hp = min(target.max_hp, target.hp + heal_raw);
+        healer.mp -= 3;
+
+        var healed_amt = target.hp - before_hp;
+
+        sim_log_tag(sim, "HEAL",
+            "ðŸ©¹ Healer restores " + target.name + " +" + string(healed_amt) +
+            " HP (" + string(before_hp) + "â†’" + string(target.hp) + ")."
+        );
+    }
+}
+function sim_chance(sim, pct) {
+    return sim_rand_range(sim, 1, 100) <= pct;
+}
+function sim_check_party_health(sim) {
+    for (var i = 0; i < array_length(sim.party); i++) {
+        var p = sim.party[i];
+
+        if (p.hp <= 0) {
+            p.hp = 1;
+            p.wounds += 1;
+            p.def = max(0, p.base_def - p.wounds);
+            sim.stats.knockdowns += 1;
+
+            sim_log_tag(sim, "KNOCKDOWN",
+                "âš  " + p.name + " collapses but is dragged onward (HP set to 1)."
+            );
+            sim_log_tag(sim, "WOUND",
+                "ðŸ©¸ Wounded: " + p.name + " gains a wound (" + string(p.wounds) +
+                "). DEF now " + string(p.def) + "."
+            );
+        }
+
+        var hp_pct = p.hp / p.max_hp;
+
+        if (!p.near_death_flag && hp_pct < 0.20) {
+            p.near_death_flag = true;
+            sim.stats.near_deaths += 1;
+
+            sim_log_tag(sim, "NEAR_DEATH",
+                "ðŸš¨ Near-death: " + p.name + " is under 20% HP!"
+            );
+        } else if (p.near_death_flag && hp_pct > 0.35) {
+            p.near_death_flag = false;
+        }
+
+        // Reset per-beat flag
+        p.downed_this_beat = false;
+    }
+}
+function sim_director_next_event(sim) {
+    // Big beats
+    if (sim.beat == 0) return "intro";
+    if (sim.beat == sim.beats_target - 10) return "boss"; // last ~10 beats reserved for boss
+
+    // If party is struggling, offer relief
+    var avg_hp_pct = sim_party_avg_hp_pct(sim);
+    if (avg_hp_pct < 0.45 || sim.tension > 75) {
+        return "relief";
+    }
+
+
+	if (sim.director.merchant_cd == 0 && sim.director.merchants_this_zone < 2 && sim_chance(sim, 10)) {
+	    sim.director.merchant_cd = 8; // no merchant for next 8 beats
+	    return "merchant";
+	}
+
+	if (sim.director.chest_cd == 0 && sim_chance(sim, 16)) {
+	    sim.director.chest_cd = 4;
+	    return "chest";
+	}
+
+
+    // Variety beats
+    if (sim_chance(sim, 12)) return "merchant";
+    if (sim_chance(sim, 18)) return "chest";
+
+    // Default
+    return "combat";
+}
+function sim_give_item(sim, item_name) {
+    var idx = sim_rand_range(sim, 0, 3);
+    var slot = "trinket";
+
+    // crude slot mapping
+    if (string_pos("Wand", item_name) > 0 || item_name == "Spell Scroll") slot = "weapon";
+    if (string_pos("Helm", item_name) > 0 || string_pos("Shield", item_name) > 0 || item_name == "Armor Patch") slot = "armor";
+    if (string_pos("Vial", item_name) > 0 || item_name == "Health Tonic") slot = "consumable";
+
+    // owner mapping for a few signature items
+    if (item_name == "Mirror Dagger") idx = 2;
+    if (item_name == "Saint's Charm") idx = 3;
+    if (item_name == "Ember Ring") idx = 1;
+
+    var p = sim.party[idx];
+
+    // Snapshot stats for delta logging
+    var before_atk      = p.atk;
+    var before_base_def = p.base_def;
+    var before_def      = p.def;
+
+    switch (slot) {
+        case "weapon":      p.weapon = item_name; break;
+        case "armor":       p.armor = item_name; break;
+        case "trinket":     p.trinket = item_name; break;
+        case "consumable":  p.consumable = item_name; break;
+    }
+
+    // --- Item effects (keep tiny + explicit) ---
+    if (item_name == "Warden's Sigil") {
+        p.base_def += 5;
+    } else if (item_name == "Ogre King's Tooth") {
+        p.atk += 2;
+    } else if (item_name == "Crown Shard") {
+        p.atk += 1;
+        p.base_def += 1;
+    }
+
+    // Recompute def from base_def and wounds
+    p.def = max(0, p.base_def - p.wounds);
+
+    sim_log_tag(sim, "EQUIP",
+        "ðŸ“¦ EQUIP â†’ " + p.name + " equips (" + slot + "): " + item_name + "."
+    );
+
+    if (p.atk != before_atk) {
+        sim_log_tag(sim, "STAT_ATK",
+            "ðŸŸ© ATK " + string(before_atk) + "â†’" + string(p.atk) + "."
+        );
+    }
+
+    if (p.base_def != before_base_def || p.def != before_def) {
+        sim_log_tag(sim, "STAT_DEF",
+            "ðŸŸ¦ DEF " + string(before_def) + "â†’" + string(p.def) +
+            " (base " + string(before_base_def) + "â†’" + string(p.base_def) + ")."
+        );
+    }
+}
+function sim_log(sim, text) {
+    // Keep in-memory
+    array_push(sim.log, text);
+
+    // Also dump to Output console for sharing back
+    show_debug_message(text);
+}
+function sim_log_tag(sim, tag, msg) {
+    sim_log(sim, "[" + string(tag) + "] " + msg);
+}
+function sim_make_party_member(role, name, max_hp, max_mp, atk, def) {
+    return {
+        role: role,
+        name: name,
+
+        hp: max_hp,
+        max_hp: max_hp,
+
+        mp: max_mp,
+        max_mp: max_mp,
+
+        atk: atk,
+        base_def: def,
+        def: def,
+
+        weapon: "",
+        armor: "",
+        trinket: "",
+        consumable: "",
+
+        items: [],
+        status: [],
+
+        wounds: 0,
+        near_death_flag: false,
+
+        // NEW: prevents healing after lethal damage in same beat
+        downed_this_beat: false
+    };
+}
+function sim_name_pick(sim, role) {
+    // Lightweight name pools; later you can replace with a name generator
+    var list;
+    switch (role) {
+        case "tank":   list = ["Brann", "Korda", "Hollis", "Marek"]; break;
+        case "mage":   list = ["Veya", "Sorin", "Ilyra", "Quen"]; break;
+        case "thief":  list = ["Pip", "Nyx", "Ravel", "Tams"]; break;
+        case "healer": list = ["Edda", "Mira", "Sel", "Jonel"]; break;
+        default:       list = ["Ash", "Rowan", "Vale", "Skye"]; break;
+    }
+    return list[sim_rand_range(sim, 0, array_length(list) - 1)];
+}
+function sim_party_avg_hp_pct(sim) {
+    var total = 0;
+    for (var i = 0; i < array_length(sim.party); i++) {
+        var p = sim.party[i];
+        total += (p.hp / p.max_hp);
+    }
+    return total / array_length(sim.party);
+}
+
+
+
+function sim_party_heal(sim, amount) {
+    for (var i = 0; i < array_length(sim.party); i++) {
+        var p = sim.party[i];
+        p.hp = min(p.max_hp, p.hp + amount);
+    }
+    sim_log(sim, "âœ¨ Party heals +" + string(amount) + " (group).");
+}
+
+function sim_party_restore_mp(sim, amount) {
+    for (var i = 0; i < array_length(sim.party); i++) {
+        var p = sim.party[i];
+        p.mp = min(p.max_mp, p.mp + amount);
+    }
+    sim_log(sim, "ðŸ”· Party restores MP +" + string(amount) + " (group).");
+}
+
+function sim_rand_range(sim, a, b) {
+    var r = sim_rng_next(sim);
+    // convert to 0..1 using 32-bit range
+    var t = r / 4294967296; // 2^32
+    return a + floor(t * (b - a + 1));
+}
+
+function sim_resolve_boss(sim) {
+    var boss = (sim.zone == "Castle") ? "Iron Warden" : "Hollow Ogre";
+    sim_log_tag(sim, "BOSS_SPAWN", "ðŸ‘‘ BOSS: " + boss + " emerges!");
+
+    var tank   = sim.party[0];
+    var mage   = sim.party[1];
+    var thief  = sim.party[2];
+
+    // --- BOSS: smash tank ---
+    var boss_hit = (sim.difficulty * 6 + sim_rand_range(sim, 10, 22));
+    var dmg_tank = max(0, boss_hit - tank.def);
+
+    var before_hp = tank.hp;
+    tank.hp -= dmg_tank;
+    if (tank.hp <= 0) tank.downed_this_beat = true;
+
+    sim_log_tag(sim, "BOSS_SMASH",
+        "âš” " + boss + " smashes: " + tank.name + " takes " + string(dmg_tank) +
+        " (" + string(before_hp) + "â†’" + string(tank.hp) + ")."
+    );
+
+    // --- BOSS: splash ---
+    sim_apply_party_damage(sim, sim_rand_range(sim, 2, 6));
+
+    // --- PARTY COUNTERS (numbers for animation; log-only) ---
+    sim_log_tag(sim, "BRACE", "ðŸ›¡ " + tank.name + " braces and holds the line.");
+
+    var thief_hit = max(1, thief.atk + sim_rand_range(sim, 2, 10));
+    var thief_crit = sim_chance(sim, 20);
+    if (thief_crit) thief_hit *= 2;
+
+    sim_log_tag(sim, thief_crit ? "THIEF_CRIT" : "THIEF_HIT",
+        "ðŸ—¡ " + thief.name + " slips in: " + string(thief_hit) + " damage" + (thief_crit ? " (CRIT!)." : ".")
+    );
+
+    var mage_hit = max(1, mage.atk * 3 + sim_rand_range(sim, 5, 18));
+    var mage_crit = sim_chance(sim, 15);
+    if (mage_crit) mage_hit *= 2;
+
+    sim_log_tag(sim, mage_crit ? "MAGE_CRIT" : "MAGE_HIT",
+        "âœ¨ " + mage.name + " unleashes a blast: " + string(mage_hit) + " damage" + (mage_crit ? " (CRIT!)." : ".")
+    );
+
+    // Healer reaction (real healing)
+    sim_auto_heal(sim);
+
+    // Knockdowns / near-death tracking
+    sim_check_party_health(sim);
+
+    // Determine outcome: if tank survives and avg HP not terrible, win
+    var avg_hp_pct = sim_party_avg_hp_pct(sim);
+
+    if (tank.hp > 0 && avg_hp_pct > 0.25) {
+        sim.stats.boss_defeated = true;
+
+        // FINISHER cue (log-only)
+        var finisher_name = mage.name;
+        var finisher_desc = "blast";
+        var finisher_dmg  = mage_hit;
+        if (thief_hit > finisher_dmg) {
+            finisher_name = thief.name;
+            finisher_desc = "strike";
+            finisher_dmg  = thief_hit;
+        }
+
+        sim_log_tag(sim, "FINISHER",
+            "ðŸ’¥ FINISHER â†’ " + finisher_name + "'s " + finisher_desc +
+            " breaks the " + boss + "! (" + string(finisher_dmg) + ")"
+        );
+
+        var gold = sim_rand_range(sim, 50, 90);
+        sim.gold_total += gold;
+
+        var trophy = choose("Warden's Sigil", "Ogre King's Tooth", "Crown Shard");
+
+        sim_log_tag(sim, "BOSS_DEFEATED", "ðŸ† Boss defeated! +" + string(gold) + " gold.");
+        sim_log_tag(sim, "TROPHY_DROP",  "ðŸŽ Trophy drop: " + trophy + ".");
+
+        // Equip after drop (sim_give_item logs EQUIP + STAT deltas)
+        sim_give_item(sim, trophy);
+
+        sim.tension = clamp(sim.tension + 30, 0, 100);
+
+        // End episode on boss victory
+        sim.finished = true;
+        sim_run_finalize(sim);
+        return;
+
+    } else {
+        sim_log_tag(sim, "RETREAT", "ðŸ’€ Boss overwhelms the party. Retreat!");
+        sim.tension = 100;
+        sim.finished = true;
+        sim_run_finalize(sim);
+        return;
+    }
+}
+function sim_resolve_chest(sim) {
+    sim.stats.chests_opened += 1;
+
+    // Thief improves results
+    var thief_bonus = 10;
+
+    var roll = sim_rand_range(sim, 1, 100) + thief_bonus;
+    if (roll >= 95) {
+        // Rare
+        var item = choose("Ember Ring", "Frost Band", "Mirror Dagger", "Saint's Charm");
+        sim.stats.rares_found += 1;
+        sim_give_item(sim, item);
+        sim_log(sim, "ðŸ§° Chest: RARE find! " + item + ".");
+    } else if (roll >= 60) {
+        var item2 = choose("Steel Helm", "Mana Vial", "Swift Boots", "Blessed Wraps");
+        sim_give_item(sim, item2);
+        sim_log(sim, "ðŸ§° Chest: found " + item2 + ".");
+    } else if (roll >= 30) {
+        var gold = sim_rand_range(sim, 10, 30);
+        sim.gold_total += gold;
+        sim_log(sim, "ðŸ§° Chest: +" + string(gold) + " gold.");
+    } else {
+        // Mimic / trap
+        sim_log(sim, "ðŸ§° Chest: it's a trap! Poison needles.");
+        sim_apply_party_damage(sim, sim_rand_range(sim, 3, 8));
+        sim.tension = clamp(sim.tension + 18, 0, 100);
+        sim_check_party_health(sim);
+    }
+}
+function sim_resolve_combat(sim) {
+    var threat = sim.difficulty + sim_rand_range(sim, 0, 3);
+
+    var foe = choose("Skeletons", "Slimes", "Bandits", "Cultists", "Wolfpack");
+    if (sim.zone == "Castle") foe = choose("Knights", "Gargoyles", "Sentinel Orbs");
+
+    var tank = sim.party[0];
+
+    // Tank takes primary damage
+    var dmg_to_tank = max(0, (threat * 4 + sim_rand_range(sim, 2, 8)) - tank.def);
+    var before_tank = tank.hp;
+    tank.hp -= dmg_to_tank;
+    if (tank.hp <= 0) tank.downed_this_beat = true;
+
+    // Optional clip to someone else
+    if (sim_chance(sim, 35)) {
+        var idx = sim_rand_range(sim, 1, 3);
+        var p = sim.party[idx];
+        var dmg = max(0, (threat * 2 + sim_rand_range(sim, 1, 6)) - p.def);
+        var before = p.hp;
+        p.hp -= dmg;
+        if (p.hp <= 0) p.downed_this_beat = true;
+
+        sim_log_tag(sim, "COMBAT_HIT",
+            "âš” " + foe + " clash: " + p.name + " takes " + string(dmg) +
+            " (" + string(before) + "â†’" + string(p.hp) + ")."
+        );
+    }
+
+    // Mage hits back (for animation/storyboard)
+    var mage = sim.party[1];
+    var crit = sim_chance(sim, 15);
+    var hit = threat * 6 + sim_rand_range(sim, 4, 14);
+    if (crit) hit *= 2;
+
+    sim_log_tag(sim, "COMBAT_EXCHANGE",
+        "âš” " + foe + " clash: " + tank.name + " takes " + string(dmg_to_tank) +
+        " (" + string(before_tank) + "â†’" + string(tank.hp) + "). " +
+        "âœ¨ " + mage.name + " hits for " + string(hit) + (crit ? " (CRIT!)." : ".")
+    );
+
+    // Healer reacts
+    sim_auto_heal(sim);
+
+    // Loot
+    var gold = sim_rand_range(sim, 3, 10) + sim.difficulty;
+    sim.gold_total += gold;
+
+    sim_log_tag(sim, "LOOT", "ðŸ’° Loot: +" + string(gold) + " gold.");
+
+    sim.tension = clamp(sim.tension + 12 + threat * 2, 0, 100);
+
+    // Knockdowns / near-death tracking
+    sim_check_party_health(sim);
+}
+function sim_resolve_intro(sim) {
+    sim_log(sim, "ðŸ§­ The party advances into the " + sim.zone + ".");
+}
+function sim_resolve_merchant(sim) {
+    var offer = choose("Health Tonic", "Armor Patch", "Spell Scroll", "Sharpening Stone");
+    var cost  = sim_rand_range(sim, 20, 35);
+
+    if (sim.gold_total < cost) {
+        sim_log_tag(sim, "MERCHANT_SKIP",
+            "ðŸ§¿ Merchant: party browses, buys nothing."
+        );
+        return;
+    }
+
+    var buyer = sim.party[sim_rand_range(sim, 0, 3)];
+    var gold_before = sim.gold_total;
+
+    sim.gold_total -= cost;
+
+    sim_log_tag(sim, "MERCHANT_BUY",
+        "ðŸ§¿ Merchant: " + buyer.name + " buys " + offer +
+        " for " + string(cost) + " gold (" +
+        string(gold_before) + "â†’" + string(sim.gold_total) + ")."
+    );
+
+    // Apply item
+    switch (offer) {
+        case "Health Tonic":
+            sim_log_tag(sim, "ITEM_GAIN",
+                "ðŸ§ª " + buyer.name + " acquires Health Tonic."
+            );
+
+            // OPTIONAL: immediate party heal (as in your log)
+            var tonic_heal = sim_rand_range(sim, 8, 14);
+            sim_log_tag(sim, "GROUP_HEAL",
+                "âœ¨ Health Tonic heals +" + string(tonic_heal) + " (group)."
+            );
+
+            for (var i = 0; i < array_length(sim.party); i++) {
+                var p = sim.party[i];
+                var before = p.hp;
+                p.hp = min(p.max_hp, p.hp + tonic_heal);
+
+                sim_log_tag(sim, "HP_DELTA",
+                    "  â¤ï¸ " + p.name + " HP " + string(before) + "â†’" + string(p.hp) + "."
+                );
+            }
+            break;
+
+        case "Armor Patch":
+            sim.party[0].base_def += 1;
+            sim.party[0].def = max(0, sim.party[0].base_def - sim.party[0].wounds);
+
+            sim_log_tag(sim, "STAT_DEF",
+                "ðŸ›¡ " + sim.party[0].name + " DEF increases to " +
+                string(sim.party[0].def) + "."
+            );
+            break;
+
+        case "Spell Scroll":
+            sim.party[1].atk += 1;
+            sim_log_tag(sim, "STAT_ATK",
+                "ðŸ“œ " + sim.party[1].name + " ATK increases to " +
+                string(sim.party[1].atk) + "."
+            );
+            break;
+
+        case "Sharpening Stone":
+            sim.party[2].atk += 1;
+            sim_log_tag(sim, "STAT_ATK",
+                "ðŸ—¡ " + sim.party[2].name + " ATK increases to " +
+                string(sim.party[2].atk) + "."
+            );
+            break;
+    }
+}
+function sim_resolve_relief(sim) {
+    var relief_type = choose("campfire", "healing shrine", "abandoned outpost", "quiet corridor");
+
+    sim_log_tag(sim, "RELIEF_START",
+        "ðŸ•¯ Relief: " + relief_type + ". The party regroups."
+    );
+
+    // --- GROUP HEAL ---
+    var heal_amt = sim_rand_range(sim, 6, 14);
+    sim_log_tag(sim, "GROUP_HEAL",
+        "âœ¨ Party heals +" + string(heal_amt) + " (group)."
+    );
+
+    for (var i = 0; i < array_length(sim.party); i++) {
+        var p = sim.party[i];
+        var before = p.hp;
+        p.hp = min(p.max_hp, p.hp + heal_amt);
+
+        sim_log_tag(sim, "HP_DELTA",
+            "  â¤ï¸ " + p.name + " HP " + string(before) + "â†’" + string(p.hp) + "."
+        );
+    }
+
+    // --- GROUP MP RESTORE ---
+    var mp_amt = sim_rand_range(sim, 4, 10);
+    sim_log_tag(sim, "GROUP_MP",
+        "ðŸ”· Party restores MP +" + string(mp_amt) + " (group)."
+    );
+
+    for (var i = 0; i < array_length(sim.party); i++) {
+        var p = sim.party[i];
+        var before_mp = p.mp;
+        p.mp = min(p.max_mp, p.mp + mp_amt);
+
+        sim_log_tag(sim, "MP_DELTA",
+            "  ðŸ”· " + p.name + " MP " + string(before_mp) + "â†’" + string(p.mp) + "."
+        );
+    }
+
+    // --- WOUND RECOVERY (one member, if any wounds exist) ---
+    var wounded_idx = -1;
+    for (var i = 0; i < array_length(sim.party); i++) {
+        if (sim.party[i].wounds > 0) {
+            wounded_idx = i;
+            break;
+        }
+    }
+
+    if (wounded_idx != -1) {
+        var w = sim.party[wounded_idx];
+        var before_wounds = w.wounds;
+        var before_def = w.def;
+
+        w.wounds -= 1;
+        w.def = max(0, w.base_def - w.wounds);
+
+        sim_log_tag(sim, "WOUND_HEAL",
+            "ðŸ©º Relief treatment: " + w.name + " recovers 1 wound."
+        );
+        sim_log_tag(sim, "STAT_DEF",
+            "ðŸŸ¦ DEF " + string(before_def) + "â†’" + string(w.def) +
+            " (wounds " + string(before_wounds) + "â†’" + string(w.wounds) + ")."
+        );
+    }
+
+    sim.tension = clamp(sim.tension - 25, 0, 100);
+}
+function sim_rng_next(sim) {
+    // Simple LCG: deterministic across platforms/builds
+    // X_{n+1} = (aX + c) mod 2^32
+    sim.rng = (1664525 * sim.rng + 1013904223) & $FFFFFFFF;
+    return sim.rng;
+}
+
+function sim_run_finalize(sim) {
+    if (sim.finished && sim.beat >= sim.beats_target) return;
+
+    sim.finished = true;
+
+    // Score quick summary
+    var avg_hp_pct = sim_party_avg_hp_pct(sim);
+    sim_log(sim, "ðŸ“º Episode ends. Gold=" + string(sim.gold_total) +
+        " | Chests=" + string(sim.stats.chests_opened) +
+        " | Merchants=" + string(sim.stats.merchants_seen) +
+        " | Rares=" + string(sim.stats.rares_found) +
+        " | Near-deaths=" + string(sim.stats.near_deaths) +
+        " | Boss=" + (sim.stats.boss_defeated ? "DEFEATED" : "NO"));
+
+    sim_log(sim, "ðŸ“Š Party avg HP%: " + string(round(avg_hp_pct * 100)) + "%");
+}
+function sim_run_init(sim, seed, beats_target) {
+    // Core run state
+    sim.seed = seed;
+    sim.rng = seed;               // internal RNG state (do not use GameMaker's global RNG)
+    sim.beat = 0;
+    sim.beats_target = beats_target;
+    sim.finished = false;
+
+    sim.zone = "Dungeon";
+    sim.difficulty = 1;
+    sim.tension = 10;             // 0..100 pacing knob
+    sim.gold_total = 0;
+
+	sim.director = {
+	    merchant_cd: 0,
+	    chest_cd: 0,
+	    merchants_this_zone: 0
+	};
+
+	sim.prev_zone = sim.zone;
+
+    sim.log = [];
+    sim_log(sim, "ðŸŽ¬ Episode begins. Seed=" + string(sim.seed) + " Zone=" + sim.zone);
+
+    // Party
+    sim.party = [];
+    sim.party[0] = sim_make_party_member("Tank",   sim_name_pick(sim, "tank"),   70,  5,  8, 6);
+    sim.party[1] = sim_make_party_member("Mage",   sim_name_pick(sim, "mage"),   40, 30, 12, 2);
+    sim.party[2] = sim_make_party_member("Thief",  sim_name_pick(sim, "thief"),  45, 10, 10, 3);
+    sim.party[3] = sim_make_party_member("Healer", sim_name_pick(sim, "healer"), 42, 28,  6, 3);
+
+    // Starter items (strings for now, but this becomes structs later)
+	sim.party[0].armor = "Iron Shield";
+	sim.party[1].weapon = "Charcoal Wand";
+	sim.party[2].trinket = "Lockpick Kit";
+	sim.party[3].trinket = "Prayer Beads";
+
+
+    // Simple per-run counters for scoring/debug
+    sim.stats = {
+        near_deaths: 0,
+        knockdowns: 0,
+        chests_opened: 0,
+        merchants_seen: 0,
+        rares_found: 0,
+        boss_defeated: false
+    };
+}
+function sim_run_new(sim, beats_target) {
+    // New run with a new seed
+    var seed = irandom_range(100000, 999999);
+    sim_run_init(sim, seed, beats_target);
+}
+function sim_run_restart_same_seed(sim) {
+    // Replay exact run deterministically
+    sim_run_init(sim, sim.seed, sim.beats_target);
+}
+function sim_run_step(sim) {
+    if (sim.finished) return;
+
+    // End condition
+    if (sim.beat >= sim.beats_target) {
+        sim_run_finalize(sim);
+        return;
+    }
+	
+	// Cooldowns tick down at the start of the beat
+	sim.director.merchant_cd = max(0, sim.director.merchant_cd - 1);
+	sim.director.chest_cd = max(0, sim.director.chest_cd - 1);
+
+    // Zone shifts (cheap â€œseasonâ€ feel)
+    if (sim.beat == 0) sim.zone = "Dungeon";
+    if (sim.beat == 35) sim.zone = "Wilderness";
+    if (sim.beat == 70) sim.zone = "Town";
+    if (sim.beat == 85) sim.zone = "Castle";
+
+	if (sim.zone != sim.prev_zone) {
+	    sim.director.merchants_this_zone = 0;
+	    sim.prev_zone = sim.zone;
+	}
+
+
+
+    // Difficulty ramps
+    if (sim.beat > 0 && sim.beat % 20 == 0) sim.difficulty += 1;
+
+    // Director picks the next beat event
+    var ev = sim_director_next_event(sim);
+
+    switch (ev) {
+        case "intro":    sim_resolve_intro(sim); break;
+        case "combat":   sim_resolve_combat(sim); break;
+        case "chest":    sim_resolve_chest(sim); break;
+        case "merchant": sim_resolve_merchant(sim); break;
+        case "relief":   sim_resolve_relief(sim); break;
+        case "boss":     sim_resolve_boss(sim); break;
+        default:         sim_resolve_combat(sim); break;
+    }
+
+    // Tension decay (prevents runaway)
+    sim.tension = clamp(sim.tension - 2, 0, 100);
+
+    sim.beat += 1;
+	
+
+
+}
