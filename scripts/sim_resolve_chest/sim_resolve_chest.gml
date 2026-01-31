@@ -4,7 +4,6 @@ function sim_resolve_chest(sim) {
     // Trap chance
     if (sim_chance(sim, 15)) {
         sim_log_tag(sim, "CHEST_TRAP", "🧰 Chest: it's a trap! Poison needles.");
-        // Use existing splash function (logs itself per member)
         sim_apply_party_damage(sim, sim_rand_range(sim, 4, 8));
         return;
     }
@@ -19,18 +18,18 @@ function sim_resolve_chest(sim) {
         return;
     }
 
-    // Item chest
-    var item = choose("Mana Vial", "Blessed Wraps", "Swift Boots", "Steel Helm", "Mirror Dagger", "Saint's Charm", "Ember Ring");
+    // Item chest (struct-based)
+    var tier_target = clamp(1 + floor(sim.difficulty / 2), 1, 10);
+    var item = loot_generate_item(sim, { source: "chest", zone: sim.zone, tier_target: tier_target });
+
     sim.stats.chests_opened += 1;
 
-    var rare = (item == "Saint's Charm" || item == "Ember Ring" || item == "Mirror Dagger");
-    if (rare) {
+    if (item.is_named || item.rarity == "rare" || item.rarity == "epic" || item.rarity == "legendary") {
         sim.stats.rares_found += 1;
-        sim_log_tag(sim, "CHEST_RARE", "🧰 Chest: RARE find! " + item + ".");
+        sim_log_tag(sim, "CHEST_RARE", "🧰 Chest: RARE find! " + item.name + ".");
     } else {
-        sim_log_tag(sim, "CHEST_ITEM", "🧰 Chest: found " + item + ".");
+        sim_log_tag(sim, "CHEST_ITEM", "🧰 Chest: found " + item.name + ".");
     }
 
-    // Equip/application handled here (and will emit [EQUIP] + stat deltas)
     sim_give_item(sim, item);
 }

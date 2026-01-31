@@ -1,20 +1,27 @@
-function loot_item_make(id, name, type, tier, rarity, value, stats, use, tags, fx, anim, is_named) {
-    // Canonical item struct: procedural and named items share this exact format.
+function loot_item_make(id, name, item_type, tier, rarity, value, stats, use, tags, note, anim, is_named) {
+
+    // Pricing split (anchored on value)
+    var buy_price  = max(1, floor(value * 1.15));
+    var sell_value = max(1, floor(value * 0.45));
+
     return {
         id: id,
         name: name,
-        type: type,           // "weapon"|"armor"|"trinket"|"consumable"|"treasure"
-        tier: tier,           // int
-        rarity: rarity,       // "common"|"uncommon"|"rare"|"epic"|"legendary"
-        value: value,         // gold value; also your default "better-ness"
+        type: item_type,
+        tier: tier,
+        rarity: rarity,
 
-        stats: stats,         // {atk, def, hp, mp}
-        use: use,             // {heal, mp, wound_heal} for consumables (0s otherwise)
+        // Canonical anchor + buy/sell split
+        value: value,
+        buy_price: buy_price,
+        sell_value: sell_value,
 
-        tags: tags,           // array of strings
-        fx: fx,               // e.g., "spark_blue", "holy_glow"
-        anim: anim,           // e.g., "equip_hand", "equip_body", "drink", "read"
+        stats: stats,
+        use: use,
 
-        is_named: is_named    // bool (true when from named table jackpot)
+        tags: tags,
+        note: note,
+        anim: anim,
+        is_named: is_named
     };
 }

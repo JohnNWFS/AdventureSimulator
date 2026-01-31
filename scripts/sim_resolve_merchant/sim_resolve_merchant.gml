@@ -1,73 +1,45 @@
 function sim_resolve_merchant(sim) {
-    var offer = choose("Health Tonic", "Armor Patch", "Spell Scroll", "Sharpening Stone");
-    var cost  = sim_rand_range(sim, 20, 35);
+    // Count this as a merchant encounter (even if you can't afford anything)
+    sim.stats.merchants_seen += 1;
+
+    // Also enforce director gating (per-zone cap)
+    sim.director.merchants_this_zone += 1;
+    sim.director.merchant_cd = 8; // no merchant for next 8 beats
+
+    // Generate a merchant item
+    var tier_target = clamp(2 + floor(sim.difficulty / 2), 1, 10);
+    var offer = loot_generate_item(sim, { source: "merchant", zone: sim.zone, tier_target: tier_target });
+
+    // If merchant rolled treasure, reroll once
+    if (offer.type == "treasure") {
+        offer = loot_generate_item(sim, { source: "merchant", zone: sim.zone, tier_target: tier_target });
+    }
+
+    // Cost: simple scaling off value (tunable later)
+    //var cost = offer.buy_price;  //optional for later use
+	var cost = max(10, offer.buy_price);
+
 
     if (sim.gold_total < cost) {
         sim_log_tag(sim, "MERCHANT_SKIP",
-            "🧿 Merchant: party browses, buys nothing."
+            "🧿 Merchant: party browses, can't afford " + offer.name + " (" + string(cost) + "g)."
         );
         return;
     }
 
-    var buyer = sim.party[sim_rand_range(sim, 0, 3)];
-    var gold_before = sim.gold_total;
+    var buyer_idx = sim_rand_range(sim, 0, array_length(sim.party) - 1);
+    var buyer = sim.party[buyer_idx];
 
+    var gold_before = sim.gold_total;
     sim.gold_total -= cost;
 
     sim_log_tag(sim, "MERCHANT_BUY",
-        "🧿 Merchant: " + buyer.name + " buys " + offer +
-        " for " + string(cost) + " gold (" +
-        string(gold_before) + "→" + string(sim.gold_total) + ")."
+	"🧿 Merchant: " + buyer.name + " buys " + offer.name +
+	" for " + string(cost) + "g (value " + string(offer.value) + ", sells " + string(offer.sell_value) + "). " +
+	"Gold " + string(gold_before) + "→" + string(sim.gold_total) + "."
+
     );
 
-    // Apply item
-    switch (offer) {
-        case "Health Tonic":
-            sim_log_tag(sim, "ITEM_GAIN",
-                "🧪 " + buyer.name + " acquires Health Tonic."
-            );
-
-            // OPTIONAL: immediate party heal (as in your log)
-            var tonic_heal = sim_rand_range(sim, 8, 14);
-            sim_log_tag(sim, "GROUP_HEAL",
-                "✨ Health Tonic heals +" + string(tonic_heal) + " (group)."
-            );
-
-            for (var i = 0; i < array_length(sim.party); i++) {
-                var p = sim.party[i];
-                var before = p.hp;
-                p.hp = min(p.max_hp, p.hp + tonic_heal);
-
-                sim_log_tag(sim, "HP_DELTA",
-                    "  ❤️ " + p.name + " HP " + string(before) + "→" + string(p.hp) + "."
-                );
-            }
-            break;
-
-        case "Armor Patch":
-            sim.party[0].base_def += 1;
-            sim.party[0].def = max(0, sim.party[0].base_def - sim.party[0].wounds);
-
-            sim_log_tag(sim, "STAT_DEF",
-                "🛡 " + sim.party[0].name + " DEF increases to " +
-                string(sim.party[0].def) + "."
-            );
-            break;
-
-        case "Spell Scroll":
-            sim.party[1].atk += 1;
-            sim_log_tag(sim, "STAT_ATK",
-                "📜 " + sim.party[1].name + " ATK increases to " +
-                string(sim.party[1].atk) + "."
-            );
-            break;
-
-        case "Sharpening Stone":
-            sim.party[2].atk += 1;
-            sim_log_tag(sim, "STAT_ATK",
-                "🗡 " + sim.party[2].name + " ATK increases to " +
-                string(sim.party[2].atk) + "."
-            );
-            break;
-    }
+    // Buyer receives what they bought
+    sim_give_item_to(sim, offer, buyer_idx);
 }

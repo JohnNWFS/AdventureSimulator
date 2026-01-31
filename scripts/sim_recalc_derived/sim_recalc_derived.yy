@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"sim_recalc_derived",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"sim_recalc_derived",
+  "parent":{
+    "name":"SCRIPTS",
+    "path":"folders/SCRIPTS.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

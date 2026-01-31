@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"sim_item_slot_from_type",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"sim_item_slot_from_type",
+  "parent":{
+    "name":"SCRIPTS",
+    "path":"folders/SCRIPTS.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -27,23 +27,20 @@ function sim_resolve_relief(sim) {
         "🔷 Party restores MP +" + string(mp_amt) + " (group)."
     );
 
-    for (var i = 0; i < array_length(sim.party); i++) {
-        var p = sim.party[i];
-        var before_mp = p.mp;
-        p.mp = min(p.max_mp, p.mp + mp_amt);
+    for (var j = 0; j < array_length(sim.party); j++) {
+        var p2 = sim.party[j];
+        var before_mp = p2.mp;
+        p2.mp = min(p2.max_mp, p2.mp + mp_amt);
 
         sim_log_tag(sim, "MP_DELTA",
-            "  🔷 " + p.name + " MP " + string(before_mp) + "→" + string(p.mp) + "."
+            "  🔷 " + p2.name + " MP " + string(before_mp) + "→" + string(p2.mp) + "."
         );
     }
 
     // --- WOUND RECOVERY (one member, if any wounds exist) ---
     var wounded_idx = -1;
-    for (var i = 0; i < array_length(sim.party); i++) {
-        if (sim.party[i].wounds > 0) {
-            wounded_idx = i;
-            break;
-        }
+    for (var k = 0; k < array_length(sim.party); k++) {
+        if (sim.party[k].wounds > 0) { wounded_idx = k; break; }
     }
 
     if (wounded_idx != -1) {
@@ -51,8 +48,8 @@ function sim_resolve_relief(sim) {
         var before_wounds = w.wounds;
         var before_def = w.def;
 
-        w.wounds -= 1;
-        w.def = max(0, w.base_def - w.wounds);
+        w.wounds = max(0, w.wounds - 1);
+        sim_recalc_derived(w);
 
         sim_log_tag(sim, "WOUND_HEAL",
             "🩺 Relief treatment: " + w.name + " recovers 1 wound."

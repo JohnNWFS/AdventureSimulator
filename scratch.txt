@@ -1,0 +1,780 @@
+**********************************.
+Entering main loop.
+**********************************.
+[BEAT_SOURCE] 🧭 The party advances deeper.
+🧭 The party advances into the Dungeon.
+GM_Size setting canvas width height to 1366 by 768
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_HIT] ⚔ Slimes clash: Ravel takes 8 (45→37).
+[COMBAT_EXCHANGE] ⚔ Slimes clash: Brann takes 16 (70→54). ✨ Quen hits for 32.
+[HEAL] 🩹 Healer restores Brann +9 HP (54→63).
+[LOOT] 💰 Loot: +8 gold.
+[BEAT_SOURCE] 🧭 Encounter: a traveling merchant appears.
+[MERCHANT_SKIP] 🧿 Merchant: party browses, can't afford Shadow Bone Shield (1428g).
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_EXCHANGE] ⚔ Skeletons clash: Brann takes 5 (63→58). ✨ Quen hits for 19.
+[HEAL] 🩹 Healer restores Ravel +6 HP (37→43).
+[LOOT] 💰 Loot: +9 gold.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_EXCHANGE] ⚔ Skeletons clash: Brann takes 12 (58→46). ✨ Quen hits for 23.
+[HEAL] 🩹 Healer restores Brann +8 HP (46→54).
+[LOOT] 💰 Loot: +8 gold.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_HIT] ⚔ Skeletons clash: Sel takes 6 (42→36).
+[COMBAT_EXCHANGE] ⚔ Skeletons clash: Brann takes 15 (54→39). ✨ Quen hits for 35.
+[HEAL] 🩹 Healer restores Brann +13 HP (39→52).
+[LOOT] 💰 Loot: +5 gold.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_EXCHANGE] ⚔ Cultists clash: Brann takes 13 (52→39). ✨ Quen hits for 25.
+[HEAL] 🩹 Healer restores Brann +9 HP (39→48).
+[LOOT] 💰 Loot: +7 gold.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: abandoned outpost. The party regroups.
+[GROUP_HEAL] ✨ Party heals +10 (group).
+[HP_DELTA]   ❤️ Brann HP 48→58.
+[HP_DELTA]   ❤️ Quen HP 40→40.
+[HP_DELTA]   ❤️ Ravel HP 43→45.
+[HP_DELTA]   ❤️ Sel HP 36→44.
+[GROUP_MP] 🔷 Party restores MP +8 (group).
+[MP_DELTA]   🔷 Brann MP 5→5.
+[MP_DELTA]   🔷 Quen MP 30→30.
+[MP_DELTA]   🔷 Ravel MP 10→11.
+[MP_DELTA]   🔷 Sel MP 13→21.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_EXCHANGE] ⚔ Bandits clash: Brann takes 15 (58→43). ✨ Quen hits for 35.
+[HEAL] 🩹 Healer restores Brann +8 HP (43→51).
+[LOOT] 💰 Loot: +4 gold.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: quiet corridor. The party regroups.
+[GROUP_HEAL] ✨ Party heals +9 (group).
+[HP_DELTA]   ❤️ Brann HP 51→60.
+[HP_DELTA]   ❤️ Quen HP 40→40.
+[HP_DELTA]   ❤️ Ravel HP 45→45.
+[HP_DELTA]   ❤️ Sel HP 44→44.
+[GROUP_MP] 🔷 Party restores MP +10 (group).
+[MP_DELTA]   🔷 Brann MP 5→5.
+[MP_DELTA]   🔷 Quen MP 30→30.
+[MP_DELTA]   🔷 Ravel MP 11→11.
+[MP_DELTA]   🔷 Sel MP 18→28.
+Resizing swap chain to 1366 by 768...
+Setting viewport to 1366 by 768
+
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_EXCHANGE] ⚔ Wolfpack clash: Brann takes 9 (60→51). ✨ Quen hits for 28.
+[HEAL] 🩹 Healer restores Brann +13 HP (51→64).
+[LOOT] 💰 Loot: +5 gold.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_EXCHANGE] ⚔ Slimes clash: Brann takes 12 (64→52). ✨ Quen hits for 52 (CRIT!).
+[HEAL] 🩹 Healer restores Brann +11 HP (52→63).
+[LOOT] 💰 Loot: +7 gold.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: abandoned outpost. The party regroups.
+[GROUP_HEAL] ✨ Party heals +7 (group).
+[HP_DELTA]   ❤️ Brann HP 63→70.
+[HP_DELTA]   ❤️ Quen HP 40→40.
+[HP_DELTA]   ❤️ Ravel HP 45→45.
+[HP_DELTA]   ❤️ Sel HP 44→44.
+[GROUP_MP] 🔷 Party restores MP +8 (group).
+[MP_DELTA]   🔷 Brann MP 5→5.
+[MP_DELTA]   🔷 Quen MP 30→30.
+[MP_DELTA]   🔷 Ravel MP 11→11.
+[MP_DELTA]   🔷 Sel MP 22→29.
+[BEAT_SOURCE] 🧭 Exploration find: the party spots something ahead.
+[CHEST_OPEN] 🧰 Chest found.
+[CHEST_GOLD] 🧰 Chest: +26 gold.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_EXCHANGE] ⚔ Slimes clash: Brann takes 8 (70→62). ✨ Quen hits for 26.
+[LOOT] 💰 Loot: +5 gold.
+[BEAT_SOURCE] 🧭 Encounter: a traveling merchant appears.
+[MERCHANT_SKIP] 🧿 Merchant: party browses, can't afford Fine Slate Wand (1179g).
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_EXCHANGE] ⚔ Wolfpack clash: Brann takes 0 (62→62). ✨ Quen hits for 28 (CRIT!).
+[LOOT] 💰 Loot: +8 gold.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: abandoned outpost. The party regroups.
+[GROUP_HEAL] ✨ Party heals +13 (group).
+[HP_DELTA]   ❤️ Brann HP 62→70.
+[HP_DELTA]   ❤️ Quen HP 40→40.
+[HP_DELTA]   ❤️ Ravel HP 45→45.
+[HP_DELTA]   ❤️ Sel HP 44→44.
+[GROUP_MP] 🔷 Party restores MP +6 (group).
+[MP_DELTA]   🔷 Brann MP 5→5.
+[MP_DELTA]   🔷 Quen MP 30→30.
+[MP_DELTA]   🔷 Ravel MP 11→11.
+[MP_DELTA]   🔷 Sel MP 29→29.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_EXCHANGE] ⚔ Slimes clash: Brann takes 14 (70→56). ✨ Quen hits for 36.
+[HEAL] 🩹 Healer restores Brann +13 HP (56→69).
+[LOOT] 💰 Loot: +11 gold.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_EXCHANGE] ⚔ Bandits clash: Brann takes 11 (69→58). ✨ Quen hits for 72 (CRIT!).
+[HEAL] 🩹 Healer restores Brann +8 HP (58→66).
+[LOOT] 💰 Loot: +6 gold.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: campfire. The party regroups.
+[GROUP_HEAL] ✨ Party heals +11 (group).
+[HP_DELTA]   ❤️ Brann HP 66→70.
+[HP_DELTA]   ❤️ Quen HP 40→40.
+[HP_DELTA]   ❤️ Ravel HP 45→45.
+[HP_DELTA]   ❤️ Sel HP 44→44.
+[GROUP_MP] 🔷 Party restores MP +10 (group).
+[MP_DELTA]   🔷 Brann MP 5→5.
+[MP_DELTA]   🔷 Quen MP 30→30.
+[MP_DELTA]   🔷 Ravel MP 11→11.
+[MP_DELTA]   🔷 Sel MP 23→29.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_EXCHANGE] ⚔ Cultists clash: Brann takes 11 (70→59). ✨ Quen hits for 25.
+[HEAL] 🩹 Healer restores Brann +8 HP (59→67).
+[LOOT] 💰 Loot: +6 gold.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: quiet corridor. The party regroups.
+[GROUP_HEAL] ✨ Party heals +8 (group).
+[HP_DELTA]   ❤️ Brann HP 67→70.
+[HP_DELTA]   ❤️ Quen HP 40→40.
+[HP_DELTA]   ❤️ Ravel HP 45→45.
+[HP_DELTA]   ❤️ Sel HP 44→44.
+[GROUP_MP] 🔷 Party restores MP +9 (group).
+[MP_DELTA]   🔷 Brann MP 5→5.
+[MP_DELTA]   🔷 Quen MP 30→30.
+[MP_DELTA]   🔷 Ravel MP 11→11.
+[MP_DELTA]   🔷 Sel MP 26→29.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_HIT] ⚔ Slimes clash: Quen takes 7 (40→33).
+[COMBAT_EXCHANGE] ⚔ Slimes clash: Brann takes 11 (70→59). ✨ Quen hits for 32.
+[HEAL] 🩹 Healer restores Quen +7 HP (33→40).
+[LOOT] 💰 Loot: +7 gold.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_EXCHANGE] ⚔ Cultists clash: Brann takes 10 (59→49). ✨ Quen hits for 29.
+[HEAL] 🩹 Healer restores Brann +14 HP (49→63).
+[LOOT] 💰 Loot: +10 gold.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: quiet corridor. The party regroups.
+[GROUP_HEAL] ✨ Party heals +12 (group).
+[HP_DELTA]   ❤️ Brann HP 63→70.
+[HP_DELTA]   ❤️ Quen HP 40→40.
+[HP_DELTA]   ❤️ Ravel HP 45→45.
+[HP_DELTA]   ❤️ Sel HP 44→44.
+[GROUP_MP] 🔷 Party restores MP +8 (group).
+[MP_DELTA]   🔷 Brann MP 5→5.
+[MP_DELTA]   🔷 Quen MP 30→30.
+[MP_DELTA]   🔷 Ravel MP 11→11.
+[MP_DELTA]   🔷 Sel MP 23→29.
+[BEAT_SOURCE] 🧭 Exploration find: the party spots something ahead.
+[CHEST_OPEN] 🧰 Chest found.
+[CHEST_GOLD] 🧰 Chest: +24 gold.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_EXCHANGE] ⚔ Slimes clash: Brann takes 3 (70→67). ✨ Quen hits for 26.
+[LOOT] 💰 Loot: +7 gold.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_HIT] ⚔ Wolfpack clash: Ravel takes 6 (45→39).
+[COMBAT_EXCHANGE] ⚔ Wolfpack clash: Brann takes 9 (67→58). ✨ Quen hits for 23.
+[HEAL] 🩹 Healer restores Brann +8 HP (58→66).
+[LOOT] 💰 Loot: +12 gold.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: abandoned outpost. The party regroups.
+[GROUP_HEAL] ✨ Party heals +9 (group).
+[HP_DELTA]   ❤️ Brann HP 66→70.
+[HP_DELTA]   ❤️ Quen HP 40→40.
+[HP_DELTA]   ❤️ Ravel HP 39→45.
+[HP_DELTA]   ❤️ Sel HP 44→44.
+[GROUP_MP] 🔷 Party restores MP +9 (group).
+[MP_DELTA]   🔷 Brann MP 5→5.
+[MP_DELTA]   🔷 Quen MP 30→30.
+[MP_DELTA]   🔷 Ravel MP 11→11.
+[MP_DELTA]   🔷 Sel MP 26→29.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_EXCHANGE] ⚔ Slimes clash: Brann takes 15 (70→55). ✨ Quen hits for 82 (CRIT!).
+[HEAL] 🩹 Healer restores Brann +15 HP (55→70).
+[LOOT] 💰 Loot: +9 gold.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: abandoned outpost. The party regroups.
+[GROUP_HEAL] ✨ Party heals +13 (group).
+[HP_DELTA]   ❤️ Brann HP 70→70.
+[HP_DELTA]   ❤️ Quen HP 40→40.
+[HP_DELTA]   ❤️ Ravel HP 45→45.
+[HP_DELTA]   ❤️ Sel HP 44→44.
+[GROUP_MP] 🔷 Party restores MP +7 (group).
+[MP_DELTA]   🔷 Brann MP 5→5.
+[MP_DELTA]   🔷 Quen MP 30→30.
+[MP_DELTA]   🔷 Ravel MP 11→11.
+[MP_DELTA]   🔷 Sel MP 26→29.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_EXCHANGE] ⚔ Bandits clash: Brann takes 9 (70→61). ✨ Quen hits for 30.
+[LOOT] 💰 Loot: +7 gold.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_EXCHANGE] ⚔ Slimes clash: Brann takes 12 (61→49). ✨ Quen hits for 60 (CRIT!).
+[HEAL] 🩹 Healer restores Brann +9 HP (49→58).
+[LOOT] 💰 Loot: +11 gold.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: abandoned outpost. The party regroups.
+[GROUP_HEAL] ✨ Party heals +12 (group).
+[HP_DELTA]   ❤️ Brann HP 58→70.
+[HP_DELTA]   ❤️ Quen HP 40→40.
+[HP_DELTA]   ❤️ Ravel HP 45→45.
+[HP_DELTA]   ❤️ Sel HP 44→44.
+[GROUP_MP] 🔷 Party restores MP +6 (group).
+[MP_DELTA]   🔷 Brann MP 5→5.
+[MP_DELTA]   🔷 Quen MP 30→30.
+[MP_DELTA]   🔷 Ravel MP 11→11.
+[MP_DELTA]   🔷 Sel MP 26→29.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_EXCHANGE] ⚔ Slimes clash: Brann takes 3 (70→67). ✨ Quen hits for 17.
+[LOOT] 💰 Loot: +11 gold.
+[BEAT_SOURCE] 🧭 Exploration find: the party spots something ahead.
+[CHEST_OPEN] 🧰 Chest found.
+[CHEST_ITEM] 🧰 Chest: found Forgotten Gem.
+[TREASURE] 💰 Treasure: Forgotten Gem converts to +153 gold.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_EXCHANGE] ⚔ Skeletons clash: Brann takes 8 (67→59). ✨ Quen hits for 22.
+[HEAL] 🩹 Healer restores Brann +7 HP (59→66).
+[LOOT] 💰 Loot: +9 gold.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: abandoned outpost. The party regroups.
+[GROUP_HEAL] ✨ Party heals +11 (group).
+[HP_DELTA]   ❤️ Brann HP 66→70.
+[HP_DELTA]   ❤️ Quen HP 40→40.
+[HP_DELTA]   ❤️ Ravel HP 45→45.
+[HP_DELTA]   ❤️ Sel HP 44→44.
+[GROUP_MP] 🔷 Party restores MP +4 (group).
+[MP_DELTA]   🔷 Brann MP 5→5.
+[MP_DELTA]   🔷 Quen MP 30→30.
+[MP_DELTA]   🔷 Ravel MP 11→11.
+[MP_DELTA]   🔷 Sel MP 26→29.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_EXCHANGE] ⚔ Bandits clash: Brann takes 5 (70→65). ✨ Quen hits for 19.
+[LOOT] 💰 Loot: +12 gold.
+[BEAT_SOURCE] 🧭 Encounter: a traveling merchant appears.
+[MERCHANT_SKIP] 🧿 Merchant: party browses, can't afford Fortifying Vial (790g).
+[BEAT_SOURCE] 🧭 Exploration find: the party spots something ahead.
+[CHEST_OPEN] 🧰 Chest found.
+[CHEST_GOLD] 🧰 Chest: +16 gold.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_EXCHANGE] ⚔ Skeletons clash: Brann takes 10 (65→55). ✨ Quen hits for 22.
+[HEAL] 🩹 Healer restores Brann +14 HP (55→69).
+[LOOT] 💰 Loot: +10 gold.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: abandoned outpost. The party regroups.
+[GROUP_HEAL] ✨ Party heals +13 (group).
+[HP_DELTA]   ❤️ Brann HP 69→70.
+[HP_DELTA]   ❤️ Quen HP 40→40.
+[HP_DELTA]   ❤️ Ravel HP 45→45.
+[HP_DELTA]   ❤️ Sel HP 44→44.
+[GROUP_MP] 🔷 Party restores MP +8 (group).
+[MP_DELTA]   🔷 Brann MP 5→5.
+[MP_DELTA]   🔷 Quen MP 30→30.
+[MP_DELTA]   🔷 Ravel MP 11→11.
+[MP_DELTA]   🔷 Sel MP 26→29.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_EXCHANGE] ⚔ Wolfpack clash: Brann takes 24 (70→46). ✨ Quen hits for 47.
+[HEAL] 🩹 Healer restores Brann +9 HP (46→55).
+[LOOT] 💰 Loot: +9 gold.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: healing shrine. The party regroups.
+[GROUP_HEAL] ✨ Party heals +6 (group).
+[HP_DELTA]   ❤️ Brann HP 55→61.
+[HP_DELTA]   ❤️ Quen HP 40→40.
+[HP_DELTA]   ❤️ Ravel HP 45→45.
+[HP_DELTA]   ❤️ Sel HP 44→44.
+[GROUP_MP] 🔷 Party restores MP +8 (group).
+[MP_DELTA]   🔷 Brann MP 5→5.
+[MP_DELTA]   🔷 Quen MP 30→30.
+[MP_DELTA]   🔷 Ravel MP 11→11.
+[MP_DELTA]   🔷 Sel MP 26→29.
+[BEAT_SOURCE] 🧭 Exploration find: the party spots something ahead.
+[CHEST_OPEN] 🧰 Chest found.
+[CHEST_TRAP] 🧰 Chest: it's a trap! Poison needles.
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~4).
+[SPLASH_HIT] ☠ SPLASH → Brann takes 0 (61→61).
+[SPLASH_HIT] ☠ SPLASH → Quen takes 1 (40→39).
+[SPLASH_HIT] ☠ SPLASH → Ravel takes 2 (45→43).
+[SPLASH_HIT] ☠ SPLASH → Sel takes 1 (44→43).
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_EXCHANGE] ⚔ Wolfpack clash: Brann takes 19 (61→42). ✨ Quen hits for 76 (CRIT!).
+[HEAL] 🩹 Healer restores Brann +8 HP (42→50).
+[LOOT] 💰 Loot: +6 gold.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_EXCHANGE] ⚔ Slimes clash: Brann takes 16 (50→34). ✨ Quen hits for 34.
+[HEAL] 🩹 Healer restores Brann +14 HP (34→48).
+[LOOT] 💰 Loot: +12 gold.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: quiet corridor. The party regroups.
+[GROUP_HEAL] ✨ Party heals +14 (group).
+[HP_DELTA]   ❤️ Brann HP 48→62.
+[HP_DELTA]   ❤️ Quen HP 39→40.
+[HP_DELTA]   ❤️ Ravel HP 43→45.
+[HP_DELTA]   ❤️ Sel HP 43→44.
+[GROUP_MP] 🔷 Party restores MP +7 (group).
+[MP_DELTA]   🔷 Brann MP 5→5.
+[MP_DELTA]   🔷 Quen MP 30→30.
+[MP_DELTA]   🔷 Ravel MP 11→11.
+[MP_DELTA]   🔷 Sel MP 23→29.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_EXCHANGE] ⚔ Skeletons clash: Brann takes 10 (62→52). ✨ Quen hits for 32.
+[HEAL] 🩹 Healer restores Brann +13 HP (52→65).
+[LOOT] 💰 Loot: +12 gold.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: campfire. The party regroups.
+[GROUP_HEAL] ✨ Party heals +10 (group).
+[HP_DELTA]   ❤️ Brann HP 65→70.
+[HP_DELTA]   ❤️ Quen HP 40→40.
+[HP_DELTA]   ❤️ Ravel HP 45→45.
+[HP_DELTA]   ❤️ Sel HP 44→44.
+[GROUP_MP] 🔷 Party restores MP +8 (group).
+[MP_DELTA]   🔷 Brann MP 5→5.
+[MP_DELTA]   🔷 Quen MP 30→30.
+[MP_DELTA]   🔷 Ravel MP 11→11.
+[MP_DELTA]   🔷 Sel MP 26→29.
+[BEAT_SOURCE] 🧭 Exploration find: the party spots something ahead.
+[CHEST_OPEN] 🧰 Chest found.
+[CHEST_GOLD] 🧰 Chest: +19 gold.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_EXCHANGE] ⚔ Bandits clash: Brann takes 21 (70→49). ✨ Quen hits for 37.
+[HEAL] 🩹 Healer restores Brann +10 HP (49→59).
+[LOOT] 💰 Loot: +8 gold.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_EXCHANGE] ⚔ Bandits clash: Brann takes 20 (59→39). ✨ Quen hits for 41.
+[HEAL] 🩹 Healer restores Brann +15 HP (39→54).
+[LOOT] 💰 Loot: +13 gold.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: healing shrine. The party regroups.
+[GROUP_HEAL] ✨ Party heals +7 (group).
+[HP_DELTA]   ❤️ Brann HP 54→61.
+[HP_DELTA]   ❤️ Quen HP 40→40.
+[HP_DELTA]   ❤️ Ravel HP 45→45.
+[HP_DELTA]   ❤️ Sel HP 44→44.
+[GROUP_MP] 🔷 Party restores MP +7 (group).
+[MP_DELTA]   🔷 Brann MP 5→5.
+[MP_DELTA]   🔷 Quen MP 30→30.
+[MP_DELTA]   🔷 Ravel MP 11→11.
+[MP_DELTA]   🔷 Sel MP 23→29.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_EXCHANGE] ⚔ Bandits clash: Brann takes 12 (61→49). ✨ Quen hits for 25.
+[HEAL] 🩹 Healer restores Brann +8 HP (49→57).
+[LOOT] 💰 Loot: +13 gold.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: campfire. The party regroups.
+[GROUP_HEAL] ✨ Party heals +6 (group).
+[HP_DELTA]   ❤️ Brann HP 57→63.
+[HP_DELTA]   ❤️ Quen HP 40→40.
+[HP_DELTA]   ❤️ Ravel HP 45→45.
+[HP_DELTA]   ❤️ Sel HP 44→44.
+[GROUP_MP] 🔷 Party restores MP +10 (group).
+[MP_DELTA]   🔷 Brann MP 5→5.
+[MP_DELTA]   🔷 Quen MP 30→30.
+[MP_DELTA]   🔷 Ravel MP 11→11.
+[MP_DELTA]   🔷 Sel MP 26→29.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_EXCHANGE] ⚔ Skeletons clash: Brann takes 24 (63→39). ✨ Quen hits for 44.
+[HEAL] 🩹 Healer restores Brann +9 HP (39→48).
+[LOOT] 💰 Loot: +8 gold.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_EXCHANGE] ⚔ Wolfpack clash: Brann takes 16 (48→32). ✨ Quen hits for 40.
+[HEAL] 🩹 Healer restores Brann +15 HP (32→47).
+[LOOT] 💰 Loot: +13 gold.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: campfire. The party regroups.
+[GROUP_HEAL] ✨ Party heals +10 (group).
+[HP_DELTA]   ❤️ Brann HP 47→57.
+[HP_DELTA]   ❤️ Quen HP 40→40.
+[HP_DELTA]   ❤️ Ravel HP 45→45.
+[HP_DELTA]   ❤️ Sel HP 44→44.
+[GROUP_MP] 🔷 Party restores MP +10 (group).
+[MP_DELTA]   🔷 Brann MP 5→5.
+[MP_DELTA]   🔷 Quen MP 30→30.
+[MP_DELTA]   🔷 Ravel MP 11→11.
+[MP_DELTA]   🔷 Sel MP 23→29.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_EXCHANGE] ⚔ Slimes clash: Brann takes 20 (57→37). ✨ Quen hits for 44.
+[HEAL] 🩹 Healer restores Brann +8 HP (37→45).
+[LOOT] 💰 Loot: +11 gold.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: abandoned outpost. The party regroups.
+[GROUP_HEAL] ✨ Party heals +8 (group).
+[HP_DELTA]   ❤️ Brann HP 45→53.
+[HP_DELTA]   ❤️ Quen HP 40→40.
+[HP_DELTA]   ❤️ Ravel HP 45→45.
+[HP_DELTA]   ❤️ Sel HP 44→44.
+[GROUP_MP] 🔷 Party restores MP +4 (group).
+[MP_DELTA]   🔷 Brann MP 5→5.
+[MP_DELTA]   🔷 Quen MP 30→30.
+[MP_DELTA]   🔷 Ravel MP 11→11.
+[MP_DELTA]   🔷 Sel MP 26→29.
+[BEAT_SOURCE] 🧭 Encounter: a traveling merchant appears.
+[MERCHANT_SKIP] 🧿 Merchant: party browses, can't afford Hide Wraps (749g).
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_HIT] ⚔ Wolfpack clash: Quen takes 11 (40→29).
+[COMBAT_EXCHANGE] ⚔ Wolfpack clash: Brann takes 18 (53→35). ✨ Quen hits for 34.
+[HEAL] 🩹 Healer restores Brann +15 HP (35→50).
+[LOOT] 💰 Loot: +10 gold.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: healing shrine. The party regroups.
+[GROUP_HEAL] ✨ Party heals +12 (group).
+[HP_DELTA]   ❤️ Brann HP 50→62.
+[HP_DELTA]   ❤️ Quen HP 29→40.
+[HP_DELTA]   ❤️ Ravel HP 45→45.
+[HP_DELTA]   ❤️ Sel HP 44→44.
+[GROUP_MP] 🔷 Party restores MP +4 (group).
+[MP_DELTA]   🔷 Brann MP 5→5.
+[MP_DELTA]   🔷 Quen MP 30→30.
+[MP_DELTA]   🔷 Ravel MP 11→11.
+[MP_DELTA]   🔷 Sel MP 26→29.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_HIT] ⚔ Wolfpack clash: Quen takes 15 (40→25).
+[COMBAT_EXCHANGE] ⚔ Wolfpack clash: Brann takes 25 (62→37). ✨ Quen hits for 48.
+[HEAL] 🩹 Healer restores Brann +8 HP (37→45).
+[LOOT] 💰 Loot: +7 gold.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_EXCHANGE] ⚔ Bandits clash: Brann takes 25 (45→20). ✨ Quen hits for 86 (CRIT!).
+[HEAL] 🩹 Healer restores Brann +15 HP (20→35).
+[LOOT] 💰 Loot: +10 gold.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: campfire. The party regroups.
+[GROUP_HEAL] ✨ Party heals +9 (group).
+[HP_DELTA]   ❤️ Brann HP 35→44.
+[HP_DELTA]   ❤️ Quen HP 25→34.
+[HP_DELTA]   ❤️ Ravel HP 45→45.
+[HP_DELTA]   ❤️ Sel HP 44→44.
+[GROUP_MP] 🔷 Party restores MP +7 (group).
+[MP_DELTA]   🔷 Brann MP 5→5.
+[MP_DELTA]   🔷 Quen MP 30→30.
+[MP_DELTA]   🔷 Ravel MP 11→11.
+[MP_DELTA]   🔷 Sel MP 23→29.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_HIT] ⚔ Bandits clash: Ravel takes 14 (45→31).
+[COMBAT_EXCHANGE] ⚔ Bandits clash: Brann takes 23 (44→21). ✨ Quen hits for 40.
+[HEAL] 🩹 Healer restores Brann +16 HP (21→37).
+[LOOT] 💰 Loot: +10 gold.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: quiet corridor. The party regroups.
+[GROUP_HEAL] ✨ Party heals +10 (group).
+[HP_DELTA]   ❤️ Brann HP 37→47.
+[HP_DELTA]   ❤️ Quen HP 34→40.
+[HP_DELTA]   ❤️ Ravel HP 31→41.
+[HP_DELTA]   ❤️ Sel HP 44→44.
+[GROUP_MP] 🔷 Party restores MP +5 (group).
+[MP_DELTA]   🔷 Brann MP 5→5.
+[MP_DELTA]   🔷 Quen MP 30→30.
+[MP_DELTA]   🔷 Ravel MP 11→11.
+[MP_DELTA]   🔷 Sel MP 26→29.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_EXCHANGE] ⚔ Cultists clash: Brann takes 17 (47→30). ✨ Quen hits for 43.
+[HEAL] 🩹 Healer restores Brann +16 HP (30→46).
+[LOOT] 💰 Loot: +14 gold.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: healing shrine. The party regroups.
+[GROUP_HEAL] ✨ Party heals +9 (group).
+[HP_DELTA]   ❤️ Brann HP 46→55.
+[HP_DELTA]   ❤️ Quen HP 40→40.
+[HP_DELTA]   ❤️ Ravel HP 41→45.
+[HP_DELTA]   ❤️ Sel HP 44→44.
+[GROUP_MP] 🔷 Party restores MP +5 (group).
+[MP_DELTA]   🔷 Brann MP 5→5.
+[MP_DELTA]   🔷 Quen MP 30→30.
+[MP_DELTA]   🔷 Ravel MP 11→11.
+[MP_DELTA]   🔷 Sel MP 26→29.
+[BEAT_SOURCE] 🧭 Exploration find: the party spots something ahead.
+[CHEST_OPEN] 🧰 Chest found.
+[CHEST_ITEM] 🧰 Chest: found Royal Idol.
+[TREASURE] 💰 Treasure: Royal Idol converts to +111 gold.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_EXCHANGE] ⚔ Slimes clash: Brann takes 21 (55→34). ✨ Quen hits for 34.
+[HEAL] 🩹 Healer restores Brann +13 HP (34→47).
+[LOOT] 💰 Loot: +13 gold.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_HIT] ⚔ Skeletons clash: Ravel takes 11 (45→34).
+[COMBAT_EXCHANGE] ⚔ Skeletons clash: Brann takes 15 (47→32). ✨ Quen hits for 76 (CRIT!).
+[HEAL] 🩹 Healer restores Brann +15 HP (32→47).
+[LOOT] 💰 Loot: +8 gold.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: campfire. The party regroups.
+[GROUP_HEAL] ✨ Party heals +11 (group).
+[HP_DELTA]   ❤️ Brann HP 47→58.
+[HP_DELTA]   ❤️ Quen HP 40→40.
+[HP_DELTA]   ❤️ Ravel HP 34→45.
+[HP_DELTA]   ❤️ Sel HP 44→44.
+[GROUP_MP] 🔷 Party restores MP +6 (group).
+[MP_DELTA]   🔷 Brann MP 5→5.
+[MP_DELTA]   🔷 Quen MP 30→30.
+[MP_DELTA]   🔷 Ravel MP 11→11.
+[MP_DELTA]   🔷 Sel MP 23→29.
+[BEAT_SOURCE] 🧭 Encounter: a traveling merchant appears.
+[MERCHANT_SKIP] 🧿 Merchant: party browses, can't afford Brass Sword (1807g).
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_HIT] ⚔ Wolfpack clash: Ravel takes 15 (45→30).
+[COMBAT_EXCHANGE] ⚔ Wolfpack clash: Brann takes 21 (58→37). ✨ Quen hits for 49.
+[HEAL] 🩹 Healer restores Brann +8 HP (37→45).
+[LOOT] 💰 Loot: +12 gold.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: abandoned outpost. The party regroups.
+[GROUP_HEAL] ✨ Party heals +10 (group).
+[HP_DELTA]   ❤️ Brann HP 45→55.
+[HP_DELTA]   ❤️ Quen HP 40→40.
+[HP_DELTA]   ❤️ Ravel HP 30→40.
+[HP_DELTA]   ❤️ Sel HP 44→44.
+[GROUP_MP] 🔷 Party restores MP +8 (group).
+[MP_DELTA]   🔷 Brann MP 5→5.
+[MP_DELTA]   🔷 Quen MP 30→30.
+[MP_DELTA]   🔷 Ravel MP 11→11.
+[MP_DELTA]   🔷 Sel MP 26→29.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_EXCHANGE] ⚔ Cultists clash: Brann takes 15 (55→40). ✨ Quen hits for 37.
+[HEAL] 🩹 Healer restores Brann +16 HP (40→56).
+[LOOT] 💰 Loot: +13 gold.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: abandoned outpost. The party regroups.
+[GROUP_HEAL] ✨ Party heals +10 (group).
+[HP_DELTA]   ❤️ Brann HP 56→66.
+[HP_DELTA]   ❤️ Quen HP 40→40.
+[HP_DELTA]   ❤️ Ravel HP 40→45.
+[HP_DELTA]   ❤️ Sel HP 44→44.
+[GROUP_MP] 🔷 Party restores MP +4 (group).
+[MP_DELTA]   🔷 Brann MP 5→5.
+[MP_DELTA]   🔷 Quen MP 30→30.
+[MP_DELTA]   🔷 Ravel MP 11→11.
+[MP_DELTA]   🔷 Sel MP 26→29.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_EXCHANGE] ⚔ Skeletons clash: Brann takes 21 (66→45). ✨ Quen hits for 76 (CRIT!).
+[HEAL] 🩹 Healer restores Brann +16 HP (45→61).
+[LOOT] 💰 Loot: +8 gold.
+[BEAT_SOURCE] 🧭 Exploration find: the party spots something ahead.
+[CHEST_OPEN] 🧰 Chest found.
+[CHEST_TRAP] 🧰 Chest: it's a trap! Poison needles.
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~6).
+[SPLASH_HIT] ☠ SPLASH → Brann takes 0 (61→61).
+[SPLASH_HIT] ☠ SPLASH → Quen takes 3 (40→37).
+[SPLASH_HIT] ☠ SPLASH → Ravel takes 3 (45→42).
+[SPLASH_HIT] ☠ SPLASH → Sel takes 3 (44→41).
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_HIT] ⚔ Wolfpack clash: Sel takes 15 (41→26).
+[COMBAT_EXCHANGE] ⚔ Wolfpack clash: Brann takes 33 (61→28). ✨ Quen hits for 59.
+[HEAL] 🩹 Healer restores Brann +14 HP (28→42).
+[LOOT] 💰 Loot: +11 gold.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: healing shrine. The party regroups.
+[GROUP_HEAL] ✨ Party heals +12 (group).
+[HP_DELTA]   ❤️ Brann HP 42→54.
+[HP_DELTA]   ❤️ Quen HP 37→40.
+[HP_DELTA]   ❤️ Ravel HP 42→45.
+[HP_DELTA]   ❤️ Sel HP 26→38.
+[GROUP_MP] 🔷 Party restores MP +9 (group).
+[MP_DELTA]   🔷 Brann MP 5→5.
+[MP_DELTA]   🔷 Quen MP 30→30.
+[MP_DELTA]   🔷 Ravel MP 11→11.
+[MP_DELTA]   🔷 Sel MP 23→29.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_HIT] ⚔ Knights clash: Quen takes 13 (40→27).
+[COMBAT_EXCHANGE] ⚔ Knights clash: Brann takes 15 (54→39). ✨ Quen hits for 44.
+[HEAL] 🩹 Healer restores Brann +11 HP (39→50).
+[LOOT] 💰 Loot: +11 gold.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: quiet corridor. The party regroups.
+[GROUP_HEAL] ✨ Party heals +10 (group).
+[HP_DELTA]   ❤️ Brann HP 50→60.
+[HP_DELTA]   ❤️ Quen HP 27→37.
+[HP_DELTA]   ❤️ Ravel HP 45→45.
+[HP_DELTA]   ❤️ Sel HP 38→44.
+[GROUP_MP] 🔷 Party restores MP +9 (group).
+[MP_DELTA]   🔷 Brann MP 5→5.
+[MP_DELTA]   🔷 Quen MP 30→30.
+[MP_DELTA]   🔷 Ravel MP 11→11.
+[MP_DELTA]   🔷 Sel MP 26→29.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_HIT] ⚔ Gargoyles clash: Sel takes 18 (44→26).
+[COMBAT_EXCHANGE] ⚔ Gargoyles clash: Brann takes 27 (60→33). ✨ Quen hits for 56.
+[HEAL] 🩹 Healer restores Brann +13 HP (33→46).
+[LOOT] 💰 Loot: +9 gold.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: healing shrine. The party regroups.
+[GROUP_HEAL] ✨ Party heals +10 (group).
+[HP_DELTA]   ❤️ Brann HP 46→56.
+[HP_DELTA]   ❤️ Quen HP 37→40.
+[HP_DELTA]   ❤️ Ravel HP 45→45.
+[HP_DELTA]   ❤️ Sel HP 26→36.
+[GROUP_MP] 🔷 Party restores MP +4 (group).
+[MP_DELTA]   🔷 Brann MP 5→5.
+[MP_DELTA]   🔷 Quen MP 30→30.
+[MP_DELTA]   🔷 Ravel MP 11→11.
+[MP_DELTA]   🔷 Sel MP 26→29.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_EXCHANGE] ⚔ Knights clash: Brann takes 16 (56→40). ✨ Quen hits for 74 (CRIT!).
+[HEAL] 🩹 Healer restores Brann +16 HP (40→56).
+[LOOT] 💰 Loot: +11 gold.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: abandoned outpost. The party regroups.
+[GROUP_HEAL] ✨ Party heals +13 (group).
+[HP_DELTA]   ❤️ Brann HP 56→69.
+[HP_DELTA]   ❤️ Quen HP 40→40.
+[HP_DELTA]   ❤️ Ravel HP 45→45.
+[HP_DELTA]   ❤️ Sel HP 36→44.
+[GROUP_MP] 🔷 Party restores MP +6 (group).
+[MP_DELTA]   🔷 Brann MP 5→5.
+[MP_DELTA]   🔷 Quen MP 30→30.
+[MP_DELTA]   🔷 Ravel MP 11→11.
+[MP_DELTA]   🔷 Sel MP 26→29.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_EXCHANGE] ⚔ Knights clash: Brann takes 25 (69→44). ✨ Quen hits for 50.
+[HEAL] 🩹 Healer restores Brann +8 HP (44→52).
+[LOOT] 💰 Loot: +10 gold.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: abandoned outpost. The party regroups.
+[GROUP_HEAL] ✨ Party heals +12 (group).
+[HP_DELTA]   ❤️ Brann HP 52→64.
+[HP_DELTA]   ❤️ Quen HP 40→40.
+[HP_DELTA]   ❤️ Ravel HP 45→45.
+[HP_DELTA]   ❤️ Sel HP 44→44.
+[GROUP_MP] 🔷 Party restores MP +9 (group).
+[MP_DELTA]   🔷 Brann MP 5→5.
+[MP_DELTA]   🔷 Quen MP 30→30.
+[MP_DELTA]   🔷 Ravel MP 11→11.
+[MP_DELTA]   🔷 Sel MP 26→29.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_EXCHANGE] ⚔ Gargoyles clash: Brann takes 31 (64→33). ✨ Quen hits for 52.
+[HEAL] 🩹 Healer restores Brann +14 HP (33→47).
+[LOOT] 💰 Loot: +14 gold.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_EXCHANGE] ⚔ Knights clash: Brann takes 18 (47→29). ✨ Quen hits for 42.
+[HEAL] 🩹 Healer restores Brann +14 HP (29→43).
+[LOOT] 💰 Loot: +14 gold.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: quiet corridor. The party regroups.
+[GROUP_HEAL] ✨ Party heals +13 (group).
+[HP_DELTA]   ❤️ Brann HP 43→56.
+[HP_DELTA]   ❤️ Quen HP 40→40.
+[HP_DELTA]   ❤️ Ravel HP 45→45.
+[HP_DELTA]   ❤️ Sel HP 44→44.
+[GROUP_MP] 🔷 Party restores MP +10 (group).
+[MP_DELTA]   🔷 Brann MP 5→5.
+[MP_DELTA]   🔷 Quen MP 30→30.
+[MP_DELTA]   🔷 Ravel MP 11→11.
+[MP_DELTA]   🔷 Sel MP 23→29.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_HIT] ⚔ Gargoyles clash: Quen takes 13 (40→27).
+[COMBAT_EXCHANGE] ⚔ Gargoyles clash: Brann takes 20 (56→36). ✨ Quen hits for 37.
+[HEAL] 🩹 Healer restores Brann +14 HP (36→50).
+[LOOT] 💰 Loot: +15 gold.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: campfire. The party regroups.
+[GROUP_HEAL] ✨ Party heals +8 (group).
+[HP_DELTA]   ❤️ Brann HP 50→58.
+[HP_DELTA]   ❤️ Quen HP 27→35.
+[HP_DELTA]   ❤️ Ravel HP 45→45.
+[HP_DELTA]   ❤️ Sel HP 44→44.
+[GROUP_MP] 🔷 Party restores MP +7 (group).
+[MP_DELTA]   🔷 Brann MP 5→5.
+[MP_DELTA]   🔷 Quen MP 30→30.
+[MP_DELTA]   🔷 Ravel MP 11→11.
+[MP_DELTA]   🔷 Sel MP 26→29.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_EXCHANGE] ⚔ Sentinel Orbs clash: Brann takes 29 (58→29). ✨ Quen hits for 52.
+[HEAL] 🩹 Healer restores Brann +10 HP (29→39).
+[LOOT] 💰 Loot: +12 gold.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: abandoned outpost. The party regroups.
+[GROUP_HEAL] ✨ Party heals +14 (group).
+[HP_DELTA]   ❤️ Brann HP 39→53.
+[HP_DELTA]   ❤️ Quen HP 35→40.
+[HP_DELTA]   ❤️ Ravel HP 45→45.
+[HP_DELTA]   ❤️ Sel HP 44→44.
+[GROUP_MP] 🔷 Party restores MP +4 (group).
+[MP_DELTA]   🔷 Brann MP 5→5.
+[MP_DELTA]   🔷 Quen MP 30→30.
+[MP_DELTA]   🔷 Ravel MP 11→11.
+[MP_DELTA]   🔷 Sel MP 26→29.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_HIT] ⚔ Knights clash: Quen takes 20 (40→20).
+[COMBAT_EXCHANGE] ⚔ Knights clash: Brann takes 35 (53→18). ✨ Quen hits for 68.
+[HEAL] 🩹 Healer restores Brann +11 HP (18→29).
+[LOOT] 💰 Loot: +13 gold.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: campfire. The party regroups.
+[GROUP_HEAL] ✨ Party heals +10 (group).
+[HP_DELTA]   ❤️ Brann HP 29→39.
+[HP_DELTA]   ❤️ Quen HP 20→30.
+[HP_DELTA]   ❤️ Ravel HP 45→45.
+[HP_DELTA]   ❤️ Sel HP 44→44.
+[GROUP_MP] 🔷 Party restores MP +10 (group).
+[MP_DELTA]   🔷 Brann MP 5→5.
+[MP_DELTA]   🔷 Quen MP 30→30.
+[MP_DELTA]   🔷 Ravel MP 11→11.
+[MP_DELTA]   🔷 Sel MP 26→29.
+[BEAT_SOURCE] 🧭 Exploration find: the party spots something ahead.
+[CHEST_OPEN] 🧰 Chest found.
+[CHEST_ITEM] 🧰 Chest: found Shadow Vial.
+[ITEM_GAIN] 🧪 Consumable acquired: Shadow Vial.
+[GROUP_HEAL] ✨ Shadow Vial heals +24 (group).
+[HP_DELTA]   ❤️ Brann HP 39→63.
+[HP_DELTA]   ❤️ Quen HP 30→40.
+[HP_DELTA]   ❤️ Ravel HP 45→45.
+[HP_DELTA]   ❤️ Sel HP 44→44.
+[GROUP_MP] 🔷 Shadow Vial restores MP +11 (group).
+[MP_DELTA]   🔷 Brann MP 5→5.
+[MP_DELTA]   🔷 Quen MP 30→30.
+[MP_DELTA]   🔷 Ravel MP 11→11.
+[MP_DELTA]   🔷 Sel MP 29→29.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_EXCHANGE] ⚔ Gargoyles clash: Brann takes 23 (63→40). ✨ Quen hits for 50.
+[HEAL] 🩹 Healer restores Brann +15 HP (40→55).
+[LOOT] 💰 Loot: +10 gold.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: campfire. The party regroups.
+[GROUP_HEAL] ✨ Party heals +10 (group).
+[HP_DELTA]   ❤️ Brann HP 55→65.
+[HP_DELTA]   ❤️ Quen HP 40→40.
+[HP_DELTA]   ❤️ Ravel HP 45→45.
+[HP_DELTA]   ❤️ Sel HP 44→44.
+[GROUP_MP] 🔷 Party restores MP +7 (group).
+[MP_DELTA]   🔷 Brann MP 5→5.
+[MP_DELTA]   🔷 Quen MP 30→30.
+[MP_DELTA]   🔷 Ravel MP 11→11.
+[MP_DELTA]   🔷 Sel MP 26→29.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_EXCHANGE] ⚔ Gargoyles clash: Brann takes 28 (65→37). ✨ Quen hits for 59.
+[HEAL] 🩹 Healer restores Brann +9 HP (37→46).
+[LOOT] 💰 Loot: +12 gold.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: campfire. The party regroups.
+[GROUP_HEAL] ✨ Party heals +12 (group).
+[HP_DELTA]   ❤️ Brann HP 46→58.
+[HP_DELTA]   ❤️ Quen HP 40→40.
+[HP_DELTA]   ❤️ Ravel HP 45→45.
+[HP_DELTA]   ❤️ Sel HP 44→44.
+[GROUP_MP] 🔷 Party restores MP +9 (group).
+[MP_DELTA]   🔷 Brann MP 5→5.
+[MP_DELTA]   🔷 Quen MP 30→30.
+[MP_DELTA]   🔷 Ravel MP 11→11.
+[MP_DELTA]   🔷 Sel MP 26→29.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_HIT] ⚔ Knights clash: Quen takes 11 (40→29).
+[COMBAT_EXCHANGE] ⚔ Knights clash: Brann takes 24 (58→34). ✨ Quen hits for 98 (CRIT!).
+[HEAL] 🩹 Healer restores Brann +13 HP (34→47).
+[LOOT] 💰 Loot: +11 gold.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[COMBAT_HIT] ⚔ Gargoyles clash: Quen takes 18 (29→11).
+[COMBAT_EXCHANGE] ⚔ Gargoyles clash: Brann takes 23 (47→24). ✨ Quen hits for 48.
+[HEAL] 🩹 Healer restores Quen +13 HP (11→24).
+[LOOT] 💰 Loot: +12 gold.
+[BEAT_SOURCE] 🧭 Ominous presence: the air shifts. Something huge is near.
+[BOSS_SPAWN] 👑 BOSS: Iron Warden emerges!
+[BOSS_SMASH] ⚔ Iron Warden smashes: Brann takes 45 (24→-21).
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~6).
+[SPLASH_HIT] ☠ SPLASH → Brann takes 0 (-21→-21).
+[SPLASH_HIT] ☠ SPLASH → Quen takes 3 (24→21).
+[SPLASH_HIT] ☠ SPLASH → Ravel takes 4 (45→41).
+[SPLASH_HIT] ☠ SPLASH → Sel takes 2 (44→42).
+[BRACE] 🛡 Brann braces and holds the line.
+[THIEF_HIT] 🗡 Ravel slips in: 16 damage.
+[MAGE_CRIT] ✨ Quen unleashes a blast: 114 damage (CRIT!).
+[HEAL] 🩹 Healer restores Quen +15 HP (21→36).
+[KNOCKDOWN] ⚠ Brann collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Brann gains a wound (1). DEF now 6.
+[NEAR_DEATH] 🚨 Near-death: Brann is under 20% HP!
+[FINISHER] 💥 FINISHER → Quen's blast breaks the Iron Warden! (114)
+[BOSS_DEFEATED] 🏆 Boss defeated! +60 gold.
+[TROPHY_DROP] 🎁 Trophy drop: Marble Charm.
+[EQUIP] 📦 EQUIP → Brann equips (trinket): Marble Charm.
+[STAT_ATK] 🟩 ATK 8→11.
+[STAT_DEF] 🟦 DEF 6→9.
+[STAT_HP] ❤️ MAX HP 70→86.
+📺 Episode ends. Gold=978 | Chests=7 | Merchants=5 | Rares=0 | Near-deaths=1 | Boss=DEFEATED
+📊 Party avg HP%: 69%
+###game_end###254

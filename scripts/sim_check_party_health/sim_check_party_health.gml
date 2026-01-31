@@ -5,7 +5,8 @@ function sim_check_party_health(sim) {
         if (p.hp <= 0) {
             p.hp = 1;
             p.wounds += 1;
-            p.def = max(0, p.base_def - p.wounds);
+            sim_recalc_derived(p);
+
             sim.stats.knockdowns += 1;
 
             sim_log_tag(sim, "KNOCKDOWN",

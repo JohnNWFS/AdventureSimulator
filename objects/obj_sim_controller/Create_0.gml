@@ -7,7 +7,7 @@ ui_max_lines = 26;
 sim = {};                   // will hold run state + party
 sim_run_new(sim, episode_beats_target); // new seed, new run
 
-loot_debug_dump(sim, 20, { source: "chest", zone: "Dungeon", tier_target: 2 });
-loot_debug_dump(sim, 10, { source: "merchant", zone: "Town", tier_target: 4 });
-loot_debug_dump(sim, 10, { source: "boss", zone: "Castle", tier_target: 7 });
+//loot_debug_dump(sim, 20, { source: "chest", zone: "Dungeon", tier_target: 2 });
+//loot_debug_dump(sim, 10, { source: "merchant", zone: "Town", tier_target: 4 });
+//loot_debug_dump(sim, 10, { source: "boss", zone: "Castle", tier_target: 7 });
 

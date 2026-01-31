@@ -8,10 +8,20 @@ function sim_run_step(sim) {
     }
 
     // Zone shifts (cheap “season” feel)
-    if (sim.beat == 0) sim.zone = "Dungeon";
-    if (sim.beat == 35) sim.zone = "Wilderness";
-    if (sim.beat == 70) sim.zone = "Town";
-    if (sim.beat == 85) sim.zone = "Castle";
+	var old_zone = sim.zone;
+
+	if (sim.beat == 0) sim.zone = "Dungeon";
+	if (sim.beat == 35) sim.zone = "Wilderness";
+	if (sim.beat == 70) sim.zone = "Town";
+	if (sim.beat == 85) sim.zone = "Castle";
+
+	// Reset per-zone director counters on zone change
+	if (sim.zone != old_zone) {
+	    sim.director.merchants_this_zone = 0;
+	    sim.director.merchant_cd = 0;
+	    sim.director.chest_cd = 0;
+	}
+
 
     // Difficulty ramps
     if (sim.beat > 0 && sim.beat % 20 == 0) sim.difficulty += 1;

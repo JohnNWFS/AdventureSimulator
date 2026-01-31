@@ -66,7 +66,8 @@ function loot_pick_affixes(sim, item_type, rarity, zone) {
         case "consumable":
             // Always use flavor adjectives (ignore rarity_prefix)
             material = "";
-            prefix = choose("Soothing", "Bitter", "Ember", "Clear", "Holy", "Shadow", "Swift", "Ironhide");
+			prefix = choose("Soothing", "Bitter", "Ember", "Clear", "Holy", "Shadow", "Fortifying");
+
             anim = "drink";
 
             // Optional fx for higher rarities (keeps "rare" feel without "Keen Vial")

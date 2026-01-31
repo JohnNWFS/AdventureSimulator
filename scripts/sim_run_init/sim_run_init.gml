@@ -29,11 +29,46 @@ function sim_run_init(sim, seed, beats_target) {
     sim.party[2] = sim_make_party_member("Thief",  sim_name_pick(sim, "thief"),  45, 10, 10, 3);
     sim.party[3] = sim_make_party_member("Healer", sim_name_pick(sim, "healer"), 42, 28,  6, 3);
 
-    // Starter items (strings for now, but this becomes structs later)
-	sim.party[0].armor = "Iron Shield";
-	sim.party[1].weapon = "Charcoal Wand";
-	sim.party[2].trinket = "Lockpick Kit";
-	sim.party[3].trinket = "Prayer Beads";
+	// Starter items (struct-based; modest stats)
+	var starter_armor = loot_item_make(
+	    "starter_iron_shield", "Iron Shield", "armor", 1, "common", 60,
+	    { atk: 0, def: 1, hp: 0, mp: 0 },
+	    { heal: 0, mp: 0, wound_heal: 0 },
+	    ["starter"], "", "equip_body", false
+	);
+
+	var starter_wand = loot_item_make(
+	    "starter_charcoal_wand", "Charcoal Wand", "weapon", 1, "common", 60,
+	    { atk: 1, def: 0, hp: 0, mp: 0 },
+	    { heal: 0, mp: 0, wound_heal: 0 },
+	    ["starter"], "", "equip_hand", false
+	);
+
+	var starter_lockpick = loot_item_make(
+	    "starter_lockpick_kit", "Lockpick Kit", "trinket", 1, "common", 60,
+	    { atk: 0, def: 0, hp: 0, mp: 1 },
+	    { heal: 0, mp: 0, wound_heal: 0 },
+	    ["starter"], "", "equip_trinket", false
+	);
+
+	var starter_beads = loot_item_make(
+	    "starter_prayer_beads", "Prayer Beads", "trinket", 1, "common", 60,
+	    { atk: 0, def: 0, hp: 2, mp: 1 },
+	    { heal: 0, mp: 0, wound_heal: 0 },
+	    ["starter"], "", "equip_trinket", false
+	);
+
+	// Equip starter gear
+	sim_set_equipped_item(sim.party[0], "armor", starter_armor);
+	sim_set_equipped_item(sim.party[1], "weapon", starter_wand);
+	sim_set_equipped_item(sim.party[2], "trinket", starter_lockpick);
+	sim_set_equipped_item(sim.party[3], "trinket", starter_beads);
+
+	// Recalc derived stats after equipping
+	for (var si = 0; si < array_length(sim.party); si++) {
+	    sim_recalc_derived(sim.party[si]);
+	}
+
 
 
     // Simple per-run counters for scoring/debug

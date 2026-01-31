@@ -26,9 +26,9 @@ for (var i = 0; i < array_length(sim.party); i++) {
     "  MP " + string(p.mp) + "/" + string(p.max_mp) +
     "  ATK " + string(p.atk) + " DEF " + string(p.def) +
     "  Wounds " + string(p.wounds) +
-    "  W:" + (p.weapon == "" ? "-" : p.weapon) +
-    "  A:" + (p.armor == "" ? "-" : p.armor) +
-    "  T:" + (p.trinket == "" ? "-" : p.trinket);
+	"  W:" + sim_item_name(p.equip.weapon) +
+	"  A:" + sim_item_name(p.equip.armor) +
+	"  T:" + sim_item_name(p.equip.trinket);
 
     draw_text(gui_x, gui_y, line);
     gui_y += 18;

@@ -3,3 +3,4 @@ for /r %f in (*.gml) do (
   echo ===== FILE: %f =====>>all_scripts_combined.gml
   type "%f">>all_scripts_combined.gml
 )
+pause

@@ -71,13 +71,15 @@ function sim_resolve_boss(sim) {
         var gold = sim_rand_range(sim, 50, 90);
         sim.gold_total += gold;
 
-        var trophy = choose("Warden's Sigil", "Ogre King's Tooth", "Crown Shard");
 
         sim_log_tag(sim, "BOSS_DEFEATED", "🏆 Boss defeated! +" + string(gold) + " gold.");
-        sim_log_tag(sim, "TROPHY_DROP",  "🎁 Trophy drop: " + trophy + ".");
 
         // Equip after drop (sim_give_item logs EQUIP + STAT deltas)
-        sim_give_item(sim, trophy);
+		var trophy = loot_generate_item(sim, { source: "boss", zone: sim.zone, tier_target: 7 });
+
+		sim_log_tag(sim, "TROPHY_DROP",  "🎁 Trophy drop: " + trophy.name + ".");
+		sim_give_item(sim, trophy);
+
 
         sim.tension = clamp(sim.tension + 30, 0, 100);
 

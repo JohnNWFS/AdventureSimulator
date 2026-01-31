@@ -6,6 +6,11 @@ ui_max_lines = 26;
 
 sim = {};                   // will hold run state + party
 sim_run_new(sim, episode_beats_target); // new seed, new run
+
+loot_debug_dump(sim, 20, { source: "chest", zone: "Dungeon", tier_target: 2 });
+loot_debug_dump(sim, 10, { source: "merchant", zone: "Town", tier_target: 4 });
+loot_debug_dump(sim, 10, { source: "boss", zone: "Castle", tier_target: 7 });
+
 /// obj_sim_controller :: Draw GUI
 draw_set_font(-1);
 draw_set_halign(fa_left);
@@ -34,9 +39,9 @@ for (var i = 0; i < array_length(sim.party); i++) {
     "  MP " + string(p.mp) + "/" + string(p.max_mp) +
     "  ATK " + string(p.atk) + " DEF " + string(p.def) +
     "  Wounds " + string(p.wounds) +
-    "  W:" + (p.weapon == "" ? "-" : p.weapon) +
-    "  A:" + (p.armor == "" ? "-" : p.armor) +
-    "  T:" + (p.trinket == "" ? "-" : p.trinket);
+	"  W:" + sim_item_name(p.equip.weapon) +
+	"  A:" + sim_item_name(p.equip.armor) +
+	"  T:" + sim_item_name(p.equip.trinket);
 
     draw_text(gui_x, gui_y, line);
     gui_y += 18;
@@ -82,27 +87,483 @@ if (auto_run && !sim.finished) {
 }
 
 // If finished, do nothing until rerun/new seed.
-function sim_apply_party_damage(sim, amount) {
-    sim_log_tag(sim, "SPLASH_BEGIN", "â˜  Splash damage begins (base ~" + string(amount) + ").");
+function loot_build_name(prefix, material, base, suffix) {
+    var name = "";
+
+    if (prefix != "") name += prefix + " ";
+    if (material != "") name += material + " ";
+    name += base;
+    if (suffix != "") name += " " + suffix;
+
+    // Clean double spaces just in case
+    name = string_replace(name, "  ", " ");
+    name = string_replace(name, "  ", " ");
+    return name;
+}
+function loot_compute_value(sim, item_type, tier, rarity, stats, use) {
+    var base = tier * 25;
+
+    var rarity_bonus = 0;
+    switch (rarity) {
+        case "uncommon":  rarity_bonus = 50; break;
+        case "rare":      rarity_bonus = 140; break;
+        case "epic":      rarity_bonus = 350; break;
+        case "legendary": rarity_bonus = 900; break;
+        default:          rarity_bonus = 0; break;
+    }
+
+    var stat_value = 0;
+    stat_value += stats.atk * 60;
+    stat_value += stats.def * 55;
+    stat_value += stats.hp * 3;
+    stat_value += stats.mp * 4;
+
+    var use_value = 0;
+    use_value += use.heal * 3;
+    use_value += use.mp * 4;
+    use_value += use.wound_heal * 300;
+
+    // Treasure should feel like "gold payload" and be a compelling event.
+    // Make it scale with tier and rarity, with a solid random chunk.
+    if (item_type == "treasure") {
+        var chunk = sim_rand_range(sim, 40, 120) + (tier * 20);
+        var rarity_mul = 1;
+        switch (rarity) {
+            case "uncommon":  rarity_mul = 1.2; break;
+            case "rare":      rarity_mul = 1.6; break;
+            case "epic":      rarity_mul = 2.2; break;
+            case "legendary": rarity_mul = 3.0; break;
+            default:          rarity_mul = 1.0; break;
+        }
+        return floor((chunk + rarity_bonus) * rarity_mul);
+    }
+
+    return base + rarity_bonus + stat_value + use_value;
+}
+function loot_debug_dump(sim, count, context) {
+    // context: {source, zone, tier_target}
+    for (var i = 0; i < count; i++) {
+        var item = loot_generate_item(sim, context);
+
+        var s = item.stats;
+        var u = item.use;
+
+        // One compact line for scanning/tuning
+        sim_log_tag(sim, "ITEM_GEN",
+            "ðŸŽ " + item.name +
+            " | type=" + item.type +
+            " tier=" + string(item.tier) +
+            " rarity=" + item.rarity +
+            " value=" + string(item.value) +
+            " | ATK+" + string(s.atk) +
+            " DEF+" + string(s.def) +
+            " HP+" + string(s.hp) +
+            " MP+" + string(s.mp) +
+            " | use(heal=" + string(u.heal) +
+            " mp=" + string(u.mp) +
+            " wound=" + string(u.wound_heal) + ")" +
+            (item.is_named ? " | NAMED!" : "")
+        );
+    }
+}
+function loot_generate_item(sim, context) {
+    // context: {source, zone, tier_target}
+    var zone = context.zone;
+    var tier_target = context.tier_target;
+
+    // Named jackpot?
+    if (loot_roll_named(sim, context)) {
+        var named = loot_named_table_init();
+        var pick = named[sim_rand_range(sim, 0, array_length(named) - 1)];
+        return pick; // already is_named = true
+    }
+
+    // Procedural item
+    var item_type = loot_pick_item_type(sim, context);
+    var rarity = loot_roll_rarity(sim, context);
+
+    // Tier near target
+    var tier = clamp(tier_target + sim_rand_range(sim, -1, 1), 1, 10);
+
+    // Name parts
+    var base = "Trinket";
+    switch (item_type) {
+        case "weapon": base = choose("Sword", "Axe", "Dagger", "Wand"); break;
+        case "armor": base = choose("Helm", "Shield", "Cuirass", "Wraps"); break;
+        case "trinket": base = choose("Ring", "Charm", "Band", "Sigil"); break;
+        case "consumable": base = choose("Tonic", "Vial", "Draught"); break;
+        case "treasure": base = choose("Gem", "Idol", "Relic", "Coin Cache"); break;
+    }
+
+    var aff = loot_pick_affixes(sim, item_type, rarity, zone);
+    var name = loot_build_name(aff.prefix, aff.material, base, aff.suffix);
+
+    // Stats + use
+    var rolled = loot_roll_stats(sim, item_type, tier, rarity);
+    var stats = rolled.stats;
+    var use = rolled.use;
+
+    // Value
+	var value = loot_compute_value(sim, item_type, tier, rarity, stats, use);
+
+
+    // ID (simple, deterministic-ish)
+    var id1 = "gen_" + string(item_type) + "_" + string(tier) + "_" + string(sim_rand_range(sim, 1000, 9999));
+
+    // Tags
+    var tags = aff.tags;
+    // Add one tag for rarity (helps cinematics)
+    tags[array_length(tags)] = rarity;
+
+    return loot_item_make(
+        id1, name, item_type, tier, rarity, value,
+        stats, use, tags,
+        aff.fx, aff.anim, false
+    );
+}
+function loot_item_make(id, name, type, tier, rarity, value, stats, use, tags, fx, anim, is_named) {
+    // Canonical item struct: procedural and named items share this exact format.
+    return {
+        id: id,
+        name: name,
+        type: type,           // "weapon"|"armor"|"trinket"|"consumable"|"treasure"
+        tier: tier,           // int
+        rarity: rarity,       // "common"|"uncommon"|"rare"|"epic"|"legendary"
+        value: value,         // gold value; also your default "better-ness"
+
+        stats: stats,         // {atk, def, hp, mp}
+        use: use,             // {heal, mp, wound_heal} for consumables (0s otherwise)
+
+        tags: tags,           // array of strings
+        fx: fx,               // e.g., "spark_blue", "holy_glow"
+        anim: anim,           // e.g., "equip_hand", "equip_body", "drink", "read"
+
+        is_named: is_named    // bool (true when from named table jackpot)
+    };
+}
+function loot_item_score(item) {
+    // Keep this brutally simple for cinematic-first.
+    // "Better" == higher value.
+    return item.value;
+}
+function loot_named_table_init() {
+    // Small starter set. We'll expand later.
+    // NOTE: these are examples; stats/value are intentionally dramatic but still simple.
+
+    var items = [];
+
+    items[array_length(items)] = loot_item_make(
+        "named_one_ring", "One Ring", "trinket", 10, "legendary", 5000,
+        { atk: 2, def: 2, hp: 20, mp: 20 },
+        { heal: 0, mp: 0, wound_heal: 0 },
+        ["named", "cursed", "ancient"], "shadow_glow", "equip_trinket", true
+    );
+
+    items[array_length(items)] = loot_item_make(
+        "named_excalibur", "Excalibur", "weapon", 10, "legendary", 4200,
+        { atk: 10, def: 0, hp: 0, mp: 0 },
+        { heal: 0, mp: 0, wound_heal: 0 },
+        ["named", "holy", "blade"], "holy_glow", "equip_hand", true
+    );
+
+    items[array_length(items)] = loot_item_make(
+        "named_witches_brew", "Shakespearean Witch's Brew", "consumable", 8, "epic", 1200,
+        { atk: 0, def: 0, hp: 0, mp: 0 },
+        { heal: 40, mp: 25, wound_heal: 1 },
+        ["named", "alchemy"], "green_smoke", "drink", true
+    );
+
+    items[array_length(items)] = loot_item_make(
+        "named_warden_sigil", "Warden's Sigil", "trinket", 7, "epic", 950,
+        { atk: 0, def: 5, hp: 0, mp: 0 },
+        { heal: 0, mp: 0, wound_heal: 0 },
+        ["named", "castle"], "steel_spark", "equip_trinket", true
+    );
+
+    items[array_length(items)] = loot_item_make(
+        "named_ember_circlet", "Ember Circlet", "trinket", 6, "rare", 650,
+        { atk: 2, def: 1, hp: 0, mp: 8 },
+        { heal: 0, mp: 0, wound_heal: 0 },
+        ["named", "fire"], "ember_glow", "equip_trinket", true
+    );
+
+    return items;
+}
+function loot_pick_affixes(sim, item_type, rarity, zone) {
+    var prefix = "";
+    var suffix = "";
+    var material = "";
+    var fx = "";
+    var anim = "equip_trinket";
+    var tags = [];
+
+    // Zone tag
+    switch (zone) {
+        case "Dungeon": tags = ["dungeon"]; break;
+        case "Wilderness": tags = ["wild"]; break;
+        case "Town": tags = ["civil"]; break;
+        case "Castle": tags = ["castle"]; break;
+        default: tags = []; break;
+    }
+
+    // Rarity flavor + fx (ONLY for gear/trinkets; NOT for consumables/treasure)
+    var rarity_prefix = "";
+    switch (rarity) {
+        case "uncommon":  rarity_prefix = choose("Fine", "Sturdy", "Keen"); break;
+        case "rare":      rarity_prefix = choose("Runed", "Blessed", "Shadow"); fx = choose("spark_blue", "holy_glow", "shadow_glow"); break;
+        case "epic":      rarity_prefix = choose("Warden's", "Ancient", "Sovereign"); fx = choose("steel_spark", "ember_glow", "holy_glow"); break;
+        case "legendary": rarity_prefix = choose("Mythic", "Unbroken", "Crowned"); fx = choose("holy_glow", "shadow_glow"); break;
+        default:          rarity_prefix = ""; break;
+    }
+
+    switch (item_type) {
+
+        case "weapon":
+            prefix = rarity_prefix;
+            switch (zone) {
+                case "Dungeon":    material = choose("Iron", "Bone", "Slate"); break;
+                case "Wilderness": material = choose("Bone", "Oak", "Flint"); break;
+                case "Town":       material = choose("Steel", "Brass", "Iron"); break;
+                case "Castle":     material = choose("Silver", "Iron", "Steel"); break;
+                default:           material = choose("Iron", "Steel"); break;
+            }
+            anim = "equip_hand";
+            break;
+
+        case "armor":
+            prefix = rarity_prefix;
+            switch (zone) {
+                case "Dungeon":    material = choose("Iron", "Hide", "Bone"); break;
+                case "Wilderness": material = choose("Hide", "Leather", "Bone"); break;
+                case "Town":       material = choose("Steel", "Leather", "Iron"); break;
+                case "Castle":     material = choose("Iron", "Steel", "Silver"); break;
+                default:           material = choose("Leather", "Iron"); break;
+            }
+            anim = "equip_body";
+            break;
+
+        case "trinket":
+            prefix = rarity_prefix;
+            switch (zone) {
+                case "Dungeon":    material = choose("Obsidian", "Slate", "Onyx"); break;
+                case "Wilderness": material = choose("Jade", "Bone", "Amber"); break;
+                case "Town":       material = choose("Silver", "Brass", "Steel"); break;
+                case "Castle":     material = choose("Silver", "Gold", "Marble"); break;
+                default:           material = choose("Silver", "Brass"); break;
+            }
+            anim = "equip_trinket";
+            break;
+
+        case "consumable":
+            // Always use flavor adjectives (ignore rarity_prefix)
+            material = "";
+			prefix = choose("Soothing", "Bitter", "Ember", "Clear", "Holy", "Shadow", "Fortifying");
+
+            anim = "drink";
+
+            // Optional fx for higher rarities (keeps "rare" feel without "Keen Vial")
+            if (rarity == "rare" || rarity == "epic" || rarity == "legendary") {
+                fx = choose("spark_blue", "holy_glow", "ember_glow", "shadow_glow");
+            }
+            break;
+
+        case "treasure":
+            // Treasure reads like a descriptor (ignore rarity_prefix)
+            material = "";
+            prefix = choose("Gilded", "Ancient", "Engraved", "Jeweled", "Forgotten", "Royal", "Sealed");
+            anim = "pickup";
+
+            if (rarity == "rare" || rarity == "epic" || rarity == "legendary") {
+                fx = choose("spark_blue", "ember_glow", "holy_glow");
+            }
+            break;
+
+        default:
+            material = "";
+            prefix = "";
+            anim = "pickup";
+            break;
+    }
+
+    return {
+        prefix: prefix,
+        suffix: suffix,
+        material: material,
+        tags: tags,
+        fx: fx,
+        anim: anim
+    };
+}
+function loot_pick_item_type(sim, context) {
+    // context: {source, zone, tier_target}
+    // Weights tuned for "cinematic variety" not realism.
+
+    var source = context.source;
+
+    if (source == "chest") {
+        return loot_pick_weighted(sim, [
+            { w: 30, v: "treasure" },
+            { w: 25, v: "trinket" },
+            { w: 20, v: "consumable" },
+            { w: 15, v: "armor" },
+            { w: 10, v: "weapon" }
+        ]);
+    }
+
+    if (source == "merchant") {
+        return loot_pick_weighted(sim, [
+            { w: 35, v: "consumable" },
+            { w: 25, v: "armor" },
+            { w: 25, v: "weapon" },
+            { w: 15, v: "trinket" }
+        ]);
+    }
+
+    if (source == "boss") {
+        return loot_pick_weighted(sim, [
+            { w: 45, v: "trinket" },
+            { w: 30, v: "weapon" },
+            { w: 25, v: "armor" }
+        ]);
+    }
+
+    // combat default
+    return loot_pick_weighted(sim, [
+        { w: 40, v: "treasure" },
+        { w: 25, v: "consumable" },
+        { w: 15, v: "weapon" },
+        { w: 15, v: "armor" },
+        { w: 5,  v: "trinket" }
+    ]);
+}
+function loot_pick_weighted(sim, entries) {
+    // entries: array of structs like [{w: 60, v: "weapon"}, {w: 40, v: "armor"}]
+    var total = 0;
+    for (var i = 0; i < array_length(entries); i++) total += max(0, entries[i].w);
+
+    if (total <= 0) {
+        // fallback: just return first value if weights are busted
+        return entries[0].v;
+    }
+
+    var r = sim_rand_range(sim, 1, total);
+    var acc = 0;
+
+    for (var i = 0; i < array_length(entries); i++) {
+        acc += max(0, entries[i].w);
+        if (r <= acc) return entries[i].v;
+    }
+
+    return entries[array_length(entries) - 1].v;
+}
+function loot_roll_named(sim, context) {
+    // Jackpot rule: d100 == 100
+    // Later we can bias odds by source (boss higher), but start simple.
+    return loot_roll_pct(sim) == 100;
+}
+function loot_roll_pct(sim) {
+	// returns 1...100 using the sim RNG
+	return sim_rand_range(sim, 1, 100);
+}
+function loot_roll_rarity(sim, context) {
+    // Basic rarity roll. Later: bias by source/zone/tier.
+    var r = loot_roll_pct(sim);
+
+    if (r >= 99) return "legendary";
+    if (r >= 95) return "epic";
+    if (r >= 85) return "rare";
+    if (r >= 65) return "uncommon";
+    return "common";
+}
+function loot_roll_stats(sim, item_type, tier, rarity) {
+    // FIX: enforce "minimum viable stats" so armor/weapons/trinkets don't roll blank.
+    var atk = 0, def = 0, hp = 0, mp = 0;
+    var heal = 0, mp_use = 0, wound_heal = 0;
+
+    var rarity_mult = 1;
+    switch (rarity) {
+        case "uncommon": rarity_mult = 1.2; break;
+        case "rare": rarity_mult = 1.5; break;
+        case "epic": rarity_mult = 2.0; break;
+        case "legendary": rarity_mult = 3.0; break;
+        default: rarity_mult = 1.0; break;
+    }
+
+    switch (item_type) {
+
+        case "weapon":
+            atk = floor((tier * 1.2 + sim_rand_range(sim, 0, 2)) * rarity_mult);
+            // Minimum: weapons always add at least 1 ATK
+            if (atk < 1) atk = 1;
+            break;
+
+        case "armor":
+            def = floor((tier * 0.8 + sim_rand_range(sim, 0, 2)) * rarity_mult);
+            // Minimum: armor always adds at least 1 DEF
+            if (def < 1) def = 1;
+            break;
+
+        case "trinket":
+            // Mixed bonuses, but ensure at least one non-zero stat.
+            atk = floor((tier * 0.4) * rarity_mult);
+            def = floor((tier * 0.4) * rarity_mult);
+
+            if (sim_chance(sim, 40)) hp = floor((tier * 2) * rarity_mult);
+            if (sim_chance(sim, 40)) mp = floor((tier * 2) * rarity_mult);
+
+            // Minimum: if everything is zero, force a small bonus (favor MP/HP for cinematic variety)
+            if (atk <= 0 && def <= 0 && hp <= 0 && mp <= 0) {
+                if (sim_chance(sim, 50)) mp = 2 + floor(tier * 0.5);
+                else hp = 4 + floor(tier * 1.0);
+            }
+            break;
+
+        case "consumable":
+            heal = floor((tier * 4 + sim_rand_range(sim, 6, 12)) * rarity_mult);
+            mp_use = floor((tier * 2 + sim_rand_range(sim, 2, 6)) * rarity_mult);
+
+            // Minimum: consumable should always do something
+            if (heal < 5) heal = 5;
+            if (mp_use < 0) mp_use = 0;
+
+            if (rarity == "epic" || rarity == "legendary") wound_heal = 1;
+            break;
+
+        case "treasure":
+            // No stats
+            break;
+    }
+
+    return {
+        stats: { atk: atk, def: def, hp: hp, mp: mp },
+        use: { heal: heal, mp: mp_use, wound_heal: wound_heal }
+    };
+}
+function sim_apply_party_damage(sim, base_dmg) {
+    sim_log_tag(sim, "SPLASH_BEGIN",
+        "â˜  Splash damage begins (base ~" + string(base_dmg) + ")."
+    );
 
     for (var i = 0; i < array_length(sim.party); i++) {
         var p = sim.party[i];
 
-        var mod1 = 0;
-        if (p.role == "Healer") mod1 = -1;
-        if (p.role == "Thief")  mod1 = -1;
-
-        var dmg = max(0, amount + mod1);
+        // Vary damage slightly per member
+        var dmg = max(0, base_dmg + sim_rand_range(sim, -1, 1) - p.def);
         var before = p.hp;
 
         p.hp -= dmg;
-
-        if (p.hp <= 0) p.downed_this_beat = true;
 
         sim_log_tag(sim, "SPLASH_HIT",
             "â˜  SPLASH â†’ " + p.name + " takes " + string(dmg) +
             " (" + string(before) + "â†’" + string(p.hp) + ")."
         );
+
+        // Immediate downed cue (animation-friendly)
+        if (before > 0 && p.hp <= 0) {
+            sim_log_tag(sim, "DOWNED",
+                "âš  " + p.name + " is down!"
+            );
+        }
     }
 }
 function sim_auto_heal(sim) {
@@ -211,49 +672,121 @@ function sim_director_next_event(sim) {
     // Default
     return "combat";
 }
-function sim_give_item(sim, item_name) {
-    var idx = sim_rand_range(sim, 0, 3);
-    var slot = "trinket";
+function sim_get_equipped_item(p, slot) {
+    if (!is_struct(p.equip)) return undefined;
+    switch (slot) {
+        case "weapon": return p.equip.weapon;
+        case "armor":  return p.equip.armor;
+        case "trinket": return p.equip.trinket;
+    }
+    return undefined;
+}
+function sim_give_item(sim, item) {
+    if (!is_struct(item)) {
+        sim_log_tag(sim, "ITEM_ERR", "Tried to give a non-item.");
+        return;
+    }
 
-    // crude slot mapping
-    if (string_pos("Wand", item_name) > 0 || item_name == "Spell Scroll") slot = "weapon";
-    if (string_pos("Helm", item_name) > 0 || string_pos("Shield", item_name) > 0 || item_name == "Armor Patch") slot = "armor";
-    if (string_pos("Vial", item_name) > 0 || item_name == "Health Tonic") slot = "consumable";
+    // Treasures convert immediately to gold
+    if (item.type == "treasure") {
+        sim.gold_total += item.value;
+        sim_log_tag(sim, "TREASURE",
+            "ðŸ’° Treasure: " + item.name + " converts to +" + string(item.value) + " gold."
+        );
+        return;
+    }
 
-    // owner mapping for a few signature items
-    if (item_name == "Mirror Dagger") idx = 2;
-    if (item_name == "Saint's Charm") idx = 3;
-    if (item_name == "Ember Ring") idx = 1;
+    // Consumables: keep current behavior simple (immediate group use when obtained)
+    if (item.type == "consumable") {
+        sim_log_tag(sim, "ITEM_GAIN", "ðŸ§ª Consumable acquired: " + item.name + ".");
 
+        // Apply use effects (group heal/mp + wound heal one member if applicable)
+        if (item.use.heal > 0) {
+            sim_log_tag(sim, "GROUP_HEAL",
+                "âœ¨ " + item.name + " heals +" + string(item.use.heal) + " (group)."
+            );
+            for (var i = 0; i < array_length(sim.party); i++) {
+                var p = sim.party[i];
+                var before = p.hp;
+                p.hp = min(p.max_hp, p.hp + item.use.heal);
+                sim_log_tag(sim, "HP_DELTA",
+                    "  â¤ï¸ " + p.name + " HP " + string(before) + "â†’" + string(p.hp) + "."
+                );
+            }
+        }
+
+        if (item.use.mp > 0) {
+            sim_log_tag(sim, "GROUP_MP",
+                "ðŸ”· " + item.name + " restores MP +" + string(item.use.mp) + " (group)."
+            );
+            for (var i = 0; i < array_length(sim.party); i++) {
+                var p2 = sim.party[i];
+                var before_mp = p2.mp;
+                p2.mp = min(p2.max_mp, p2.mp + item.use.mp);
+                sim_log_tag(sim, "MP_DELTA",
+                    "  ðŸ”· " + p2.name + " MP " + string(before_mp) + "â†’" + string(p2.mp) + "."
+                );
+            }
+        }
+
+        if (item.use.wound_heal > 0) {
+            var healed = 0;
+            for (var k = 0; k < array_length(sim.party); k++) {
+                if (sim.party[k].wounds > 0) {
+                    var w = sim.party[k];
+                    var before_wounds = w.wounds;
+                    var before_def = w.def;
+
+                    w.wounds = max(0, w.wounds - item.use.wound_heal);
+                    sim_recalc_derived(w);
+
+                    sim_log_tag(sim, "WOUND_HEAL",
+                        "ðŸ©º " + item.name + ": " + w.name + " recovers " + string(item.use.wound_heal) + " wound."
+                    );
+                    sim_log_tag(sim, "STAT_DEF",
+                        "ðŸŸ¦ DEF " + string(before_def) + "â†’" + string(w.def) +
+                        " (wounds " + string(before_wounds) + "â†’" + string(w.wounds) + ")."
+                    );
+
+                    healed = 1;
+                    break;
+                }
+            }
+            if (!healed) {
+                sim_log_tag(sim, "WOUND_HEAL",
+                    "ðŸ©º " + item.name + ": no wounds to treat."
+                );
+            }
+        }
+
+        return;
+    }
+
+    // Equip flow (weapon/armor/trinket)
+    var slot = sim_item_slot_from_type(item.type);
+    if (slot == "") {
+        sim_log_tag(sim, "ITEM_SKIP", "Unknown item type: " + string(item.type) + " (" + item.name + ").");
+        return;
+    }
+
+    // Pick a recipient (keep it simple for now; weâ€™ll add equip logic later)
+    var idx = sim_rand_range(sim, 0, array_length(sim.party) - 1);
     var p = sim.party[idx];
 
-    // Snapshot stats for delta logging
+    // Snapshot before for delta logs
     var before_atk      = p.atk;
     var before_base_def = p.base_def;
     var before_def      = p.def;
 
-    switch (slot) {
-        case "weapon":      p.weapon = item_name; break;
-        case "armor":       p.armor = item_name; break;
-        case "trinket":     p.trinket = item_name; break;
-        case "consumable":  p.consumable = item_name; break;
-    }
+    var before_max_hp   = p.max_hp;
+    var before_max_mp   = p.max_mp;
 
-    // --- Item effects (keep tiny + explicit) ---
-    if (item_name == "Warden's Sigil") {
-        p.base_def += 5;
-    } else if (item_name == "Ogre King's Tooth") {
-        p.atk += 2;
-    } else if (item_name == "Crown Shard") {
-        p.atk += 1;
-        p.base_def += 1;
-    }
-
-    // Recompute def from base_def and wounds
-    p.def = max(0, p.base_def - p.wounds);
+    // Equip (replace existing slot item)
+    sim_set_equipped_item(p, slot, item);
+    sim_recalc_derived(p);
 
     sim_log_tag(sim, "EQUIP",
-        "ðŸ“¦ EQUIP â†’ " + p.name + " equips (" + slot + "): " + item_name + "."
+        "ðŸ“¦ EQUIP â†’ " + p.name + " equips (" + slot + "): " + item.name + "."
     );
 
     if (p.atk != before_atk) {
@@ -267,6 +800,30 @@ function sim_give_item(sim, item_name) {
             "ðŸŸ¦ DEF " + string(before_def) + "â†’" + string(p.def) +
             " (base " + string(before_base_def) + "â†’" + string(p.base_def) + ")."
         );
+    }
+
+    if (p.max_hp != before_max_hp) {
+        sim_log_tag(sim, "STAT_HP",
+            "â¤ï¸ MAX HP " + string(before_max_hp) + "â†’" + string(p.max_hp) + "."
+        );
+    }
+
+    if (p.max_mp != before_max_mp) {
+        sim_log_tag(sim, "STAT_MP",
+            "ðŸ”· MAX MP " + string(before_max_mp) + "â†’" + string(p.max_mp) + "."
+        );
+    }
+}
+function sim_item_name(item) {
+    if (is_struct(item) && variable_struct_exists(item, "name")) return item.name;
+    return "-";
+}
+function sim_item_slot_from_type(item_type) {
+    switch (item_type) {
+        case "weapon": return "weapon";
+        case "armor":  return "armor";
+        case "trinket": return "trinket";
+        default: return ""; // consumable/treasure don't equip
     }
 }
 function sim_log(sim, text) {
@@ -284,6 +841,13 @@ function sim_make_party_member(role, name, max_hp, max_mp, atk, def) {
         role: role,
         name: name,
 
+        // Base stats (never directly modified by gear)
+        base_max_hp: max_hp,
+        base_max_mp: max_mp,
+        base_atk: atk,
+        base_def: def,
+
+        // Current stats (derived from base + gear)
         hp: max_hp,
         max_hp: max_hp,
 
@@ -291,21 +855,26 @@ function sim_make_party_member(role, name, max_hp, max_mp, atk, def) {
         max_mp: max_mp,
 
         atk: atk,
-        base_def: def,
         def: def,
 
-        weapon: "",
-        armor: "",
-        trinket: "",
-        consumable: "",
+        // Equipped items (structs or undefined)
+        equip: {
+            weapon: undefined,
+            armor: undefined,
+            trinket: undefined
+        },
 
+        // Immediate-use consumable (kept here for now; struct or undefined)
+        consumable: undefined,
+
+        // Future inventory hooks (we'll expand later)
         items: [],
         status: [],
 
         wounds: 0,
         near_death_flag: false,
 
-        // NEW: prevents healing after lethal damage in same beat
+        // Prevents healing after lethal damage in same beat
         downed_this_beat: false
     };
 }
@@ -355,6 +924,33 @@ function sim_rand_range(sim, a, b) {
     return a + floor(t * (b - a + 1));
 }
 
+function sim_recalc_derived(p) {
+    var gear_atk = 0;
+    var gear_def = 0;
+    var gear_hp  = 0;
+    var gear_mp  = 0;
+
+    var w = p.equip.weapon;
+    var a = p.equip.armor;
+    var t = p.equip.trinket;
+
+    if (is_struct(w)) { gear_atk += w.stats.atk; gear_def += w.stats.def; gear_hp += w.stats.hp; gear_mp += w.stats.mp; }
+    if (is_struct(a)) { gear_atk += a.stats.atk; gear_def += a.stats.def; gear_hp += a.stats.hp; gear_mp += a.stats.mp; }
+    if (is_struct(t)) { gear_atk += t.stats.atk; gear_def += t.stats.def; gear_hp += t.stats.hp; gear_mp += t.stats.mp; }
+
+    p.max_hp = max(1, p.base_max_hp + gear_hp);
+    p.max_mp = max(0, p.base_max_mp + gear_mp);
+
+    // Clamp current resources to new max
+    p.hp = clamp(p.hp, 0, p.max_hp);
+    p.mp = clamp(p.mp, 0, p.max_mp);
+
+    p.atk = max(0, p.base_atk + gear_atk);
+
+    // Wounds reduce DEF after gear/base are applied
+    var raw_def = p.base_def + gear_def;
+    p.def = max(0, raw_def - p.wounds);
+}
 function sim_resolve_boss(sim) {
     var boss = (sim.zone == "Castle") ? "Iron Warden" : "Hollow Ogre";
     sim_log_tag(sim, "BOSS_SPAWN", "ðŸ‘‘ BOSS: " + boss + " emerges!");
@@ -428,13 +1024,15 @@ function sim_resolve_boss(sim) {
         var gold = sim_rand_range(sim, 50, 90);
         sim.gold_total += gold;
 
-        var trophy = choose("Warden's Sigil", "Ogre King's Tooth", "Crown Shard");
 
         sim_log_tag(sim, "BOSS_DEFEATED", "ðŸ† Boss defeated! +" + string(gold) + " gold.");
-        sim_log_tag(sim, "TROPHY_DROP",  "ðŸŽ Trophy drop: " + trophy + ".");
 
         // Equip after drop (sim_give_item logs EQUIP + STAT deltas)
-        sim_give_item(sim, trophy);
+		var trophy = loot_generate_item(sim, { source: "boss", zone: sim.zone, tier_target: 7 });
+
+		sim_log_tag(sim, "TROPHY_DROP",  "ðŸŽ Trophy drop: " + trophy.name + ".");
+		sim_give_item(sim, trophy);
+
 
         sim.tension = clamp(sim.tension + 30, 0, 100);
 
@@ -452,33 +1050,39 @@ function sim_resolve_boss(sim) {
     }
 }
 function sim_resolve_chest(sim) {
+    sim_log_tag(sim, "CHEST_OPEN", "ðŸ§° Chest found.");
+
+    // Trap chance
+    if (sim_chance(sim, 15)) {
+        sim_log_tag(sim, "CHEST_TRAP", "ðŸ§° Chest: it's a trap! Poison needles.");
+        sim_apply_party_damage(sim, sim_rand_range(sim, 4, 8));
+        return;
+    }
+
+    // Gold chest (most common)
+    if (sim_chance(sim, 60)) {
+        var gold = sim_rand_range(sim, 10, 28) + floor(sim.difficulty / 2);
+        sim.gold_total += gold;
+
+        sim.stats.chests_opened += 1;
+        sim_log_tag(sim, "CHEST_GOLD", "ðŸ§° Chest: +" + string(gold) + " gold.");
+        return;
+    }
+
+    // Item chest (struct-based)
+    var tier_target = clamp(1 + floor(sim.difficulty / 2), 1, 10);
+    var item = loot_generate_item(sim, { source: "chest", zone: sim.zone, tier_target: tier_target });
+
     sim.stats.chests_opened += 1;
 
-    // Thief improves results
-    var thief_bonus = 10;
-
-    var roll = sim_rand_range(sim, 1, 100) + thief_bonus;
-    if (roll >= 95) {
-        // Rare
-        var item = choose("Ember Ring", "Frost Band", "Mirror Dagger", "Saint's Charm");
+    if (item.is_named || item.rarity == "rare" || item.rarity == "epic" || item.rarity == "legendary") {
         sim.stats.rares_found += 1;
-        sim_give_item(sim, item);
-        sim_log(sim, "ðŸ§° Chest: RARE find! " + item + ".");
-    } else if (roll >= 60) {
-        var item2 = choose("Steel Helm", "Mana Vial", "Swift Boots", "Blessed Wraps");
-        sim_give_item(sim, item2);
-        sim_log(sim, "ðŸ§° Chest: found " + item2 + ".");
-    } else if (roll >= 30) {
-        var gold = sim_rand_range(sim, 10, 30);
-        sim.gold_total += gold;
-        sim_log(sim, "ðŸ§° Chest: +" + string(gold) + " gold.");
+        sim_log_tag(sim, "CHEST_RARE", "ðŸ§° Chest: RARE find! " + item.name + ".");
     } else {
-        // Mimic / trap
-        sim_log(sim, "ðŸ§° Chest: it's a trap! Poison needles.");
-        sim_apply_party_damage(sim, sim_rand_range(sim, 3, 8));
-        sim.tension = clamp(sim.tension + 18, 0, 100);
-        sim_check_party_health(sim);
+        sim_log_tag(sim, "CHEST_ITEM", "ðŸ§° Chest: found " + item.name + ".");
     }
+
+    sim_give_item(sim, item);
 }
 function sim_resolve_combat(sim) {
     var threat = sim.difficulty + sim_rand_range(sim, 0, 3);
@@ -509,7 +1113,7 @@ function sim_resolve_combat(sim) {
         );
     }
 
-    // Mage hits back (for animation/storyboard)
+    // Mage hits back (storyboard number for animation)
     var mage = sim.party[1];
     var crit = sim_chance(sim, 15);
     var hit = threat * 6 + sim_rand_range(sim, 4, 14);
@@ -521,26 +1125,35 @@ function sim_resolve_combat(sim) {
         "âœ¨ " + mage.name + " hits for " + string(hit) + (crit ? " (CRIT!)." : ".")
     );
 
-    // Healer reacts
+    // Healer reacts (real healing + tagged logging inside sim_auto_heal)
     sim_auto_heal(sim);
 
-    // Loot
+    // IMPORTANT: resolve collapses/wounds/near-death BEFORE loot narration
+    sim_check_party_health(sim);
+
+    // Loot AFTER health resolution
     var gold = sim_rand_range(sim, 3, 10) + sim.difficulty;
     sim.gold_total += gold;
 
     sim_log_tag(sim, "LOOT", "ðŸ’° Loot: +" + string(gold) + " gold.");
 
     sim.tension = clamp(sim.tension + 12 + threat * 2, 0, 100);
-
-    // Knockdowns / near-death tracking
-    sim_check_party_health(sim);
 }
 function sim_resolve_intro(sim) {
     sim_log(sim, "ðŸ§­ The party advances into the " + sim.zone + ".");
 }
 function sim_resolve_merchant(sim) {
-    var offer = choose("Health Tonic", "Armor Patch", "Spell Scroll", "Sharpening Stone");
-    var cost  = sim_rand_range(sim, 20, 35);
+    // Generate a merchant item (bias toward consumables for now to preserve behavior)
+    var tier_target = clamp(2 + floor(sim.difficulty / 2), 1, 10);
+    var offer = loot_generate_item(sim, { source: "merchant", zone: sim.zone, tier_target: tier_target });
+
+    // If merchant rolled treasure, reroll once (town merchant selling a coin cache is silly for now)
+    if (offer.type == "treasure") {
+        offer = loot_generate_item(sim, { source: "merchant", zone: sim.zone, tier_target: tier_target });
+    }
+
+    // Cost: simple scaling off value (tunable later)
+    var cost = max(10, floor(offer.value * 0.35));
 
     if (sim.gold_total < cost) {
         sim_log_tag(sim, "MERCHANT_SKIP",
@@ -549,67 +1162,18 @@ function sim_resolve_merchant(sim) {
         return;
     }
 
-    var buyer = sim.party[sim_rand_range(sim, 0, 3)];
+    var buyer = sim.party[sim_rand_range(sim, 0, array_length(sim.party) - 1)];
     var gold_before = sim.gold_total;
 
     sim.gold_total -= cost;
 
     sim_log_tag(sim, "MERCHANT_BUY",
-        "ðŸ§¿ Merchant: " + buyer.name + " buys " + offer +
+        "ðŸ§¿ Merchant: " + buyer.name + " buys " + offer.name +
         " for " + string(cost) + " gold (" +
         string(gold_before) + "â†’" + string(sim.gold_total) + ")."
     );
 
-    // Apply item
-    switch (offer) {
-        case "Health Tonic":
-            sim_log_tag(sim, "ITEM_GAIN",
-                "ðŸ§ª " + buyer.name + " acquires Health Tonic."
-            );
-
-            // OPTIONAL: immediate party heal (as in your log)
-            var tonic_heal = sim_rand_range(sim, 8, 14);
-            sim_log_tag(sim, "GROUP_HEAL",
-                "âœ¨ Health Tonic heals +" + string(tonic_heal) + " (group)."
-            );
-
-            for (var i = 0; i < array_length(sim.party); i++) {
-                var p = sim.party[i];
-                var before = p.hp;
-                p.hp = min(p.max_hp, p.hp + tonic_heal);
-
-                sim_log_tag(sim, "HP_DELTA",
-                    "  â¤ï¸ " + p.name + " HP " + string(before) + "â†’" + string(p.hp) + "."
-                );
-            }
-            break;
-
-        case "Armor Patch":
-            sim.party[0].base_def += 1;
-            sim.party[0].def = max(0, sim.party[0].base_def - sim.party[0].wounds);
-
-            sim_log_tag(sim, "STAT_DEF",
-                "ðŸ›¡ " + sim.party[0].name + " DEF increases to " +
-                string(sim.party[0].def) + "."
-            );
-            break;
-
-        case "Spell Scroll":
-            sim.party[1].atk += 1;
-            sim_log_tag(sim, "STAT_ATK",
-                "ðŸ“œ " + sim.party[1].name + " ATK increases to " +
-                string(sim.party[1].atk) + "."
-            );
-            break;
-
-        case "Sharpening Stone":
-            sim.party[2].atk += 1;
-            sim_log_tag(sim, "STAT_ATK",
-                "ðŸ—¡ " + sim.party[2].name + " ATK increases to " +
-                string(sim.party[2].atk) + "."
-            );
-            break;
-    }
+    sim_give_item(sim, offer);
 }
 function sim_resolve_relief(sim) {
     var relief_type = choose("campfire", "healing shrine", "abandoned outpost", "quiet corridor");
@@ -766,10 +1330,6 @@ function sim_run_step(sim) {
         sim_run_finalize(sim);
         return;
     }
-	
-	// Cooldowns tick down at the start of the beat
-	sim.director.merchant_cd = max(0, sim.director.merchant_cd - 1);
-	sim.director.chest_cd = max(0, sim.director.chest_cd - 1);
 
     // Zone shifts (cheap â€œseasonâ€ feel)
     if (sim.beat == 0) sim.zone = "Dungeon";
@@ -777,18 +1337,34 @@ function sim_run_step(sim) {
     if (sim.beat == 70) sim.zone = "Town";
     if (sim.beat == 85) sim.zone = "Castle";
 
-	if (sim.zone != sim.prev_zone) {
-	    sim.director.merchants_this_zone = 0;
-	    sim.prev_zone = sim.zone;
-	}
-
-
-
     // Difficulty ramps
     if (sim.beat > 0 && sim.beat % 20 == 0) sim.difficulty += 1;
 
     // Director picks the next beat event
     var ev = sim_director_next_event(sim);
+
+    // Playback: why this beat is happening (source cue)
+    switch (ev) {
+        case "chest":
+            sim_log_tag(sim, "BEAT_SOURCE", "ðŸ§­ Exploration find: the party spots something ahead.");
+            break;
+        case "merchant":
+            sim_log_tag(sim, "BEAT_SOURCE", "ðŸ§­ Encounter: a traveling merchant appears.");
+            break;
+        case "relief":
+            sim_log_tag(sim, "BEAT_SOURCE", "ðŸ§­ Rest stop: the party finds a safe pocket to regroup.");
+            break;
+        case "boss":
+            sim_log_tag(sim, "BEAT_SOURCE", "ðŸ§­ Ominous presence: the air shifts. Something huge is near.");
+            break;
+        case "intro":
+            sim_log_tag(sim, "BEAT_SOURCE", "ðŸ§­ The party advances deeper.");
+            break;
+        case "combat":
+        default:
+            sim_log_tag(sim, "BEAT_SOURCE", "ðŸ§­ Danger: movement in the shadows.");
+            break;
+    }
 
     switch (ev) {
         case "intro":    sim_resolve_intro(sim); break;
@@ -804,7 +1380,14 @@ function sim_run_step(sim) {
     sim.tension = clamp(sim.tension - 2, 0, 100);
 
     sim.beat += 1;
-	
 
-
+    sim.director.merchant_cd = max(0, sim.director.merchant_cd - 1);
+    sim.director.chest_cd = max(0, sim.director.chest_cd - 1);
+}
+function sim_set_equipped_item(p, slot, item) {
+    switch (slot) {
+        case "weapon": p.equip.weapon = item; break;
+        case "armor":  p.equip.armor  = item; break;
+        case "trinket": p.equip.trinket = item; break;
+    }
 }

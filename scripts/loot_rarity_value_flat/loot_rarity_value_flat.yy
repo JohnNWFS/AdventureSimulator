@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"loot_rarity_value_flat",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"loot_rarity_value_flat",
+  "parent":{
+    "name":"LOOT",
+    "path":"folders/SCRIPTS/LOOT.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
