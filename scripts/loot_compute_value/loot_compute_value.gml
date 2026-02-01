@@ -21,10 +21,10 @@ function loot_compute_value(sim, item_type, tier, rarity, stats, use) {
 
     // Tier curve: slightly super-linear so higher tiers feel pricier
     // (t=1 -> ~53, t=10 -> ~309 before multipliers)
-    var tier_curve = floor(35 + power(tier, 1.18) * 18);
+    var tier_curve = floor(25 + power(tier, 1.14) * 12);
 
     // Power curve: value rises strongly with power but not absurdly
-    var power_curve = floor(pwr * 14);
+    var power_curve = floor(pwr * 4);
 
     // Rarity affects price more than it affects power
     var v = (tier_curve + power_curve);

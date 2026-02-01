@@ -1,3 +1,48 @@
+***************************************
+ *     GameMaker v2024.14.3.260    *
+***************************************
+Setting scheduler resolution to 1
+Set process priority to HIGH_PRIORITY_CLASS
+Set main thread priority to HIGHEST
+Registered with MMCSS 'Games' task
+Set MMCSS thread priority to CRITICAL
+Reading File C:\Users\hoffe\AppData\Local\GameMakerStudio2\GMS2TEMP\AdventureSimulator_79264BB7_VM\AdventureSimulator.win took 0 ms
+DirectX11: Using hardware device
+DXGI_FEATURE_PRESENT_ALLOW_TEARING is supported - variable refresh rate displays will work correctly
+Window overlaps with output 0 (\\.\DISPLAY1) by 1115274 pixels
+Restricting swap chain to output: \\.\DISPLAY1 (HMONITOR: 0x0000000000010001)
+Creating swap chain at 1366 by 768
+Using IDXGIFactory2::CreateSwapChainForHwnd (modern API for windowed mode)
+Adding DXGI_SWAP_CHAIN_FLAG_ALLOW_TEARING to swap chain flags
+Set swap chain maximum frame latency to 1
+Setting viewport to 1366 by 768
+
+Resizing swap chain to 1366 by 768...
+Setting viewport to 1366 by 768
+
+Collision Event time(microsecs)=1
+Variable_Global_Init()
+PrepareGame()
+Audio_Init()
+Audio group 0 -> Loaded
+Attempting to set gamepadcount to 12
+Game_Prepare()
+Script_Prepare() 
+TimeLine_Prepare() 
+Object_Prepare() 
+Room_Prepare() 
+Finished PrepareGame() 
+Run_Start
+Done g_EffectsManager.Init()
+Done RenderStateManager
+CreateColPairs took 0.000000s 0 usecs for 2 object types obj_col_numb=0 physobjcount=0 resizes 0 final size 0
+Done ObjectLists
+Done Extension_Initialize
+About to startroom
+🎬 Episode begins. Seed=353356 Zone=Dungeon
+Total memory used = 39011358 (0x0253441e) bytes 37.20MB
+Free memory = 6142640 (0x005dbab0) bytes 5.86MB
+Peak memory used = 39011358 (0x0253441e) bytes 37.20MB
 **********************************.
 Entering main loop.
 **********************************.
@@ -5,776 +50,1014 @@ Entering main loop.
 🧭 The party advances into the Dungeon.
 GM_Size setting canvas width height to 1366 by 768
 [BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_HIT] ⚔ Slimes clash: Ravel takes 8 (45→37).
-[COMBAT_EXCHANGE] ⚔ Slimes clash: Brann takes 16 (70→54). ✨ Quen hits for 32.
-[HEAL] 🩹 Healer restores Brann +9 HP (54→63).
-[LOOT] 💰 Loot: +8 gold.
-[BEAT_SOURCE] 🧭 Encounter: a traveling merchant appears.
-[MERCHANT_SKIP] 🧿 Merchant: party browses, can't afford Shadow Bone Shield (1428g).
+[ENCOUNTER] ⚔ Combat: Skeleton (threat 6).
+[CURSED_GROUND] 🜏 Cursed ground: spells feel heavier and more expensive.
+[COMBAT_EXCHANGE] ⚔ Skeleton strikes: Malum of Dockside takes 35 (70→35).
+[THIEF_HIT] 🗡 Brris slips in: 26 damage.
+[MAGE_HIT] ✨ Toros the Unlucky casts for 64. [MP 30→24]
+[HEAL] 🩹 Healer restores Malum of Dockside +10 HP (35→45).
 [BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_EXCHANGE] ⚔ Skeletons clash: Brann takes 5 (63→58). ✨ Quen hits for 19.
-[HEAL] 🩹 Healer restores Ravel +6 HP (37→43).
-[LOOT] 💰 Loot: +9 gold.
+[ENCOUNTER] ⚔ Combat: Cult Acolyte (threat 5).
+[CURSED_GROUND] 🜏 Cursed ground: spells feel heavier and more expensive.
+[COMBAT_EXCHANGE] ⚔ Cult Acolyte strikes: Malum of Dockside takes 32 (45→13).
+[THIEF_HIT] 🗡 Brris slips in: 23 damage.
+[MAGE_CRIT] ✨ Toros the Unlucky casts for 98 (CRIT!). [MP 24→19]
+[HEAL] 🩹 Healer restores Malum of Dockside +12 HP (13→25).
 [BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_EXCHANGE] ⚔ Skeletons clash: Brann takes 12 (58→46). ✨ Quen hits for 23.
-[HEAL] 🩹 Healer restores Brann +8 HP (46→54).
-[LOOT] 💰 Loot: +8 gold.
+[ENCOUNTER] ⚔ Combat: Goblin (threat 4).
+[COMBAT_EXCHANGE] ⚔ Goblin strikes: Malum of Dockside takes 27 (25→-2).
+[THIEF_EXEC] 🗡 Brris smells blood: 30 damage.
+[MAGE_HIT] ✨ Toros the Unlucky casts for 45. [MP 19→16]
+[HEAL] 🩹 Healer restores Malum of Dockside +12 HP (-2→10).
+[NEAR_DEATH] 🚨 Near-death: Malum of Dockside is under 20% HP!
 [BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_HIT] ⚔ Skeletons clash: Sel takes 6 (42→36).
-[COMBAT_EXCHANGE] ⚔ Skeletons clash: Brann takes 15 (54→39). ✨ Quen hits for 35.
-[HEAL] 🩹 Healer restores Brann +13 HP (39→52).
-[LOOT] 💰 Loot: +5 gold.
+[ENCOUNTER] ⚔ Combat: Skeleton (threat 4).
+[BERSERK] 🔥 Berserk rush: the enemy swings wild and hard.
+[COMBAT_EXCHANGE] ⚔ Skeleton strikes: Malum of Dockside takes 32 (10→-22).
+[CHAOS] 💢 Chaos erupts in the scrum.
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~1).
+[EXECUTION_BLOW] 🩸 EXECUTION BLOW → Malum of Dockside takes 1 (-22→-23).
+[SPLASH_HIT] ☠ SPLASH → Toros the Unlucky takes 1 (40→39).
+[SPLASH_HIT] ☠ SPLASH → Brris takes 1 (45→44).
+[SPLASH_HIT] ☠ SPLASH → Harris takes 1 (42→41).
+[THIEF_EXEC] 🗡 Brris smells blood: 33 damage.
+[MAGE_HIT] ✨ Toros the Unlucky casts for 50. [MP 16→13]
+[HEAL] 🩹 Healer restores Malum of Dockside +11 HP (-23→-12).
+[KNOCKDOWN] ⚠ Malum of Dockside collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Malum of Dockside gains a wound (1). DEF now 6.
 [BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_EXCHANGE] ⚔ Cultists clash: Brann takes 13 (52→39). ✨ Quen hits for 25.
-[HEAL] 🩹 Healer restores Brann +9 HP (39→48).
-[LOOT] 💰 Loot: +7 gold.
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: abandoned outpost. The party regroups.
-[GROUP_HEAL] ✨ Party heals +10 (group).
-[HP_DELTA]   ❤️ Brann HP 48→58.
-[HP_DELTA]   ❤️ Quen HP 40→40.
-[HP_DELTA]   ❤️ Ravel HP 43→45.
-[HP_DELTA]   ❤️ Sel HP 36→44.
-[GROUP_MP] 🔷 Party restores MP +8 (group).
-[MP_DELTA]   🔷 Brann MP 5→5.
-[MP_DELTA]   🔷 Quen MP 30→30.
-[MP_DELTA]   🔷 Ravel MP 10→11.
-[MP_DELTA]   🔷 Sel MP 13→21.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_EXCHANGE] ⚔ Bandits clash: Brann takes 15 (58→43). ✨ Quen hits for 35.
-[HEAL] 🩹 Healer restores Brann +8 HP (43→51).
-[LOOT] 💰 Loot: +4 gold.
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: quiet corridor. The party regroups.
-[GROUP_HEAL] ✨ Party heals +9 (group).
-[HP_DELTA]   ❤️ Brann HP 51→60.
-[HP_DELTA]   ❤️ Quen HP 40→40.
-[HP_DELTA]   ❤️ Ravel HP 45→45.
-[HP_DELTA]   ❤️ Sel HP 44→44.
-[GROUP_MP] 🔷 Party restores MP +10 (group).
-[MP_DELTA]   🔷 Brann MP 5→5.
-[MP_DELTA]   🔷 Quen MP 30→30.
-[MP_DELTA]   🔷 Ravel MP 11→11.
-[MP_DELTA]   🔷 Sel MP 18→28.
-Resizing swap chain to 1366 by 768...
-Setting viewport to 1366 by 768
-
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_EXCHANGE] ⚔ Wolfpack clash: Brann takes 9 (60→51). ✨ Quen hits for 28.
-[HEAL] 🩹 Healer restores Brann +13 HP (51→64).
-[LOOT] 💰 Loot: +5 gold.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_EXCHANGE] ⚔ Slimes clash: Brann takes 12 (64→52). ✨ Quen hits for 52 (CRIT!).
-[HEAL] 🩹 Healer restores Brann +11 HP (52→63).
-[LOOT] 💰 Loot: +7 gold.
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: abandoned outpost. The party regroups.
-[GROUP_HEAL] ✨ Party heals +7 (group).
-[HP_DELTA]   ❤️ Brann HP 63→70.
-[HP_DELTA]   ❤️ Quen HP 40→40.
-[HP_DELTA]   ❤️ Ravel HP 45→45.
-[HP_DELTA]   ❤️ Sel HP 44→44.
-[GROUP_MP] 🔷 Party restores MP +8 (group).
-[MP_DELTA]   🔷 Brann MP 5→5.
-[MP_DELTA]   🔷 Quen MP 30→30.
-[MP_DELTA]   🔷 Ravel MP 11→11.
-[MP_DELTA]   🔷 Sel MP 22→29.
+[ENCOUNTER] ⚔ Combat: Goblin (threat 5).
+[COMBAT_EXCHANGE] ⚔ Goblin strikes: Malum of Dockside takes 33 (1→-32).
+[THIEF_EXEC] 🗡 Brris smells blood: 30 damage.
+[MAGE_HIT] ✨ Toros the Unlucky casts for 52. [MP 13→10]
+[HEAL] 🩹 Healer restores Malum of Dockside +7 HP (-32→-25).
+[KNOCKDOWN] ⚠ Malum of Dockside collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Malum of Dockside gains a wound (2). DEF now 5.
 [BEAT_SOURCE] 🧭 Exploration find: the party spots something ahead.
 [CHEST_OPEN] 🧰 Chest found.
 [CHEST_GOLD] 🧰 Chest: +26 gold.
 [BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_EXCHANGE] ⚔ Slimes clash: Brann takes 8 (70→62). ✨ Quen hits for 26.
-[LOOT] 💰 Loot: +5 gold.
-[BEAT_SOURCE] 🧭 Encounter: a traveling merchant appears.
-[MERCHANT_SKIP] 🧿 Merchant: party browses, can't afford Fine Slate Wand (1179g).
+[ENCOUNTER] ⚔ Combat: Slime (threat 5).
+[CURSED_GROUND] 🜏 Cursed ground: spells feel heavier and more expensive.
+[COMBAT_EXCHANGE] ⚔ Slime strikes: Malum of Dockside takes 37 (1→-36).
+[THIEF_EXEC_CRIT] 🗡 Brris smells blood: 54 damage (CRIT!).
+[MAGE_HIT] ✨ Toros the Unlucky casts for 56. [MP 10→5]
+[HEAL] 🩹 Healer restores Malum of Dockside +12 HP (-36→-24).
+[CRACKING] 🫠 Malum of Dockside looks shaken (38→20).
+[KNOCKDOWN] ⚠ Malum of Dockside collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Malum of Dockside gains a wound (3). DEF now 4.
 [BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_EXCHANGE] ⚔ Wolfpack clash: Brann takes 0 (62→62). ✨ Quen hits for 28 (CRIT!).
-[LOOT] 💰 Loot: +8 gold.
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: abandoned outpost. The party regroups.
-[GROUP_HEAL] ✨ Party heals +13 (group).
-[HP_DELTA]   ❤️ Brann HP 62→70.
-[HP_DELTA]   ❤️ Quen HP 40→40.
-[HP_DELTA]   ❤️ Ravel HP 45→45.
-[HP_DELTA]   ❤️ Sel HP 44→44.
-[GROUP_MP] 🔷 Party restores MP +6 (group).
-[MP_DELTA]   🔷 Brann MP 5→5.
-[MP_DELTA]   🔷 Quen MP 30→30.
-[MP_DELTA]   🔷 Ravel MP 11→11.
-[MP_DELTA]   🔷 Sel MP 29→29.
+[ENCOUNTER] ⚔ Combat: Cult Acolyte (threat 6).
+[AMBUSH] 🕳 Ambush! Something lashes out before you can set formation.
+[AMBUSH_HIT] 🕳 AMBUSH → Toros the Unlucky takes 7 (39→32).
+[COMBAT_EXCHANGE] ⚔ Cult Acolyte strikes: Malum of Dockside takes 36 (1→-35).
+[THIEF_EXEC] 🗡 Brris smells blood: 30 damage.
+[MAGE_HIT] ✨ Toros the Unlucky casts for 61. [MP 5→1]
+[HEAL] 🩹 Healer restores Malum of Dockside +13 HP (-35→-22).
+[RETIRE_NOTICE] 🏳 Malum of Dockside mutters: 'After this… I'm done.'
+[KNOCKDOWN] ⚠ Malum of Dockside collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Malum of Dockside gains a wound (4). DEF now 3.
 [BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_EXCHANGE] ⚔ Slimes clash: Brann takes 14 (70→56). ✨ Quen hits for 36.
-[HEAL] 🩹 Healer restores Brann +13 HP (56→69).
-[LOOT] 💰 Loot: +11 gold.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_EXCHANGE] ⚔ Bandits clash: Brann takes 11 (69→58). ✨ Quen hits for 72 (CRIT!).
-[HEAL] 🩹 Healer restores Brann +8 HP (58→66).
-[LOOT] 💰 Loot: +6 gold.
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: campfire. The party regroups.
-[GROUP_HEAL] ✨ Party heals +11 (group).
-[HP_DELTA]   ❤️ Brann HP 66→70.
-[HP_DELTA]   ❤️ Quen HP 40→40.
-[HP_DELTA]   ❤️ Ravel HP 45→45.
-[HP_DELTA]   ❤️ Sel HP 44→44.
-[GROUP_MP] 🔷 Party restores MP +10 (group).
-[MP_DELTA]   🔷 Brann MP 5→5.
-[MP_DELTA]   🔷 Quen MP 30→30.
-[MP_DELTA]   🔷 Ravel MP 11→11.
-[MP_DELTA]   🔷 Sel MP 23→29.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_EXCHANGE] ⚔ Cultists clash: Brann takes 11 (70→59). ✨ Quen hits for 25.
-[HEAL] 🩹 Healer restores Brann +8 HP (59→67).
-[LOOT] 💰 Loot: +6 gold.
+[ENCOUNTER] ⚔ Combat: Skeleton (threat 6).
+[COMBAT_EXCHANGE] ⚔ Skeleton strikes: Malum of Dockside takes 42 (1→-41).
+[THIEF_EXEC] 🗡 Brris smells blood: 32 damage.
+[MAGE_CRIT] ✨ Toros the Unlucky jabs for 56 (CRIT!). [NO MP]
+[HEAL] 🩹 Healer restores Malum of Dockside +7 HP (-41→-34).
+[KNOCKDOWN] ⚠ Malum of Dockside collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Malum of Dockside gains a wound (5). DEF now 2.
+Resizing swap chain to 1366 by 768...
+Setting viewport to 1366 by 768
+
 [BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
 [RELIEF_START] 🕯 Relief: quiet corridor. The party regroups.
 [GROUP_HEAL] ✨ Party heals +8 (group).
-[HP_DELTA]   ❤️ Brann HP 67→70.
-[HP_DELTA]   ❤️ Quen HP 40→40.
-[HP_DELTA]   ❤️ Ravel HP 45→45.
-[HP_DELTA]   ❤️ Sel HP 44→44.
-[GROUP_MP] 🔷 Party restores MP +9 (group).
-[MP_DELTA]   🔷 Brann MP 5→5.
-[MP_DELTA]   🔷 Quen MP 30→30.
-[MP_DELTA]   🔷 Ravel MP 11→11.
-[MP_DELTA]   🔷 Sel MP 26→29.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_HIT] ⚔ Slimes clash: Quen takes 7 (40→33).
-[COMBAT_EXCHANGE] ⚔ Slimes clash: Brann takes 11 (70→59). ✨ Quen hits for 32.
-[HEAL] 🩹 Healer restores Quen +7 HP (33→40).
-[LOOT] 💰 Loot: +7 gold.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_EXCHANGE] ⚔ Cultists clash: Brann takes 10 (59→49). ✨ Quen hits for 29.
-[HEAL] 🩹 Healer restores Brann +14 HP (49→63).
-[LOOT] 💰 Loot: +10 gold.
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: quiet corridor. The party regroups.
-[GROUP_HEAL] ✨ Party heals +12 (group).
-[HP_DELTA]   ❤️ Brann HP 63→70.
-[HP_DELTA]   ❤️ Quen HP 40→40.
-[HP_DELTA]   ❤️ Ravel HP 45→45.
-[HP_DELTA]   ❤️ Sel HP 44→44.
-[GROUP_MP] 🔷 Party restores MP +8 (group).
-[MP_DELTA]   🔷 Brann MP 5→5.
-[MP_DELTA]   🔷 Quen MP 30→30.
-[MP_DELTA]   🔷 Ravel MP 11→11.
-[MP_DELTA]   🔷 Sel MP 23→29.
-[BEAT_SOURCE] 🧭 Exploration find: the party spots something ahead.
-[CHEST_OPEN] 🧰 Chest found.
-[CHEST_GOLD] 🧰 Chest: +24 gold.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_EXCHANGE] ⚔ Slimes clash: Brann takes 3 (70→67). ✨ Quen hits for 26.
-[LOOT] 💰 Loot: +7 gold.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_HIT] ⚔ Wolfpack clash: Ravel takes 6 (45→39).
-[COMBAT_EXCHANGE] ⚔ Wolfpack clash: Brann takes 9 (67→58). ✨ Quen hits for 23.
-[HEAL] 🩹 Healer restores Brann +8 HP (58→66).
-[LOOT] 💰 Loot: +12 gold.
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: abandoned outpost. The party regroups.
-[GROUP_HEAL] ✨ Party heals +9 (group).
-[HP_DELTA]   ❤️ Brann HP 66→70.
-[HP_DELTA]   ❤️ Quen HP 40→40.
-[HP_DELTA]   ❤️ Ravel HP 39→45.
-[HP_DELTA]   ❤️ Sel HP 44→44.
-[GROUP_MP] 🔷 Party restores MP +9 (group).
-[MP_DELTA]   🔷 Brann MP 5→5.
-[MP_DELTA]   🔷 Quen MP 30→30.
-[MP_DELTA]   🔷 Ravel MP 11→11.
-[MP_DELTA]   🔷 Sel MP 26→29.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_EXCHANGE] ⚔ Slimes clash: Brann takes 15 (70→55). ✨ Quen hits for 82 (CRIT!).
-[HEAL] 🩹 Healer restores Brann +15 HP (55→70).
-[LOOT] 💰 Loot: +9 gold.
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: abandoned outpost. The party regroups.
-[GROUP_HEAL] ✨ Party heals +13 (group).
-[HP_DELTA]   ❤️ Brann HP 70→70.
-[HP_DELTA]   ❤️ Quen HP 40→40.
-[HP_DELTA]   ❤️ Ravel HP 45→45.
-[HP_DELTA]   ❤️ Sel HP 44→44.
-[GROUP_MP] 🔷 Party restores MP +7 (group).
-[MP_DELTA]   🔷 Brann MP 5→5.
-[MP_DELTA]   🔷 Quen MP 30→30.
-[MP_DELTA]   🔷 Ravel MP 11→11.
-[MP_DELTA]   🔷 Sel MP 26→29.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_EXCHANGE] ⚔ Bandits clash: Brann takes 9 (70→61). ✨ Quen hits for 30.
-[LOOT] 💰 Loot: +7 gold.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_EXCHANGE] ⚔ Slimes clash: Brann takes 12 (61→49). ✨ Quen hits for 60 (CRIT!).
-[HEAL] 🩹 Healer restores Brann +9 HP (49→58).
-[LOOT] 💰 Loot: +11 gold.
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: abandoned outpost. The party regroups.
-[GROUP_HEAL] ✨ Party heals +12 (group).
-[HP_DELTA]   ❤️ Brann HP 58→70.
-[HP_DELTA]   ❤️ Quen HP 40→40.
-[HP_DELTA]   ❤️ Ravel HP 45→45.
-[HP_DELTA]   ❤️ Sel HP 44→44.
+[HP_DELTA]   ❤️ Malum of Dockside HP 1→9.
+[HP_DELTA]   ❤️ Toros the Unlucky HP 32→40.
+[HP_DELTA]   ❤️ Brris HP 44→45.
+[HP_DELTA]   ❤️ Harris HP 41→44.
 [GROUP_MP] 🔷 Party restores MP +6 (group).
-[MP_DELTA]   🔷 Brann MP 5→5.
-[MP_DELTA]   🔷 Quen MP 30→30.
-[MP_DELTA]   🔷 Ravel MP 11→11.
-[MP_DELTA]   🔷 Sel MP 26→29.
+[MP_DELTA]   🔷 Malum of Dockside MP 5→5.
+[MP_DELTA]   🔷 Toros the Unlucky MP 1→7.
+[MP_DELTA]   🔷 Brris MP 10→11.
+[MP_DELTA]   🔷 Harris MP 4→10.
+[WOUND_HEAL] 🩺 Relief treatment: Malum of Dockside recovers 1 wound.
+[STAT_DEF] 🟦 DEF 2→3 (wounds 5→4).
+[RESOLVE] 🧠 Malum of Dockside steadies (0→15).
 [BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_EXCHANGE] ⚔ Slimes clash: Brann takes 3 (70→67). ✨ Quen hits for 17.
-[LOOT] 💰 Loot: +11 gold.
+[ENCOUNTER] ⚔ Combat: Skeleton (threat 3).
+[AMBUSH] 🕳 Ambush! Something lashes out before you can set formation.
+[AMBUSH_HIT] 🕳 AMBUSH → Toros the Unlucky takes 3 (40→37).
+[COMBAT_EXCHANGE] ⚔ Skeleton strikes: Malum of Dockside takes 25 (9→-16).
+[THIEF_EXEC_CRIT] 🗡 Brris smells blood: 62 damage (CRIT!).
+[MAGE_HIT] ✨ Toros the Unlucky casts for 35. [MP 7→4]
+[HEAL] 🩹 Healer restores Malum of Dockside +6 HP (-16→-10).
+[RETIRE_NOTICE] 🏳 Malum of Dockside mutters: 'After this… I'm done.'
+[KNOCKDOWN] ⚠ Malum of Dockside collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Malum of Dockside gains a wound (5). DEF now 2.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Slime (threat 2).
+[COMBAT_EXCHANGE] ⚔ Slime strikes: Malum of Dockside takes 15 (1→-14).
+[THIEF_EXEC_CRIT] 🗡 Brris smells blood: 62 damage (CRIT!).
+[MAGE_HIT] ✨ Toros the Unlucky casts for 36. [MP 4→2]
+[HEAL] 🩹 Healer restores Malum of Dockside +12 HP (-14→-2).
+[KNOCKDOWN] ⚠ Malum of Dockside collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Malum of Dockside gains a wound (6). DEF now 1.
 [BEAT_SOURCE] 🧭 Exploration find: the party spots something ahead.
 [CHEST_OPEN] 🧰 Chest found.
-[CHEST_ITEM] 🧰 Chest: found Forgotten Gem.
-[TREASURE] 💰 Treasure: Forgotten Gem converts to +153 gold.
+[CHEST_GOLD] 🧰 Chest: +23 gold.
 [BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_EXCHANGE] ⚔ Skeletons clash: Brann takes 8 (67→59). ✨ Quen hits for 22.
-[HEAL] 🩹 Healer restores Brann +7 HP (59→66).
-[LOOT] 💰 Loot: +9 gold.
+[ENCOUNTER] ⚔ Combat: Cult Acolyte (threat 1).
+[COMBAT_EXCHANGE] ⚔ Cult Acolyte strikes: Malum of Dockside takes 9 (1→-8).
+[THIEF_EXEC_CRIT] 🗡 Brris smells blood: 64 damage (CRIT!).
+[MAGE_HIT] ✨ Toros the Unlucky casts for 22. [MP 2→0]
+[HEAL] 🩹 Healer restores Malum of Dockside +11 HP (-8→3).
 [BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: abandoned outpost. The party regroups.
+[RELIEF_START] 🕯 Relief: campfire. The party regroups.
 [GROUP_HEAL] ✨ Party heals +11 (group).
-[HP_DELTA]   ❤️ Brann HP 66→70.
-[HP_DELTA]   ❤️ Quen HP 40→40.
-[HP_DELTA]   ❤️ Ravel HP 45→45.
-[HP_DELTA]   ❤️ Sel HP 44→44.
-[GROUP_MP] 🔷 Party restores MP +4 (group).
-[MP_DELTA]   🔷 Brann MP 5→5.
-[MP_DELTA]   🔷 Quen MP 30→30.
-[MP_DELTA]   🔷 Ravel MP 11→11.
-[MP_DELTA]   🔷 Sel MP 26→29.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_EXCHANGE] ⚔ Bandits clash: Brann takes 5 (70→65). ✨ Quen hits for 19.
-[LOOT] 💰 Loot: +12 gold.
-[BEAT_SOURCE] 🧭 Encounter: a traveling merchant appears.
-[MERCHANT_SKIP] 🧿 Merchant: party browses, can't afford Fortifying Vial (790g).
-[BEAT_SOURCE] 🧭 Exploration find: the party spots something ahead.
-[CHEST_OPEN] 🧰 Chest found.
-[CHEST_GOLD] 🧰 Chest: +16 gold.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_EXCHANGE] ⚔ Skeletons clash: Brann takes 10 (65→55). ✨ Quen hits for 22.
-[HEAL] 🩹 Healer restores Brann +14 HP (55→69).
-[LOOT] 💰 Loot: +10 gold.
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: abandoned outpost. The party regroups.
-[GROUP_HEAL] ✨ Party heals +13 (group).
-[HP_DELTA]   ❤️ Brann HP 69→70.
-[HP_DELTA]   ❤️ Quen HP 40→40.
-[HP_DELTA]   ❤️ Ravel HP 45→45.
-[HP_DELTA]   ❤️ Sel HP 44→44.
+[HP_DELTA]   ❤️ Malum of Dockside HP 3→14.
+[HP_DELTA]   ❤️ Toros the Unlucky HP 37→40.
+[HP_DELTA]   ❤️ Brris HP 45→45.
+[HP_DELTA]   ❤️ Harris HP 44→44.
 [GROUP_MP] 🔷 Party restores MP +8 (group).
-[MP_DELTA]   🔷 Brann MP 5→5.
-[MP_DELTA]   🔷 Quen MP 30→30.
-[MP_DELTA]   🔷 Ravel MP 11→11.
-[MP_DELTA]   🔷 Sel MP 26→29.
+[MP_DELTA]   🔷 Malum of Dockside MP 5→5.
+[MP_DELTA]   🔷 Toros the Unlucky MP 0→8.
+[MP_DELTA]   🔷 Brris MP 11→11.
+[MP_DELTA]   🔷 Harris MP 1→9.
+[WOUND_HEAL] 🩺 Relief treatment: Malum of Dockside recovers 1 wound.
+[STAT_DEF] 🟦 DEF 1→2 (wounds 6→5).
+[RESOLVE] 🧠 Malum of Dockside steadies (0→11).
 [BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_EXCHANGE] ⚔ Wolfpack clash: Brann takes 24 (70→46). ✨ Quen hits for 47.
-[HEAL] 🩹 Healer restores Brann +9 HP (46→55).
-[LOOT] 💰 Loot: +9 gold.
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: healing shrine. The party regroups.
-[GROUP_HEAL] ✨ Party heals +6 (group).
-[HP_DELTA]   ❤️ Brann HP 55→61.
-[HP_DELTA]   ❤️ Quen HP 40→40.
-[HP_DELTA]   ❤️ Ravel HP 45→45.
-[HP_DELTA]   ❤️ Sel HP 44→44.
-[GROUP_MP] 🔷 Party restores MP +8 (group).
-[MP_DELTA]   🔷 Brann MP 5→5.
-[MP_DELTA]   🔷 Quen MP 30→30.
-[MP_DELTA]   🔷 Ravel MP 11→11.
-[MP_DELTA]   🔷 Sel MP 26→29.
+[ENCOUNTER] ⚔ Combat: Slime (threat 8).
+[REINFORCEMENTS] 🪓 Reinforcements: more shapes join the fight from the dark.
+[COMBAT_EXCHANGE] ⚔ Slime strikes: Malum of Dockside takes 54 (14→-40).
+[CHAOS] 💢 Chaos erupts in the scrum.
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~2).
+[EXECUTION_BLOW] 🩸 EXECUTION BLOW → Malum of Dockside takes 1 (-40→-41).
+[SPLASH_HIT] ☠ SPLASH → Toros the Unlucky takes 1 (40→39).
+[SPLASH_HIT] ☠ SPLASH → Brris takes 1 (45→44).
+[SPLASH_HIT] ☠ SPLASH → Harris takes 1 (44→43).
+[THIEF_EXEC_CRIT] 🗡 Brris smells blood: 66 damage (CRIT!).
+[MAGE_HIT] ✨ Toros the Unlucky casts for 75. [MP 8→4]
+[HEAL] 🩹 Healer restores Malum of Dockside +7 HP (-41→-34).
+[RETIRE_NOTICE] 🏳 Malum of Dockside mutters: 'After this… I'm done.'
+[KNOCKDOWN] ⚠ Malum of Dockside collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Malum of Dockside gains a wound (6). DEF now 1.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Skeleton (threat 2).
+[COMBAT_EXCHANGE] ⚔ Skeleton strikes: Malum of Dockside takes 19 (1→-18).
+[THIEF_EXEC_CRIT] 🗡 Brris smells blood: 58 damage (CRIT!).
+[MAGE_HIT] ✨ Toros the Unlucky casts for 34. [MP 4→2]
+[HEAL] 🩹 Healer restores Malum of Dockside +8 HP (-18→-10).
+[KNOCKDOWN] ⚠ Malum of Dockside collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Malum of Dockside gains a wound (7). DEF now 0.
 [BEAT_SOURCE] 🧭 Exploration find: the party spots something ahead.
 [CHEST_OPEN] 🧰 Chest found.
 [CHEST_TRAP] 🧰 Chest: it's a trap! Poison needles.
-[SPLASH_BEGIN] ☠ Splash damage begins (base ~4).
-[SPLASH_HIT] ☠ SPLASH → Brann takes 0 (61→61).
-[SPLASH_HIT] ☠ SPLASH → Quen takes 1 (40→39).
-[SPLASH_HIT] ☠ SPLASH → Ravel takes 2 (45→43).
-[SPLASH_HIT] ☠ SPLASH → Sel takes 1 (44→43).
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~6).
+[SPLASH_HIT] ☠ SPLASH → Malum of Dockside takes 6 (1→-5).
+[DOWNED] ⚠ Malum of Dockside is down!
+[SPLASH_HIT] ☠ SPLASH → Toros the Unlucky takes 3 (39→36).
+[SPLASH_HIT] ☠ SPLASH → Brris takes 4 (44→40).
+[SPLASH_HIT] ☠ SPLASH → Harris takes 2 (43→41).
+[BEAT_SOURCE] 🧭 Encounter: a traveling merchant appears.
+[MERCHANT_SKIP] 🧿 Merchant: party browses, can't afford Keen Iron Sword (296g).
+[RETIRE] 🏳 Malum of Dockside retires. 'Not today. Not anymore.'
+[RECRUIT] 🧑‍🤝‍🧑 Recruit joins: Tank Morris (Sewer-raised, Scarred).
+[BEAT_SOURCE] 🧭 Encounter: a traveling merchant appears.
+[MERCHANT_SKIP] 🧿 Merchant: party browses, can't afford Iron Wraps (163g).
 [BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_EXCHANGE] ⚔ Wolfpack clash: Brann takes 19 (61→42). ✨ Quen hits for 76 (CRIT!).
-[HEAL] 🩹 Healer restores Brann +8 HP (42→50).
-[LOOT] 💰 Loot: +6 gold.
+[ENCOUNTER] ⚔ Combat: Skeleton (threat 3).
+[COMBAT_EXCHANGE] ⚔ Skeleton strikes: Morris takes 15 (74→59).
+[THIEF_CRIT] 🗡 Brris slips in: 48 damage (CRIT!).
+[MAGE_HIT] ✨ Toros the Unlucky jabs for 16. [NO MP]
+[HEAL] 🩹 Healer restores Morris +10 HP (59→69).
 [BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_EXCHANGE] ⚔ Slimes clash: Brann takes 16 (50→34). ✨ Quen hits for 34.
-[HEAL] 🩹 Healer restores Brann +14 HP (34→48).
-[LOOT] 💰 Loot: +12 gold.
+[ENCOUNTER] ⚔ Combat: Warg (threat 2).
+[COMBAT_EXCHANGE] ⚔ Warg strikes: Morris takes 11 (69→58).
+[THIEF_HIT] 🗡 Brris slips in: 23 damage.
+[MAGE_HIT] ✨ Toros the Unlucky casts for 32. [MP 2→0]
 [BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
 [RELIEF_START] 🕯 Relief: quiet corridor. The party regroups.
-[GROUP_HEAL] ✨ Party heals +14 (group).
-[HP_DELTA]   ❤️ Brann HP 48→62.
-[HP_DELTA]   ❤️ Quen HP 39→40.
-[HP_DELTA]   ❤️ Ravel HP 43→45.
-[HP_DELTA]   ❤️ Sel HP 43→44.
-[GROUP_MP] 🔷 Party restores MP +7 (group).
-[MP_DELTA]   🔷 Brann MP 5→5.
-[MP_DELTA]   🔷 Quen MP 30→30.
-[MP_DELTA]   🔷 Ravel MP 11→11.
-[MP_DELTA]   🔷 Sel MP 23→29.
+[GROUP_HEAL] ✨ Party heals +6 (group).
+[HP_DELTA]   ❤️ Morris HP 58→64.
+[HP_DELTA]   ❤️ Toros the Unlucky HP 36→40.
+[HP_DELTA]   ❤️ Brris HP 40→45.
+[HP_DELTA]   ❤️ Harris HP 41→44.
+[GROUP_MP] 🔷 Party restores MP +9 (group).
+[MP_DELTA]   🔷 Morris MP 5→5.
+[MP_DELTA]   🔷 Toros the Unlucky MP 0→9.
+[MP_DELTA]   🔷 Brris MP 11→11.
+[MP_DELTA]   🔷 Harris MP 0→9.
 [BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_EXCHANGE] ⚔ Skeletons clash: Brann takes 10 (62→52). ✨ Quen hits for 32.
-[HEAL] 🩹 Healer restores Brann +13 HP (52→65).
-[LOOT] 💰 Loot: +12 gold.
+[ENCOUNTER] ⚔ Combat: Warg (threat 6).
+[COMBAT_EXCHANGE] ⚔ Warg strikes: Morris takes 35 (64→29).
+[THIEF_CRIT] 🗡 Brris slips in: 50 damage (CRIT!).
+[MAGE_HIT] ✨ Toros the Unlucky casts for 54. [MP 9→5]
+[HEAL] 🩹 Healer restores Morris +7 HP (29→36).
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Bandit (threat 7).
+[COMBAT_EXCHANGE] ⚔ Bandit strikes: Morris takes 44 (36→-8).
+[THIEF_EXEC_CRIT] 🗡 Brris smells blood: 64 damage (CRIT!).
+[MAGE_HIT] ✨ Toros the Unlucky casts for 63. [MP 5→1]
+[HEAL] 🩹 Healer restores Morris +7 HP (-8→-1).
+[KNOCKDOWN] ⚠ Morris collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Morris gains a wound (1). DEF now 5.
+[NEAR_DEATH] 🚨 Near-death: Morris is under 20% HP!
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Bandit (threat 6).
+[COMBAT_EXCHANGE] ⚔ Bandit strikes: Morris takes 34 (1→-33).
+[THIEF_EXEC] 🗡 Brris smells blood: 35 damage.
+[MAGE_HIT] ✨ Toros the Unlucky jabs for 23. [NO MP]
+[HEAL] 🩹 Healer restores Morris +11 HP (-33→-22).
+[KNOCKDOWN] ⚠ Morris collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Morris gains a wound (2). DEF now 4.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Bandit (threat 2).
+[COMBAT_EXCHANGE] ⚔ Bandit strikes: Morris takes 16 (1→-15).
+[THIEF_EXEC] 🗡 Brris smells blood: 33 damage.
+[MAGE_HIT] ✨ Toros the Unlucky jabs for 8. [NO MP]
+[CRACKING] 🫠 Morris looks shaken (38→20).
+[KNOCKDOWN] ⚠ Morris collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Morris gains a wound (3). DEF now 3.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: campfire. The party regroups.
+[GROUP_HEAL] ✨ Party heals +6 (group).
+[HP_DELTA]   ❤️ Morris HP 1→7.
+[HP_DELTA]   ❤️ Toros the Unlucky HP 40→40.
+[HP_DELTA]   ❤️ Brris HP 45→45.
+[HP_DELTA]   ❤️ Harris HP 44→44.
+[GROUP_MP] 🔷 Party restores MP +7 (group).
+[MP_DELTA]   🔷 Morris MP 5→5.
+[MP_DELTA]   🔷 Toros the Unlucky MP 1→8.
+[MP_DELTA]   🔷 Brris MP 11→11.
+[MP_DELTA]   🔷 Harris MP 0→7.
+[WOUND_HEAL] 🩺 Relief treatment: Morris recovers 1 wound.
+[STAT_DEF] 🟦 DEF 3→4 (wounds 3→2).
+[RESOLVE] 🧠 Morris steadies (12→24).
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Cult Acolyte (threat 5).
+[AMBUSH] 🕳 Ambush! Something lashes out before you can set formation.
+[AMBUSH_HIT] 🕳 AMBUSH → Harris takes 7 (44→37).
+[COMBAT_EXCHANGE] ⚔ Cult Acolyte strikes: Morris takes 33 (7→-26).
+[THIEF_EXEC] 🗡 Brris smells blood: 34 damage.
+[MAGE_HIT] ✨ Toros the Unlucky casts for 48. [MP 8→5]
+[HEAL] 🩹 Healer restores Morris +12 HP (-26→-14).
+[RETIRE_NOTICE] 🏳 Morris mutters: 'After this… I'm done.'
+[KNOCKDOWN] ⚠ Morris collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Morris gains a wound (3). DEF now 3.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Warg (threat 7).
+[COMBAT_EXCHANGE] ⚔ Warg strikes: Morris takes 48 (1→-47).
+[THIEF_EXEC] 🗡 Brris smells blood: 27 damage.
+[MAGE_CRIT] ✨ Toros the Unlucky casts for 144 (CRIT!). [MP 5→1]
+[HEAL] 🩹 Healer restores Morris +10 HP (-47→-37).
+[KNOCKDOWN] ⚠ Morris collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Morris gains a wound (4). DEF now 2.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Cult Acolyte (threat 5).
+[SLIPPERY] 🧊 Slippery ground: footing is bad, armor helps less than usual.
+[COMBAT_EXCHANGE] ⚔ Cult Acolyte strikes: Morris takes 36 (1→-35).
+[THIEF_EXEC] 🗡 Brris smells blood: 28 damage.
+[MAGE_HIT] ✨ Toros the Unlucky jabs for 18. [NO MP]
+[KNOCKDOWN] ⚠ Morris collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Morris gains a wound (5). DEF now 1.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Skeleton (threat 7).
+[COMBAT_EXCHANGE] ⚔ Skeleton strikes: Morris takes 47 (1→-46).
+[THIEF_EXEC_CRIT] 🗡 Brris smells blood: 64 damage (CRIT!).
+[MAGE_HIT] ✨ Toros the Unlucky jabs for 24. [NO MP]
+[KNOCKDOWN] ⚠ Morris collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Morris gains a wound (6). DEF now 0.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: healing shrine. The party regroups.
+[GROUP_HEAL] ✨ Party heals +11 (group).
+[HP_DELTA]   ❤️ Morris HP 1→12.
+[HP_DELTA]   ❤️ Toros the Unlucky HP 40→40.
+[HP_DELTA]   ❤️ Brris HP 45→45.
+[HP_DELTA]   ❤️ Harris HP 37→44.
+[GROUP_MP] 🔷 Party restores MP +6 (group).
+[MP_DELTA]   🔷 Morris MP 5→5.
+[MP_DELTA]   🔷 Toros the Unlucky MP 1→7.
+[MP_DELTA]   🔷 Brris MP 11→11.
+[MP_DELTA]   🔷 Harris MP 1→7.
+[WOUND_HEAL] 🩺 Relief treatment: Morris recovers 1 wound.
+[STAT_DEF] 🟦 DEF 0→1 (wounds 6→5).
+[RESOLVE] 🧠 Morris steadies (0→10).
+[BEAT_SOURCE] 🧭 Encounter: a traveling merchant appears.
+[MERCHANT_SKIP] 🧿 Merchant: party browses, can't afford Iron Cuirass (187g).
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Goblin (threat 4).
+[SLIPPERY] 🧊 Slippery ground: footing is bad, armor helps less than usual.
+[COMBAT_EXCHANGE] ⚔ Goblin strikes: Morris takes 36 (12→-24).
+[THIEF_EXEC] 🗡 Brris smells blood: 29 damage.
+[MAGE_HIT] ✨ Toros the Unlucky casts for 41. [MP 7→4]
+[HEAL] 🩹 Healer restores Morris +11 HP (-24→-13).
+[KNOCKDOWN] ⚠ Morris collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Morris gains a wound (6). DEF now 0.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Goblin (threat 4).
+[BERSERK] 🔥 Berserk rush: the enemy swings wild and hard.
+[COMBAT_EXCHANGE] ⚔ Goblin strikes: Morris takes 37 (1→-36).
+[CHAOS] 💢 Chaos erupts in the scrum.
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~1).
+[EXECUTION_BLOW] 🩸 EXECUTION BLOW → Morris takes 1 (-36→-37).
+[SPLASH_HIT] ☠ SPLASH → Toros the Unlucky takes 1 (40→39).
+[SPLASH_HIT] ☠ SPLASH → Brris takes 1 (45→44).
+[SPLASH_HIT] ☠ SPLASH → Harris takes 1 (44→43).
+[THIEF_EXEC_CRIT] 🗡 Brris smells blood: 70 damage (CRIT!).
+[MAGE_HIT] ✨ Toros the Unlucky casts for 50. [MP 4→1]
+[HEAL] 🩹 Healer restores Morris +10 HP (-37→-27).
+[KNOCKDOWN] ⚠ Morris collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Morris gains a wound (7). DEF now 0.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Warg (threat 6).
+[COMBAT_EXCHANGE] ⚔ Warg strikes: Morris takes 41 (1→-40).
+[THIEF_EXEC] 🗡 Brris smells blood: 31 damage.
+[MAGE_CRIT] ✨ Toros the Unlucky jabs for 56 (CRIT!). [NO MP]
+[KNOCKDOWN] ⚠ Morris collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Morris gains a wound (8). DEF now 0.
 [BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
 [RELIEF_START] 🕯 Relief: campfire. The party regroups.
 [GROUP_HEAL] ✨ Party heals +10 (group).
-[HP_DELTA]   ❤️ Brann HP 65→70.
-[HP_DELTA]   ❤️ Quen HP 40→40.
-[HP_DELTA]   ❤️ Ravel HP 45→45.
-[HP_DELTA]   ❤️ Sel HP 44→44.
-[GROUP_MP] 🔷 Party restores MP +8 (group).
-[MP_DELTA]   🔷 Brann MP 5→5.
-[MP_DELTA]   🔷 Quen MP 30→30.
-[MP_DELTA]   🔷 Ravel MP 11→11.
-[MP_DELTA]   🔷 Sel MP 26→29.
+[HP_DELTA]   ❤️ Morris HP 1→11.
+[HP_DELTA]   ❤️ Toros the Unlucky HP 39→40.
+[HP_DELTA]   ❤️ Brris HP 44→45.
+[HP_DELTA]   ❤️ Harris HP 43→44.
+[GROUP_MP] 🔷 Party restores MP +5 (group).
+[MP_DELTA]   🔷 Morris MP 5→5.
+[MP_DELTA]   🔷 Toros the Unlucky MP 1→6.
+[MP_DELTA]   🔷 Brris MP 11→11.
+[MP_DELTA]   🔷 Harris MP 1→6.
+[WOUND_HEAL] 🩺 Relief treatment: Morris recovers 1 wound.
+[STAT_DEF] 🟦 DEF 0→0 (wounds 8→7).
+[RESOLVE] 🧠 Morris steadies (0→17).
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Slime (threat 7).
+[COMBAT_EXCHANGE] ⚔ Slime strikes: Morris takes 52 (11→-41).
+[THIEF_EXEC_CRIT] 🗡 Brris smells blood: 54 damage (CRIT!).
+[MAGE_CRIT] ✨ Toros the Unlucky casts for 132 (CRIT!). [MP 6→2]
+[HEAL] 🩹 Healer restores Morris +14 HP (-41→-27).
+[RETIRE_NOTICE] 🏳 Morris mutters: 'After this… I'm done.'
+[KNOCKDOWN] ⚠ Morris collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Morris gains a wound (8). DEF now 0.
+[BEAT_SOURCE] 🧭 Encounter: a traveling merchant appears.
+[MERCHANT_SKIP] 🧿 Merchant: party browses, can't afford Fortifying Tonic (194g).
+[RETIRE] 🏳 Morris retires. 'Not today. Not anymore.'
+[RECRUIT] 🧑‍🤝‍🧑 Recruit joins: Tank Jenann the Unlucky (Ruins scholar, Stubborn).
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Skeleton (threat 5).
+[COMBAT_EXCHANGE] ⚔ Skeleton strikes: Jenann the Unlucky takes 26 (82→56).
+[THIEF_HIT] 🗡 Brris slips in: 28 damage.
+[MAGE_HIT] ✨ Toros the Unlucky jabs for 22. [NO MP]
+[HEAL] 🩹 Healer restores Jenann the Unlucky +10 HP (56→66).
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Cult Acolyte (threat 5).
+[COMBAT_EXCHANGE] ⚔ Cult Acolyte strikes: Jenann the Unlucky takes 33 (66→33).
+[THIEF_HIT] 🗡 Brris slips in: 26 damage.
+[MAGE_HIT] ✨ Toros the Unlucky jabs for 22. [NO MP]
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Bandit (threat 9).
+[REINFORCEMENTS] 🪓 Reinforcements: more shapes join the fight from the dark.
+[COMBAT_EXCHANGE] ⚔ Bandit strikes: Jenann the Unlucky takes 55 (33→-22).
+[CHAOS] 💢 Chaos erupts in the scrum.
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~2).
+[EXECUTION_BLOW] 🩸 EXECUTION BLOW → Jenann the Unlucky takes 1 (-22→-23).
+[SPLASH_HIT] ☠ SPLASH → Toros the Unlucky takes 1 (40→39).
+[SPLASH_HIT] ☠ SPLASH → Brris takes 1 (45→44).
+[SPLASH_HIT] ☠ SPLASH → Harris takes 1 (44→43).
+[THIEF_EXEC] 🗡 Brris smells blood: 24 damage.
+[MAGE_HIT] ✨ Toros the Unlucky jabs for 31. [NO MP]
+[KNOCKDOWN] ⚠ Jenann the Unlucky collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Jenann the Unlucky gains a wound (1). DEF now 6.
+[NEAR_DEATH] 🚨 Near-death: Jenann the Unlucky is under 20% HP!
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: healing shrine. The party regroups.
+[GROUP_HEAL] ✨ Party heals +11 (group).
+[HP_DELTA]   ❤️ Jenann the Unlucky HP 1→12.
+[HP_DELTA]   ❤️ Toros the Unlucky HP 39→40.
+[HP_DELTA]   ❤️ Brris HP 44→45.
+[HP_DELTA]   ❤️ Harris HP 43→44.
+[GROUP_MP] 🔷 Party restores MP +7 (group).
+[MP_DELTA]   🔷 Jenann the Unlucky MP 5→5.
+[MP_DELTA]   🔷 Toros the Unlucky MP 2→9.
+[MP_DELTA]   🔷 Brris MP 11→11.
+[MP_DELTA]   🔷 Harris MP 0→7.
+[WOUND_HEAL] 🩺 Relief treatment: Jenann the Unlucky recovers 1 wound.
+[STAT_DEF] 🟦 DEF 6→7 (wounds 1→0).
 [BEAT_SOURCE] 🧭 Exploration find: the party spots something ahead.
 [CHEST_OPEN] 🧰 Chest found.
-[CHEST_GOLD] 🧰 Chest: +19 gold.
+[CHEST_ITEM] 🧰 Chest: found Engraved Coin Cache.
+[TREASURE] 💰 Treasure: Engraved Coin Cache converts to +156 gold.
 [BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_EXCHANGE] ⚔ Bandits clash: Brann takes 21 (70→49). ✨ Quen hits for 37.
-[HEAL] 🩹 Healer restores Brann +10 HP (49→59).
-[LOOT] 💰 Loot: +8 gold.
+[ENCOUNTER] ⚔ Combat: Skeleton (threat 5).
+[COMBAT_EXCHANGE] ⚔ Skeleton strikes: Jenann the Unlucky takes 32 (12→-20).
+[THIEF_EXEC_CRIT] 🗡 Brris smells blood: 64 damage (CRIT!).
+[MAGE_HIT] ✨ Toros the Unlucky casts for 55. [MP 9→6]
+[HEAL] 🩹 Healer restores Jenann the Unlucky +13 HP (-20→-7).
+[KNOCKDOWN] ⚠ Jenann the Unlucky collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Jenann the Unlucky gains a wound (1). DEF now 6.
 [BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_EXCHANGE] ⚔ Bandits clash: Brann takes 20 (59→39). ✨ Quen hits for 41.
-[HEAL] 🩹 Healer restores Brann +15 HP (39→54).
-[LOOT] 💰 Loot: +13 gold.
+[ENCOUNTER] ⚔ Combat: Goblin (threat 7).
+[COMBAT_EXCHANGE] ⚔ Goblin strikes: Jenann the Unlucky takes 42 (1→-41).
+[THIEF_EXEC_CRIT] 🗡 Brris smells blood: 50 damage (CRIT!).
+[MAGE_HIT] ✨ Toros the Unlucky casts for 69. [MP 6→2]
+[HEAL] 🩹 Healer restores Jenann the Unlucky +15 HP (-41→-26).
+[CRACKING] 🫠 Jenann the Unlucky looks shaken (30→22).
+[KNOCKDOWN] ⚠ Jenann the Unlucky collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Jenann the Unlucky gains a wound (2). DEF now 5.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: healing shrine. The party regroups.
+[GROUP_HEAL] ✨ Party heals +9 (group).
+[HP_DELTA]   ❤️ Jenann the Unlucky HP 1→10.
+[HP_DELTA]   ❤️ Toros the Unlucky HP 40→40.
+[HP_DELTA]   ❤️ Brris HP 45→45.
+[HP_DELTA]   ❤️ Harris HP 44→44.
+[GROUP_MP] 🔷 Party restores MP +6 (group).
+[MP_DELTA]   🔷 Jenann the Unlucky MP 5→5.
+[MP_DELTA]   🔷 Toros the Unlucky MP 2→8.
+[MP_DELTA]   🔷 Brris MP 11→11.
+[MP_DELTA]   🔷 Harris MP 1→7.
+[WOUND_HEAL] 🩺 Relief treatment: Jenann the Unlucky recovers 1 wound.
+[STAT_DEF] 🟦 DEF 5→6 (wounds 2→1).
+[RESOLVE] 🧠 Jenann the Unlucky steadies (22→36).
+[BEAT_SOURCE] 🧭 Exploration find: the party spots something ahead.
+[CHEST_OPEN] 🧰 Chest found.
+[CHEST_TRAP] 🧰 Chest: it's a trap! Poison needles.
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~8).
+[SPLASH_HIT] ☠ SPLASH → Jenann the Unlucky takes 3 (10→7).
+[SPLASH_HIT] ☠ SPLASH → Toros the Unlucky takes 6 (40→34).
+[SPLASH_HIT] ☠ SPLASH → Brris takes 5 (45→40).
+[SPLASH_HIT] ☠ SPLASH → Harris takes 5 (44→39).
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Warg (threat 6).
+[AMBUSH] 🕳 Ambush! Something lashes out before you can set formation.
+[AMBUSH_HIT] 🕳 AMBUSH → Harris takes 3 (39→36).
+[COMBAT_EXCHANGE] ⚔ Warg strikes: Jenann the Unlucky takes 36 (7→-29).
+[THIEF_EXEC] 🗡 Brris smells blood: 30 damage.
+[MAGE_HIT] ✨ Toros the Unlucky casts for 60. [MP 8→4]
+[HEAL] 🩹 Healer restores Jenann the Unlucky +14 HP (-29→-15).
+[CRACKING] 🫠 Jenann the Unlucky looks shaken (36→18).
+[RETIRE_NOTICE] 🏳 Jenann the Unlucky mutters: 'After this… I'm done.'
+[KNOCKDOWN] ⚠ Jenann the Unlucky collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Jenann the Unlucky gains a wound (2). DEF now 5.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Goblin (threat 7).
+[CURSED_GROUND] 🜏 Cursed ground: spells feel heavier and more expensive.
+[COMBAT_EXCHANGE] ⚔ Goblin strikes: Jenann the Unlucky takes 46 (1→-45).
+[THIEF_EXEC_CRIT] 🗡 Brris smells blood: 68 damage (CRIT!).
+[MAGE_HIT] ✨ Toros the Unlucky jabs for 29. [NO MP]
+[HEAL] 🩹 Healer restores Jenann the Unlucky +13 HP (-45→-32).
+[KNOCKDOWN] ⚠ Jenann the Unlucky collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Jenann the Unlucky gains a wound (3). DEF now 4.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Bandit (threat 6).
+[COMBAT_EXCHANGE] ⚔ Bandit strikes: Jenann the Unlucky takes 38 (1→-37).
+[THIEF_EXEC] 🗡 Brris smells blood: 29 damage.
+[MAGE_HIT] ✨ Toros the Unlucky casts for 64. [MP 4→0]
+[KNOCKDOWN] ⚠ Jenann the Unlucky collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Jenann the Unlucky gains a wound (4). DEF now 3.
+[BEAT_SOURCE] 🧭 Encounter: a traveling merchant appears.
+[MERCHANT_SKIP] 🧿 Merchant: party browses, can't afford Bone Shield (363g).
+[RETIRE] 🏳 Jenann the Unlucky retires. 'Not today. Not anymore.'
+[RECRUIT] 🧑‍🤝‍🧑 Recruit joins: Tank Selira the Unlucky (Temple-run, Stubborn).
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Goblin (threat 3).
+[COMBAT_EXCHANGE] ⚔ Goblin strikes: Selira the Unlucky takes 21 (82→61).
+[THIEF_HIT] 🗡 Brris slips in: 24 damage.
+[MAGE_HIT] ✨ Toros the Unlucky jabs for 19. [NO MP]
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: healing shrine. The party regroups.
+[GROUP_HEAL] ✨ Party heals +14 (group).
+[HP_DELTA]   ❤️ Selira the Unlucky HP 61→75.
+[HP_DELTA]   ❤️ Toros the Unlucky HP 34→40.
+[HP_DELTA]   ❤️ Brris HP 40→45.
+[HP_DELTA]   ❤️ Harris HP 36→44.
+[GROUP_MP] 🔷 Party restores MP +7 (group).
+[MP_DELTA]   🔷 Selira the Unlucky MP 5→5.
+[MP_DELTA]   🔷 Toros the Unlucky MP 0→7.
+[MP_DELTA]   🔷 Brris MP 11→11.
+[MP_DELTA]   🔷 Harris MP 1→8.
+[BEAT_SOURCE] 🧭 Exploration find: the party spots something ahead.
+[CHEST_OPEN] 🧰 Chest found.
+[CHEST_GOLD] 🧰 Chest: +25 gold.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Slime (threat 4).
+[BERSERK] 🔥 Berserk rush: the enemy swings wild and hard.
+[COMBAT_EXCHANGE] ⚔ Slime strikes: Selira the Unlucky takes 38 (75→37).
+[CHAOS] 💢 Chaos erupts in the scrum.
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~1).
+[SPLASH_HIT] ☠ SPLASH → Selira the Unlucky takes 1 (37→36).
+[SPLASH_HIT] ☠ SPLASH → Toros the Unlucky takes 1 (40→39).
+[SPLASH_HIT] ☠ SPLASH → Brris takes 1 (45→44).
+[SPLASH_HIT] ☠ SPLASH → Harris takes 1 (44→43).
+[THIEF_HIT] 🗡 Brris slips in: 28 damage.
+[MAGE_CRIT] ✨ Toros the Unlucky casts for 96 (CRIT!). [MP 7→4]
+[HEAL] 🩹 Healer restores Selira the Unlucky +15 HP (36→51).
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Skeleton (threat 3).
+[CURSED_GROUND] 🜏 Cursed ground: spells feel heavier and more expensive.
+[COMBAT_EXCHANGE] ⚔ Skeleton strikes: Selira the Unlucky takes 22 (51→29).
+[THIEF_HIT] 🗡 Brris slips in: 23 damage.
+[MAGE_HIT] ✨ Toros the Unlucky jabs for 14. [NO MP]
+[HEAL] 🩹 Healer restores Selira the Unlucky +10 HP (29→39).
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Skeleton (threat 7).
+[REINFORCEMENTS] 🪓 Reinforcements: more shapes join the fight from the dark.
+[COMBAT_EXCHANGE] ⚔ Skeleton strikes: Selira the Unlucky takes 43 (39→-4).
+[CHAOS] 💢 Chaos erupts in the scrum.
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~2).
+[EXECUTION_BLOW] 🩸 EXECUTION BLOW → Selira the Unlucky takes 1 (-4→-5).
+[SPLASH_HIT] ☠ SPLASH → Toros the Unlucky takes 1 (39→38).
+[SPLASH_HIT] ☠ SPLASH → Brris takes 1 (44→43).
+[SPLASH_HIT] ☠ SPLASH → Harris takes 1 (43→42).
+[THIEF_EXEC] 🗡 Brris smells blood: 28 damage.
+[MAGE_HIT] ✨ Toros the Unlucky casts for 61. [MP 4→0]
+[KNOCKDOWN] ⚠ Selira the Unlucky collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Selira the Unlucky gains a wound (1). DEF now 6.
+[NEAR_DEATH] 🚨 Near-death: Selira the Unlucky is under 20% HP!
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Slime (threat 5).
+[ELITE] 👁 Elite foe: tougher, meaner, and weirdly proud of it.
+[COMBAT_EXCHANGE] ⚔ Slime strikes: Selira the Unlucky takes 40 (1→-39).
+[THIEF_EXEC_CRIT] 🗡 Brris smells blood: 56 damage (CRIT!).
+[MAGE_HIT] ✨ Toros the Unlucky jabs for 25. [NO MP]
+[KNOCKDOWN] ⚠ Selira the Unlucky collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Selira the Unlucky gains a wound (2). DEF now 5.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: abandoned outpost. The party regroups.
+[GROUP_HEAL] ✨ Party heals +8 (group).
+[HP_DELTA]   ❤️ Selira the Unlucky HP 1→9.
+[HP_DELTA]   ❤️ Toros the Unlucky HP 38→40.
+[HP_DELTA]   ❤️ Brris HP 43→45.
+[HP_DELTA]   ❤️ Harris HP 42→44.
+[GROUP_MP] 🔷 Party restores MP +7 (group).
+[MP_DELTA]   🔷 Selira the Unlucky MP 5→5.
+[MP_DELTA]   🔷 Toros the Unlucky MP 0→7.
+[MP_DELTA]   🔷 Brris MP 11→11.
+[MP_DELTA]   🔷 Harris MP 2→9.
+[WOUND_HEAL] 🩺 Relief treatment: Selira the Unlucky recovers 1 wound.
+[STAT_DEF] 🟦 DEF 5→6 (wounds 2→1).
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Goblin (threat 7).
+[SLIPPERY] 🧊 Slippery ground: footing is bad, armor helps less than usual.
+[COMBAT_EXCHANGE] ⚔ Goblin strikes: Selira the Unlucky takes 49 (9→-40).
+[THIEF_EXEC] 🗡 Brris smells blood: 33 damage.
+[MAGE_HIT] ✨ Toros the Unlucky casts for 70. [MP 7→3]
+[HEAL] 🩹 Healer restores Selira the Unlucky +10 HP (-40→-30).
+[KNOCKDOWN] ⚠ Selira the Unlucky collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Selira the Unlucky gains a wound (2). DEF now 5.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Bandit (threat 3).
+[COMBAT_EXCHANGE] ⚔ Bandit strikes: Selira the Unlucky takes 18 (1→-17).
+[THIEF_EXEC] 🗡 Brris smells blood: 27 damage.
+[MAGE_HIT] ✨ Toros the Unlucky casts for 33. [MP 3→0]
+[HEAL] 🩹 Healer restores Selira the Unlucky +15 HP (-17→-2).
+[CRACKING] 🫠 Selira the Unlucky looks shaken (27→9).
+[RETIRE_NOTICE] 🏳 Selira the Unlucky mutters: 'After this… I'm done.'
+[KNOCKDOWN] ⚠ Selira the Unlucky collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Selira the Unlucky gains a wound (3). DEF now 4.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Goblin (threat 10).
+[ELITE] 👁 Elite foe: tougher, meaner, and weirdly proud of it.
+[COMBAT_EXCHANGE] ⚔ Goblin strikes: Selira the Unlucky takes 75 (1→-74).
+[THIEF_EXEC_CRIT] 🗡 Brris smells blood: 68 damage (CRIT!).
+[MAGE_HIT] ✨ Toros the Unlucky jabs for 32. [NO MP]
+[HEAL] 🩹 Healer restores Selira the Unlucky +13 HP (-74→-61).
+[KNOCKDOWN] ⚠ Selira the Unlucky collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Selira the Unlucky gains a wound (4). DEF now 3.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: quiet corridor. The party regroups.
+[GROUP_HEAL] ✨ Party heals +10 (group).
+[HP_DELTA]   ❤️ Selira the Unlucky HP 1→11.
+[HP_DELTA]   ❤️ Toros the Unlucky HP 40→40.
+[HP_DELTA]   ❤️ Brris HP 45→45.
+[HP_DELTA]   ❤️ Harris HP 44→44.
+[GROUP_MP] 🔷 Party restores MP +6 (group).
+[MP_DELTA]   🔷 Selira the Unlucky MP 5→5.
+[MP_DELTA]   🔷 Toros the Unlucky MP 0→6.
+[MP_DELTA]   🔷 Brris MP 11→11.
+[MP_DELTA]   🔷 Harris MP 0→6.
+[WOUND_HEAL] 🩺 Relief treatment: Selira the Unlucky recovers 1 wound.
+[STAT_DEF] 🟦 DEF 3→4 (wounds 4→3).
+[RESOLVE] 🧠 Selira the Unlucky steadies (0→16).
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Slime (threat 7).
+[COMBAT_EXCHANGE] ⚔ Slime strikes: Selira the Unlucky takes 41 (11→-30).
+[THIEF_EXEC] 🗡 Brris smells blood: 31 damage.
+[MAGE_HIT] ✨ Toros the Unlucky casts for 67. [MP 6→2]
+[HEAL] 🩹 Healer restores Selira the Unlucky +14 HP (-30→-16).
+[RETIRE_NOTICE] 🏳 Selira the Unlucky mutters: 'After this… I'm done.'
+[KNOCKDOWN] ⚠ Selira the Unlucky collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Selira the Unlucky gains a wound (4). DEF now 3.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Goblin (threat 6).
+[COMBAT_EXCHANGE] ⚔ Goblin strikes: Selira the Unlucky takes 42 (1→-41).
+[THIEF_EXEC] 🗡 Brris smells blood: 30 damage.
+[MAGE_HIT] ✨ Toros the Unlucky jabs for 28. [NO MP]
+[HEAL] 🩹 Healer restores Selira the Unlucky +16 HP (-41→-25).
+[KNOCKDOWN] ⚠ Selira the Unlucky collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Selira the Unlucky gains a wound (5). DEF now 2.
+[BEAT_SOURCE] 🧭 Encounter: a traveling merchant appears.
+[MERCHANT_SKIP] 🧿 Merchant: party browses, can't afford Oak Axe (315g).
+[RETIRE] 🏳 Selira the Unlucky retires. 'Not today. Not anymore.'
+[RECRUIT] 🧑‍🤝‍🧑 Recruit joins: Tank Haryx (Old garrison, Scarred).
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Cult Acolyte (threat 4).
+[COMBAT_EXCHANGE] ⚔ Cult Acolyte strikes: Haryx takes 26 (86→60).
+[THIEF_HIT] 🗡 Brris slips in: 25 damage.
+[MAGE_HIT] ✨ Toros the Unlucky jabs for 22. [NO MP]
+[BEAT_SOURCE] 🧭 Encounter: a traveling merchant appears.
+[MERCHANT_BUY] 🧿 Merchant: Haryx buys Brass Ring for 217 gold (230→13).
+[EQUIP] 📦 EQUIP → Haryx equips (trinket): Brass Ring [Δ23.0].
+[STAT_ATK] 🟩 ATK 10→11.
+[STAT_DEF] 🟦 DEF 7→8 (base 7→7).
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Slime (threat 8).
+[COMBAT_EXCHANGE] ⚔ Slime strikes: Haryx takes 50 (60→10).
+[THIEF_HIT] 🗡 Brris slips in: 23 damage.
+[MAGE_HIT] ✨ Toros the Unlucky jabs for 31. [NO MP]
+[NEAR_DEATH] 🚨 Near-death: Haryx is under 20% HP!
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Slime (threat 5).
+[COMBAT_EXCHANGE] ⚔ Slime strikes: Haryx takes 28 (10→-18).
+[THIEF_EXEC_CRIT] 🗡 Brris smells blood: 68 damage (CRIT!).
+[MAGE_HIT] ✨ Toros the Unlucky jabs for 19. [NO MP]
+[KNOCKDOWN] ⚠ Haryx collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Haryx gains a wound (1). DEF now 7.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: healing shrine. The party regroups.
+[GROUP_HEAL] ✨ Party heals +6 (group).
+[HP_DELTA]   ❤️ Haryx HP 1→7.
+[HP_DELTA]   ❤️ Toros the Unlucky HP 40→40.
+[HP_DELTA]   ❤️ Brris HP 45→45.
+[HP_DELTA]   ❤️ Harris HP 44→44.
+[GROUP_MP] 🔷 Party restores MP +6 (group).
+[MP_DELTA]   🔷 Haryx MP 5→5.
+[MP_DELTA]   🔷 Toros the Unlucky MP 2→8.
+[MP_DELTA]   🔷 Brris MP 11→11.
+[MP_DELTA]   🔷 Harris MP 0→6.
+[WOUND_HEAL] 🩺 Relief treatment: Haryx recovers 1 wound.
+[STAT_DEF] 🟦 DEF 7→8 (wounds 1→0).
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Bandit (threat 7).
+[CURSED_GROUND] 🜏 Cursed ground: spells feel heavier and more expensive.
+[COMBAT_EXCHANGE] ⚔ Bandit strikes: Haryx takes 47 (7→-40).
+[THIEF_EXEC_CRIT] 🗡 Brris smells blood: 66 damage (CRIT!).
+[MAGE_HIT] ✨ Toros the Unlucky casts for 63. [MP 8→2]
+[HEAL] 🩹 Healer restores Haryx +14 HP (-40→-26).
+[KNOCKDOWN] ⚠ Haryx collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Haryx gains a wound (1). DEF now 7.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Bandit (threat 8).
+[AMBUSH] 🕳 Ambush! Something lashes out before you can set formation.
+[AMBUSH_HIT] 🕳 AMBUSH → Toros the Unlucky takes 9 (40→31).
+[COMBAT_EXCHANGE] ⚔ Bandit strikes: Haryx takes 52 (1→-51).
+[THIEF_EXEC] 🗡 Brris smells blood: 33 damage.
+[MAGE_HIT] ✨ Toros the Unlucky jabs for 30. [NO MP]
+[HEAL] 🩹 Healer restores Haryx +9 HP (-51→-42).
+[CRACKING] 🫠 Haryx looks shaken (32→24).
+[KNOCKDOWN] ⚠ Haryx collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Haryx gains a wound (2). DEF now 6.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Goblin (threat 7).
+[CURSED_GROUND] 🜏 Cursed ground: spells feel heavier and more expensive.
+[COMBAT_EXCHANGE] ⚔ Goblin strikes: Haryx takes 49 (1→-48).
+[THIEF_EXEC] 🗡 Brris smells blood: 31 damage.
+[MAGE_HIT] ✨ Toros the Unlucky jabs for 28. [NO MP]
+[RETIRE_NOTICE] 🏳 Haryx mutters: 'After this… I'm done.'
+[KNOCKDOWN] ⚠ Haryx collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Haryx gains a wound (3). DEF now 5.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Bandit (threat 4).
+[AMBUSH] 🕳 Ambush! Something lashes out before you can set formation.
+[AMBUSH_HIT] 🕳 AMBUSH → Toros the Unlucky takes 9 (31→22).
+[COMBAT_EXCHANGE] ⚔ Bandit strikes: Haryx takes 27 (1→-26).
+[THIEF_EXEC] 🗡 Brris smells blood: 29 damage.
+[MAGE_HIT] ✨ Toros the Unlucky jabs for 20. [NO MP]
+[KNOCKDOWN] ⚠ Haryx collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Haryx gains a wound (4). DEF now 4.
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: campfire. The party regroups.
+[GROUP_HEAL] ✨ Party heals +8 (group).
+[HP_DELTA]   ❤️ Haryx HP 1→9.
+[HP_DELTA]   ❤️ Toros the Unlucky HP 22→30.
+[HP_DELTA]   ❤️ Brris HP 45→45.
+[HP_DELTA]   ❤️ Harris HP 44→44.
+[GROUP_MP] 🔷 Party restores MP +8 (group).
+[MP_DELTA]   🔷 Haryx MP 5→5.
+[MP_DELTA]   🔷 Toros the Unlucky MP 2→10.
+[MP_DELTA]   🔷 Brris MP 11→11.
+[MP_DELTA]   🔷 Harris MP 0→8.
+[WOUND_HEAL] 🩺 Relief treatment: Haryx recovers 1 wound.
+[STAT_DEF] 🟦 DEF 4→5 (wounds 4→3).
+[RESOLVE] 🧠 Haryx steadies (0→11).
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Warg (threat 6).
+[AMBUSH] 🕳 Ambush! Something lashes out before you can set formation.
+[AMBUSH_HIT] 🕳 AMBUSH → Toros the Unlucky takes 8 (30→22).
+[COMBAT_EXCHANGE] ⚔ Warg strikes: Haryx takes 38 (9→-29).
+[THIEF_EXEC] 🗡 Brris smells blood: 30 damage.
+[MAGE_HIT] ✨ Toros the Unlucky casts for 58. [MP 10→6]
+[HEAL] 🩹 Healer restores Haryx +12 HP (-29→-17).
+[RETIRE_NOTICE] 🏳 Haryx mutters: 'After this… I'm done.'
+[KNOCKDOWN] ⚠ Haryx collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Haryx gains a wound (4). DEF now 4.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Bandit (threat 5).
+[BERSERK] 🔥 Berserk rush: the enemy swings wild and hard.
+[COMBAT_EXCHANGE] ⚔ Bandit strikes: Haryx takes 44 (1→-43).
+[CHAOS] 💢 Chaos erupts in the scrum.
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~1).
+[EXECUTION_BLOW] 🩸 EXECUTION BLOW → Haryx takes 1 (-43→-44).
+[SPLASH_HIT] ☠ SPLASH → Toros the Unlucky takes 1 (22→21).
+[SPLASH_HIT] ☠ SPLASH → Brris takes 1 (45→44).
+[SPLASH_HIT] ☠ SPLASH → Harris takes 1 (44→43).
+[THIEF_EXEC] 🗡 Brris smells blood: 31 damage.
+[MAGE_HIT] ✨ Toros the Unlucky casts for 59. [MP 6→3]
+[HEAL] 🩹 Healer restores Haryx +8 HP (-44→-36).
+[KNOCKDOWN] ⚠ Haryx collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Haryx gains a wound (5). DEF now 3.
+[BEAT_SOURCE] 🧭 Encounter: a traveling merchant appears.
+[MERCHANT_SKIP] 🧿 Merchant: party browses, can't afford Warden's Sigil (1092g).
+[RETIRE] 🏳 Haryx retires. 'Not today. Not anymore.'
+[RECRUIT] 🧑‍🤝‍🧑 Recruit joins: Tank Valar the Scarred (Highroad drifter, Stubborn).
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Slime (threat 6).
+[SLIPPERY] 🧊 Slippery ground: footing is bad, armor helps less than usual.
+[COMBAT_EXCHANGE] ⚔ Slime strikes: Valar the Scarred takes 38 (90→52).
+[THIEF_HIT] 🗡 Brris slips in: 23 damage.
+[MAGE_HIT] ✨ Toros the Unlucky jabs for 27. [NO MP]
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Goblin (threat 6).
+[AMBUSH] 🕳 Ambush! Something lashes out before you can set formation.
+[AMBUSH_HIT] 🕳 AMBUSH → Toros the Unlucky takes 5 (21→16).
+[COMBAT_EXCHANGE] ⚔ Goblin strikes: Valar the Scarred takes 32 (52→20).
+[THIEF_HIT] 🗡 Brris slips in: 24 damage.
+[MAGE_HIT] ✨ Toros the Unlucky jabs for 22. [NO MP]
+[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: quiet corridor. The party regroups.
+[GROUP_HEAL] ✨ Party heals +7 (group).
+[HP_DELTA]   ❤️ Valar the Scarred HP 20→27.
+[HP_DELTA]   ❤️ Toros the Unlucky HP 16→23.
+[HP_DELTA]   ❤️ Brris HP 44→45.
+[HP_DELTA]   ❤️ Harris HP 43→44.
+[GROUP_MP] 🔷 Party restores MP +5 (group).
+[MP_DELTA]   🔷 Valar the Scarred MP 5→5.
+[MP_DELTA]   🔷 Toros the Unlucky MP 3→8.
+[MP_DELTA]   🔷 Brris MP 11→11.
+[MP_DELTA]   🔷 Harris MP 2→7.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Goblin (threat 7).
+[COMBAT_EXCHANGE] ⚔ Goblin strikes: Valar the Scarred takes 39 (27→-12).
+[THIEF_EXEC] 🗡 Brris smells blood: 25 damage.
+[MAGE_HIT] ✨ Toros the Unlucky casts for 71. [MP 8→4]
+[HEAL] 🩹 Healer restores Valar the Scarred +8 HP (-12→-4).
+[KNOCKDOWN] ⚠ Valar the Scarred collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Valar the Scarred gains a wound (1). DEF now 7.
+[NEAR_DEATH] 🚨 Near-death: Valar the Scarred is under 20% HP!
+[BEAT_SOURCE] 🧭 Encounter: a traveling merchant appears.
+[MERCHANT_SKIP] 🧿 Merchant: party browses, can't afford Iron Cuirass (264g).
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Bandit (threat 5).
+[COMBAT_EXCHANGE] ⚔ Bandit strikes: Valar the Scarred takes 32 (1→-31).
+[THIEF_EXEC] 🗡 Brris smells blood: 32 damage.
+[MAGE_HIT] ✨ Toros the Unlucky casts for 57. [MP 4→1]
+[HEAL] 🩹 Healer restores Valar the Scarred +10 HP (-31→-21).
+[KNOCKDOWN] ⚠ Valar the Scarred collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Valar the Scarred gains a wound (2). DEF now 6.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Goblin (threat 6).
+[COMBAT_EXCHANGE] ⚔ Goblin strikes: Valar the Scarred takes 38 (1→-37).
+[THIEF_EXEC] 🗡 Brris smells blood: 34 damage.
+[MAGE_CRIT] ✨ Toros the Unlucky jabs for 52 (CRIT!). [NO MP]
+[CRACKING] 🫠 Valar the Scarred looks shaken (38→20).
+[KNOCKDOWN] ⚠ Valar the Scarred collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Valar the Scarred gains a wound (3). DEF now 5.
 [BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
 [RELIEF_START] 🕯 Relief: healing shrine. The party regroups.
 [GROUP_HEAL] ✨ Party heals +7 (group).
-[HP_DELTA]   ❤️ Brann HP 54→61.
-[HP_DELTA]   ❤️ Quen HP 40→40.
-[HP_DELTA]   ❤️ Ravel HP 45→45.
-[HP_DELTA]   ❤️ Sel HP 44→44.
-[GROUP_MP] 🔷 Party restores MP +7 (group).
-[MP_DELTA]   🔷 Brann MP 5→5.
-[MP_DELTA]   🔷 Quen MP 30→30.
-[MP_DELTA]   🔷 Ravel MP 11→11.
-[MP_DELTA]   🔷 Sel MP 23→29.
+[HP_DELTA]   ❤️ Valar the Scarred HP 1→8.
+[HP_DELTA]   ❤️ Toros the Unlucky HP 23→30.
+[HP_DELTA]   ❤️ Brris HP 45→45.
+[HP_DELTA]   ❤️ Harris HP 44→44.
+[GROUP_MP] 🔷 Party restores MP +4 (group).
+[MP_DELTA]   🔷 Valar the Scarred MP 5→5.
+[MP_DELTA]   🔷 Toros the Unlucky MP 1→5.
+[MP_DELTA]   🔷 Brris MP 11→11.
+[MP_DELTA]   🔷 Harris MP 1→5.
+[WOUND_HEAL] 🩺 Relief treatment: Valar the Scarred recovers 1 wound.
+[STAT_DEF] 🟦 DEF 5→6 (wounds 3→2).
+[RESOLVE] 🧠 Valar the Scarred steadies (12→23).
+[BEAT_SOURCE] 🧭 Encounter: a traveling merchant appears.
+[MERCHANT_SKIP] 🧿 Merchant: party browses, can't afford Sturdy Steel Wraps (562g).
 [BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_EXCHANGE] ⚔ Bandits clash: Brann takes 12 (61→49). ✨ Quen hits for 25.
-[HEAL] 🩹 Healer restores Brann +8 HP (49→57).
-[LOOT] 💰 Loot: +13 gold.
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: campfire. The party regroups.
-[GROUP_HEAL] ✨ Party heals +6 (group).
-[HP_DELTA]   ❤️ Brann HP 57→63.
-[HP_DELTA]   ❤️ Quen HP 40→40.
-[HP_DELTA]   ❤️ Ravel HP 45→45.
-[HP_DELTA]   ❤️ Sel HP 44→44.
-[GROUP_MP] 🔷 Party restores MP +10 (group).
-[MP_DELTA]   🔷 Brann MP 5→5.
-[MP_DELTA]   🔷 Quen MP 30→30.
-[MP_DELTA]   🔷 Ravel MP 11→11.
-[MP_DELTA]   🔷 Sel MP 26→29.
+[ENCOUNTER] ⚔ Combat: Slime (threat 8).
+[COMBAT_EXCHANGE] ⚔ Slime strikes: Valar the Scarred takes 45 (8→-37).
+[THIEF_EXEC] 🗡 Brris smells blood: 28 damage.
+[MAGE_CRIT] ✨ Toros the Unlucky casts for 156 (CRIT!). [MP 5→1]
+[HEAL] 🩹 Healer restores Valar the Scarred +14 HP (-37→-23).
+[RETIRE_NOTICE] 🏳 Valar the Scarred mutters: 'After this… I'm done.'
+[KNOCKDOWN] ⚠ Valar the Scarred collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Valar the Scarred gains a wound (3). DEF now 5.
 [BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_EXCHANGE] ⚔ Skeletons clash: Brann takes 24 (63→39). ✨ Quen hits for 44.
-[HEAL] 🩹 Healer restores Brann +9 HP (39→48).
-[LOOT] 💰 Loot: +8 gold.
+[ENCOUNTER] ⚔ Combat: Warg (threat 7).
+[COMBAT_EXCHANGE] ⚔ Warg strikes: Valar the Scarred takes 47 (1→-46).
+[THIEF_EXEC] 🗡 Brris smells blood: 26 damage.
+[MAGE_HIT] ✨ Toros the Unlucky jabs for 24. [NO MP]
+[KNOCKDOWN] ⚠ Valar the Scarred collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Valar the Scarred gains a wound (4). DEF now 4.
 [BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_EXCHANGE] ⚔ Wolfpack clash: Brann takes 16 (48→32). ✨ Quen hits for 40.
-[HEAL] 🩹 Healer restores Brann +15 HP (32→47).
-[LOOT] 💰 Loot: +13 gold.
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: campfire. The party regroups.
-[GROUP_HEAL] ✨ Party heals +10 (group).
-[HP_DELTA]   ❤️ Brann HP 47→57.
-[HP_DELTA]   ❤️ Quen HP 40→40.
-[HP_DELTA]   ❤️ Ravel HP 45→45.
-[HP_DELTA]   ❤️ Sel HP 44→44.
-[GROUP_MP] 🔷 Party restores MP +10 (group).
-[MP_DELTA]   🔷 Brann MP 5→5.
-[MP_DELTA]   🔷 Quen MP 30→30.
-[MP_DELTA]   🔷 Ravel MP 11→11.
-[MP_DELTA]   🔷 Sel MP 23→29.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_EXCHANGE] ⚔ Slimes clash: Brann takes 20 (57→37). ✨ Quen hits for 44.
-[HEAL] 🩹 Healer restores Brann +8 HP (37→45).
-[LOOT] 💰 Loot: +11 gold.
+[ENCOUNTER] ⚔ Combat: Slime (threat 6).
+[BERSERK] 🔥 Berserk rush: the enemy swings wild and hard.
+[COMBAT_EXCHANGE] ⚔ Slime strikes: Valar the Scarred takes 58 (1→-57).
+[CHAOS] 💢 Chaos erupts in the scrum.
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~1).
+[EXECUTION_BLOW] 🩸 EXECUTION BLOW → Valar the Scarred takes 1 (-57→-58).
+[SPLASH_HIT] ☠ SPLASH → Toros the Unlucky takes 1 (30→29).
+[SPLASH_HIT] ☠ SPLASH → Brris takes 1 (45→44).
+[SPLASH_HIT] ☠ SPLASH → Harris takes 1 (44→43).
+[THIEF_EXEC] 🗡 Brris smells blood: 28 damage.
+[MAGE_HIT] ✨ Toros the Unlucky jabs for 28. [NO MP]
+[KNOCKDOWN] ⚠ Valar the Scarred collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Valar the Scarred gains a wound (5). DEF now 3.
 [BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
 [RELIEF_START] 🕯 Relief: abandoned outpost. The party regroups.
 [GROUP_HEAL] ✨ Party heals +8 (group).
-[HP_DELTA]   ❤️ Brann HP 45→53.
-[HP_DELTA]   ❤️ Quen HP 40→40.
-[HP_DELTA]   ❤️ Ravel HP 45→45.
-[HP_DELTA]   ❤️ Sel HP 44→44.
-[GROUP_MP] 🔷 Party restores MP +4 (group).
-[MP_DELTA]   🔷 Brann MP 5→5.
-[MP_DELTA]   🔷 Quen MP 30→30.
-[MP_DELTA]   🔷 Ravel MP 11→11.
-[MP_DELTA]   🔷 Sel MP 26→29.
-[BEAT_SOURCE] 🧭 Encounter: a traveling merchant appears.
-[MERCHANT_SKIP] 🧿 Merchant: party browses, can't afford Hide Wraps (749g).
+[HP_DELTA]   ❤️ Valar the Scarred HP 1→9.
+[HP_DELTA]   ❤️ Toros the Unlucky HP 29→37.
+[HP_DELTA]   ❤️ Brris HP 44→45.
+[HP_DELTA]   ❤️ Harris HP 43→44.
+[GROUP_MP] 🔷 Party restores MP +5 (group).
+[MP_DELTA]   🔷 Valar the Scarred MP 5→5.
+[MP_DELTA]   🔷 Toros the Unlucky MP 1→6.
+[MP_DELTA]   🔷 Brris MP 11→11.
+[MP_DELTA]   🔷 Harris MP 2→7.
+[WOUND_HEAL] 🩺 Relief treatment: Valar the Scarred recovers 1 wound.
+[STAT_DEF] 🟦 DEF 3→4 (wounds 5→4).
+[RESOLVE] 🧠 Valar the Scarred steadies (0→12).
 [BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_HIT] ⚔ Wolfpack clash: Quen takes 11 (40→29).
-[COMBAT_EXCHANGE] ⚔ Wolfpack clash: Brann takes 18 (53→35). ✨ Quen hits for 34.
-[HEAL] 🩹 Healer restores Brann +15 HP (35→50).
-[LOOT] 💰 Loot: +10 gold.
+[ENCOUNTER] ⚔ Combat: Warg (threat 4).
+[BERSERK] 🔥 Berserk rush: the enemy swings wild and hard.
+[COMBAT_EXCHANGE] ⚔ Warg strikes: Valar the Scarred takes 39 (9→-30).
+[CHAOS] 💢 Chaos erupts in the scrum.
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~1).
+[EXECUTION_BLOW] 🩸 EXECUTION BLOW → Valar the Scarred takes 1 (-30→-31).
+[SPLASH_HIT] ☠ SPLASH → Toros the Unlucky takes 1 (37→36).
+[SPLASH_HIT] ☠ SPLASH → Brris takes 1 (45→44).
+[SPLASH_HIT] ☠ SPLASH → Harris takes 1 (44→43).
+[THIEF_EXEC] 🗡 Brris smells blood: 26 damage.
+[MAGE_HIT] ✨ Toros the Unlucky casts for 48. [MP 6→3]
+[HEAL] 🩹 Healer restores Valar the Scarred +10 HP (-31→-21).
+[RETIRE_NOTICE] 🏳 Valar the Scarred mutters: 'After this… I'm done.'
+[KNOCKDOWN] ⚠ Valar the Scarred collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Valar the Scarred gains a wound (5). DEF now 3.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Slime (threat 4).
+[COMBAT_EXCHANGE] ⚔ Slime strikes: Valar the Scarred takes 30 (1→-29).
+[THIEF_EXEC_CRIT] 🗡 Brris smells blood: 58 damage (CRIT!).
+[MAGE_CRIT] ✨ Toros the Unlucky casts for 80 (CRIT!). [MP 3→0]
+[HEAL] 🩹 Healer restores Valar the Scarred +8 HP (-29→-21).
+[KNOCKDOWN] ⚠ Valar the Scarred collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Valar the Scarred gains a wound (6). DEF now 2.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Skeleton (threat 6).
+[COMBAT_EXCHANGE] ⚔ Skeleton strikes: Valar the Scarred takes 42 (1→-41).
+[THIEF_EXEC] 🗡 Brris smells blood: 34 damage.
+[MAGE_HIT] ✨ Toros the Unlucky jabs for 22. [NO MP]
+[KNOCKDOWN] ⚠ Valar the Scarred collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Valar the Scarred gains a wound (7). DEF now 1.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Bandit (threat 7).
+[REINFORCEMENTS] 🪓 Reinforcements: more shapes join the fight from the dark.
+[COMBAT_EXCHANGE] ⚔ Bandit strikes: Valar the Scarred takes 54 (1→-53).
+[CHAOS] 💢 Chaos erupts in the scrum.
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~2).
+[EXECUTION_BLOW] 🩸 EXECUTION BLOW → Valar the Scarred takes 1 (-53→-54).
+[SPLASH_HIT] ☠ SPLASH → Toros the Unlucky takes 1 (36→35).
+[SPLASH_HIT] ☠ SPLASH → Brris takes 1 (44→43).
+[SPLASH_HIT] ☠ SPLASH → Harris takes 1 (43→42).
+[THIEF_EXEC] 🗡 Brris smells blood: 31 damage.
+[MAGE_HIT] ✨ Toros the Unlucky jabs for 25. [NO MP]
+[KNOCKDOWN] ⚠ Valar the Scarred collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Valar the Scarred gains a wound (8). DEF now 0.
 [BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
 [RELIEF_START] 🕯 Relief: healing shrine. The party regroups.
-[GROUP_HEAL] ✨ Party heals +12 (group).
-[HP_DELTA]   ❤️ Brann HP 50→62.
-[HP_DELTA]   ❤️ Quen HP 29→40.
-[HP_DELTA]   ❤️ Ravel HP 45→45.
-[HP_DELTA]   ❤️ Sel HP 44→44.
-[GROUP_MP] 🔷 Party restores MP +4 (group).
-[MP_DELTA]   🔷 Brann MP 5→5.
-[MP_DELTA]   🔷 Quen MP 30→30.
-[MP_DELTA]   🔷 Ravel MP 11→11.
-[MP_DELTA]   🔷 Sel MP 26→29.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_HIT] ⚔ Wolfpack clash: Quen takes 15 (40→25).
-[COMBAT_EXCHANGE] ⚔ Wolfpack clash: Brann takes 25 (62→37). ✨ Quen hits for 48.
-[HEAL] 🩹 Healer restores Brann +8 HP (37→45).
-[LOOT] 💰 Loot: +7 gold.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_EXCHANGE] ⚔ Bandits clash: Brann takes 25 (45→20). ✨ Quen hits for 86 (CRIT!).
-[HEAL] 🩹 Healer restores Brann +15 HP (20→35).
-[LOOT] 💰 Loot: +10 gold.
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: campfire. The party regroups.
-[GROUP_HEAL] ✨ Party heals +9 (group).
-[HP_DELTA]   ❤️ Brann HP 35→44.
-[HP_DELTA]   ❤️ Quen HP 25→34.
-[HP_DELTA]   ❤️ Ravel HP 45→45.
-[HP_DELTA]   ❤️ Sel HP 44→44.
+[GROUP_HEAL] ✨ Party heals +11 (group).
+[HP_DELTA]   ❤️ Valar the Scarred HP 1→12.
+[HP_DELTA]   ❤️ Toros the Unlucky HP 35→40.
+[HP_DELTA]   ❤️ Brris HP 43→45.
+[HP_DELTA]   ❤️ Harris HP 42→44.
 [GROUP_MP] 🔷 Party restores MP +7 (group).
-[MP_DELTA]   🔷 Brann MP 5→5.
-[MP_DELTA]   🔷 Quen MP 30→30.
-[MP_DELTA]   🔷 Ravel MP 11→11.
-[MP_DELTA]   🔷 Sel MP 23→29.
+[MP_DELTA]   🔷 Valar the Scarred MP 5→5.
+[MP_DELTA]   🔷 Toros the Unlucky MP 0→7.
+[MP_DELTA]   🔷 Brris MP 11→11.
+[MP_DELTA]   🔷 Harris MP 1→8.
+[WOUND_HEAL] 🩺 Relief treatment: Valar the Scarred recovers 1 wound.
+[STAT_DEF] 🟦 DEF 0→1 (wounds 8→7).
+[RESOLVE] 🧠 Valar the Scarred steadies (0→14).
 [BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_HIT] ⚔ Bandits clash: Ravel takes 14 (45→31).
-[COMBAT_EXCHANGE] ⚔ Bandits clash: Brann takes 23 (44→21). ✨ Quen hits for 40.
-[HEAL] 🩹 Healer restores Brann +16 HP (21→37).
-[LOOT] 💰 Loot: +10 gold.
+[ENCOUNTER] ⚔ Combat: Goblin (threat 7).
+[COMBAT_EXCHANGE] ⚔ Goblin strikes: Valar the Scarred takes 48 (12→-36).
+[THIEF_EXEC_CRIT] 🗡 Brris smells blood: 62 damage (CRIT!).
+[MAGE_HIT] ✨ Toros the Unlucky casts for 67. [MP 7→3]
+[HEAL] 🩹 Healer restores Valar the Scarred +16 HP (-36→-20).
+[RETIRE_NOTICE] 🏳 Valar the Scarred mutters: 'After this… I'm done.'
+[KNOCKDOWN] ⚠ Valar the Scarred collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Valar the Scarred gains a wound (8). DEF now 0.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Slime (threat 5).
+[COMBAT_EXCHANGE] ⚔ Slime strikes: Valar the Scarred takes 34 (1→-33).
+[THIEF_EXEC] 🗡 Brris smells blood: 29 damage.
+[MAGE_HIT] ✨ Toros the Unlucky casts for 51. [MP 3→0]
+[HEAL] 🩹 Healer restores Valar the Scarred +13 HP (-33→-20).
+[KNOCKDOWN] ⚠ Valar the Scarred collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Valar the Scarred gains a wound (9). DEF now 0.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Slime (threat 7).
+[COMBAT_EXCHANGE] ⚔ Slime strikes: Valar the Scarred takes 52 (1→-51).
+[THIEF_EXEC_CRIT] 🗡 Brris smells blood: 52 damage (CRIT!).
+[MAGE_HIT] ✨ Toros the Unlucky jabs for 26. [NO MP]
+[KNOCKDOWN] ⚠ Valar the Scarred collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Valar the Scarred gains a wound (10). DEF now 0.
 [BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
 [RELIEF_START] 🕯 Relief: quiet corridor. The party regroups.
-[GROUP_HEAL] ✨ Party heals +10 (group).
-[HP_DELTA]   ❤️ Brann HP 37→47.
-[HP_DELTA]   ❤️ Quen HP 34→40.
-[HP_DELTA]   ❤️ Ravel HP 31→41.
-[HP_DELTA]   ❤️ Sel HP 44→44.
-[GROUP_MP] 🔷 Party restores MP +5 (group).
-[MP_DELTA]   🔷 Brann MP 5→5.
-[MP_DELTA]   🔷 Quen MP 30→30.
-[MP_DELTA]   🔷 Ravel MP 11→11.
-[MP_DELTA]   🔷 Sel MP 26→29.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_EXCHANGE] ⚔ Cultists clash: Brann takes 17 (47→30). ✨ Quen hits for 43.
-[HEAL] 🩹 Healer restores Brann +16 HP (30→46).
-[LOOT] 💰 Loot: +14 gold.
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: healing shrine. The party regroups.
-[GROUP_HEAL] ✨ Party heals +9 (group).
-[HP_DELTA]   ❤️ Brann HP 46→55.
-[HP_DELTA]   ❤️ Quen HP 40→40.
-[HP_DELTA]   ❤️ Ravel HP 41→45.
-[HP_DELTA]   ❤️ Sel HP 44→44.
-[GROUP_MP] 🔷 Party restores MP +5 (group).
-[MP_DELTA]   🔷 Brann MP 5→5.
-[MP_DELTA]   🔷 Quen MP 30→30.
-[MP_DELTA]   🔷 Ravel MP 11→11.
-[MP_DELTA]   🔷 Sel MP 26→29.
-[BEAT_SOURCE] 🧭 Exploration find: the party spots something ahead.
-[CHEST_OPEN] 🧰 Chest found.
-[CHEST_ITEM] 🧰 Chest: found Royal Idol.
-[TREASURE] 💰 Treasure: Royal Idol converts to +111 gold.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_EXCHANGE] ⚔ Slimes clash: Brann takes 21 (55→34). ✨ Quen hits for 34.
-[HEAL] 🩹 Healer restores Brann +13 HP (34→47).
-[LOOT] 💰 Loot: +13 gold.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_HIT] ⚔ Skeletons clash: Ravel takes 11 (45→34).
-[COMBAT_EXCHANGE] ⚔ Skeletons clash: Brann takes 15 (47→32). ✨ Quen hits for 76 (CRIT!).
-[HEAL] 🩹 Healer restores Brann +15 HP (32→47).
-[LOOT] 💰 Loot: +8 gold.
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: campfire. The party regroups.
 [GROUP_HEAL] ✨ Party heals +11 (group).
-[HP_DELTA]   ❤️ Brann HP 47→58.
-[HP_DELTA]   ❤️ Quen HP 40→40.
-[HP_DELTA]   ❤️ Ravel HP 34→45.
-[HP_DELTA]   ❤️ Sel HP 44→44.
-[GROUP_MP] 🔷 Party restores MP +6 (group).
-[MP_DELTA]   🔷 Brann MP 5→5.
-[MP_DELTA]   🔷 Quen MP 30→30.
-[MP_DELTA]   🔷 Ravel MP 11→11.
-[MP_DELTA]   🔷 Sel MP 23→29.
+[HP_DELTA]   ❤️ Valar the Scarred HP 1→12.
+[HP_DELTA]   ❤️ Toros the Unlucky HP 40→40.
+[HP_DELTA]   ❤️ Brris HP 45→45.
+[HP_DELTA]   ❤️ Harris HP 44→44.
+[GROUP_MP] 🔷 Party restores MP +7 (group).
+[MP_DELTA]   🔷 Valar the Scarred MP 5→5.
+[MP_DELTA]   🔷 Toros the Unlucky MP 0→7.
+[MP_DELTA]   🔷 Brris MP 11→11.
+[MP_DELTA]   🔷 Harris MP 2→9.
+[WOUND_HEAL] 🩺 Relief treatment: Valar the Scarred recovers 1 wound.
+[STAT_DEF] 🟦 DEF 0→0 (wounds 10→9).
+[RESOLVE] 🧠 Valar the Scarred steadies (0→13).
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Bandit (threat 6).
+[COMBAT_EXCHANGE] ⚔ Bandit strikes: Valar the Scarred takes 42 (12→-30).
+[THIEF_EXEC] 🗡 Brris smells blood: 35 damage.
+[MAGE_HIT] ✨ Toros the Unlucky casts for 56. [MP 7→3]
+[HEAL] 🩹 Healer restores Valar the Scarred +16 HP (-30→-14).
+[RETIRE_NOTICE] 🏳 Valar the Scarred mutters: 'After this… I'm done.'
+[KNOCKDOWN] ⚠ Valar the Scarred collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Valar the Scarred gains a wound (10). DEF now 0.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Skeleton (threat 5).
+[COMBAT_EXCHANGE] ⚔ Skeleton strikes: Valar the Scarred takes 37 (1→-36).
+[THIEF_EXEC] 🗡 Brris smells blood: 30 damage.
+[MAGE_CRIT] ✨ Toros the Unlucky casts for 110 (CRIT!). [MP 3→0]
+[HEAL] 🩹 Healer restores Valar the Scarred +16 HP (-36→-20).
+[KNOCKDOWN] ⚠ Valar the Scarred collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Valar the Scarred gains a wound (11). DEF now 0.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER] ⚔ Combat: Slime (threat 6).
+[AMBUSH] 🕳 Ambush! Something lashes out before you can set formation.
+[AMBUSH_HIT] 🕳 AMBUSH → Harris takes 3 (44→41).
+[COMBAT_EXCHANGE] ⚔ Slime strikes: Valar the Scarred takes 48 (1→-47).
+[THIEF_EXEC] 🗡 Brris smells blood: 31 damage.
+[MAGE_HIT] ✨ Toros the Unlucky jabs for 27. [NO MP]
+[HEAL] 🩹 Healer restores Valar the Scarred +14 HP (-47→-33).
+[KNOCKDOWN] ⚠ Valar the Scarred collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Valar the Scarred gains a wound (12). DEF now 0.
 [BEAT_SOURCE] 🧭 Encounter: a traveling merchant appears.
-[MERCHANT_SKIP] 🧿 Merchant: party browses, can't afford Brass Sword (1807g).
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_HIT] ⚔ Wolfpack clash: Ravel takes 15 (45→30).
-[COMBAT_EXCHANGE] ⚔ Wolfpack clash: Brann takes 21 (58→37). ✨ Quen hits for 49.
-[HEAL] 🩹 Healer restores Brann +8 HP (37→45).
-[LOOT] 💰 Loot: +12 gold.
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: abandoned outpost. The party regroups.
-[GROUP_HEAL] ✨ Party heals +10 (group).
-[HP_DELTA]   ❤️ Brann HP 45→55.
-[HP_DELTA]   ❤️ Quen HP 40→40.
-[HP_DELTA]   ❤️ Ravel HP 30→40.
-[HP_DELTA]   ❤️ Sel HP 44→44.
-[GROUP_MP] 🔷 Party restores MP +8 (group).
-[MP_DELTA]   🔷 Brann MP 5→5.
-[MP_DELTA]   🔷 Quen MP 30→30.
-[MP_DELTA]   🔷 Ravel MP 11→11.
-[MP_DELTA]   🔷 Sel MP 26→29.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_EXCHANGE] ⚔ Cultists clash: Brann takes 15 (55→40). ✨ Quen hits for 37.
-[HEAL] 🩹 Healer restores Brann +16 HP (40→56).
-[LOOT] 💰 Loot: +13 gold.
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: abandoned outpost. The party regroups.
-[GROUP_HEAL] ✨ Party heals +10 (group).
-[HP_DELTA]   ❤️ Brann HP 56→66.
-[HP_DELTA]   ❤️ Quen HP 40→40.
-[HP_DELTA]   ❤️ Ravel HP 40→45.
-[HP_DELTA]   ❤️ Sel HP 44→44.
-[GROUP_MP] 🔷 Party restores MP +4 (group).
-[MP_DELTA]   🔷 Brann MP 5→5.
-[MP_DELTA]   🔷 Quen MP 30→30.
-[MP_DELTA]   🔷 Ravel MP 11→11.
-[MP_DELTA]   🔷 Sel MP 26→29.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_EXCHANGE] ⚔ Skeletons clash: Brann takes 21 (66→45). ✨ Quen hits for 76 (CRIT!).
-[HEAL] 🩹 Healer restores Brann +16 HP (45→61).
-[LOOT] 💰 Loot: +8 gold.
+[MERCHANT_SKIP] 🧿 Merchant: party browses, can't afford Ember Draught (319g).
+[RETIRE] 🏳 Valar the Scarred retires. 'Not today. Not anymore.'
+[RECRUIT] 🧑‍🤝‍🧑 Recruit joins: Tank Quen the Scarred (Dockside, Stubborn).
 [BEAT_SOURCE] 🧭 Exploration find: the party spots something ahead.
 [CHEST_OPEN] 🧰 Chest found.
 [CHEST_TRAP] 🧰 Chest: it's a trap! Poison needles.
-[SPLASH_BEGIN] ☠ Splash damage begins (base ~6).
-[SPLASH_HIT] ☠ SPLASH → Brann takes 0 (61→61).
-[SPLASH_HIT] ☠ SPLASH → Quen takes 3 (40→37).
-[SPLASH_HIT] ☠ SPLASH → Ravel takes 3 (45→42).
-[SPLASH_HIT] ☠ SPLASH → Sel takes 3 (44→41).
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~8).
+[SPLASH_HIT] ☠ SPLASH → Quen the Scarred takes 1 (94→93).
+[SPLASH_HIT] ☠ SPLASH → Toros the Unlucky takes 5 (40→35).
+[SPLASH_HIT] ☠ SPLASH → Brris takes 6 (45→39).
+[SPLASH_HIT] ☠ SPLASH → Harris takes 4 (41→37).
 [BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_HIT] ⚔ Wolfpack clash: Sel takes 15 (41→26).
-[COMBAT_EXCHANGE] ⚔ Wolfpack clash: Brann takes 33 (61→28). ✨ Quen hits for 59.
-[HEAL] 🩹 Healer restores Brann +14 HP (28→42).
-[LOOT] 💰 Loot: +11 gold.
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: healing shrine. The party regroups.
-[GROUP_HEAL] ✨ Party heals +12 (group).
-[HP_DELTA]   ❤️ Brann HP 42→54.
-[HP_DELTA]   ❤️ Quen HP 37→40.
-[HP_DELTA]   ❤️ Ravel HP 42→45.
-[HP_DELTA]   ❤️ Sel HP 26→38.
-[GROUP_MP] 🔷 Party restores MP +9 (group).
-[MP_DELTA]   🔷 Brann MP 5→5.
-[MP_DELTA]   🔷 Quen MP 30→30.
-[MP_DELTA]   🔷 Ravel MP 11→11.
-[MP_DELTA]   🔷 Sel MP 23→29.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_HIT] ⚔ Knights clash: Quen takes 13 (40→27).
-[COMBAT_EXCHANGE] ⚔ Knights clash: Brann takes 15 (54→39). ✨ Quen hits for 44.
-[HEAL] 🩹 Healer restores Brann +11 HP (39→50).
-[LOOT] 💰 Loot: +11 gold.
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: quiet corridor. The party regroups.
-[GROUP_HEAL] ✨ Party heals +10 (group).
-[HP_DELTA]   ❤️ Brann HP 50→60.
-[HP_DELTA]   ❤️ Quen HP 27→37.
-[HP_DELTA]   ❤️ Ravel HP 45→45.
-[HP_DELTA]   ❤️ Sel HP 38→44.
-[GROUP_MP] 🔷 Party restores MP +9 (group).
-[MP_DELTA]   🔷 Brann MP 5→5.
-[MP_DELTA]   🔷 Quen MP 30→30.
-[MP_DELTA]   🔷 Ravel MP 11→11.
-[MP_DELTA]   🔷 Sel MP 26→29.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_HIT] ⚔ Gargoyles clash: Sel takes 18 (44→26).
-[COMBAT_EXCHANGE] ⚔ Gargoyles clash: Brann takes 27 (60→33). ✨ Quen hits for 56.
-[HEAL] 🩹 Healer restores Brann +13 HP (33→46).
-[LOOT] 💰 Loot: +9 gold.
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: healing shrine. The party regroups.
-[GROUP_HEAL] ✨ Party heals +10 (group).
-[HP_DELTA]   ❤️ Brann HP 46→56.
-[HP_DELTA]   ❤️ Quen HP 37→40.
-[HP_DELTA]   ❤️ Ravel HP 45→45.
-[HP_DELTA]   ❤️ Sel HP 26→36.
-[GROUP_MP] 🔷 Party restores MP +4 (group).
-[MP_DELTA]   🔷 Brann MP 5→5.
-[MP_DELTA]   🔷 Quen MP 30→30.
-[MP_DELTA]   🔷 Ravel MP 11→11.
-[MP_DELTA]   🔷 Sel MP 26→29.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_EXCHANGE] ⚔ Knights clash: Brann takes 16 (56→40). ✨ Quen hits for 74 (CRIT!).
-[HEAL] 🩹 Healer restores Brann +16 HP (40→56).
-[LOOT] 💰 Loot: +11 gold.
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: abandoned outpost. The party regroups.
-[GROUP_HEAL] ✨ Party heals +13 (group).
-[HP_DELTA]   ❤️ Brann HP 56→69.
-[HP_DELTA]   ❤️ Quen HP 40→40.
-[HP_DELTA]   ❤️ Ravel HP 45→45.
-[HP_DELTA]   ❤️ Sel HP 36→44.
-[GROUP_MP] 🔷 Party restores MP +6 (group).
-[MP_DELTA]   🔷 Brann MP 5→5.
-[MP_DELTA]   🔷 Quen MP 30→30.
-[MP_DELTA]   🔷 Ravel MP 11→11.
-[MP_DELTA]   🔷 Sel MP 26→29.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_EXCHANGE] ⚔ Knights clash: Brann takes 25 (69→44). ✨ Quen hits for 50.
-[HEAL] 🩹 Healer restores Brann +8 HP (44→52).
-[LOOT] 💰 Loot: +10 gold.
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: abandoned outpost. The party regroups.
-[GROUP_HEAL] ✨ Party heals +12 (group).
-[HP_DELTA]   ❤️ Brann HP 52→64.
-[HP_DELTA]   ❤️ Quen HP 40→40.
-[HP_DELTA]   ❤️ Ravel HP 45→45.
-[HP_DELTA]   ❤️ Sel HP 44→44.
-[GROUP_MP] 🔷 Party restores MP +9 (group).
-[MP_DELTA]   🔷 Brann MP 5→5.
-[MP_DELTA]   🔷 Quen MP 30→30.
-[MP_DELTA]   🔷 Ravel MP 11→11.
-[MP_DELTA]   🔷 Sel MP 26→29.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_EXCHANGE] ⚔ Gargoyles clash: Brann takes 31 (64→33). ✨ Quen hits for 52.
-[HEAL] 🩹 Healer restores Brann +14 HP (33→47).
-[LOOT] 💰 Loot: +14 gold.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_EXCHANGE] ⚔ Knights clash: Brann takes 18 (47→29). ✨ Quen hits for 42.
-[HEAL] 🩹 Healer restores Brann +14 HP (29→43).
-[LOOT] 💰 Loot: +14 gold.
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: quiet corridor. The party regroups.
-[GROUP_HEAL] ✨ Party heals +13 (group).
-[HP_DELTA]   ❤️ Brann HP 43→56.
-[HP_DELTA]   ❤️ Quen HP 40→40.
-[HP_DELTA]   ❤️ Ravel HP 45→45.
-[HP_DELTA]   ❤️ Sel HP 44→44.
-[GROUP_MP] 🔷 Party restores MP +10 (group).
-[MP_DELTA]   🔷 Brann MP 5→5.
-[MP_DELTA]   🔷 Quen MP 30→30.
-[MP_DELTA]   🔷 Ravel MP 11→11.
-[MP_DELTA]   🔷 Sel MP 23→29.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_HIT] ⚔ Gargoyles clash: Quen takes 13 (40→27).
-[COMBAT_EXCHANGE] ⚔ Gargoyles clash: Brann takes 20 (56→36). ✨ Quen hits for 37.
-[HEAL] 🩹 Healer restores Brann +14 HP (36→50).
-[LOOT] 💰 Loot: +15 gold.
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: campfire. The party regroups.
-[GROUP_HEAL] ✨ Party heals +8 (group).
-[HP_DELTA]   ❤️ Brann HP 50→58.
-[HP_DELTA]   ❤️ Quen HP 27→35.
-[HP_DELTA]   ❤️ Ravel HP 45→45.
-[HP_DELTA]   ❤️ Sel HP 44→44.
-[GROUP_MP] 🔷 Party restores MP +7 (group).
-[MP_DELTA]   🔷 Brann MP 5→5.
-[MP_DELTA]   🔷 Quen MP 30→30.
-[MP_DELTA]   🔷 Ravel MP 11→11.
-[MP_DELTA]   🔷 Sel MP 26→29.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_EXCHANGE] ⚔ Sentinel Orbs clash: Brann takes 29 (58→29). ✨ Quen hits for 52.
-[HEAL] 🩹 Healer restores Brann +10 HP (29→39).
-[LOOT] 💰 Loot: +12 gold.
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: abandoned outpost. The party regroups.
-[GROUP_HEAL] ✨ Party heals +14 (group).
-[HP_DELTA]   ❤️ Brann HP 39→53.
-[HP_DELTA]   ❤️ Quen HP 35→40.
-[HP_DELTA]   ❤️ Ravel HP 45→45.
-[HP_DELTA]   ❤️ Sel HP 44→44.
-[GROUP_MP] 🔷 Party restores MP +4 (group).
-[MP_DELTA]   🔷 Brann MP 5→5.
-[MP_DELTA]   🔷 Quen MP 30→30.
-[MP_DELTA]   🔷 Ravel MP 11→11.
-[MP_DELTA]   🔷 Sel MP 26→29.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_HIT] ⚔ Knights clash: Quen takes 20 (40→20).
-[COMBAT_EXCHANGE] ⚔ Knights clash: Brann takes 35 (53→18). ✨ Quen hits for 68.
-[HEAL] 🩹 Healer restores Brann +11 HP (18→29).
-[LOOT] 💰 Loot: +13 gold.
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: campfire. The party regroups.
-[GROUP_HEAL] ✨ Party heals +10 (group).
-[HP_DELTA]   ❤️ Brann HP 29→39.
-[HP_DELTA]   ❤️ Quen HP 20→30.
-[HP_DELTA]   ❤️ Ravel HP 45→45.
-[HP_DELTA]   ❤️ Sel HP 44→44.
-[GROUP_MP] 🔷 Party restores MP +10 (group).
-[MP_DELTA]   🔷 Brann MP 5→5.
-[MP_DELTA]   🔷 Quen MP 30→30.
-[MP_DELTA]   🔷 Ravel MP 11→11.
-[MP_DELTA]   🔷 Sel MP 26→29.
-[BEAT_SOURCE] 🧭 Exploration find: the party spots something ahead.
-[CHEST_OPEN] 🧰 Chest found.
-[CHEST_ITEM] 🧰 Chest: found Shadow Vial.
-[ITEM_GAIN] 🧪 Consumable acquired: Shadow Vial.
-[GROUP_HEAL] ✨ Shadow Vial heals +24 (group).
-[HP_DELTA]   ❤️ Brann HP 39→63.
-[HP_DELTA]   ❤️ Quen HP 30→40.
-[HP_DELTA]   ❤️ Ravel HP 45→45.
-[HP_DELTA]   ❤️ Sel HP 44→44.
-[GROUP_MP] 🔷 Shadow Vial restores MP +11 (group).
-[MP_DELTA]   🔷 Brann MP 5→5.
-[MP_DELTA]   🔷 Quen MP 30→30.
-[MP_DELTA]   🔷 Ravel MP 11→11.
-[MP_DELTA]   🔷 Sel MP 29→29.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_EXCHANGE] ⚔ Gargoyles clash: Brann takes 23 (63→40). ✨ Quen hits for 50.
-[HEAL] 🩹 Healer restores Brann +15 HP (40→55).
-[LOOT] 💰 Loot: +10 gold.
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: campfire. The party regroups.
-[GROUP_HEAL] ✨ Party heals +10 (group).
-[HP_DELTA]   ❤️ Brann HP 55→65.
-[HP_DELTA]   ❤️ Quen HP 40→40.
-[HP_DELTA]   ❤️ Ravel HP 45→45.
-[HP_DELTA]   ❤️ Sel HP 44→44.
-[GROUP_MP] 🔷 Party restores MP +7 (group).
-[MP_DELTA]   🔷 Brann MP 5→5.
-[MP_DELTA]   🔷 Quen MP 30→30.
-[MP_DELTA]   🔷 Ravel MP 11→11.
-[MP_DELTA]   🔷 Sel MP 26→29.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_EXCHANGE] ⚔ Gargoyles clash: Brann takes 28 (65→37). ✨ Quen hits for 59.
-[HEAL] 🩹 Healer restores Brann +9 HP (37→46).
-[LOOT] 💰 Loot: +12 gold.
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: campfire. The party regroups.
-[GROUP_HEAL] ✨ Party heals +12 (group).
-[HP_DELTA]   ❤️ Brann HP 46→58.
-[HP_DELTA]   ❤️ Quen HP 40→40.
-[HP_DELTA]   ❤️ Ravel HP 45→45.
-[HP_DELTA]   ❤️ Sel HP 44→44.
-[GROUP_MP] 🔷 Party restores MP +9 (group).
-[MP_DELTA]   🔷 Brann MP 5→5.
-[MP_DELTA]   🔷 Quen MP 30→30.
-[MP_DELTA]   🔷 Ravel MP 11→11.
-[MP_DELTA]   🔷 Sel MP 26→29.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_HIT] ⚔ Knights clash: Quen takes 11 (40→29).
-[COMBAT_EXCHANGE] ⚔ Knights clash: Brann takes 24 (58→34). ✨ Quen hits for 98 (CRIT!).
-[HEAL] 🩹 Healer restores Brann +13 HP (34→47).
-[LOOT] 💰 Loot: +11 gold.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[COMBAT_HIT] ⚔ Gargoyles clash: Quen takes 18 (29→11).
-[COMBAT_EXCHANGE] ⚔ Gargoyles clash: Brann takes 23 (47→24). ✨ Quen hits for 48.
-[HEAL] 🩹 Healer restores Quen +13 HP (11→24).
-[LOOT] 💰 Loot: +12 gold.
+[ENCOUNTER] ⚔ Combat: Slime (threat 8).
+[COMBAT_EXCHANGE] ⚔ Slime strikes: Quen the Scarred takes 45 (93→48).
+[THIEF_HIT] 🗡 Brris slips in: 26 damage.
+[MAGE_HIT] ✨ Toros the Unlucky jabs for 31. [NO MP]
 [BEAT_SOURCE] 🧭 Ominous presence: the air shifts. Something huge is near.
 [BOSS_SPAWN] 👑 BOSS: Iron Warden emerges!
-[BOSS_SMASH] ⚔ Iron Warden smashes: Brann takes 45 (24→-21).
-[SPLASH_BEGIN] ☠ Splash damage begins (base ~6).
-[SPLASH_HIT] ☠ SPLASH → Brann takes 0 (-21→-21).
-[SPLASH_HIT] ☠ SPLASH → Quen takes 3 (24→21).
-[SPLASH_HIT] ☠ SPLASH → Ravel takes 4 (45→41).
-[SPLASH_HIT] ☠ SPLASH → Sel takes 2 (44→42).
-[BRACE] 🛡 Brann braces and holds the line.
-[THIEF_HIT] 🗡 Ravel slips in: 16 damage.
-[MAGE_CRIT] ✨ Quen unleashes a blast: 114 damage (CRIT!).
-[HEAL] 🩹 Healer restores Quen +15 HP (21→36).
-[KNOCKDOWN] ⚠ Brann collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Brann gains a wound (1). DEF now 6.
-[NEAR_DEATH] 🚨 Near-death: Brann is under 20% HP!
-[FINISHER] 💥 FINISHER → Quen's blast breaks the Iron Warden! (114)
-[BOSS_DEFEATED] 🏆 Boss defeated! +60 gold.
-[TROPHY_DROP] 🎁 Trophy drop: Marble Charm.
-[EQUIP] 📦 EQUIP → Brann equips (trinket): Marble Charm.
-[STAT_ATK] 🟩 ATK 8→11.
-[STAT_DEF] 🟦 DEF 6→9.
-[STAT_HP] ❤️ MAX HP 70→86.
-📺 Episode ends. Gold=978 | Chests=7 | Merchants=5 | Rares=0 | Near-deaths=1 | Boss=DEFEATED
-📊 Party avg HP%: 69%
-###game_end###254
+[BOSS_SMASH] ⚔ Iron Warden smashes: Quen the Scarred takes 48 (48→0).
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~4).
+[EXECUTION_BLOW] 🩸 EXECUTION BLOW → Quen the Scarred takes 1 (0→-1).
+[SPLASH_HIT] ☠ SPLASH → Toros the Unlucky takes 2 (35→33).
+[SPLASH_HIT] ☠ SPLASH → Brris takes 1 (39→38).
+[SPLASH_HIT] ☠ SPLASH → Harris takes 1 (37→36).
+[BRACE_FAIL] 🪦 Quen the Scarred can't brace.
+[THIEF_EXEC] 🗡 Brris smells blood: 20 damage.
+[MAGE_HIT] ✨ Toros the Unlucky sputters a weak zap: 24 damage. [NO MP]
+[KNOCKDOWN] ⚠ Quen the Scarred collapses but is dragged onward (HP set to 1).
+[WOUND] 🩸 Wounded: Quen the Scarred gains a wound (1). DEF now 7.
+[NEAR_DEATH] 🚨 Near-death: Quen the Scarred is under 20% HP!
+[FINISHER] 💥 FINISHER → Toros the Unlucky's blast breaks the Iron Warden! (24)
+[BOSS_DEFEATED] 🏆 Boss defeated! +70 gold.
+[TROPHY_DROP] 🎁 Trophy drop: Fine Gold Charm.
+[EQUIP] 📦 EQUIP → Toros the Unlucky equips (trinket): Fine Gold Charm [Δ88.1].
+[STAT_ATK] 🟩 ATK 13→16.
+[STAT_DEF] 🟦 DEF 2→5 (base 2→2).
+[STAT_MP] 🔷 MAX MP 30→46.
+📺 Episode ends. Gold=83 | Chests=4 | Merchants=1 | Rares=0 | Near-deaths=7 | Boss=DEFEATED
+📊 Party avg HP%: 62%

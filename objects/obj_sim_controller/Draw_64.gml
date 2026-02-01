@@ -25,10 +25,15 @@ for (var i = 0; i < array_length(sim.party); i++) {
     "  HP " + string(p.hp) + "/" + string(p.max_hp) +
     "  MP " + string(p.mp) + "/" + string(p.max_mp) +
     "  ATK " + string(p.atk) + " DEF " + string(p.def) +
-    "  Wounds " + string(p.wounds) +
-	"  W:" + sim_item_name(p.equip.weapon) +
-	"  A:" + sim_item_name(p.equip.armor) +
-	"  T:" + sim_item_name(p.equip.trinket);
+    "  Wounds " + string(p.wounds);
+	
+	var eq = (variable_struct_exists(p, "equip") && is_struct(p.equip))
+    ? p.equip
+    : { weapon: undefined, armor: undefined, trinket: undefined };
+	
+	line += "  W:" + sim_item_name(eq.weapon) +
+	        "  A:" + sim_item_name(eq.armor) +
+	        "  T:" + sim_item_name(eq.trinket);
 
     draw_text(gui_x, gui_y, line);
     gui_y += 18;

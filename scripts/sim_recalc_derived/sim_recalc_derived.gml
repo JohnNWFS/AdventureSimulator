@@ -1,27 +1,64 @@
 function sim_recalc_derived(p) {
-    var gear_atk = 0;
-    var gear_def = 0;
-    var gear_hp  = 0;
-    var gear_mp  = 0;
+    // Ensure equip struct exists (compat with legacy party members)
+    if (!variable_struct_exists(p, "equip") || !is_struct(p.equip)) {
+        p.equip = { weapon: undefined, armor: undefined, trinket: undefined };
+    }
 
+    // Base stats should exist; if not, fall back to current values safely
+    if (!variable_struct_exists(p, "base_max_hp")) p.base_max_hp = p.max_hp;
+    if (!variable_struct_exists(p, "base_max_mp")) p.base_max_mp = p.max_mp;
+    if (!variable_struct_exists(p, "base_atk"))    p.base_atk    = p.atk;
+    if (!variable_struct_exists(p, "base_def"))    p.base_def    = p.def;
+
+    var hp_bonus = 0;
+    var mp_bonus = 0;
+    var atk_bonus = 0;
+    var def_bonus = 0;
+
+    // Pull equipped items
     var w = p.equip.weapon;
     var a = p.equip.armor;
     var t = p.equip.trinket;
 
-    if (is_struct(w)) { gear_atk += w.stats.atk; gear_def += w.stats.def; gear_hp += w.stats.hp; gear_mp += w.stats.mp; }
-    if (is_struct(a)) { gear_atk += a.stats.atk; gear_def += a.stats.def; gear_hp += a.stats.hp; gear_mp += a.stats.mp; }
-    if (is_struct(t)) { gear_atk += t.stats.atk; gear_def += t.stats.def; gear_hp += t.stats.hp; gear_mp += t.stats.mp; }
+    // Sum bonuses (items are structs in your newer loot system)
+    if (!is_undefined(w) && is_struct(w) && variable_struct_exists(w, "stats")) {
+        atk_bonus += w.stats.atk;
+        def_bonus += w.stats.def;
+        hp_bonus  += w.stats.hp;
+        mp_bonus  += w.stats.mp;
+    }
 
-    p.max_hp = max(1, p.base_max_hp + gear_hp);
-    p.max_mp = max(0, p.base_max_mp + gear_mp);
+    if (!is_undefined(a) && is_struct(a) && variable_struct_exists(a, "stats")) {
+        atk_bonus += a.stats.atk;
+        def_bonus += a.stats.def;
+        hp_bonus  += a.stats.hp;
+        mp_bonus  += a.stats.mp;
+    }
 
-    // Clamp current resources to new max
-    p.hp = clamp(p.hp, 0, p.max_hp);
+    if (!is_undefined(t) && is_struct(t) && variable_struct_exists(t, "stats")) {
+        atk_bonus += t.stats.atk;
+        def_bonus += t.stats.def;
+        hp_bonus  += t.stats.hp;
+        mp_bonus  += t.stats.mp;
+    }
+
+    // Apply wound penalty to DEF (your current behavior)
+    var wound_def_pen = (variable_struct_exists(p, "wounds")) ? p.wounds : 0;
+
+    // Derived maxima
+    p.max_hp = max(1, p.base_max_hp + hp_bonus);
+    p.max_mp = max(0, p.base_max_mp + mp_bonus);
+
+    // Derived combat stats
+    p.atk = p.base_atk + atk_bonus;
+    p.def = max(0, (p.base_def + def_bonus) - wound_def_pen);
+
+    // Clamp current resources to maxima
+    p.hp = clamp(p.hp, -p.max_hp * 2, p.max_hp); // allow negatives for overkill checks
     p.mp = clamp(p.mp, 0, p.max_mp);
 
-    p.atk = max(0, p.base_atk + gear_atk);
-
-    // Wounds reduce DEF after gear/base are applied
-    var raw_def = p.base_def + gear_def;
-    p.def = max(0, raw_def - p.wounds);
+    // Optional legacy strings for HUD compatibility
+    p.weapon  = sim_item_name(p.equip.weapon);
+    p.armor   = sim_item_name(p.equip.armor);
+    p.trinket = sim_item_name(p.equip.trinket);
 }

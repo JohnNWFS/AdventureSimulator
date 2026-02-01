@@ -7,21 +7,11 @@ function sim_run_step(sim) {
         return;
     }
 
-    // Zone shifts (cheap “season” feel)
-	var old_zone = sim.zone;
-
-	if (sim.beat == 0) sim.zone = "Dungeon";
-	if (sim.beat == 35) sim.zone = "Wilderness";
-	if (sim.beat == 70) sim.zone = "Town";
-	if (sim.beat == 85) sim.zone = "Castle";
-
-	// Reset per-zone director counters on zone change
-	if (sim.zone != old_zone) {
-	    sim.director.merchants_this_zone = 0;
-	    sim.director.merchant_cd = 0;
-	    sim.director.chest_cd = 0;
-	}
-
+    // Zone shifts
+    if (sim.beat == 0) sim.zone = "Dungeon";
+    if (sim.beat == 35) sim.zone = "Wilderness";
+    if (sim.beat == 70) sim.zone = "Town";
+    if (sim.beat == 85) sim.zone = "Castle";
 
     // Difficulty ramps
     if (sim.beat > 0 && sim.beat % 20 == 0) sim.difficulty += 1;
@@ -32,19 +22,19 @@ function sim_run_step(sim) {
     // Playback: why this beat is happening (source cue)
     switch (ev) {
         case "chest":
-            sim_log_tag(sim, "BEAT_SOURCE", "🧭 Exploration find: the party spots something ahead.");
+            sim_log_tag(sim, "BEAT_SOURCE", "🔎 Exploration find: the party spots something ahead.");
             break;
         case "merchant":
-            sim_log_tag(sim, "BEAT_SOURCE", "🧭 Encounter: a traveling merchant appears.");
+            sim_log_tag(sim, "BEAT_SOURCE", "🧳 Encounter: a traveling merchant appears.");
             break;
         case "relief":
-            sim_log_tag(sim, "BEAT_SOURCE", "🧭 Rest stop: the party finds a safe pocket to regroup.");
+            sim_log_tag(sim, "BEAT_SOURCE", "🛖 Rest stop: the party finds a safe pocket to regroup.");
             break;
         case "boss":
-            sim_log_tag(sim, "BEAT_SOURCE", "🧭 Ominous presence: the air shifts. Something huge is near.");
+            sim_log_tag(sim, "BEAT_SOURCE", "👁 Ominous presence: the air shifts. Something huge is near.");
             break;
         case "intro":
-            sim_log_tag(sim, "BEAT_SOURCE", "🧭 The party advances deeper.");
+            sim_log_tag(sim, "BEAT_SOURCE", "🗺 The party advances deeper.");
             break;
         case "combat":
         default:
@@ -61,6 +51,9 @@ function sim_run_step(sim) {
         case "boss":     sim_resolve_boss(sim); break;
         default:         sim_resolve_combat(sim); break;
     }
+
+    // NEW: process retirements/deaths and recruit replacements (keeps 4 archetypes always)
+    sim_party_process_exits(sim, ev);
 
     // Tension decay (prevents runaway)
     sim.tension = clamp(sim.tension - 2, 0, 100);

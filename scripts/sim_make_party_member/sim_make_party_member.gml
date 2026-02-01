@@ -3,13 +3,6 @@ function sim_make_party_member(role, name, max_hp, max_mp, atk, def) {
         role: role,
         name: name,
 
-        // Base stats (never directly modified by gear)
-        base_max_hp: max_hp,
-        base_max_mp: max_mp,
-        base_atk: atk,
-        base_def: def,
-
-        // Current stats (derived from base + gear)
         hp: max_hp,
         max_hp: max_hp,
 
@@ -17,26 +10,40 @@ function sim_make_party_member(role, name, max_hp, max_mp, atk, def) {
         max_mp: max_mp,
 
         atk: atk,
+        base_def: def,
         def: def,
 
-        // Equipped items (structs or undefined)
-        equip: {
-            weapon: undefined,
-            armor: undefined,
-            trinket: undefined
-        },
+        // Base stat anchors (so sim_recalc_derived never has to guess)
+        base_max_hp: max_hp,
+        base_max_mp: max_mp,
+        base_atk: atk,
 
-        // Immediate-use consumable (kept here for now; struct or undefined)
-        consumable: undefined,
+        // Legacy string-ish fields (HUD compatibility)
+        weapon: "",
+        armor: "",
+        trinket: "",
+        consumable: "",
 
-        // Future inventory hooks (we'll expand later)
+        // NEW canonical equip struct (always exists)
+        equip: { weapon: undefined, armor: undefined, trinket: undefined },
+
         items: [],
         status: [],
 
         wounds: 0,
         near_death_flag: false,
+        downed_this_beat: false,
 
-        // Prevents healing after lethal damage in same beat
-        downed_this_beat: false
+        // NEW death/retire system
+        dead: false,
+        retired: false,
+
+        // Legacy-ish state string (kept in sync)
+        status_state: "alive",
+
+        // Resolve system
+        resolve: 100,
+        retire_notice: false,
+        cracking_flag: false
     };
 }

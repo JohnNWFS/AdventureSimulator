@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"sim_adjust_resolve",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"sim_adjust_resolve",
+  "parent":{
+    "name":"RESOLVE",
+    "path":"folders/SCRIPTS/RESOLVE.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
