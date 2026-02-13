@@ -82,6 +82,20 @@ function sim_resolve_combat(sim) {
         " (" + string(before_tank) + "→" + string(tank.hp) + ")."
     );
 
+    if (sim_chance(sim, 18)) {
+        var off_i = sim_rand_range(sim, 1, array_length(sim.party) - 1);
+        var off_target = sim.party[off_i];
+        if (!off_target.dead && !off_target.retired) {
+            var flank_dmg = max(1, floor((base_dmg * sim_rand_range(sim, 30, 50)) / 100) - floor(off_target.def * 0.5));
+            var before_off = off_target.hp;
+            off_target.hp -= flank_dmg;
+            sim_log_tag(sim, "FLANK_HIT",
+                "🪓 Flanking blow! " + off_target.name + " takes " + string(flank_dmg) +
+                " (" + string(before_off) + "→" + string(off_target.hp) + ")."
+            );
+        }
+    }
+
     // Catastrophic check right away (rare, but dramatic)
     if (tank.hp <= -tank.max_hp) {
         tank.dead = true;
@@ -147,13 +161,6 @@ function sim_resolve_combat(sim) {
 
     // --- Knockdowns / near-death / death consistency ---
     sim_check_party_health(sim);
-
-    // If anyone died, do an emergency town vignette + replacements
-    if (sim_party_any_dead(sim)) {
-        sim_log_tag(sim, "RETREAT", "🏘 The party staggers back to town to regroup.");
-        sim_log_tag(sim, "TOWN_RETURN", "🏘 Town lights blur through rain and exhaustion.");
-        sim_party_process_exits(sim, "combat");
-    }
 
     // --- Tension climbs ---
     sim.tension = clamp(sim.tension + sim_rand_range(sim, 6, 14), 0, 100);

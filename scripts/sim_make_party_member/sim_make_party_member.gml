@@ -44,6 +44,9 @@ function sim_make_party_member(role, name, max_hp, max_mp, atk, def) {
         // Resolve system
         resolve: 100,
         retire_notice: false,
-        cracking_flag: false
+        cracking_flag: false,
+
+        exit_flagged: false,
+        exit_mode: "none"
     };
 }

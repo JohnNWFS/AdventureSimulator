@@ -1,41 +1,51 @@
 function sim_party_process_exits(sim, ev) {
 
-    // Only allow retirement decisions at "safe" beats.
-    // Death replacement can happen anytime (because... well... 💀).
-    var safe_stop = (ev == "merchant" || ev == "relief");
+    // Only allow retirement rolls at safer beats unless we're retreating.
+    var safe_stop = (ev == "merchant" || ev == "relief" || ev == "city_scene" || sim.retreat_to_city);
 
     for (var i = 0; i < array_length(sim.party); i++) {
         var p = sim.party[i];
+
+        // Keep explicit exit flags in sync with resolve-based retire notices.
+        if (p.retire_notice) {
+            p.exit_flagged = true;
+            p.exit_mode = "retire";
+        }
+
+        // Retreat-to-city should hard-commit retirements for flagged members.
+        if (sim.retreat_to_city && p.exit_flagged && p.exit_mode == "retire" && !p.dead && !p.retired) {
+            p.retired = true;
+        }
 
         // --- Retirement roll (probabilistic) ---
         if (safe_stop && !p.dead && !p.retired) {
             if (p.retire_notice) {
                 // Chance rises with wounds and low resolve.
-                // Tuned to be uncommon, not constant.
-                var wound_push = max(0, (p.wounds - 5) * 6);         // 6% per wound beyond 5
-                var resolve_pull = max(0, (70 - p.resolve));         // lower resolve => higher chance
-                var chance = clamp(8 + wound_push + resolve_pull, 8, 70);
+                var wound_push = max(0, (p.wounds - 3) * 8);
+                var resolve_pull = max(0, (70 - p.resolve));
+                var chance = clamp(12 + wound_push + resolve_pull, 12, 85);
 
                 if (sim_chance(sim, chance)) {
                     p.retired = true;
-
-                    if (is_struct(sim.stats) && variable_struct_exists(sim.stats, "retirements")) {
-                        sim.stats.retirements += 1;
-                    }
-
-                    sim_log_tag(sim, "RETIRE",
-                        "🏳 " + p.name + " retires: \"I'm done tempting fate.\""
-                    );
-
-                    // Legacy bump for survivors
-                    sim_party_apply_legacy(sim, p, "retire");
                 }
             }
         }
 
+        if (p.retired) {
+            if (is_struct(sim.stats) && variable_struct_exists(sim.stats, "retirements")) {
+                sim.stats.retirements += 1;
+            }
+
+            sim_log_tag(sim, "RETIRE",
+                "🏳 " + p.name + " retires: \"I'm done tempting fate.\""
+            );
+
+            // Legacy bump for survivors
+            sim_party_apply_legacy(sim, p, "retire");
+        }
+
         // --- Death replacement ---
         if (p.dead) {
-
             if (is_struct(sim.stats) && variable_struct_exists(sim.stats, "deaths")) {
                 sim.stats.deaths += 1;
             }
@@ -65,5 +75,32 @@ function sim_party_process_exits(sim, ev) {
                 "🧑 New " + role_name + " joins: " + sim.party[i].name + "."
             );
         }
+    }
+}
+
+function sim_resolve_city_scene(sim) {
+    sim.city_scene_pending = false;
+    sim.city_scene_played = true;
+
+    sim_log_tag(sim, "CITY_SCENE",
+        "🏙 The party reaches the city walls to triage wounds, mourn losses, and regroup."
+    );
+
+    // Clear any stale exit flags from pre-retreat state.
+    for (var i = 0; i < array_length(sim.party); i++) {
+        var p = sim.party[i];
+        if (p.dead || p.retired) continue;
+
+        if (p.wounds > 0) {
+            var heal_wounds = min(2, p.wounds);
+            p.wounds -= heal_wounds;
+            sim_recalc_derived(p);
+            sim_log_tag(sim, "CITY_CARE",
+                "🩺 " + p.name + " receives city care (wounds -" + string(heal_wounds) + ")."
+            );
+        }
+
+        p.exit_flagged = false;
+        p.exit_mode = "none";
     }
 }
