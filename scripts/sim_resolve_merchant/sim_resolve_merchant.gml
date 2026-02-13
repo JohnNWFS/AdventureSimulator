@@ -2,6 +2,9 @@ function sim_resolve_merchant(sim) {
     // --- Harden stats (prevents "field not set" crashes) ---
     if (!is_struct(sim.stats)) sim.stats = {};
     if (!variable_struct_exists(sim.stats, "merchants_seen")) sim.stats.merchants_seen = 0;
+    if (!variable_struct_exists(sim.stats, "merchants_bought")) sim.stats.merchants_bought = 0;
+
+    sim.stats.merchants_seen += 1;
 
     // Generate a merchant item
     var tier_target = clamp(2 + floor(sim.difficulty / 2), 1, 10);
@@ -61,7 +64,7 @@ function sim_resolve_merchant(sim) {
     var gold_before = sim.gold_total;
 
     sim.gold_total -= cost;
-    sim.stats.merchants_seen += 1;
+    sim.stats.merchants_bought += 1;
 
     sim_log_tag(sim, "MERCHANT_BUY",
         "🧳 Merchant: " + buyer.name + " buys " + offer.name +

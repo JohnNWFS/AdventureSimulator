@@ -11,10 +11,17 @@ function sim_run_init(sim, seed, beats_target) {
     sim.tension = 10;
     sim.gold_total = 0;
 
+    sim.wound_retreat_threshold = 3;
+    sim.retreat_to_city = false;
+    sim.retreat_beats_left = 0;
+    sim.city_scene_pending = false;
+    sim.city_scene_played = false;
+
     sim.director = {
         merchant_cd: 0,
         chest_cd: 0,
-        merchants_this_zone: 0
+        merchants_this_zone: 0,
+        beats_since_relief: 0
     };
 
     sim.prev_zone = sim.zone;
@@ -47,6 +54,7 @@ function sim_run_init(sim, seed, beats_target) {
         knockdowns: 0,
         chests_opened: 0,
         merchants_seen: 0,
+        merchants_bought: 0,
         rares_found: 0,
         boss_defeated: false,
 

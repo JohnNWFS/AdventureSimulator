@@ -1,5 +1,6 @@
 function sim_resolve_chest(sim) {
     sim_log_tag(sim, "CHEST_OPEN", "🧰 Chest found.");
+    sim.stats.chests_opened += 1;
 
     // Trap chance
     if (sim_chance(sim, 15)) {
@@ -13,7 +14,6 @@ function sim_resolve_chest(sim) {
         var gold = sim_rand_range(sim, 10, 28) + floor(sim.difficulty / 2);
         sim.gold_total += gold;
 
-        sim.stats.chests_opened += 1;
         sim_log_tag(sim, "CHEST_GOLD", "🧰 Chest: +" + string(gold) + " gold.");
         return;
     }
@@ -21,8 +21,6 @@ function sim_resolve_chest(sim) {
     // Item chest (struct-based)
     var tier_target = clamp(1 + floor(sim.difficulty / 2), 1, 10);
     var item = loot_generate_item(sim, { source: "chest", zone: sim.zone, tier_target: tier_target });
-
-    sim.stats.chests_opened += 1;
 
     if (item.is_named || item.rarity == "rare" || item.rarity == "epic" || item.rarity == "legendary") {
         sim.stats.rares_found += 1;

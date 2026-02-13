@@ -6,17 +6,14 @@ function sim_resolve_relief(sim) {
     );
 
     // --- GROUP HEAL ---
-    var heal_amt = sim_rand_range(sim, 6, 14);
+    var heal_amt = sim_rand_range(sim, 8, 16) + sim.difficulty;
     sim_log_tag(sim, "GROUP_HEAL",
         "✨ Party heals +" + string(heal_amt) + " (group)."
     );
 
     for (var i = 0; i < array_length(sim.party); i++) {
         var p = sim.party[i];
-
-        // Skip dead/retired bodies (they'll be replaced by exit processing)
-        if (variable_struct_exists(p, "dead") && p.dead) continue;
-        if (variable_struct_exists(p, "retired") && p.retired) continue;
+        if (p.dead || p.retired) continue;
 
         var before = p.hp;
         p.hp = min(p.max_hp, p.hp + heal_amt);
@@ -27,16 +24,14 @@ function sim_resolve_relief(sim) {
     }
 
     // --- GROUP MP RESTORE ---
-    var mp_amt = sim_rand_range(sim, 4, 10);
+    var mp_amt = sim_rand_range(sim, 6, 14) + floor(sim.difficulty);
     sim_log_tag(sim, "GROUP_MP",
         "🔷 Party restores MP +" + string(mp_amt) + " (group)."
     );
 
     for (var j = 0; j < array_length(sim.party); j++) {
         var p2 = sim.party[j];
-
-        if (variable_struct_exists(p2, "dead") && p2.dead) continue;
-        if (variable_struct_exists(p2, "retired") && p2.retired) continue;
+        if (p2.dead || p2.retired) continue;
 
         var before_mp = p2.mp;
         p2.mp = min(p2.max_mp, p2.mp + mp_amt);
@@ -46,27 +41,24 @@ function sim_resolve_relief(sim) {
         );
     }
 
-    // --- WOUND RECOVERY (one member) ---
-    var wounded_idx = -1;
+    // --- WOUND RECOVERY (all members, scaled) ---
     for (var k = 0; k < array_length(sim.party); k++) {
-        var pk = sim.party[k];
-        if ((variable_struct_exists(pk, "dead") && pk.dead) || (variable_struct_exists(pk, "retired") && pk.retired)) continue;
-        if (pk.wounds > 0) { wounded_idx = k; break; }
-    }
+        var w = sim.party[k];
+        if (w.dead || w.retired) continue;
+        if (w.wounds <= 0) continue;
 
-    if (wounded_idx != -1) {
-        var w = sim.party[wounded_idx];
+        var wound_heal = 1;
+        if (w.wounds >= 8) wound_heal = 3;
+        else if (w.wounds >= 5) wound_heal = 2;
 
         var before_wounds = w.wounds;
         var before_def = w.def;
 
-        w.wounds = max(0, w.wounds - 1);
-
-        // Recalc may normalize equip + derived stats
+        w.wounds = max(0, w.wounds - wound_heal);
         sim_recalc_derived(w);
 
         sim_log_tag(sim, "WOUND_HEAL",
-            "🩺 Relief treatment: " + w.name + " recovers 1 wound."
+            "🩺 Relief treatment: " + w.name + " recovers " + string(wound_heal) + " wound(s)."
         );
         sim_log_tag(sim, "STAT_DEF",
             "🟦 DEF " + string(before_def) + "→" + string(w.def) +
@@ -74,33 +66,22 @@ function sim_resolve_relief(sim) {
         );
     }
 
-    // --- Resolve recovery (subtle, avoids spam) ---
+    // --- Resolve recovery ---
     for (var r = 0; r < array_length(sim.party); r++) {
         var pr = sim.party[r];
-
-        if (variable_struct_exists(pr, "dead") && pr.dead) continue;
-        if (variable_struct_exists(pr, "retired") && pr.retired) continue;
-
-        if (!variable_struct_exists(pr, "resolve")) pr.resolve = 100;
-        if (!variable_struct_exists(pr, "retire_notice")) pr.retire_notice = false;
+        if (pr.dead || pr.retired) continue;
 
         var before_res = pr.resolve;
         pr.resolve = clamp(pr.resolve + sim_rand_range(sim, 10, 18), 0, 100);
 
-        // Only log if they were in the red zone previously
         if (before_res <= 25 || pr.retire_notice) {
             sim_log_tag(sim, "RESOLVE",
                 "🧠 " + pr.name + " steadies (" + string(before_res) + "→" + string(pr.resolve) + ")."
             );
         }
 
-        // If they recovered, clear retirement warning
         if (pr.resolve > 20) pr.retire_notice = false;
     }
 
     sim.tension = clamp(sim.tension - 25, 0, 100);
-
-    // NOTE: Don't call sim_party_process_exits here if you're already calling it from sim_run_step.
-    // If you're NOT calling it from sim_run_step, uncomment the next line:
-    // sim_party_process_exits(sim, "relief");
 }
