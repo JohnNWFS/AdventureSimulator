@@ -28,8 +28,12 @@ function sim_check_party_health(sim) {
         if (p.hp <= 0) {
             p.status_state = "downed";
             p.hp = 1;
-            p.wounds += 1;
-            p.def = max(0, p.base_def - p.wounds);
+            var chain_from_near_death = (variable_struct_exists(p, "near_death_triggered_this_beat") && p.near_death_triggered_this_beat);
+
+            if (!chain_from_near_death) {
+                p.wounds += 1;
+                p.def = max(0, p.base_def - p.wounds);
+            }
 
             if (is_struct(sim.stats) && variable_struct_exists(sim.stats, "knockdowns")) {
                 sim.stats.knockdowns += 1;
@@ -37,18 +41,24 @@ function sim_check_party_health(sim) {
 
             p.resolve = clamp(p.resolve - RESOLVE_HIT_KD, 0, 100);
 
-            sim_log_tag(sim, "DOWNED",
-                "⚠ " + p.name + " is downed and stabilized at 1 HP."
-            );
-            sim_log_tag(sim, "WOUND",
-                "🩸 Wounded: " + p.name + " gains a wound (" + string(p.wounds) +
-                "). DEF now " + string(p.def) + "."
-            );
+            if (!p.downed_this_beat) {
+                sim_log_tag(sim, "DOWNED",
+                    "⚠ " + p.name + " is downed and stabilized at 1 HP."
+                );
+                if (!chain_from_near_death) {
+                    sim_log_tag(sim, "WOUND",
+                        "🩸 Wounded: " + p.name + " gains a wound (" + string(p.wounds) +
+                        "). DEF now " + string(p.def) + "."
+                    );
+                }
+            }
+            p.downed_this_beat = true;
 
             if (!sim.retreat_to_city && p.wounds >= WOUND_RETREAT_THRESHOLD) {
                 sim.retreat_to_city = true;
                 sim.city_scene_pending = true;
                 sim.retreat_beats_left = sim_rand_range(sim, 1, 2);
+                sim.director.retreat_bridge_left = sim_rand_range(sim, 1, 2);
                 sim_log_tag(sim, "RETREAT_CALL",
                     "⚠ The party breaks off and heads to the city before someone dies."
                 );
@@ -70,14 +80,15 @@ function sim_check_party_health(sim) {
         var hp_pct = p.hp / max(1, p.max_hp);
 
         if (hp_pct < 0.20) {
-            if (is_struct(sim.stats) && variable_struct_exists(sim.stats, "near_deaths")) {
-                sim.stats.near_deaths += 1;
-            }
             if (!p.near_death_flag) {
                 p.near_death_flag = true;
+                p.near_death_triggered_this_beat = true;
                 p.near_death_count += 1;
                 p.wounds += 1;
                 p.def = max(0, p.base_def - p.wounds);
+                if (is_struct(sim.stats) && variable_struct_exists(sim.stats, "near_deaths")) {
+                    sim.stats.near_deaths += 1;
+                }
                 sim_log_tag(sim, "NEAR_DEATH",
                     "🚨 Near-death: " + p.name + " is under 20% HP!"
                 );
@@ -89,6 +100,7 @@ function sim_check_party_health(sim) {
             p.near_death_flag = false;
         }
 
+        p.near_death_triggered_this_beat = false;
         p.downed_this_beat = false;
 
         if (!p.retire_notice && (p.wounds >= RETIRE_WOUNDS_HARD || p.near_death_count >= 4)) {
