@@ -14,6 +14,11 @@ function beat_output_emit(tag, text, data)
     if (!is_string(tag) || tag == "") tag = "UNTAGGED";
     if (!is_string(text)) text = string(text);
 
+    var is_beat_like = (tag != "DEBUG" && tag != "WARN" && tag != "ERR");
+
+    if (!variable_global_exists("debug_enabled") || !global.debug_enabled) return;
+    if (is_beat_like && !debug_allow_beat()) return;
+
     // Normalize final line
     var line = "[" + tag + "] " + text;
 
@@ -24,6 +29,8 @@ function beat_output_emit(tag, text, data)
         array_delete(global.debug_lines, 0, 1);
     }
 
-    // Also send to Output / console for normal debugging
-    show_debug_message(line);
+    if (is_beat_like) {
+        if (!variable_global_exists("debug_beats_emitted")) global.debug_beats_emitted = 0;
+        global.debug_beats_emitted += 1;
+    }
 }

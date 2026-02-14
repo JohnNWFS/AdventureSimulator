@@ -31,6 +31,7 @@
     {"id":{"name":"obj_sim_controller","path":"objects/obj_sim_controller/obj_sim_controller.yy",},},
     {"id":{"name":"rm_sim","path":"rooms/rm_sim/rm_sim.yy",},},
     {"id":{"name":"beat_output_emit","path":"scripts/beat_output_emit/beat_output_emit.yy",},},
+    {"id":{"name":"debug_allow_beat","path":"scripts/debug_allow_beat/debug_allow_beat.yy",},},
     {"id":{"name":"loot_build_name","path":"scripts/loot_build_name/loot_build_name.yy",},},
     {"id":{"name":"loot_compute_power","path":"scripts/loot_compute_power/loot_compute_power.yy",},},
     {"id":{"name":"loot_compute_value","path":"scripts/loot_compute_value/loot_compute_value.yy",},},

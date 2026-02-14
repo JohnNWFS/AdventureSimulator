@@ -1,7 +1,9 @@
 function sim_log(sim, text) {
-    // Keep in-memory
+    if (!is_string(text)) text = string(text);
+
+    // Keep in-memory for HUD
     array_push(sim.log, text);
 
-    // Also dump to Output console for sharing back
-    show_debug_message(text);
+    // Route through canonical emitter
+    beat_output_emit("LOG", text, undefined);
 }

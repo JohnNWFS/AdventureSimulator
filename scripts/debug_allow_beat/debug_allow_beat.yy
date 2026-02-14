@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"debug_allow_beat",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"debug_allow_beat",
+  "parent":{
+    "name":"OTHER",
+    "path":"folders/SCRIPTS/OTHER.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
