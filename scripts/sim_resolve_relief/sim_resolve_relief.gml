@@ -2,6 +2,16 @@ function sim_resolve_relief(sim) {
     var relief_opts = ["campfire", "healing shrine", "abandoned outpost", "quiet corridor"];
     var relief_type = relief_opts[sim_rand_range(sim, 0, array_length(relief_opts) - 1)];
 
+    if (variable_struct_exists(sim.director, "last_relief_type") && sim.director.last_relief_type == relief_type) {
+        relief_type = relief_opts[(sim_rand_range(sim, 0, array_length(relief_opts) - 2) + 1) mod array_length(relief_opts)];
+    }
+
+    if (variable_struct_exists(sim.director, "last_relief_type") && sim.director.last_relief_type == "healing shrine" && relief_type == "quiet corridor") {
+        relief_type = "abandoned outpost";
+    }
+
+    sim.director.last_relief_type = relief_type;
+
     sim_log_tag(sim, "RELIEF_START",
         "🕯 Relief: " + relief_type + ". The party regroups."
     );

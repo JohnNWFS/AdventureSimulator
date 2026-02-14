@@ -7,7 +7,8 @@ function sim_resolve_merchant(sim) {
     sim.director.merchant_cd = 3;
     sim.director.merchants_this_zone += 1;
 
-    var tier_target = clamp(2 + floor(sim.difficulty / 2), 1, 10);
+    var gold_band = clamp(floor(sim.gold_total / 30), 0, 5);
+    var tier_target = clamp(1 + floor(sim.difficulty / 2) + floor(gold_band / 2), 1, 10);
     var offer = loot_generate_item(sim, { source: "merchant", zone: sim.zone, tier_target: tier_target });
 
     if (is_struct(offer) && variable_struct_exists(offer, "type") && offer.type == "treasure") {
@@ -54,9 +55,44 @@ function sim_resolve_merchant(sim) {
     );
 
     if (sim.gold_total < cost) {
-        sim_log_tag(sim, "MERCHANT_SKIP",
-            "🧳 The party can't afford it and moves on."
-        );
+        var fallback = sim_rand_range(sim, 0, 5);
+        switch (fallback) {
+            case 0:
+                sim_log_tag(sim, "MERCHANT_REPAIR", "🛠 The merchant offers field repairs instead of a sale.");
+                sim_party_heal(sim, sim_rand_range(sim, 4, 8));
+                break;
+            case 1:
+                sim_log_tag(sim, "MERCHANT_SUPPLY", "🧪 The merchant trades cheap poultices for future favors.");
+                sim_party_restore_mp(sim, sim_rand_range(sim, 4, 7));
+                break;
+            case 2:
+                sim_log_tag(sim, "MERCHANT_TRADE", "🔁 A barter swap nets the party a practical consumable.");
+                sim_give_item(sim, loot_generate_item(sim, { source: "merchant", zone: sim.zone, tier_target: max(1, tier_target - 1) }));
+                break;
+            case 3:
+                sim_log_tag(sim, "MERCHANT_RUMOR", "🗣 Rumor: a safer side route avoids a recent ambush point.");
+                sim.tension = clamp(sim.tension - 6, 0, 100);
+                break;
+            case 4:
+                var drip = max(4, floor(list_price * 0.35));
+                sim_log_tag(sim, "MERCHANT_DISCOUNT", "🏷 The merchant marks down stock for battered travelers.");
+                sim_log_tag(sim, "MERCHANT_OFFER", "🧳 Revised asking price: " + string(drip) + "g.");
+                if (sim.gold_total >= drip) {
+                    sim.gold_total -= drip;
+                    sim.stats.merchants_bought += 1;
+                    sim_log_tag(sim, "MERCHANT_BUY", "🧳 The party scrapes together " + string(drip) + "g and buys " + offer.name + ".");
+                    if (slot != "") {
+                        sim_set_equipped_item(sim.party[buyer_idx], slot, offer);
+                        sim_recalc_derived(sim.party[buyer_idx]);
+                    } else {
+                        sim_give_item(sim, offer);
+                    }
+                }
+                break;
+            default:
+                sim_log_tag(sim, "MERCHANT_WARNING", "⚠ Warning: scouts report movement near the next chokepoint.");
+                break;
+        }
         return;
     }
 

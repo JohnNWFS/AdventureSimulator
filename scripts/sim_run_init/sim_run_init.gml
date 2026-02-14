@@ -1,10 +1,12 @@
 function sim_run_init(sim, seed, beats_target) {
+    var short_mode = (variable_global_exists("debug_short_mode") && global.debug_short_mode);
+
     // Core run state
     global.debug_seed = seed;
     sim.seed = seed;
     sim.rng = seed;
     sim.beat = 0;
-    sim.beats_target = beats_target;
+    sim.beats_target = short_mode ? min(beats_target, 36) : beats_target;
     sim.finished = false;
 
     sim.zone = "Dungeon";
@@ -12,7 +14,7 @@ function sim_run_init(sim, seed, beats_target) {
     sim.tension = 10;
     sim.gold_total = 0;
 
-    sim.wound_retreat_threshold = 3;
+    sim.wound_retreat_threshold = short_mode ? 2 : 3;
     sim.retreat_to_city = false;
     sim.retreat_beats_left = 0;
     sim.city_scene_pending = false;
@@ -22,7 +24,19 @@ function sim_run_init(sim, seed, beats_target) {
         merchant_cd: 0,
         chest_cd: 0,
         merchants_this_zone: 0,
-        beats_since_relief: 0
+        beats_since_relief: 0,
+        adventure_cd: 0,
+        last_relief_type: "",
+        relief_context_lock: 0,
+        retreat_bridge_left: 0
+    };
+
+    sim.debug_short_mode = short_mode;
+    sim.coverage = {
+        combat: 0,
+        exploration: 0,
+        relief: 0,
+        merchant: 0
     };
 
     sim.prev_zone = sim.zone;

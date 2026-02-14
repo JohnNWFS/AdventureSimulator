@@ -42,6 +42,9 @@ function sim_run_step(sim) {
         case "chest":
             sim_log_tag(sim, "BEAT_SOURCE", "🔎 Exploration find: the party spots something ahead.");
             break;
+        case "adventure":
+            sim_log_tag(sim, "BEAT_SOURCE", "🧭 Expedition: the route itself forces a decision.");
+            break;
         case "merchant":
             sim_log_tag(sim, "BEAT_SOURCE", "🧳 Encounter: a traveling merchant appears.");
             break;
@@ -53,6 +56,9 @@ function sim_run_step(sim) {
             break;
         case "boss":
             sim_log_tag(sim, "BEAT_SOURCE", "👁 Ominous presence: the air shifts. Something huge is near.");
+            break;
+        case "retreat_bridge":
+            sim_log_tag(sim, "BEAT_SOURCE", "🏃 Withdrawal: the party falls back through dangerous ground.");
             break;
         case "intro":
             sim_log_tag(sim, "BEAT_SOURCE", "🗺 The party advances deeper.");
@@ -67,8 +73,10 @@ function sim_run_step(sim) {
         case "intro":      sim_resolve_intro(sim); break;
         case "combat":     sim_resolve_combat(sim); break;
         case "chest":      sim_resolve_chest(sim); break;
+        case "adventure":  sim_resolve_adventure(sim); break;
         case "merchant":   sim_resolve_merchant(sim); break;
         case "relief":     sim_resolve_relief(sim); break;
+        case "retreat_bridge": sim_resolve_retreat_bridge(sim); break;
         case "city_scene": sim_resolve_city_scene(sim); break;
         case "boss":       sim_resolve_boss(sim); break;
         default:             sim_resolve_combat(sim); break;
@@ -76,9 +84,14 @@ function sim_run_step(sim) {
 
     if (ev == "relief") {
         sim.director.beats_since_relief = 0;
-    } else if (ev == "combat") {
+    } else if (ev == "combat" || ev == "adventure" || ev == "retreat_bridge") {
         sim.director.beats_since_relief += 1;
     }
+
+    if (ev == "combat") sim.coverage.combat += 1;
+    if (ev == "adventure" || ev == "chest") sim.coverage.exploration += 1;
+    if (ev == "merchant") sim.coverage.merchant += 1;
+    if (ev == "relief") sim.coverage.relief += 1;
 
     // Process retirements/deaths and recruit replacements
     sim_party_process_exits(sim, ev);
@@ -90,4 +103,5 @@ function sim_run_step(sim) {
 
     sim.director.merchant_cd = max(0, sim.director.merchant_cd - 1);
     sim.director.chest_cd = max(0, sim.director.chest_cd - 1);
+    sim.director.adventure_cd = max(0, sim.director.adventure_cd - 1);
 }

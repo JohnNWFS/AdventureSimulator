@@ -103,4 +103,5 @@ function sim_resolve_city_scene(sim) {
 
     sim.retreat_to_city = false;
     sim.retreat_beats_left = 0;
+    sim.director.retreat_bridge_left = 0;
 }
