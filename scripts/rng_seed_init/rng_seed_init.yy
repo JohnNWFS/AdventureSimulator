@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"rng_seed_init",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"rng_seed_init",
+  "parent":{
+    "name":"OTHER",
+    "path":"folders/SCRIPTS/OTHER.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

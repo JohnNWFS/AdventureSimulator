@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"beat_output_emit",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"beat_output_emit",
+  "parent":{
+    "name":"OTHER",
+    "path":"folders/SCRIPTS/OTHER.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

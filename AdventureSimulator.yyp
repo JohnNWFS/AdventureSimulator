@@ -12,6 +12,7 @@
   "Folders":[
     {"$GMFolder":"","%Name":"OBJECTS","folderPath":"folders/OBJECTS.yy","name":"OBJECTS","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"SCRIPTS","folderPath":"folders/SCRIPTS.yy","name":"SCRIPTS","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"OTHER","folderPath":"folders/SCRIPTS/OTHER.yy","name":"OTHER","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"LOOT","folderPath":"folders/SCRIPTS/LOOT.yy","name":"LOOT","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"PARTY","folderPath":"folders/SCRIPTS/PARTY.yy","name":"PARTY","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"RESOLVE","folderPath":"folders/SCRIPTS/RESOLVE.yy","name":"RESOLVE","resourceType":"GMFolder","resourceVersion":"2.0",},
@@ -26,8 +27,10 @@
   },
   "name":"AdventureSimulator",
   "resources":[
+    {"id":{"name":"obj_debug_console","path":"objects/obj_debug_console/obj_debug_console.yy",},},
     {"id":{"name":"obj_sim_controller","path":"objects/obj_sim_controller/obj_sim_controller.yy",},},
     {"id":{"name":"rm_sim","path":"rooms/rm_sim/rm_sim.yy",},},
+    {"id":{"name":"beat_output_emit","path":"scripts/beat_output_emit/beat_output_emit.yy",},},
     {"id":{"name":"loot_build_name","path":"scripts/loot_build_name/loot_build_name.yy",},},
     {"id":{"name":"loot_compute_power","path":"scripts/loot_compute_power/loot_compute_power.yy",},},
     {"id":{"name":"loot_compute_value","path":"scripts/loot_compute_value/loot_compute_value.yy",},},
@@ -45,6 +48,7 @@
     {"id":{"name":"loot_roll_pct","path":"scripts/loot_roll_pct/loot_roll_pct.yy",},},
     {"id":{"name":"loot_roll_rarity","path":"scripts/loot_roll_rarity/loot_roll_rarity.yy",},},
     {"id":{"name":"loot_roll_stats","path":"scripts/loot_roll_stats/loot_roll_stats.yy",},},
+    {"id":{"name":"rng_seed_init","path":"scripts/rng_seed_init/rng_seed_init.yy",},},
     {"id":{"name":"Script65","path":"scripts/Script65/Script65.yy",},},
     {"id":{"name":"sim_adjust_resolve","path":"scripts/sim_adjust_resolve/sim_adjust_resolve.yy",},},
     {"id":{"name":"sim_apply_party_damage","path":"scripts/sim_apply_party_damage/sim_apply_party_damage.yy",},},
