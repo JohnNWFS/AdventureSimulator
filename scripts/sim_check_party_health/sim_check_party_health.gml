@@ -1,7 +1,7 @@
 function sim_check_party_health(sim) {
 
-    var RETIRE_WOUNDS_MIN = 6;
-    var RETIRE_WOUNDS_HARD = 10;
+    var RETIRE_WOUNDS_MIN = 4;
+    var RETIRE_WOUNDS_HARD = 7;
     var WOUND_RETREAT_THRESHOLD = variable_struct_exists(sim, "wound_retreat_threshold") ? sim.wound_retreat_threshold : 3;
     var RESOLVE_HIT_KD = 12;
 
@@ -15,15 +15,18 @@ function sim_check_party_health(sim) {
 
         if (p.hp <= -p.max_hp) {
             p.dead = true;
+            p.status_state = "dead";
+            p.pending_honor = true;
+            p.hp = min(p.hp, -1);
             sim_log_tag(sim, "DEATH",
-                "💀 " + p.name + " suffers catastrophic damage and dies (HP " +
-                string(p.hp) + " vs -" + string(p.max_hp) + ")."
+                "💀 " + p.name + " falls. Their body is carried back for honors."
             );
-            p.downed_this_beat = true;
+            sim.city_scene_pending = true;
             continue;
         }
 
         if (p.hp <= 0) {
+            p.status_state = "downed";
             p.hp = 1;
             p.wounds += 1;
             p.def = max(0, p.base_def - p.wounds);
@@ -34,8 +37,8 @@ function sim_check_party_health(sim) {
 
             p.resolve = clamp(p.resolve - RESOLVE_HIT_KD, 0, 100);
 
-            sim_log_tag(sim, "KNOCKDOWN",
-                "⚠ " + p.name + " collapses but is dragged onward (HP set to 1)."
+            sim_log_tag(sim, "DOWNED",
+                "⚠ " + p.name + " is downed and stabilized at 1 HP."
             );
             sim_log_tag(sim, "WOUND",
                 "🩸 Wounded: " + p.name + " gains a wound (" + string(p.wounds) +
@@ -45,33 +48,41 @@ function sim_check_party_health(sim) {
             if (!sim.retreat_to_city && p.wounds >= WOUND_RETREAT_THRESHOLD) {
                 sim.retreat_to_city = true;
                 sim.city_scene_pending = true;
-                sim.retreat_beats_left = sim_rand_range(sim, 3, 5);
+                sim.retreat_beats_left = sim_rand_range(sim, 1, 2);
                 sim_log_tag(sim, "RETREAT_CALL",
-                    "⚠ " + p.name + " has taken too many wounds. The party turns back toward the city."
+                    "⚠ The party breaks off and heads to the city before someone dies."
                 );
             }
 
-            if (!p.retire_notice && p.wounds >= RETIRE_WOUNDS_MIN) {
+            if (!p.retire_notice && (p.wounds >= RETIRE_WOUNDS_MIN || p.near_death_count >= 3)) {
                 p.retire_notice = true;
                 p.exit_flagged = true;
                 p.exit_mode = "retire";
                 sim_log_tag(sim, "RETIRE_NOTICE",
-                    "🪦 " + p.name + " looks shaken. Retirement is on the table."
+                    "🪦 " + p.name + " is badly battered and may retire in town."
                 );
+                sim.city_scene_pending = true;
             }
+        } else if (p.status_state == "downed") {
+            p.status_state = "alive";
         }
 
         var hp_pct = p.hp / max(1, p.max_hp);
 
-        // Count near-death pressure continuously so persistent danger is visible in stats
         if (hp_pct < 0.20) {
             if (is_struct(sim.stats) && variable_struct_exists(sim.stats, "near_deaths")) {
                 sim.stats.near_deaths += 1;
             }
             if (!p.near_death_flag) {
                 p.near_death_flag = true;
+                p.near_death_count += 1;
+                p.wounds += 1;
+                p.def = max(0, p.base_def - p.wounds);
                 sim_log_tag(sim, "NEAR_DEATH",
                     "🚨 Near-death: " + p.name + " is under 20% HP!"
+                );
+                sim_log_tag(sim, "WOUND",
+                    "🩸 " + p.name + " carries another lasting wound (" + string(p.wounds) + ")."
                 );
             }
         } else if (p.near_death_flag && hp_pct > 0.35) {
@@ -80,13 +91,14 @@ function sim_check_party_health(sim) {
 
         p.downed_this_beat = false;
 
-        if (!p.retire_notice && p.wounds >= RETIRE_WOUNDS_HARD) {
+        if (!p.retire_notice && (p.wounds >= RETIRE_WOUNDS_HARD || p.near_death_count >= 4)) {
             p.retire_notice = true;
             p.exit_flagged = true;
             p.exit_mode = "retire";
             sim_log_tag(sim, "RETIRE_NOTICE",
-                "🪦 " + p.name + " has had enough. They'll likely retire at the next safe stop."
+                "🪦 " + p.name + " has had enough. Retirement is likely at the next city return."
             );
+            sim.city_scene_pending = true;
         }
     }
 }

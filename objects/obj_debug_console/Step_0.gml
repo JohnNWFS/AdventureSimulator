@@ -51,4 +51,10 @@ function _debug_start_run()
     //
     // For now, we just emit a line so you can wire the hook later:
     beat_output_emit("DEBUG", "Run started. Seed=" + string(global.debug_seed), undefined);
+
+    if (object_exists(obj_sim_controller)) {
+        with (obj_sim_controller) {
+            sim_run_new(sim, episode_beats_target, global.debug_seed);
+        }
+    }
 }

@@ -23,7 +23,7 @@ function sim_director_next_event(sim) {
             return "relief";
         }
 
-        return "boss";
+        sim.retreat_to_city = false;
     }
 
     var avg_hp_pct = sim_party_avg_hp_pct(sim);

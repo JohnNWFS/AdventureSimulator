@@ -6,9 +6,8 @@ function sim_apply_party_damage(sim, base_dmg) {
     for (var i = 0; i < array_length(sim.party); i++) {
         var p = sim.party[i];
 
-        // Skip dead/retired bodies (they're handled at end-of-beat)
-        if (p.dead || p.retired) {
-            sim_log_tag(sim, "SPLASH_HIT", "☠ SPLASH → " + p.name + " is gone already.");
+        // Skip dead/retired/downed bodies
+        if (p.dead || p.retired || p.status_state == "downed") {
             continue;
         }
 

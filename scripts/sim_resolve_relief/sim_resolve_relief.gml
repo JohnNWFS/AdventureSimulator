@@ -1,5 +1,6 @@
 function sim_resolve_relief(sim) {
-    var relief_type = choose("campfire", "healing shrine", "abandoned outpost", "quiet corridor");
+    var relief_opts = ["campfire", "healing shrine", "abandoned outpost", "quiet corridor"];
+    var relief_type = relief_opts[sim_rand_range(sim, 0, array_length(relief_opts) - 1)];
 
     sim_log_tag(sim, "RELIEF_START",
         "🕯 Relief: " + relief_type + ". The party regroups."
@@ -48,8 +49,7 @@ function sim_resolve_relief(sim) {
         if (w.wounds <= 0) continue;
 
         var wound_heal = 1;
-        if (w.wounds >= 8) wound_heal = 3;
-        else if (w.wounds >= 5) wound_heal = 2;
+        if (w.wounds >= 8) wound_heal = 2;
 
         var before_wounds = w.wounds;
         var before_def = w.def;

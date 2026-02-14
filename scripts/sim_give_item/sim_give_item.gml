@@ -111,6 +111,9 @@ function sim_give_item(sim, item) {
             "📦 EQUIP → " + p.name + " equips (" + slot + "): " + item.name +
             " [Δ" + string_format(delta, 1, 1) + "]."
         );
+        sim_log_tag(sim, "EQUIP_CHANGE",
+            "📦 " + p.name + " equips " + item.name + "."
+        );
 
         if (p.atk != before_atk) {
             sim_log_tag(sim, "STAT_ATK",

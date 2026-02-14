@@ -1,5 +1,6 @@
 function sim_run_init(sim, seed, beats_target) {
     // Core run state
+    global.debug_seed = seed;
     sim.seed = seed;
     sim.rng = seed;
     sim.beat = 0;

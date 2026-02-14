@@ -31,6 +31,7 @@ function sim_make_party_member(role, name, max_hp, max_mp, atk, def) {
         status: [],
 
         wounds: 0,
+        near_death_count: 0,
         near_death_flag: false,
         downed_this_beat: false,
 
@@ -40,6 +41,7 @@ function sim_make_party_member(role, name, max_hp, max_mp, atk, def) {
 
         // Legacy-ish state string (kept in sync)
         status_state: "alive",
+        pending_honor: false,
 
         // Resolve system
         resolve: 100,

@@ -5,9 +5,11 @@ beats_per_step = 1;         // crank this up to 5/10 for turbo simulation
 ui_max_lines = 26;
 
 sim = {};                   // will hold run state + party
-sim_run_new(sim, episode_beats_target); // new seed, new run
+if (!variable_global_exists("debug_seed")) global.debug_seed = 100001;
+if (!variable_global_exists("debug_seed_step")) global.debug_seed_step = 1;
+
+sim_run_new(sim, episode_beats_target, global.debug_seed);
 
 //loot_debug_dump(sim, 20, { source: "chest", zone: "Dungeon", tier_target: 2 });
 //loot_debug_dump(sim, 10, { source: "merchant", zone: "Town", tier_target: 4 });
 //loot_debug_dump(sim, 10, { source: "boss", zone: "Castle", tier_target: 7 });
-

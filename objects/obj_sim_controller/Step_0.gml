@@ -1,7 +1,8 @@
 /// obj_sim_controller :: Step
 // Controls
 if (keyboard_check_pressed(vk_return)) {
-    sim_run_new(sim, episode_beats_target); // new seed
+    global.debug_seed += global.debug_seed_step;
+    sim_run_new(sim, episode_beats_target, global.debug_seed);
 }
 if (keyboard_check_pressed(ord("R"))) {
     sim_run_restart_same_seed(sim);         // replay same seed
