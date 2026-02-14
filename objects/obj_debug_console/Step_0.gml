@@ -3,6 +3,7 @@ var k_r = keyboard_check(ord("R")); // rerun same seed
 var k_n = keyboard_check(ord("N")); // next seed
 var k_s = keyboard_check(ord("S")); // toggle short mode
 var k_c = keyboard_check(ord("C")); // clear console
+var k_v = keyboard_check(ord("V")); // copy run log
 
 if (k_c && !key_prev_c) {
     global.debug_lines = [];
@@ -27,10 +28,17 @@ if (k_r && !key_prev_r) {
     _debug_start_run();
 }
 
+if (k_v && !key_prev_v) {
+    if (!variable_global_exists("run_log_text")) global.run_log_text = "";
+    clipboard_set_text(global.run_log_text);
+    beat_output_emit("DEBUG", "Copied run log to clipboard (" + string(string_length(global.run_log_text)) + " chars).", undefined);
+}
+
 key_prev_r = k_r;
 key_prev_n = k_n;
 key_prev_s = k_s;
 key_prev_c = k_c;
+key_prev_v = k_v;
 
 // Local function: start a deterministic run
 function _debug_start_run()

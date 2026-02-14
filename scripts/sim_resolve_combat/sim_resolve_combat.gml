@@ -29,15 +29,18 @@ function sim_calc_party_power(sim) {
 }
 
 function sim_pick_encounter_tier(sim) {
+    var normal_cap_ratio = 1.25;
+    var hard_cap_ratio = 1.45;
+
     var tier = "NORMAL";
     var min_ratio = 0.75;
-    var max_ratio = 1.10;
+    var max_ratio = normal_cap_ratio;
 
     var hard_chance = 10 + ((sim.tension > 72) ? 6 : 0);
     if (sim_chance(sim, hard_chance)) {
         tier = "HARD";
         min_ratio = 1.10;
-        max_ratio = 1.30;
+        max_ratio = hard_cap_ratio;
     }
 
     if (is_struct(sim.director) && variable_struct_exists(sim.director, "tank_tactic_state")) {
@@ -45,14 +48,87 @@ function sim_pick_encounter_tier(sim) {
         if (state.withdrawal_left > 0) {
             tier = "NORMAL";
             min_ratio = 0.75;
-            max_ratio = 0.95;
+            max_ratio = min(normal_cap_ratio, 0.95);
         }
     }
 
     return { tier: tier, min_ratio: min_ratio, max_ratio: max_ratio };
 }
 
+function sim_format_budget_line(party_power, encounter_threat, cap_used, tag, result_tag) {
+    var safe_party = max(1, party_power);
+    var ratio = encounter_threat / safe_party;
+    var line =
+        "[ENCOUNTER_BUDGET] party=" + string(party_power) +
+        " threat=" + string(encounter_threat) +
+        " ratio=" + string_format(ratio, 1, 2) +
+        " cap=" + string_format(cap_used, 1, 2) +
+        " tag=" + tag +
+        " result=" + result_tag;
+    return line;
+}
+
+function sim_try_scale_encounter(enc, cap_ratio, boss_cap_ratio, force_scale) {
+    if (!is_struct(enc) || !variable_struct_exists(enc, "enemies") || !is_array(enc.enemies)) return undefined;
+    if (enc.tag == "BOSS") return undefined;
+
+    var party_power = max(1, enc.party_power);
+    var ratio = enc.total / party_power;
+    if (!force_scale && ratio > cap_ratio + 0.20) return undefined;
+
+    var enemies = enc.enemies;
+    var enemy_count = array_length(enemies);
+    if (enemy_count <= 0) return undefined;
+
+    var removed_name = "";
+    var scaled_total = enc.total;
+
+    if (enemy_count > 1) {
+        var remove_idx = 0;
+        var remove_threat = enemies[0].threat;
+        for (var i = 1; i < enemy_count; i++) {
+            if (enemies[i].threat > remove_threat) {
+                remove_threat = enemies[i].threat;
+                remove_idx = i;
+            }
+        }
+        removed_name = enemies[remove_idx].name;
+        array_delete(enemies, remove_idx, 1);
+
+        scaled_total = 0;
+        for (var j = 0; j < array_length(enemies); j++) {
+            scaled_total += enemies[j].threat;
+        }
+    } else {
+        scaled_total = floor(enc.total * 0.90);
+    }
+
+    var scaled_ratio = scaled_total / party_power;
+    if (scaled_ratio > boss_cap_ratio + 0.35) return undefined;
+
+    var names = "";
+    for (var n = 0; n < array_length(enemies); n++) {
+        if (names != "") names += ", ";
+        names += enemies[n].name;
+    }
+
+    return {
+        names: names,
+        total: max(1, scaled_total),
+        tag: enc.tag,
+        scaled: true,
+        removed_enemy_name: removed_name,
+        weakened_only: (enemy_count <= 1),
+        party_power: enc.party_power,
+        cap_ratio: cap_ratio,
+        enemies: enemies
+    };
+}
+
 function sim_make_combat_encounter(sim, party_power) {
+    var MAX_REROLLS_PER_ENCOUNTER = 10;
+    var BOSS_CAP_RATIO = 1.80;
+
     var pool = [
         { name: "Skeleton", base: 5 },
         { name: "Bandit", base: 6 },
@@ -64,21 +140,25 @@ function sim_make_combat_encounter(sim, party_power) {
     ];
 
     var tier_pick = sim_pick_encounter_tier(sim);
-    var tier = tier_pick.tier;
+    var tag = tier_pick.tier;
+    var cap_ratio = tier_pick.max_ratio;
 
     var min_budget = floor(party_power * tier_pick.min_ratio);
     var max_budget = floor(party_power * tier_pick.max_ratio);
-    var boss_cap = floor(party_power * 1.70);
+    var boss_cap = floor(party_power * BOSS_CAP_RATIO);
     max_budget = min(max_budget, boss_cap);
 
+    var debug_budget = variable_global_exists("debug_verbose") ? global.debug_verbose : false;
     var rerolls = 0;
     var prevented = 0;
-    var accepted = undefined;
+    var attempts = 0;
+    var candidates = [];
 
-    for (var attempt = 0; attempt < 6; attempt++) {
+    for (var attempt = 0; attempt < MAX_REROLLS_PER_ENCOUNTER; attempt++) {
         var group_size = sim_rand_range(sim, 1, 3);
         var total = 0;
         var names = "";
+        var enemies = [];
 
         for (var i = 0; i < group_size; i++) {
             var e = pool[sim_rand_range(sim, 0, array_length(pool) - 1)];
@@ -91,36 +171,137 @@ function sim_make_combat_encounter(sim, party_power) {
             total += per_enemy;
             if (names != "") names += ", ";
             names += e.name;
+            array_push(enemies, { name: e.name, threat: per_enemy });
         }
+
+        attempts += 1;
+
+        var ratio = total / max(1, party_power);
+        var candidate = {
+            names: names,
+            total: total,
+            tag: tag,
+            party_power: party_power,
+            ratio: ratio,
+            cap_ratio: cap_ratio,
+            enemies: enemies
+        };
+        array_push(candidates, candidate);
 
         if (total > boss_cap) {
             prevented += 1;
             rerolls += 1;
+            if (debug_budget) sim_log_tag(sim, "ENCOUNTER_BUDGET", sim_format_budget_line(party_power, total, cap_ratio, tag, "REROLL"));
             continue;
         }
 
         if (total >= min_budget && total <= max_budget) {
-            accepted = { names: names, total: total, tier: tier, rerolls: rerolls, prevented: prevented };
-            break;
+            if (debug_budget) sim_log_tag(sim, "ENCOUNTER_BUDGET", sim_format_budget_line(party_power, total, cap_ratio, tag, "ACCEPT"));
+            return {
+                degraded: false,
+                scaled: false,
+                bestfit_selected: false,
+                names: names,
+                total: total,
+                tag: tag,
+                rerolls: rerolls,
+                prevented: prevented,
+                attempts: attempts
+            };
+        }
+
+        var scaled_attempt = sim_try_scale_encounter(candidate, cap_ratio, BOSS_CAP_RATIO, false);
+        if (!is_undefined(scaled_attempt)) {
+            prevented += 1;
+            if (debug_budget) sim_log_tag(sim, "ENCOUNTER_BUDGET", sim_format_budget_line(party_power, total, cap_ratio, tag, "SCALED"));
+            return {
+                degraded: false,
+                scaled: true,
+                bestfit_selected: false,
+                names: scaled_attempt.names,
+                total: scaled_attempt.total,
+                tag: tag,
+                rerolls: rerolls,
+                prevented: prevented,
+                attempts: attempts,
+                removed_enemy_name: scaled_attempt.removed_enemy_name,
+                weakened_only: scaled_attempt.weakened_only
+            };
         }
 
         rerolls += 1;
         if (total > max_budget) prevented += 1;
+        if (debug_budget) sim_log_tag(sim, "ENCOUNTER_BUDGET", sim_format_budget_line(party_power, total, cap_ratio, tag, "REROLL"));
     }
 
-    if (is_undefined(accepted)) {
+    var bestfit_under_cap = undefined;
+    for (var c = 0; c < array_length(candidates); c++) {
+        var cand = candidates[c];
+        if (cand.ratio <= cap_ratio) {
+            if (is_undefined(bestfit_under_cap) || cand.ratio > bestfit_under_cap.ratio) {
+                bestfit_under_cap = cand;
+            }
+        }
+    }
+
+    if (!is_undefined(bestfit_under_cap)) {
+        if (debug_budget) sim_log_tag(sim, "ENCOUNTER_BUDGET", sim_format_budget_line(party_power, bestfit_under_cap.total, cap_ratio, tag, "ACCEPT"));
         return {
-            degraded: true,
-            tier: "DEGRADED",
+            degraded: false,
+            scaled: false,
+            bestfit_selected: true,
+            names: bestfit_under_cap.names,
+            total: bestfit_under_cap.total,
+            tag: tag,
             rerolls: rerolls,
             prevented: prevented,
-            total: 0,
-            names: ""
+            attempts: attempts + 1
         };
     }
 
-    accepted.degraded = false;
-    return accepted;
+    var lowest_over_cap = undefined;
+    for (var m = 0; m < array_length(candidates); m++) {
+        var over = candidates[m];
+        if (is_undefined(lowest_over_cap) || over.ratio < lowest_over_cap.ratio) lowest_over_cap = over;
+    }
+
+    if (!is_undefined(lowest_over_cap)) {
+        var scaled_fallback = sim_try_scale_encounter(lowest_over_cap, cap_ratio, BOSS_CAP_RATIO, true);
+        if (!is_undefined(scaled_fallback)) {
+            prevented += 1;
+            if (debug_budget) sim_log_tag(sim, "ENCOUNTER_BUDGET", sim_format_budget_line(party_power, lowest_over_cap.total, cap_ratio, tag, "SCALED"));
+            return {
+                degraded: false,
+                scaled: true,
+                bestfit_selected: false,
+                names: scaled_fallback.names,
+                total: scaled_fallback.total,
+                tag: tag,
+                rerolls: rerolls,
+                prevented: prevented,
+                attempts: attempts + 1,
+                removed_enemy_name: scaled_fallback.removed_enemy_name,
+                weakened_only: scaled_fallback.weakened_only
+            };
+        }
+    }
+
+    if (debug_budget) {
+        var threat_log = is_undefined(lowest_over_cap) ? 0 : lowest_over_cap.total;
+        sim_log_tag(sim, "ENCOUNTER_BUDGET", sim_format_budget_line(party_power, threat_log, cap_ratio, tag, "DEGRADED"));
+    }
+
+    return {
+        degraded: true,
+        scaled: false,
+        bestfit_selected: false,
+        tag: tag,
+        rerolls: rerolls,
+        prevented: prevented + 1,
+        attempts: attempts + 1,
+        total: 0,
+        names: ""
+    };
 }
 
 function sim_push_tank_crisis(sim, crisis_add) {
@@ -167,12 +348,24 @@ function sim_resolve_combat(sim) {
             tank_downed_count: 0,
             total_downed_count: 0,
             encounters_over_budget_prevented: 0,
-            rerolls_count: 0
+            rerolls_count: 0,
+            encounter_attempts: 0,
+            encounter_accepted: 0,
+            encounter_rerolled: 0,
+            encounter_scaled_down: 0,
+            encounter_degraded: 0,
+            encounter_bestfit_selected: 0
         };
     }
     if (!variable_struct_exists(sim.stats, "combats")) sim.stats.combats = 0;
     if (!variable_struct_exists(sim.stats, "encounters_over_budget_prevented")) sim.stats.encounters_over_budget_prevented = 0;
     if (!variable_struct_exists(sim.stats, "rerolls_count")) sim.stats.rerolls_count = 0;
+    if (!variable_struct_exists(sim.stats, "encounter_attempts")) sim.stats.encounter_attempts = 0;
+    if (!variable_struct_exists(sim.stats, "encounter_accepted")) sim.stats.encounter_accepted = 0;
+    if (!variable_struct_exists(sim.stats, "encounter_rerolled")) sim.stats.encounter_rerolled = 0;
+    if (!variable_struct_exists(sim.stats, "encounter_scaled_down")) sim.stats.encounter_scaled_down = 0;
+    if (!variable_struct_exists(sim.stats, "encounter_degraded")) sim.stats.encounter_degraded = 0;
+    if (!variable_struct_exists(sim.stats, "encounter_bestfit_selected")) sim.stats.encounter_bestfit_selected = 0;
 
     sim.stats.combats += 1;
 
@@ -181,8 +374,11 @@ function sim_resolve_combat(sim) {
 
     sim.stats.encounters_over_budget_prevented += enc.prevented;
     sim.stats.rerolls_count += enc.rerolls;
+    sim.stats.encounter_attempts += enc.attempts;
+    sim.stats.encounter_rerolled += enc.rerolls;
 
     if (enc.degraded) {
+        sim.stats.encounter_degraded += 1;
         sim_log_tag(sim, "ENCOUNTER_SHIFT",
             "🧯 Threat budget rejected repeated over-cap rolls; encounter degrades into an escape hazard."
         );
@@ -193,23 +389,25 @@ function sim_resolve_combat(sim) {
         return;
     }
 
-    var ratio = enc.total / max(1, party_power);
-    var tag_label = enc.tier;
+    if (enc.scaled) {
+        sim.stats.encounter_scaled_down += 1;
+        if (enc.weakened_only) {
+            sim_log_tag(sim, "ENCOUNTER_SHIFT", "🧪 Budget scale-down applied a light non-boss weakening to keep threat fair.");
+        } else if (!is_undefined(enc.removed_enemy_name) && enc.removed_enemy_name != "") {
+            sim_log_tag(sim, "ENCOUNTER_SHIFT", "🪓 Budget scale-down removed " + enc.removed_enemy_name + " from the encounter.");
+        }
+    } else {
+        sim.stats.encounter_accepted += 1;
+    }
+
+    if (enc.bestfit_selected) sim.stats.encounter_bestfit_selected += 1;
+
+    var tag_label = enc.tag;
     if (tag_label == "HARD") tag_label = "[HARD]";
 
     sim_log_tag(sim, "ENCOUNTER",
         "⚔ Combat: " + enc.names + " (threat " + string(enc.total) + ") " + tag_label + "."
     );
-
-    var verbose = variable_global_exists("debug_verbose") ? global.debug_verbose : false;
-    if (verbose) {
-        sim_log_tag(sim, "ENCOUNTER_BUDGET",
-            "[ENCOUNTER_BUDGET] party=" + string(party_power) +
-            " threat=" + string(enc.total) +
-            " ratio=" + string_format(ratio, 1, 2) +
-            " tier=" + enc.tier
-        );
-    }
 
     // Optional micro-modifier for variety (combat-only)
     var _mod = sim_roll_encounter_mod(sim);
