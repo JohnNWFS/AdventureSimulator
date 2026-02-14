@@ -12,7 +12,7 @@ function sim_resolve_boss(sim) {
             "[ENCOUNTER_BUDGET] party=" + string(party_power) +
             " threat=" + string(boss_threat) +
             " ratio=" + string_format(boss_threat / max(1, party_power), 1, 2) +
-            " tier=BOSS"
+            " cap=1.80 tag=BOSS result=ACCEPT"
         );
     }
     var tank   = sim.party[0];

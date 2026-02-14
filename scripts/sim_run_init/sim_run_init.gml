@@ -74,9 +74,15 @@ function sim_run_init(sim, seed, beats_target) {
     sim.prev_zone = sim.zone;
 
     sim.log = [];
+    if (variable_global_exists("debug_enabled") && global.debug_enabled) {
+        global.run_log_text = "";
+        clipboard_set_text("");
+    }
     sim.episode_begun_logged = false;
     if (!sim.episode_begun_logged) {
         sim_log(sim, "🌟 Episode begins. Seed=" + string(sim.seed) + " Zone=" + sim.zone);
+        var verbose = variable_global_exists("debug_verbose") ? global.debug_verbose : false;
+        if (verbose) sim_log_tag(sim, "NEAR_DEATH_DEF", "near_death is tracked as HP <= 35% max HP.");
         sim.episode_begun_logged = true;
     }
 
@@ -113,6 +119,12 @@ function sim_run_init(sim, seed, beats_target) {
         total_downed_count: 0,
         encounters_over_budget_prevented: 0,
         rerolls_count: 0,
+        encounter_attempts: 0,
+        encounter_accepted: 0,
+        encounter_rerolled: 0,
+        encounter_scaled_down: 0,
+        encounter_degraded: 0,
+        encounter_bestfit_selected: 0,
 
         deaths: 0,
         retirements: 0,
