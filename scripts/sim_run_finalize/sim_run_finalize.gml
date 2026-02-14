@@ -18,4 +18,18 @@ function sim_run_finalize(sim) {
         " | Boss=" + (sim.stats.boss_defeated ? "DEFEATED" : "NO"));
 
     sim_log(sim, "📊 Party avg HP%: " + string(round(avg_hp_pct * 100)) + "%");
+    sim_log(sim,
+        "📊 Beat counts: Combat=" + string(sim.coverage.combat) +
+        " | Expedition=" + string(sim.coverage.exploration) +
+        " | Social=" + string(sim.coverage.social) +
+        " | Merchant=" + string(sim.coverage.merchant) +
+        " | Relief=" + string(sim.coverage.relief) +
+        " | Discovery=" + string(sim.coverage.discovery) +
+        " | Hazard=" + string(sim.coverage.hazard)
+    );
+    sim_log(sim,
+        "📊 Downed events=" + string(sim.stats.downed_events) +
+        " | Repeat prevented=" + string(sim.director.repeat_prevented) +
+        " | Downed-loop interventions=" + string(sim.director.downed_loop_interventions)
+    );
 }

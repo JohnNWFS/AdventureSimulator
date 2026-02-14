@@ -17,10 +17,13 @@ function sim_apply_party_damage(sim, base_dmg) {
 
         p.hp -= dmg;
 
-        sim_log_tag(sim, "SPLASH_HIT",
-            "☠ SPLASH → " + p.name + " takes " + string(dmg) +
-            " (" + string(before) + "→" + string(p.hp) + ")."
-        );
+        var verbose = variable_global_exists("debug_verbose") ? global.debug_verbose : false;
+        if (dmg > 0 || verbose) {
+            sim_log_tag(sim, "SPLASH_HIT",
+                "☠ SPLASH → " + p.name + " takes " + string(dmg) +
+                " (" + string(before) + "→" + string(p.hp) + ")."
+            );
+        }
 
         // Immediate downed cue (animation-friendly)
         if (before > 0 && p.hp <= 0) {

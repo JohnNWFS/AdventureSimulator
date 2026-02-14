@@ -1,6 +1,6 @@
 if (!global.debug_enabled) exit;
 
-var margin = 250;
+var margin = 560;
 var _x = margin;
 var _y = margin;
 

@@ -1,12 +1,14 @@
 function sim_run_init(sim, seed, beats_target) {
     var short_mode = (variable_global_exists("debug_short_mode") && global.debug_short_mode);
+    var very_short_mode = (variable_global_exists("debug_very_short_mode") && global.debug_very_short_mode);
 
     // Core run state
     global.debug_seed = seed;
     sim.seed = seed;
     sim.rng = seed;
     sim.beat = 0;
-    sim.beats_target = short_mode ? min(beats_target, 36) : beats_target;
+    var target_cap = very_short_mode ? 16 : (short_mode ? 36 : beats_target);
+    sim.beats_target = min(beats_target, target_cap);
     sim.finished = false;
 
     sim.zone = "Dungeon";
@@ -14,7 +16,7 @@ function sim_run_init(sim, seed, beats_target) {
     sim.tension = 10;
     sim.gold_total = 0;
 
-    sim.wound_retreat_threshold = short_mode ? 2 : 3;
+    sim.wound_retreat_threshold = very_short_mode ? 2 : (short_mode ? 2 : 3);
     sim.retreat_to_city = false;
     sim.retreat_beats_left = 0;
     sim.city_scene_pending = false;
@@ -26,23 +28,50 @@ function sim_run_init(sim, seed, beats_target) {
         merchants_this_zone: 0,
         beats_since_relief: 0,
         adventure_cd: 0,
+        relief_min_gap: 4,
+        relief_max_gap: 9,
+        repeat_window: 6,
+        route_mod: {
+            ambush_mult: 1.0,
+            loot_mult: 1.0,
+            hazard_mult: 1.0,
+            social_mult: 1.0,
+            relief_mult: 1.0,
+            risk_mult: 1.0,
+            ttl: 0,
+            label: ""
+        },
         last_relief_type: "",
         relief_context_lock: 0,
-        retreat_bridge_left: 0
+        retreat_bridge_left: 0,
+        discovery_courier_seen: false,
+        discovery_major_seen: false,
+        repeat_prevented: 0,
+        downed_loop_interventions: 0
     };
 
     sim.debug_short_mode = short_mode;
+    sim.debug_very_short_mode = very_short_mode;
     sim.coverage = {
         combat: 0,
         exploration: 0,
+        social: 0,
+        hazard: 0,
+        discovery: 0,
         relief: 0,
-        merchant: 0
+        merchant: 0,
+        retreat: 0
     };
 
+    sim.recent_beats = [];
     sim.prev_zone = sim.zone;
 
     sim.log = [];
-    sim_log(sim, "🌟 Episode begins. Seed=" + string(sim.seed) + " Zone=" + sim.zone);
+    sim.episode_begun_logged = false;
+    if (!sim.episode_begun_logged) {
+        sim_log(sim, "🌟 Episode begins. Seed=" + string(sim.seed) + " Zone=" + sim.zone);
+        sim.episode_begun_logged = true;
+    }
 
     // Party
     sim.party = [];
@@ -72,6 +101,7 @@ function sim_run_init(sim, seed, beats_target) {
         merchants_bought: 0,
         rares_found: 0,
         boss_defeated: false,
+        downed_events: 0,
 
         deaths: 0,
         retirements: 0,

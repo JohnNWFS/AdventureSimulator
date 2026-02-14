@@ -19,6 +19,8 @@ function sim_run_step(sim) {
         sim.prev_zone = sim.zone;
     }
 
+    if (!is_array(sim.recent_beats)) sim.recent_beats = [];
+
     // Difficulty ramps
     if (sim.beat > 0 && sim.beat % 20 == 0) sim.difficulty += 1;
 
@@ -36,6 +38,11 @@ function sim_run_step(sim) {
 
     // Director picks the next beat event
     var ev = sim_director_next_event(sim);
+
+    if (ev == "merchant" && sim.director.merchant_cd > 0) {
+        sim.director.repeat_prevented += 1;
+        ev = "adventure";
+    }
 
     // Playback: why this beat is happening (source cue)
     switch (ev) {
@@ -90,6 +97,7 @@ function sim_run_step(sim) {
 
     if (ev == "combat") sim.coverage.combat += 1;
     if (ev == "adventure" || ev == "chest") sim.coverage.exploration += 1;
+    if (ev == "retreat_bridge") sim.coverage.retreat += 1;
     if (ev == "merchant") sim.coverage.merchant += 1;
     if (ev == "relief") sim.coverage.relief += 1;
 
@@ -104,4 +112,26 @@ function sim_run_step(sim) {
     sim.director.merchant_cd = max(0, sim.director.merchant_cd - 1);
     sim.director.chest_cd = max(0, sim.director.chest_cd - 1);
     sim.director.adventure_cd = max(0, sim.director.adventure_cd - 1);
+
+    if (is_struct(sim.director.route_mod) && sim.director.route_mod.ttl > 0) {
+        sim.director.route_mod.ttl -= 1;
+        if (sim.director.route_mod.ttl <= 0) {
+            sim.director.route_mod = {
+                ambush_mult: 1.0,
+                loot_mult: 1.0,
+                hazard_mult: 1.0,
+                social_mult: 1.0,
+                relief_mult: 1.0,
+                risk_mult: 1.0,
+                ttl: 0,
+                label: ""
+            };
+            sim_log_tag(sim, "NAV_STATE", "🧭 Route modifier fades; selection weights normalize.");
+        }
+    }
+
+    array_push(sim.recent_beats, ev);
+    if (array_length(sim.recent_beats) > 20) {
+        array_delete(sim.recent_beats, 0, 1);
+    }
 }
