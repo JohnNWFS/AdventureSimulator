@@ -8,7 +8,6 @@ function sim_auto_heal(sim) {
     for (var i = 0; i < array_length(sim.party); i++) {
         var p = sim.party[i];
 
-        if (p.downed_this_beat) continue;
         if (p.dead || p.retired) continue;
 
         var pct = p.hp / max(1, p.max_hp);
@@ -24,7 +23,12 @@ function sim_auto_heal(sim) {
         var heal_raw  = sim_rand_range(sim, 8, 18) + sim.difficulty * 2;
         var before_hp = target.hp;
 
-        target.hp = min(target.max_hp, target.hp + heal_raw);
+        if (target.status_state == "downed") {
+            target.hp = max(2, min(target.max_hp, heal_raw));
+            target.status_state = "alive";
+        } else {
+            target.hp = min(target.max_hp, target.hp + heal_raw);
+        }
         healer.mp -= 3;
 
         var healed_amt = target.hp - before_hp;

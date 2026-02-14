@@ -19,7 +19,8 @@ function sim_resolve_combat(sim) {
 
     sim.stats.combats += 1;
 
-    var foe = choose("Skeleton", "Bandit", "Goblin", "Slime", "Warg", "Cult Acolyte");
+    var foes = ["Skeleton", "Bandit", "Goblin", "Slime", "Warg", "Cult Acolyte"];
+    var foe = foes[sim_rand_range(sim, 0, array_length(foes) - 1)];
     var threat = sim_rand_range(sim, 1, 6) + floor(sim.difficulty / 2);
 
     // Optional micro-modifier for variety (combat-only)
@@ -85,7 +86,7 @@ function sim_resolve_combat(sim) {
     if (sim_chance(sim, 18)) {
         var off_i = sim_rand_range(sim, 1, array_length(sim.party) - 1);
         var off_target = sim.party[off_i];
-        if (!off_target.dead && !off_target.retired) {
+        if (!off_target.dead && !off_target.retired && off_target.status_state != "downed") {
             var flank_dmg = max(1, floor((base_dmg * sim_rand_range(sim, 30, 50)) / 100) - floor(off_target.def * 0.5));
             var before_off = off_target.hp;
             off_target.hp -= flank_dmg;
@@ -114,28 +115,30 @@ function sim_resolve_combat(sim) {
     var avg_hp_pct = sim_party_avg_hp_pct(sim);
     var exec_mode = (tank.hp <= 0) || (avg_hp_pct < 0.45) || (sim.tension > 75);
 
-    var thief_base = max(1, thief.atk * 2 + sim_rand_range(sim, 2, 8));
-    var thief_bonus = exec_mode ? sim_rand_range(sim, 2, 8) : 0;
-    var thief_hit = thief_base + thief_bonus;
+    if (!thief.dead && !thief.retired && thief.status_state != "downed") {
+        var thief_base = max(1, thief.atk * 2 + sim_rand_range(sim, 2, 8));
+        var thief_bonus = exec_mode ? sim_rand_range(sim, 2, 8) : 0;
+        var thief_hit = thief_base + thief_bonus;
 
-    var thief_crit = sim_chance(sim, exec_mode ? 28 : 16);
-    if (thief_crit) thief_hit *= 2;
+        var thief_crit = sim_chance(sim, exec_mode ? 28 : 16);
+        if (thief_crit) thief_hit *= 2;
 
-    var thief_tag;
-    if (exec_mode) thief_tag = thief_crit ? "THIEF_EXEC_CRIT" : "THIEF_EXEC";
-    else           thief_tag = thief_crit ? "THIEF_CRIT"      : "THIEF_HIT";
+        var thief_tag;
+        if (exec_mode) thief_tag = thief_crit ? "THIEF_EXEC_CRIT" : "THIEF_EXEC";
+        else           thief_tag = thief_crit ? "THIEF_CRIT"      : "THIEF_HIT";
 
-    sim_log_tag(sim, thief_tag,
-        "🗡 " + thief.name +
-        (exec_mode ? " smells blood" : " slips in") +
-        ": " + string(thief_hit) + " damage" + (thief_crit ? " (CRIT!)." : ".")
-    );
+        sim_log_tag(sim, thief_tag,
+            "🗡 " + thief.name +
+            (exec_mode ? " smells blood" : " slips in") +
+            ": " + string(thief_hit) + " damage" + (thief_crit ? " (CRIT!)." : ".")
+        );
+    }
 
     // --- Mage hits back (MP matters) ---
     var mp_add = (is_struct(_mod)) ? _mod.mp_cost_add : 0;
     var mp_cost = clamp(2 + floor(threat / 3) + mp_add, 2, 8);
 
-    var cast = (mage.mp >= mp_cost);
+    var cast = (!mage.dead && !mage.retired && mage.status_state != "downed" && mage.mp >= mp_cost);
     var before_mp = mage.mp;
 
     var mage_crit = sim_chance(sim, cast ? 18 : 10);
@@ -144,17 +147,21 @@ function sim_resolve_combat(sim) {
     if (cast) {
         mage.mp -= mp_cost;
         mage_hit = (threat * 7) + sim_rand_range(sim, 6, 18) + floor(mage.atk * 0.5);
-    } else {
+    } else if (!mage.dead && !mage.retired && mage.status_state != "downed") {
         mage_hit = (threat * 3) + sim_rand_range(sim, 2, 10);
+    } else {
+        mage_hit = 0;
     }
 
     if (mage_crit) mage_hit *= 2;
 
-    sim_log_tag(sim, mage_crit ? "MAGE_CRIT" : "MAGE_HIT",
-        "✨ " + mage.name + (cast ? " casts" : " jabs") +
-        " for " + string(mage_hit) + (mage_crit ? " (CRIT!)." : ".") +
-        (cast ? (" [MP " + string(before_mp) + "→" + string(mage.mp) + "]") : " [NO MP]")
-    );
+    if (mage_hit > 0) {
+        sim_log_tag(sim, mage_crit ? "MAGE_CRIT" : "MAGE_HIT",
+            "✨ " + mage.name + (cast ? " casts" : " jabs") +
+            " for " + string(mage_hit) + (mage_crit ? " (CRIT!)." : ".") +
+            (cast ? (" [MP " + string(before_mp) + "→" + string(mage.mp) + "]") : " [NO MP]")
+        );
+    }
 
     // --- Healer reacts ---
     sim_auto_heal(sim);

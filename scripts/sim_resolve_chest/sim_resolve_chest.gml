@@ -14,6 +14,7 @@ function sim_resolve_chest(sim) {
         var gold = sim_rand_range(sim, 10, 28) + floor(sim.difficulty / 2);
         sim.gold_total += gold;
 
+        sim_log_tag(sim, "LOOT_FOUND", "💰 Loot found: " + string(gold) + " gold.");
         sim_log_tag(sim, "CHEST_GOLD", "🧰 Chest: +" + string(gold) + " gold.");
         return;
     }
@@ -24,8 +25,10 @@ function sim_resolve_chest(sim) {
 
     if (item.is_named || item.rarity == "rare" || item.rarity == "epic" || item.rarity == "legendary") {
         sim.stats.rares_found += 1;
+        sim_log_tag(sim, "LOOT_FOUND", "🎁 Loot found: " + item.name + " (rare).");
         sim_log_tag(sim, "CHEST_RARE", "🧰 Chest: RARE find! " + item.name + ".");
     } else {
+        sim_log_tag(sim, "LOOT_FOUND", "🎁 Loot found: " + item.name + ".");
         sim_log_tag(sim, "CHEST_ITEM", "🧰 Chest: found " + item.name + ".");
     }
 

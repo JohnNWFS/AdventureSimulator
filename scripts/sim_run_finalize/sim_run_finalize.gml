@@ -3,6 +3,11 @@ function sim_run_finalize(sim) {
 
     sim.finished = true;
 
+    if (!sim.city_scene_played || sim_party_any_dead(sim)) {
+        sim.city_scene_pending = true;
+        sim_resolve_city_scene(sim);
+    }
+
     // Score quick summary
     var avg_hp_pct = sim_party_avg_hp_pct(sim);
     sim_log(sim, "📺 Episode ends. Gold=" + string(sim.gold_total) +

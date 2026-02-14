@@ -45,13 +45,16 @@ function sim_resolve_boss(sim) {
     }
 
     // Thief hit (always happens as a counter action)
-    var thief_hit = max(1, thief.atk + sim_rand_range(sim, 2, 10));
-    var thief_crit = sim_chance(sim, 20);
-    if (thief_crit) thief_hit *= 2;
+    var thief_hit = 0;
+    if (!thief.dead && !thief.retired && thief.status_state != "downed") {
+        thief_hit = max(1, thief.atk + sim_rand_range(sim, 2, 10));
+        var thief_crit = sim_chance(sim, 20);
+        if (thief_crit) thief_hit *= 2;
 
-    sim_log_tag(sim, thief_crit ? "THIEF_CRIT" : "THIEF_EXEC",
-        "🗡 " + thief.name + " smells blood: " + string(thief_hit) + " damage" + (thief_crit ? " (CRIT!)." : ".")
-    );
+        sim_log_tag(sim, thief_crit ? "THIEF_CRIT" : "THIEF_EXEC",
+            "🗡 " + thief.name + " smells blood: " + string(thief_hit) + " damage" + (thief_crit ? " (CRIT!)." : ".")
+        );
+    }
 
     // Mage boss output: expensive big cast if possible, otherwise weaker fallback
     var mp_cost = clamp(6 + floor(sim.difficulty / 2), 6, 10);
@@ -61,20 +64,24 @@ function sim_resolve_boss(sim) {
     var mage_hit;
     var mage_crit = sim_chance(sim, cast ? 18 : 8);
 
-    if (cast) {
+    if (cast && !mage.dead && !mage.retired && mage.status_state != "downed") {
         mage.mp -= mp_cost;
         mage_hit = max(1, mage.atk * 3 + sim.difficulty * 2 + sim_rand_range(sim, 10, 26));
-    } else {
+    } else if (!mage.dead && !mage.retired && mage.status_state != "downed") {
         mage_hit = max(1, mage.atk + sim_rand_range(sim, 3, 12));
+    } else {
+        mage_hit = 0;
     }
 
     if (mage_crit) mage_hit *= 2;
 
-    sim_log_tag(sim, mage_crit ? "MAGE_CRIT" : "MAGE_HIT",
-        "✨ " + mage.name + (cast ? " detonates a full cast" : " sputters a weak zap") +
-        ": " + string(mage_hit) + " damage" + (mage_crit ? " (CRIT!)." : ".") +
-        (cast ? (" [MP " + string(before_mp) + "→" + string(mage.mp) + "]") : " [NO MP]")
-    );
+    if (mage_hit > 0) {
+        sim_log_tag(sim, mage_crit ? "MAGE_CRIT" : "MAGE_HIT",
+            "✨ " + mage.name + (cast ? " detonates a full cast" : " sputters a weak zap") +
+            ": " + string(mage_hit) + " damage" + (mage_crit ? " (CRIT!)." : ".") +
+            (cast ? (" [MP " + string(before_mp) + "→" + string(mage.mp) + "]") : " [NO MP]")
+        );
+    }
 
     // Healer reaction
     sim_auto_heal(sim);
