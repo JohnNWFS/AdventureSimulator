@@ -12,8 +12,8 @@
   "Folders":[
     {"$GMFolder":"","%Name":"OBJECTS","folderPath":"folders/OBJECTS.yy","name":"OBJECTS","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"SCRIPTS","folderPath":"folders/SCRIPTS.yy","name":"SCRIPTS","resourceType":"GMFolder","resourceVersion":"2.0",},
-    {"$GMFolder":"","%Name":"OTHER","folderPath":"folders/SCRIPTS/OTHER.yy","name":"OTHER","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"LOOT","folderPath":"folders/SCRIPTS/LOOT.yy","name":"LOOT","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"OTHER","folderPath":"folders/SCRIPTS/OTHER.yy","name":"OTHER","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"PARTY","folderPath":"folders/SCRIPTS/PARTY.yy","name":"PARTY","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"RESOLVE","folderPath":"folders/SCRIPTS/RESOLVE.yy","name":"RESOLVE","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"RUN","folderPath":"folders/SCRIPTS/RUN.yy","name":"RUN","resourceType":"GMFolder","resourceVersion":"2.0",},
