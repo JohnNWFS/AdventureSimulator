@@ -3,6 +3,7 @@ function sim_check_party_health(sim) {
     var RETIRE_WOUNDS_MIN = 4;
     var RETIRE_WOUNDS_HARD = 7;
     var WOUND_RETREAT_THRESHOLD = variable_struct_exists(sim, "wound_retreat_threshold") ? sim.wound_retreat_threshold : 3;
+    var DOWNED_WINDOW = 10;
     var RESOLVE_HIT_KD = 12;
 
     for (var i = 0; i < array_length(sim.party); i++) {
@@ -38,6 +39,20 @@ function sim_check_party_health(sim) {
             if (is_struct(sim.stats) && variable_struct_exists(sim.stats, "knockdowns")) {
                 sim.stats.knockdowns += 1;
             }
+            if (is_struct(sim.stats) && variable_struct_exists(sim.stats, "downed_events")) {
+                sim.stats.downed_events += 1;
+            }
+
+            if (!is_array(p.recent_downed_beats)) p.recent_downed_beats = [];
+            array_push(p.recent_downed_beats, sim.beat);
+            var k = 0;
+            while (k < array_length(p.recent_downed_beats)) {
+                if (sim.beat - p.recent_downed_beats[k] > DOWNED_WINDOW) {
+                    array_delete(p.recent_downed_beats, k, 1);
+                } else {
+                    k += 1;
+                }
+            }
 
             p.resolve = clamp(p.resolve - RESOLVE_HIT_KD, 0, 100);
 
@@ -61,6 +76,17 @@ function sim_check_party_health(sim) {
                 sim.director.retreat_bridge_left = sim_rand_range(sim, 1, 2);
                 sim_log_tag(sim, "RETREAT_CALL",
                     "⚠ The party breaks off and heads to the city before someone dies."
+                );
+            }
+
+            if (!sim.retreat_to_city && array_length(p.recent_downed_beats) >= 2) {
+                sim.retreat_to_city = true;
+                sim.city_scene_pending = true;
+                sim.retreat_beats_left = max(sim.retreat_beats_left, 2);
+                sim.director.retreat_bridge_left = max(sim.director.retreat_bridge_left, 1);
+                sim.director.downed_loop_interventions += 1;
+                sim_log_tag(sim, "RETREAT_CALL",
+                    "🏃 Repeated knockdowns force an escape call before the fight spirals."
                 );
             }
 
@@ -89,9 +115,12 @@ function sim_check_party_health(sim) {
                 if (is_struct(sim.stats) && variable_struct_exists(sim.stats, "near_deaths")) {
                     sim.stats.near_deaths += 1;
                 }
-                sim_log_tag(sim, "NEAR_DEATH",
-                    "🚨 Near-death: " + p.name + " is under 20% HP!"
-                );
+                if (!p.near_death_logged_once) {
+                    p.near_death_logged_once = true;
+                    sim_log_tag(sim, "NEAR_DEATH",
+                        "🚨 Near-death: " + p.name + " is under 20% HP!"
+                    );
+                }
                 sim_log_tag(sim, "WOUND",
                     "🩸 " + p.name + " carries another lasting wound (" + string(p.wounds) + ")."
                 );

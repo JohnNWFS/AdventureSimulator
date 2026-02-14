@@ -3,6 +3,23 @@ function sim_resolve_merchant(sim) {
     if (!variable_struct_exists(sim.stats, "merchants_seen")) sim.stats.merchants_seen = 0;
     if (!variable_struct_exists(sim.stats, "merchants_bought")) sim.stats.merchants_bought = 0;
 
+    var recent_merchants = sim_director_recent_count(sim, "merchant", 3);
+    if (recent_merchants > 0) {
+        sim.director.repeat_prevented += 1;
+        var alt = sim_rand_range(sim, 0, 2);
+        if (alt == 0) {
+            sim_log_tag(sim, "SCAVENGER", "🛞 A broken merchant cart is picked clean for scraps.");
+            sim.gold_total += sim_rand_range(sim, 3, 8);
+        } else if (alt == 1) {
+            sim_log_tag(sim, "SCAVENGER", "🧿 A scavenger offers rumor and salvage instead of trade.");
+            sim.tension = clamp(sim.tension - 4, 0, 100);
+        } else {
+            sim_log_tag(sim, "SCAVENGER", "📦 An abandoned stash replaces a repeat merchant stop.");
+            sim_give_item(sim, loot_generate_item(sim, { source: "merchant", zone: sim.zone, tier_target: max(1, floor(sim.difficulty / 2)) }));
+        }
+        return;
+    }
+
     sim.stats.merchants_seen += 1;
     sim.director.merchant_cd = 3;
     sim.director.merchants_this_zone += 1;

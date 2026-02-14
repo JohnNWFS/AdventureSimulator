@@ -41,7 +41,7 @@ for (var i = 0; i < array_length(sim.party); i++) {
 
 gui_y += 8;
 draw_text(gui_x, gui_y,
-    "Controls: ENTER=new seed | R=replay seed | T=toggle short | Q=4-seed short test | SPACE=toggle run | N=step (paused)"
+    "Controls: ENTER=new seed | R=replay seed | T=toggle short | V=toggle very short | Q=4-seed short test | SPACE=toggle run | N=step (paused)"
 );
 gui_y += 22;
 

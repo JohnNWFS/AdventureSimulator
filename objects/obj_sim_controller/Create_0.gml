@@ -1,6 +1,7 @@
 /// obj_sim_controller :: Create
 episode_beats_target = 120; // 120 beats ≈ 10 minutes if you later map 1 beat ≈ 5 sec
 episode_beats_target_short = 36;
+episode_beats_target_very_short = 16;
 auto_run = true;
 beats_per_step = 1;         // crank this up to 5/10 for turbo simulation
 ui_max_lines = 26;
@@ -9,9 +10,11 @@ sim = {};                   // will hold run state + party
 if (!variable_global_exists("debug_seed")) global.debug_seed = 100001;
 if (!variable_global_exists("debug_seed_step")) global.debug_seed_step = 1;
 if (!variable_global_exists("debug_short_mode")) global.debug_short_mode = false;
+if (!variable_global_exists("debug_very_short_mode")) global.debug_very_short_mode = false;
+if (!variable_global_exists("debug_verbose")) global.debug_verbose = false;
 if (!variable_global_exists("debug_multi_seed_count")) global.debug_multi_seed_count = 4;
 
-var run_target = global.debug_short_mode ? episode_beats_target_short : episode_beats_target;
+var run_target = global.debug_very_short_mode ? episode_beats_target_very_short : (global.debug_short_mode ? episode_beats_target_short : episode_beats_target);
 sim_run_new(sim, run_target, global.debug_seed);
 
 //loot_debug_dump(sim, 20, { source: "chest", zone: "Dungeon", tier_target: 2 });

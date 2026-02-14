@@ -33,8 +33,10 @@ function sim_make_party_member(role, name, max_hp, max_mp, atk, def) {
         wounds: 0,
         near_death_count: 0,
         near_death_flag: false,
+        near_death_logged_once: false,
         near_death_triggered_this_beat: false,
         downed_this_beat: false,
+        recent_downed_beats: [],
 
         // NEW death/retire system
         dead: false,
