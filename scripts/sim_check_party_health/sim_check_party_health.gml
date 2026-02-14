@@ -42,6 +42,12 @@ function sim_check_party_health(sim) {
             if (is_struct(sim.stats) && variable_struct_exists(sim.stats, "downed_events")) {
                 sim.stats.downed_events += 1;
             }
+            if (is_struct(sim.stats) && variable_struct_exists(sim.stats, "total_downed_count")) {
+                sim.stats.total_downed_count += 1;
+            }
+            if (p.role == "Tank" && is_struct(sim.stats) && variable_struct_exists(sim.stats, "tank_downed_count")) {
+                sim.stats.tank_downed_count += 1;
+            }
 
             if (!is_array(p.recent_downed_beats)) p.recent_downed_beats = [];
             array_push(p.recent_downed_beats, sim.beat);
@@ -85,8 +91,20 @@ function sim_check_party_health(sim) {
                 sim.retreat_beats_left = max(sim.retreat_beats_left, 2);
                 sim.director.retreat_bridge_left = max(sim.director.retreat_bridge_left, 1);
                 sim.director.downed_loop_interventions += 1;
+                var caller = "the party";
+                if (array_length(sim.party) > 3) {
+                    var healer = sim.party[3];
+                    if (!healer.dead && !healer.retired) caller = healer.name;
+                }
+                sim_log_tag(sim, "RETREAT_VOTE",
+                    "🗳 [RETREAT_VOTE] " + caller + " calls for a withdrawal after repeated knockdowns."
+                );
                 sim_log_tag(sim, "RETREAT_CALL",
                     "🏃 Repeated knockdowns force an escape call before the fight spirals."
+                );
+                var retreat_cost = choose("lost time", "reduced loot chance", "heightened pursuit risk");
+                sim_log_tag(sim, "RETREAT_COST",
+                    "⚖ Retreat consequence: " + retreat_cost + "."
                 );
             }
 

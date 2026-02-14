@@ -47,7 +47,14 @@ function sim_run_init(sim, seed, beats_target) {
         discovery_courier_seen: false,
         discovery_major_seen: false,
         repeat_prevented: 0,
-        downed_loop_interventions: 0
+        downed_loop_interventions: 0,
+        tank_crisis_window: 10,
+        tank_crisis_history: [],
+        tank_tactic_state: {
+            defensive_left: 0,
+            cover_left: 0,
+            withdrawal_left: 0
+        }
     };
 
     sim.debug_short_mode = short_mode;
@@ -102,6 +109,10 @@ function sim_run_init(sim, seed, beats_target) {
         rares_found: 0,
         boss_defeated: false,
         downed_events: 0,
+        tank_downed_count: 0,
+        total_downed_count: 0,
+        encounters_over_budget_prevented: 0,
+        rerolls_count: 0,
 
         deaths: 0,
         retirements: 0,

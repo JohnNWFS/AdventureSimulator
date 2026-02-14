@@ -29,6 +29,9 @@ function sim_run_multi_seed_short_test(sim, base_seed, run_count, beats_target_s
     var total_hazard = 0;
     var total_social = 0;
     var total_downed = 0;
+    var total_tank_downed = 0;
+    var total_over_budget_prevented = 0;
+    var total_rerolls = 0;
     var total_prevented = 0;
 
     global.debug_short_mode = true;
@@ -55,7 +58,10 @@ function sim_run_multi_seed_short_test(sim, base_seed, run_count, beats_target_s
             ", relief=" + string(sim.coverage.relief) +
             ", discovery=" + string(sim.coverage.discovery) +
             ", hazard=" + string(sim.coverage.hazard) +
-            ", downed=" + string(sim.stats.downed_events) +
+            " , downed=" + string(sim.stats.total_downed_count) +
+            ", tank downed=" + string(sim.stats.tank_downed_count) +
+            ", budget prevented=" + string(sim.stats.encounters_over_budget_prevented) +
+            ", rerolls=" + string(sim.stats.rerolls_count) +
             ", repeats prevented=" + string(sim.director.repeat_prevented)
         );
 
@@ -66,7 +72,10 @@ function sim_run_multi_seed_short_test(sim, base_seed, run_count, beats_target_s
         total_discovery += sim.coverage.discovery;
         total_hazard += sim.coverage.hazard;
         total_social += sim.coverage.social;
-        total_downed += sim.stats.downed_events;
+        total_downed += sim.stats.total_downed_count;
+        total_tank_downed += sim.stats.tank_downed_count;
+        total_over_budget_prevented += sim.stats.encounters_over_budget_prevented;
+        total_rerolls += sim.stats.rerolls_count;
         total_prevented += sim.director.repeat_prevented;
     }
 
@@ -81,7 +90,10 @@ function sim_run_multi_seed_short_test(sim, base_seed, run_count, beats_target_s
         ", relief=" + string(total_relief) +
         ", discovery=" + string(total_discovery) +
         ", hazard=" + string(total_hazard) +
-        ", downed=" + string(total_downed) +
+        " , downed=" + string(total_downed) +
+        ", tank downed=" + string(total_tank_downed) +
+        ", budget prevented=" + string(total_over_budget_prevented) +
+        ", rerolls=" + string(total_rerolls) +
         ", repeats prevented=" + string(total_prevented)
     );
     sim_log(sim, "=== End multi-seed short test ===");

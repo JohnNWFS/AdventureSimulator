@@ -1,7 +1,20 @@
 function sim_resolve_boss(sim) {
     var boss = (sim.zone == "Castle") ? "Iron Warden" : "Hollow Ogre";
-    sim_log_tag(sim, "BOSS_SPAWN", "👑 BOSS: " + boss + " emerges!");
+    sim_log_tag(sim, "BOSS_TELEGRAPH", "🌩 [BOSS] The ground shakes before the enemy appears.");
+    sim_log_tag(sim, "BOSS_SPAWN", "👑 [BOSS] " + boss + " emerges!");
 
+
+    var party_power = sim_calc_party_power(sim);
+    var boss_threat = floor(party_power * clamp(1.35 + sim.difficulty * 0.04, 1.30, 1.70));
+    var verbose = variable_global_exists("debug_verbose") ? global.debug_verbose : false;
+    if (verbose) {
+        sim_log_tag(sim, "ENCOUNTER_BUDGET",
+            "[ENCOUNTER_BUDGET] party=" + string(party_power) +
+            " threat=" + string(boss_threat) +
+            " ratio=" + string_format(boss_threat / max(1, party_power), 1, 2) +
+            " tier=BOSS"
+        );
+    }
     var tank   = sim.party[0];
     var mage   = sim.party[1];
     var thief  = sim.party[2];
@@ -12,7 +25,7 @@ function sim_resolve_boss(sim) {
     sim_recalc_derived(thief);
 
     // --- BOSS: smash tank ---
-    var boss_hit = (sim.difficulty * 6 + sim_rand_range(sim, 10, 22));
+    var boss_hit = floor((sim.difficulty * 6 + sim_rand_range(sim, 10, 22)) * (boss_threat / max(1, party_power)));
     var dmg_tank = max(0, boss_hit - tank.def);
 
     var before_hp = tank.hp;

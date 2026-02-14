@@ -28,7 +28,10 @@ function sim_run_finalize(sim) {
         " | Hazard=" + string(sim.coverage.hazard)
     );
     sim_log(sim,
-        "📊 Downed events=" + string(sim.stats.downed_events) +
+        "📊 Downed events=" + string(sim.stats.total_downed_count) +
+        " | Tank downed=" + string(sim.stats.tank_downed_count) +
+        " | Over-budget prevented=" + string(sim.stats.encounters_over_budget_prevented) +
+        " | Encounter rerolls=" + string(sim.stats.rerolls_count) +
         " | Repeat prevented=" + string(sim.director.repeat_prevented) +
         " | Downed-loop interventions=" + string(sim.director.downed_loop_interventions)
     );
