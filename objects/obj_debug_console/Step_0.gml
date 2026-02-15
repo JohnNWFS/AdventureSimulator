@@ -5,12 +5,32 @@ var k_s = keyboard_check(ord("S")); // toggle short mode
 var k_c = keyboard_check(ord("C")); // clear console
 var k_v = keyboard_check(ord("V")); // copy run log
 var k_o = keyboard_check(ord("O")); // toggle autosave-to-file
+var k_hash = keyboard_check(vk_f7); // Randomize Seed (F7)
+
 
 if (k_c && !key_prev_c) {
     global.debug_lines = [];
     global.debug_beats_emitted = 0;
     beat_output_emit("DEBUG", "Console cleared.", undefined);
 }
+
+if (k_hash && !key_prev_hash) {
+    // Clear console/run buffers
+    global.debug_lines = [];
+    global.debug_beats_emitted = 0;
+    if (!variable_global_exists("run_log_text")) global.run_log_text = "";
+    global.run_log_text = ""; // clear clipboard buffer target too (your V copies this)
+
+    // Pick new seed
+    var new_seed = irandom_range(1, 99999);
+    global.debug_seed = new_seed;
+
+    // Emit + start run
+    beat_output_emit("DEBUG", "Seed -> " + string(global.debug_seed), undefined);
+    _debug_start_run();
+}
+
+
 
 if (k_s && !key_prev_s) {
     global.debug_short_mode = !global.debug_short_mode;
@@ -47,4 +67,5 @@ key_prev_s = k_s;
 key_prev_c = k_c;
 key_prev_v = k_v;
 key_prev_o = k_o;
+key_prev_hash = k_hash;
 

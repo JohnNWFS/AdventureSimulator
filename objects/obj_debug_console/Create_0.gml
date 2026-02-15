@@ -21,6 +21,8 @@ key_prev_n = false;
 key_prev_s = false;
 key_prev_c = false;
 key_prev_v = false;
+key_prev_o = false;
+key_prev_hash = false;
 
 // A small banner so you know it's alive
 beat_output_emit("DEBUG", "Debug console online. Seed=" + string(global.debug_seed), undefined);
