@@ -123,6 +123,7 @@ function sim_resolve_combat(sim) {
     // Crisis tactics state
     var tactics = sim.director.tank_tactic_state;
     if (!variable_struct_exists(tactics, "stagger_left")) tactics.stagger_left = 0;
+    if (!variable_struct_exists(tactics, "withdrawal_announced")) tactics.withdrawal_announced = false;
 
     var dmg_taken_mult = 1.0;
     var flank_base_chance = 18;
@@ -149,6 +150,7 @@ function sim_resolve_combat(sim) {
         dmg_taken_mult *= 0.85;
         tactics.withdrawal_left -= 1;
         sim_log_tag(sim, "TACTIC", "🏃 [TACTIC] Controlled withdrawal active: disengagement posture lowers pressure.");
+        if (tactics.withdrawal_left <= 0) tactics.withdrawal_announced = false;
     }
 
     var had_ambush_pre_strike = false;
@@ -185,6 +187,12 @@ function sim_resolve_combat(sim) {
     var dmg_to_tank = max(0, base_dmg - eff_def);
     var per_hit_cap = floor(tank.max_hp * 0.55);
     if (enc.tag != "BOSS") dmg_to_tank = min(dmg_to_tank, per_hit_cap);
+
+    if (enc.tag != "BOSS" && variable_struct_exists(sim.director, "last_tank_downed_beat") && (sim.beat - sim.director.last_tank_downed_beat) <= 2) {
+        var floor_cap = -floor(tank.max_hp * 0.15);
+        var min_hp_after = max(floor_cap, tank.hp - dmg_to_tank);
+        dmg_to_tank = tank.hp - min_hp_after;
+    }
 
     var before_tank = tank.hp;
     var pre_wounds = tank.wounds;
@@ -414,6 +422,7 @@ function sim_resolve_combat(sim) {
 
     if (crisis_score >= 10 && tactics.withdrawal_left <= 0) {
         tactics.withdrawal_left = 2;
+        tactics.withdrawal_announced = false;
         sim_log_tag(sim, "TACTIC", "🏃 [TACTIC] Controlled withdrawal initiated: next encounters will be lighter.");
     } else if (crisis_score >= 7 && tactics.cover_left <= 0) {
         tactics.cover_left = 2;
@@ -425,9 +434,11 @@ function sim_resolve_combat(sim) {
 
     if ((crisis_score >= 10 || tank_downed_happened) && tactics.withdrawal_left < 2) {
         tactics.withdrawal_left = 2;
+        tactics.withdrawal_announced = false;
     }
-    if (crisis_score >= 10 || tank_downed_happened) {
+    if ((crisis_score >= 10 || tank_downed_happened) && !tactics.withdrawal_announced) {
         sim_log_tag(sim, "HEAL_COMMAND", "🗣 \"We are leaving NOW.\"");
+        tactics.withdrawal_announced = true;
     }
 
     // --- Tension climbs ---

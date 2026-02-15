@@ -26,6 +26,59 @@ function sim_make_combat_encounter(sim, party_power) {
     var attempts = 0;
     var candidates = [];
 
+    var target_total = sim_rand_range(sim, min_budget, max_budget);
+    var small_slack = 2;
+    var targeted_total = 0;
+    var targeted_names = "";
+    var targeted_enemies = [];
+    var targeted_count = 0;
+
+    while (targeted_total < target_total && targeted_count < 3) {
+        var remaining = target_total - targeted_total;
+        var fitting = [];
+
+        for (var p = 0; p < array_length(pool); p++) {
+            var fit_e = pool[p];
+            var fit_per_enemy = floor((fit_e.base + sim_rand_range(sim, -1, 2)) * (1 + sim.difficulty * 0.08));
+            var fit_non_boss_cap = max(3, floor(party_power * 0.45));
+            fit_per_enemy = clamp(fit_per_enemy, 2, fit_non_boss_cap);
+
+            if (fit_per_enemy <= (remaining + small_slack)) {
+                if ((targeted_total + fit_per_enemy) <= max_budget && (targeted_total + fit_per_enemy) <= boss_cap) {
+                    array_push(fitting, { name: fit_e.name, threat: fit_per_enemy });
+                }
+            }
+        }
+
+        if (array_length(fitting) <= 0) break;
+
+        var picked = fitting[sim_rand_range(sim, 0, array_length(fitting) - 1)];
+        targeted_total += picked.threat;
+        if (targeted_names != "") targeted_names += ", ";
+        targeted_names += picked.name;
+        array_push(targeted_enemies, picked);
+        targeted_count += 1;
+
+        if ((target_total - targeted_total) < 2) break;
+    }
+
+    attempts += 1;
+    if (targeted_total >= min_budget && targeted_total <= max_budget && targeted_total <= boss_cap) {
+        return {
+            degraded: false,
+            scaled: false,
+            bestfit_selected: false,
+            names: targeted_names,
+            total: targeted_total,
+            tag: tag,
+            rerolls: rerolls,
+            prevented: prevented,
+            attempts: attempts,
+            party_power: party_power,
+            ratio: (targeted_total / max(1, party_power))
+        };
+    }
+
     for (var attempt = 0; attempt < MAX_REROLLS_PER_ENCOUNTER; attempt++) {
         var group_size = sim_rand_range(sim, 1, 3);
         var total = 0;
@@ -34,7 +87,7 @@ function sim_make_combat_encounter(sim, party_power) {
 
         for (var i = 0; i < group_size; i++) {
             var e = pool[sim_rand_range(sim, 0, array_length(pool) - 1)];
-            var per_enemy = floor((e.base + sim_rand_range(sim, -1, 1)) * (1 + sim.difficulty * 0.06));
+            var per_enemy = floor((e.base + sim_rand_range(sim, -1, 2)) * (1 + sim.difficulty * 0.08));
 
             // Smooth non-boss spikes.
             var non_boss_cap = max(3, floor(party_power * 0.45));
