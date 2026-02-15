@@ -47,7 +47,54 @@ function sim_run_finalize(sim) {
         " | bestfit=" + string(sim.stats.encounter_bestfit_selected) +
         " | outcomes_total=" + string(encounter_outcome_total)
     );
-	
+
+    var resolved_encounters = sim.stats.encounter_accepted + sim.stats.encounter_scaled_down;
+    var ratio_avg = (resolved_encounters > 0) ? (sim.stats.encounter_ratio_sum / resolved_encounters) : 0;
+
+    var enemy_counts = variable_struct_exists(sim.stats, "encounter_enemy_counts") && is_struct(sim.stats.encounter_enemy_counts)
+        ? sim.stats.encounter_enemy_counts
+        : {};
+    var enemy_names = variable_struct_get_names(enemy_counts);
+
+    var top_name_1 = "-"; var top_count_1 = 0;
+    var top_name_2 = "-"; var top_count_2 = 0;
+    var top_name_3 = "-"; var top_count_3 = 0;
+
+    for (var en = 0; en < array_length(enemy_names); en++) {
+        var en_name = enemy_names[en];
+        var en_count = variable_struct_get(enemy_counts, en_name);
+
+        if (en_count > top_count_1) {
+            top_name_3 = top_name_2; top_count_3 = top_count_2;
+            top_name_2 = top_name_1; top_count_2 = top_count_1;
+            top_name_1 = en_name; top_count_1 = en_count;
+        } else if (en_count > top_count_2) {
+            top_name_3 = top_name_2; top_count_3 = top_count_2;
+            top_name_2 = en_name; top_count_2 = en_count;
+        } else if (en_count > top_count_3) {
+            top_name_3 = en_name; top_count_3 = en_count;
+        }
+    }
+
+    sim_log(sim,
+        "[CALIB] combats=" + string(sim.stats.combats) +
+        " accepted=" + string(sim.stats.encounter_accepted) +
+        " scaled=" + string(sim.stats.encounter_scaled_down) +
+        " degraded=" + string(sim.stats.encounter_degraded) +
+        " bestfit=" + string(sim.stats.encounter_bestfit_selected)
+    );
+    sim_log(sim,
+        "[CALIB] ratio avg=" + string_format(ratio_avg, 1, 2) +
+        " min=" + string_format(sim.stats.encounter_ratio_min, 1, 2) +
+        " max=" + string_format(sim.stats.encounter_ratio_max, 1, 2) +
+        " group(1/2/3)=" + string(sim.stats.encounter_group_1) + "/" + string(sim.stats.encounter_group_2) + "/" + string(sim.stats.encounter_group_3)
+    );
+    sim_log(sim,
+        "[CALIB] enemies top=" + top_name_1 + "(" + string(top_count_1) + "), " +
+        top_name_2 + "(" + string(top_count_2) + "), " +
+        top_name_3 + "(" + string(top_count_3) + ")"
+    );
+
 	  debug_log_flush();
 	  
 }
