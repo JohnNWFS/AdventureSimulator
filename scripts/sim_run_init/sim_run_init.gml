@@ -126,6 +126,13 @@ function sim_run_init(sim, seed, beats_target) {
         encounter_scaled_down: 0,
         encounter_degraded: 0,
         encounter_bestfit_selected: 0,
+        encounter_ratio_sum: 0,
+        encounter_ratio_min: 0,
+        encounter_ratio_max: 0,
+        encounter_group_1: 0,
+        encounter_group_2: 0,
+        encounter_group_3: 0,
+        encounter_enemy_counts: {},
 
         deaths: 0,
         retirements: 0,

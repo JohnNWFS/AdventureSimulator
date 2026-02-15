@@ -23,7 +23,14 @@ function sim_resolve_combat(sim) {
             encounter_rerolled: 0,
             encounter_scaled_down: 0,
             encounter_degraded: 0,
-            encounter_bestfit_selected: 0
+            encounter_bestfit_selected: 0,
+            encounter_ratio_sum: 0,
+            encounter_ratio_min: 0,
+            encounter_ratio_max: 0,
+            encounter_group_1: 0,
+            encounter_group_2: 0,
+            encounter_group_3: 0,
+            encounter_enemy_counts: {}
         };
     }
     if (!variable_struct_exists(sim.stats, "combats")) sim.stats.combats = 0;
@@ -35,6 +42,13 @@ function sim_resolve_combat(sim) {
     if (!variable_struct_exists(sim.stats, "encounter_scaled_down")) sim.stats.encounter_scaled_down = 0;
     if (!variable_struct_exists(sim.stats, "encounter_degraded")) sim.stats.encounter_degraded = 0;
     if (!variable_struct_exists(sim.stats, "encounter_bestfit_selected")) sim.stats.encounter_bestfit_selected = 0;
+    if (!variable_struct_exists(sim.stats, "encounter_ratio_sum")) sim.stats.encounter_ratio_sum = 0;
+    if (!variable_struct_exists(sim.stats, "encounter_ratio_min")) sim.stats.encounter_ratio_min = 0;
+    if (!variable_struct_exists(sim.stats, "encounter_ratio_max")) sim.stats.encounter_ratio_max = 0;
+    if (!variable_struct_exists(sim.stats, "encounter_group_1")) sim.stats.encounter_group_1 = 0;
+    if (!variable_struct_exists(sim.stats, "encounter_group_2")) sim.stats.encounter_group_2 = 0;
+    if (!variable_struct_exists(sim.stats, "encounter_group_3")) sim.stats.encounter_group_3 = 0;
+    if (!variable_struct_exists(sim.stats, "encounter_enemy_counts") || !is_struct(sim.stats.encounter_enemy_counts)) sim.stats.encounter_enemy_counts = {};
 
     sim.stats.combats += 1;
 
@@ -83,6 +97,22 @@ function sim_resolve_combat(sim) {
     }
 
     if (enc.bestfit_selected) sim.stats.encounter_bestfit_selected += 1;
+
+    if (!enc.degraded) {
+        sim.stats.encounter_ratio_sum += enc.ratio;
+        if ((sim.stats.encounter_ratio_min <= 0) || (enc.ratio < sim.stats.encounter_ratio_min)) sim.stats.encounter_ratio_min = enc.ratio;
+        if (enc.ratio > sim.stats.encounter_ratio_max) sim.stats.encounter_ratio_max = enc.ratio;
+
+        if (enc.group_size <= 1) sim.stats.encounter_group_1 += 1;
+        else if (enc.group_size == 2) sim.stats.encounter_group_2 += 1;
+        else sim.stats.encounter_group_3 += 1;
+
+        for (var ec = 0; ec < array_length(enc.enemies); ec++) {
+            var enemy_name = enc.enemies[ec].name;
+            var old_count = variable_struct_exists(sim.stats.encounter_enemy_counts, enemy_name) ? variable_struct_get(sim.stats.encounter_enemy_counts, enemy_name) : 0;
+            variable_struct_set(sim.stats.encounter_enemy_counts, enemy_name, old_count + 1);
+        }
+    }
 
     if (debug_budget) {
         sim_log_tag(sim, "ENCOUNTER_BUDGET",
@@ -139,18 +169,20 @@ function sim_resolve_combat(sim) {
         dmg_taken_mult *= 0.70;
         party_out_mult *= 0.80;
         tactics.defensive_left -= 1;
-        sim_log_tag(sim, "TACTIC", "🛡 [TACTIC] Defensive stance active: incoming damage reduced this beat.");
+        if (tactics.defensive_left <= 0) sim_log_tag(sim, "TACTIC", "🛡 [TACTIC] Defensive stance expires.");
     }
     if (tactics.cover_left > 0) {
         flank_base_chance = 8;
         tactics.cover_left -= 1;
-        sim_log_tag(sim, "TACTIC", "🧱 [TACTIC] Choke point/cover active: enemy accuracy reduced.");
+        if (tactics.cover_left <= 0) sim_log_tag(sim, "TACTIC", "🧱 [TACTIC] Choke point/cover breaks.");
     }
     if (tactics.withdrawal_left > 0) {
         dmg_taken_mult *= 0.85;
         tactics.withdrawal_left -= 1;
-        sim_log_tag(sim, "TACTIC", "🏃 [TACTIC] Controlled withdrawal active: disengagement posture lowers pressure.");
-        if (tactics.withdrawal_left <= 0) tactics.withdrawal_announced = false;
+        if (tactics.withdrawal_left <= 0) {
+            sim_log_tag(sim, "TACTIC", "🏃 [TACTIC] Controlled withdrawal posture ends.");
+            tactics.withdrawal_announced = false;
+        }
     }
 
     var had_ambush_pre_strike = false;
@@ -180,7 +212,7 @@ function sim_resolve_combat(sim) {
     var dmg_mult = (is_struct(_mod)) ? _mod.dmg_mult : 1.0;
     var def_mult = (is_struct(_mod)) ? _mod.def_mult : 1.0;
 
-    var base_dmg = ((threat * 3) + floor(sqrt(max(0, threat)) * 6) + sim_rand_range(sim, 3, 10));
+    var base_dmg = ((threat * 2.8) + floor(sqrt(max(0, threat)) * 6) + sim_rand_range(sim, 3, 10));
     base_dmg = floor(base_dmg * dmg_mult * dmg_taken_mult);
 
     var eff_def = floor(tank.def * def_mult);
