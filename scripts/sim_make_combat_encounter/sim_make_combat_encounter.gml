@@ -21,7 +21,6 @@ function sim_make_combat_encounter(sim, party_power) {
     var boss_cap = floor(party_power * BOSS_CAP_RATIO);
     max_budget = min(max_budget, boss_cap);
 
-    var debug_budget = variable_global_exists("debug_verbose") ? global.debug_verbose : false;
     var rerolls = 0;
     var prevented = 0;
     var attempts = 0;
@@ -35,7 +34,7 @@ function sim_make_combat_encounter(sim, party_power) {
 
         for (var i = 0; i < group_size; i++) {
             var e = pool[sim_rand_range(sim, 0, array_length(pool) - 1)];
-            var per_enemy = floor((e.base + sim_rand_range(sim, -1, 2)) * (1 + sim.difficulty * 0.08));
+            var per_enemy = floor((e.base + sim_rand_range(sim, -1, 1)) * (1 + sim.difficulty * 0.06));
 
             // Smooth non-boss spikes.
             var non_boss_cap = max(3, floor(party_power * 0.45));
@@ -64,12 +63,10 @@ function sim_make_combat_encounter(sim, party_power) {
         if (total > boss_cap) {
             prevented += 1;
             rerolls += 1;
-            if (debug_budget) sim_log_tag(sim, "ENCOUNTER_BUDGET", sim_format_budget_line(party_power, total, cap_ratio, tag, "REROLL"));
             continue;
         }
 
         if (total >= min_budget && total <= max_budget) {
-            if (debug_budget) sim_log_tag(sim, "ENCOUNTER_BUDGET", sim_format_budget_line(party_power, total, cap_ratio, tag, "ACCEPT"));
             return {
                 degraded: false,
                 scaled: false,
@@ -79,14 +76,15 @@ function sim_make_combat_encounter(sim, party_power) {
                 tag: tag,
                 rerolls: rerolls,
                 prevented: prevented,
-                attempts: attempts
+                attempts: attempts,
+                party_power: party_power,
+                ratio: ratio
             };
         }
 
         var scaled_attempt = sim_try_scale_encounter(candidate, cap_ratio, BOSS_CAP_RATIO, false);
         if (!is_undefined(scaled_attempt)) {
             prevented += 1;
-            if (debug_budget) sim_log_tag(sim, "ENCOUNTER_BUDGET", sim_format_budget_line(party_power, total, cap_ratio, tag, "SCALED"));
             return {
                 degraded: false,
                 scaled: true,
@@ -98,13 +96,14 @@ function sim_make_combat_encounter(sim, party_power) {
                 prevented: prevented,
                 attempts: attempts,
                 removed_enemy_name: scaled_attempt.removed_enemy_name,
-                weakened_only: scaled_attempt.weakened_only
+                weakened_only: scaled_attempt.weakened_only,
+                party_power: party_power,
+                ratio: (scaled_attempt.total / max(1, party_power))
             };
         }
 
         rerolls += 1;
         if (total > max_budget) prevented += 1;
-        if (debug_budget) sim_log_tag(sim, "ENCOUNTER_BUDGET", sim_format_budget_line(party_power, total, cap_ratio, tag, "REROLL"));
     }
 
     var bestfit_under_cap = undefined;
@@ -118,7 +117,6 @@ function sim_make_combat_encounter(sim, party_power) {
     }
 
     if (!is_undefined(bestfit_under_cap)) {
-        if (debug_budget) sim_log_tag(sim, "ENCOUNTER_BUDGET", sim_format_budget_line(party_power, bestfit_under_cap.total, cap_ratio, tag, "ACCEPT"));
         return {
             degraded: false,
             scaled: false,
@@ -128,7 +126,9 @@ function sim_make_combat_encounter(sim, party_power) {
             tag: tag,
             rerolls: rerolls,
             prevented: prevented,
-            attempts: attempts + 1
+            attempts: attempts + 1,
+            party_power: party_power,
+            ratio: bestfit_under_cap.ratio
         };
     }
 
@@ -142,7 +142,6 @@ function sim_make_combat_encounter(sim, party_power) {
         var scaled_fallback = sim_try_scale_encounter(lowest_over_cap, cap_ratio, BOSS_CAP_RATIO, true);
         if (!is_undefined(scaled_fallback)) {
             prevented += 1;
-            if (debug_budget) sim_log_tag(sim, "ENCOUNTER_BUDGET", sim_format_budget_line(party_power, lowest_over_cap.total, cap_ratio, tag, "SCALED"));
             return {
                 degraded: false,
                 scaled: true,
@@ -154,14 +153,11 @@ function sim_make_combat_encounter(sim, party_power) {
                 prevented: prevented,
                 attempts: attempts + 1,
                 removed_enemy_name: scaled_fallback.removed_enemy_name,
-                weakened_only: scaled_fallback.weakened_only
+                weakened_only: scaled_fallback.weakened_only,
+                party_power: party_power,
+                ratio: (scaled_fallback.total / max(1, party_power))
             };
         }
-    }
-
-    if (debug_budget) {
-        var threat_log = is_undefined(lowest_over_cap) ? 0 : lowest_over_cap.total;
-        sim_log_tag(sim, "ENCOUNTER_BUDGET", sim_format_budget_line(party_power, threat_log, cap_ratio, tag, "DEGRADED"));
     }
 
     return {
@@ -173,7 +169,8 @@ function sim_make_combat_encounter(sim, party_power) {
         prevented: prevented + 1,
         attempts: attempts + 1,
         total: 0,
-        names: ""
+        names: "",
+        party_power: party_power,
+        ratio: 0
     };
 }
-
