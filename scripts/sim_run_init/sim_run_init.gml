@@ -10,6 +10,7 @@ function sim_run_init(sim, seed, beats_target) {
     var target_cap = very_short_mode ? 16 : (short_mode ? 36 : beats_target);
     sim.beats_target = min(beats_target, target_cap);
     sim.finished = false;
+    if (!variable_struct_exists(sim, "episode_begun_logged")) sim.episode_begun_logged = false;
 
     sim.zone = "Dungeon";
     sim.difficulty = 1;
@@ -53,7 +54,8 @@ function sim_run_init(sim, seed, beats_target) {
         tank_tactic_state: {
             defensive_left: 0,
             cover_left: 0,
-            withdrawal_left: 0
+            withdrawal_left: 0,
+            withdrawal_announced: false
         }
     };
 
@@ -78,7 +80,6 @@ function sim_run_init(sim, seed, beats_target) {
         global.run_log_text = "";
         clipboard_set_text("");
     }
-    sim.episode_begun_logged = false;
     if (!sim.episode_begun_logged) {
         sim_log(sim, "🌟 Episode begins. Seed=" + string(sim.seed) + " Zone=" + sim.zone);
         var verbose = variable_global_exists("debug_verbose") ? global.debug_verbose : false;

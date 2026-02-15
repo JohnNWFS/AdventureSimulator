@@ -47,6 +47,7 @@ function sim_check_party_health(sim) {
             }
             if (p.role == "Tank" && is_struct(sim.stats) && variable_struct_exists(sim.stats, "tank_downed_count")) {
                 sim.stats.tank_downed_count += 1;
+                if (is_struct(sim.director)) sim.director.last_tank_downed_beat = sim.beat;
             }
 
             if (!is_array(p.recent_downed_beats)) p.recent_downed_beats = [];
