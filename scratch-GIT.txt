@@ -1,0 +1,4 @@
+git checkout dev
+git fetch origin
+git reset --hard origin/dev
+git clean -fd   # OPTIONAL – only if you want to remove untracked files

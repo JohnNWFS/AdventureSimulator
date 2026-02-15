@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"sim_log",
+  "%Name":"_debug_start_run",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"sim_log",
+  "name":"_debug_start_run",
   "parent":{
     "name":"OTHER and DEBUG",
     "path":"folders/SCRIPTS/OTHER and DEBUG.yy",

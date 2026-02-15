@@ -1,0 +1,129 @@
+[DEBUG] Seed -> 100008
+[DEBUG] Run started. Seed=100008
+🌟 Episode begins. Seed=100008 Zone=Dungeon
+[BEAT_SOURCE] 🗺 The party advances deeper.
+🧭 The party advances into the Dungeon.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Bandit from the encounter.
+[ENCOUNTER] ⚔ Combat: Cult Acolyte (threat 8) NORMAL.
+[COMBAT_EXCHANGE] ⚔ Cult Acolyte strikes: Tallen of Dockside takes 68 (70→2).
+[CHAOS] 💢 Chaos erupts in the scrum.
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~2).
+[THIEF_HIT] 🗡 Koriel the Scarred slips in: 24 damage.
+[MAGE_HIT] ✨ Fenira casts for 88. [MP 30→25]
+[HEAL] 🩹 Healer restores Tallen of Dockside +16 HP (2→18).
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🧪 Budget scale-down applied a light non-boss weakening to keep threat fair.
+[ENCOUNTER] ⚔ Combat: Slime (threat 1) NORMAL.
+[AMBUSH_HIT] 🕳 AMBUSH → Fenira takes 2 (40→38).
+[COMBAT_EXCHANGE] ⚔ Slime strikes: Tallen of Dockside takes 11 (18→7).
+[FLANK_HIT] 🪓 Flanking blow! Selvek the Unlucky takes 6 (42→36).
+[THIEF_HIT] 🗡 Koriel the Scarred slips in: 23 damage.
+[MAGE_HIT] ✨ Fenira casts for 31. [MP 27→25]
+[HEAL] 🩹 Healer restores Tallen of Dockside +12 HP (7→19).
+[BEAT_SOURCE] 🧭 Expedition: the route itself forces a decision.
+[HAZARD] 🌫 A spore pocket bursts from the walls.
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~4).
+[SPLASH_HIT] ☠ SPLASH → Fenira takes 3 (38→35).
+[SPLASH_HIT] ☠ SPLASH → Koriel the Scarred takes 1 (45→44).
+[SPLASH_HIT] ☠ SPLASH → Selvek the Unlucky takes 2 (36→34).
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Slime from the encounter.
+[ENCOUNTER] ⚔ Combat: Slime (threat 2) NORMAL.
+[COMBAT_EXCHANGE] ⚔ Slime strikes: Tallen of Dockside takes 9 (19→10).
+[FLANK_HIT] 🪓 Flanking blow! Fenira takes 3 (35→32).
+[THIEF_HIT] 🗡 Koriel the Scarred slips in: 28 damage.
+[MAGE_HIT] ✨ Fenira casts for 30. [MP 29→27]
+[HEAL] 🩹 Healer restores Tallen of Dockside +11 HP (10→21).
+[BEAT_SOURCE] 🧳 Encounter: a traveling merchant appears.
+[MERCHANT_OFFER] 🧳 Offer: Onyx Ring (66g, asking 66g).
+[MERCHANT_SUPPLY] 🧪 The merchant trades cheap poultices for future favors.
+🔷 Party restores MP +5 (group).
+[BEAT_SOURCE] 🧭 Expedition: the route itself forces a decision.
+[DISCOVERY] 🧷 A wounded courier is found with a sealed map fragment.
+[DISCOVERY] The courier shares a shortcut and a small payment for escort.
+[BEAT_SOURCE] 🛖 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: campfire. The party regroups.
+[GROUP_HEAL] ✨ Party heals +12 (group).
+[HP_DELTA]   ❤️ Tallen of Dockside HP 21→33.
+[HP_DELTA]   ❤️ Fenira HP 32→40.
+[HP_DELTA]   ❤️ Koriel the Scarred HP 44→45.
+[HP_DELTA]   ❤️ Selvek the Unlucky HP 34→42.
+[GROUP_MP] 🔷 Party restores MP +11 (group).
+[MP_DELTA]   🔷 Tallen of Dockside MP 5→5.
+[MP_DELTA]   🔷 Fenira MP 30→30.
+[MP_DELTA]   🔷 Koriel the Scarred MP 10→10.
+[MP_DELTA]   🔷 Selvek the Unlucky MP 28→28.
+[BEAT_SOURCE] 🧭 Expedition: the route itself forces a decision.
+[DISCOVERY] 📜 Wall runes describe the boss's old rituals and weak points.
+[BEAT_SOURCE] 🏃 Withdrawal: the party falls back through dangerous ground.
+[GATE_VERDICT] 🚑 At the outer gate, a healer orders immediate treatment and city return.
+[BEAT_SOURCE] 🔎 Exploration find: the party spots something ahead.
+[CHEST_OPEN] 🧰 Chest found.
+[LOOT_FOUND] 🎁 Loot found: Ancient Relic.
+[CHEST_ITEM] 🧰 Chest: found Ancient Relic.
+[TREASURE] 💰 Treasure: Ancient Relic converts to +198 gold.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Cult Acolyte from the encounter.
+[ENCOUNTER] ⚔ Combat: Slime, Slime (threat 7) NORMAL.
+[COMBAT_EXCHANGE] ⚔ Slime, Slime strikes: Tallen of Dockside takes 39 (33→-6).
+[THIEF_EXEC] 🗡 Koriel the Scarred smells blood: 27 damage.
+[MAGE_CRIT] ✨ Fenira casts for 134 (CRIT!). [MP 30→26]
+[HEAL] 🩹 Healer restores Tallen of Dockside +16 HP (-6→10).
+[NEAR_DEATH] 🚨 Near-death: Tallen of Dockside is under 20% HP!
+[WOUND] 🩸 Tallen of Dockside carries another lasting wound (1).
+[TACTIC] 🛡 [TACTIC] Defensive stance called: reduced damage taken for 2 beats.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🧪 Budget scale-down applied a light non-boss weakening to keep threat fair.
+[ENCOUNTER] ⚔ Combat: Slime (threat 4) NORMAL.
+[TACTIC] 🛡 [TACTIC] Defensive stance active: incoming damage reduced this beat.
+[COMBAT_EXCHANGE] ⚔ Slime strikes: Tallen of Dockside takes 16 (10→-6).
+[THIEF_EXEC_CRIT] 🗡 Koriel the Scarred smells blood: 48 damage (CRIT!).
+[MAGE_HIT] ✨ Fenira casts for 37. [MP 28→25]
+[HEAL] 🩹 Healer restores Tallen of Dockside +12 HP (-6→6).
+[BEAT_SOURCE] 🛖 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: quiet corridor. The party regroups.
+[GROUP_HEAL] ✨ Party heals +17 (group).
+[HP_DELTA]   ❤️ Tallen of Dockside HP 6→23.
+[HP_DELTA]   ❤️ Fenira HP 40→40.
+[HP_DELTA]   ❤️ Koriel the Scarred HP 45→45.
+[HP_DELTA]   ❤️ Selvek the Unlucky HP 42→42.
+[GROUP_MP] 🔷 Party restores MP +11 (group).
+[MP_DELTA]   🔷 Tallen of Dockside MP 5→5.
+[MP_DELTA]   🔷 Fenira MP 27→30.
+[MP_DELTA]   🔷 Koriel the Scarred MP 10→10.
+[MP_DELTA]   🔷 Selvek the Unlucky MP 26→28.
+[WOUND_HEAL] 🩺 Relief treatment: Tallen of Dockside recovers 1 wound(s).
+[STAT_DEF] 🟦 DEF 5→6 (wounds 1→0).
+[BEAT_SOURCE] 🧳 Encounter: a traveling merchant appears.
+[MERCHANT_OFFER] 🧳 Offer: Bone Helm (192g, asking 153g).
+[MERCHANT_BUY] 🧳 Tallen of Dockside buys Bone Helm for 153g (205→52).
+[EQUIP_CHANGE] 📦 Tallen of Dockside equips Bone Helm (armor).
+[BEAT_SOURCE] 👁 Ominous presence: the air shifts. Something huge is near.
+[BOSS_TELEGRAPH] 🌩 [BOSS] The ground shakes before the enemy appears.
+[BOSS_SPAWN] 👑 [BOSS] Hollow Ogre emerges!
+[BOSS_SMASH] ⚔ Hollow Ogre smashes: Tallen of Dockside takes 25 (23→-2).
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~5).
+[SPLASH_HIT] ☠ SPLASH → Fenira takes 4 (40→36).
+[SPLASH_HIT] ☠ SPLASH → Koriel the Scarred takes 3 (45→42).
+[SPLASH_HIT] ☠ SPLASH → Selvek the Unlucky takes 2 (42→40).
+[BRACE_FAIL] 🪦 Tallen of Dockside is down and can't brace.
+[THIEF_EXEC] 🗡 Koriel the Scarred smells blood: 19 damage.
+[MAGE_HIT] ✨ Fenira detonates a full cast: 55 damage. [MP 30→24]
+[HEAL] 🩹 Healer restores Tallen of Dockside +16 HP (-2→14).
+[FINISHER] 💥 FINISHER → Fenira's blast breaks the Hollow Ogre! (55)
+[BOSS_DEFEATED] 🏆 Boss defeated! +89 gold.
+[TROPHY_DROP] 🎁 Trophy drop: Slate Band.
+[EQUIP] 📦 EQUIP → Tallen of Dockside equips (trinket): Slate Band [Δ44.5].
+[EQUIP_CHANGE] 📦 Tallen of Dockside equips Slate Band.
+[STAT_ATK] 🟩 ATK 8→10.
+[STAT_DEF] 🟦 DEF 8→10 (base 6→6).
+[CITY_ARRIVE] 🏙 The party returns to the city to recover, honor the fallen, and make hard decisions.
+[CITY_DEPART] 🚪 The party departs the city and returns to the crawl.
+📺 Episode ends. Gold=141 | Chests=1 | Merchants=2 | Rares=0 | Near-deaths=1 | Boss=DEFEATED
+📊 Party avg HP%: 75%
+📊 Beat counts: Combat=5 | Expedition=4 | Social=0 | Merchant=2 | Relief=2 | Discovery=2 | Hazard=1
+📊 Downed events=0 | Tank downed=0 | Over-budget prevented=5 | Encounter rerolls=0 | Repeat prevented=0 | Downed-loop interventions=0
+📊 Encounter budget: attempts=5 | accepted=0 | rerolled=0 | scaled=5 | degraded=0 | bestfit=0 | outcomes_total=5
+Pause event has been registered for this frame
+Pause event has been unregistered

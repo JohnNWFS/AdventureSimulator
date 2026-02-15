@@ -1,0 +1,149 @@
+[DEBUG] Seed -> 100009
+[DEBUG] Run started. Seed=100009
+🌟 Episode begins. Seed=100009 Zone=Dungeon
+[BEAT_SOURCE] 🗺 The party advances deeper.
+🧭 The party advances into the Dungeon.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Slime from the encounter.
+[ENCOUNTER] ⚔ Combat: Slime (threat 3) NORMAL.
+[COMBAT_EXCHANGE] ⚔ Slime strikes: Taleth of Dockside takes 21 (70→49).
+[THIEF_CRIT] 🗡 Quum slips in: 48 damage (CRIT!).
+[MAGE_CRIT] ✨ Breth casts for 66 (CRIT!). [MP 30→27]
+[HEAL] 🩹 Healer restores Taleth of Dockside +20 HP (49→69).
+[BEAT_SOURCE] 🔎 Exploration find: the party spots something ahead.
+[CHEST_OPEN] 🧰 Chest found.
+[LOOT_FOUND] 🎁 Loot found: Holy Draught.
+[CHEST_ITEM] 🧰 Chest: found Holy Draught.
+[ITEM_GAIN] 🧪 Consumable acquired: Holy Draught.
+[GROUP_HEAL] ✨ Holy Draught heals +19 (group).
+[HP_DELTA]   ❤️ Taleth of Dockside HP 69→70.
+[HP_DELTA]   ❤️ Breth HP 40→40.
+[HP_DELTA]   ❤️ Quum HP 45→45.
+[HP_DELTA]   ❤️ Selrek HP 42→42.
+[GROUP_MP] 🔷 Holy Draught restores MP +9 (group).
+[MP_DELTA]   🔷 Taleth of Dockside MP 5→5.
+[MP_DELTA]   🔷 Breth MP 29→30.
+[MP_DELTA]   🔷 Quum MP 10→10.
+[MP_DELTA]   🔷 Selrek MP 27→28.
+[BEAT_SOURCE] 🧳 Encounter: a traveling merchant appears.
+[MERCHANT_OFFER] 🧳 Offer: Slate Wand (203g, asking 203g).
+[MERCHANT_TRADE] 🔁 A barter swap nets the party a practical consumable.
+[ITEM_GAIN] 🧪 Consumable acquired: Holy Tonic.
+[GROUP_HEAL] ✨ Holy Tonic heals +12 (group).
+[HP_DELTA]   ❤️ Taleth of Dockside HP 70→70.
+[HP_DELTA]   ❤️ Breth HP 40→40.
+[HP_DELTA]   ❤️ Quum HP 45→45.
+[HP_DELTA]   ❤️ Selrek HP 42→42.
+[GROUP_MP] 🔷 Holy Tonic restores MP +4 (group).
+[MP_DELTA]   🔷 Taleth of Dockside MP 5→5.
+[MP_DELTA]   🔷 Breth MP 30→30.
+[MP_DELTA]   🔷 Quum MP 10→10.
+[MP_DELTA]   🔷 Selrek MP 28→28.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Bandit from the encounter.
+[ENCOUNTER] ⚔ Combat: Goblin (threat 3) [HARD].
+[COMBAT_EXCHANGE] ⚔ Goblin strikes: Taleth of Dockside takes 21 (70→49).
+[THIEF_HIT] 🗡 Quum slips in: 23 damage.
+[MAGE_HIT] ✨ Breth casts for 34. [MP 30→27]
+[HEAL] 🩹 Healer restores Taleth of Dockside +11 HP (49→60).
+[TACTIC] 🛡 [TACTIC] Defensive stance called: reduced damage taken for 2 beats.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Warg from the encounter.
+[ENCOUNTER] ⚔ Combat: Warg, Bandit (threat 14) NORMAL.
+[TACTIC] 🛡 [TACTIC] Defensive stance active: incoming damage reduced this beat.
+[COMBAT_EXCHANGE] ⚔ Warg, Bandit strikes: Taleth of Dockside takes 57 (60→3).
+[THIEF_HIT] 🗡 Quum slips in: 20 damage.
+[MAGE_HIT] ✨ Breth casts for 92. [MP 29→23]
+[HEAL] 🩹 Healer restores Taleth of Dockside +18 HP (3→21).
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🧪 Budget scale-down applied a light non-boss weakening to keep threat fair.
+[ENCOUNTER] ⚔ Combat: Bandit (threat 4) NORMAL.
+[TACTIC] 🛡 [TACTIC] Defensive stance active: incoming damage reduced this beat.
+[COMBAT_EXCHANGE] ⚔ Bandit strikes: Taleth of Dockside takes 26 (21→-5).
+[CHAOS] 💢 Chaos erupts in the scrum.
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~0).
+[THIEF_EXEC] 🗡 Quum smells blood: 23 damage.
+[MAGE_HIT] ✨ Breth casts for 42. [MP 25→22]
+[HEAL] 🩹 Healer restores Taleth of Dockside +18 HP (-5→13).
+[NEAR_DEATH] 🚨 Near-death: Taleth of Dockside is under 20% HP!
+[WOUND] 🩸 Taleth of Dockside carries another lasting wound (1).
+[TACTIC] 🏃 [TACTIC] Controlled withdrawal initiated: next encounters will be lighter.
+[BEAT_SOURCE] 🛖 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: abandoned outpost. The party regroups.
+[GROUP_HEAL] ✨ Party heals +10 (group).
+[HP_DELTA]   ❤️ Taleth of Dockside HP 13→23.
+[HP_DELTA]   ❤️ Breth HP 40→40.
+[HP_DELTA]   ❤️ Quum HP 45→45.
+[HP_DELTA]   ❤️ Selrek HP 42→42.
+[GROUP_MP] 🔷 Party restores MP +7 (group).
+[MP_DELTA]   🔷 Taleth of Dockside MP 5→5.
+[MP_DELTA]   🔷 Breth MP 24→30.
+[MP_DELTA]   🔷 Quum MP 10→10.
+[MP_DELTA]   🔷 Selrek MP 25→28.
+[WOUND_HEAL] 🩺 Relief treatment: Taleth of Dockside recovers 1 wound(s).
+[STAT_DEF] 🟦 DEF 5→6 (wounds 1→0).
+[BEAT_SOURCE] 🔎 Exploration find: the party spots something ahead.
+[CHEST_OPEN] 🧰 Chest found.
+[LOOT_FOUND] 🎁 Loot found: Royal Gem.
+[CHEST_ITEM] 🧰 Chest: found Royal Gem.
+[TREASURE] 💰 Treasure: Royal Gem converts to +119 gold.
+[BEAT_SOURCE] 🏃 Withdrawal: the party falls back through dangerous ground.
+[RETREAT_DECISION] 🏳 The party votes to pull out before the next push turns fatal.
+[BEAT_SOURCE] 🧭 Expedition: the route itself forces a decision.
+[DISCOVERY] 🧷 A wounded courier is found with a sealed map fragment.
+[DISCOVERY] The courier shares a shortcut and a small payment for escort.
+[BEAT_SOURCE] 🧭 Expedition: the route itself forces a decision.
+[DISCOVERY] 📜 Wall runes describe the boss's old rituals and weak points.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Warg from the encounter.
+[ENCOUNTER] ⚔ Combat: Goblin (threat 5) NORMAL.
+[TACTIC] 🏃 [TACTIC] Controlled withdrawal active: disengagement posture lowers pressure.
+[COMBAT_EXCHANGE] ⚔ Goblin strikes: Taleth of Dockside takes 25 (23→-2).
+[THIEF_EXEC] 🗡 Quum smells blood: 25 damage.
+[MAGE_HIT] ✨ Breth casts for 56. [MP 30→27]
+[HEAL] 🩹 Healer restores Taleth of Dockside +14 HP (-2→12).
+[TACTIC] 🧱 [TACTIC] Choke point secured: incoming accuracy reduced for 2 beats.
+[BEAT_SOURCE] 🧳 Encounter: a traveling merchant appears.
+[MERCHANT_OFFER] 🧳 Offer: Iron Helm (132g, asking 92g).
+[MERCHANT_BUY] 🧳 Taleth of Dockside buys Iron Helm for 92g (123→31).
+[EQUIP_CHANGE] 📦 Taleth of Dockside equips Iron Helm (armor).
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🧪 Budget scale-down applied a light non-boss weakening to keep threat fair.
+[ENCOUNTER] ⚔ Combat: Goblin (threat 5) NORMAL.
+[TACTIC] 🧱 [TACTIC] Choke point/cover active: enemy accuracy reduced.
+[TACTIC] 🏃 [TACTIC] Controlled withdrawal active: disengagement posture lowers pressure.
+[COMBAT_EXCHANGE] ⚔ Goblin strikes: Taleth of Dockside takes 27 (12→-15).
+[THIEF_EXEC] 🗡 Quum smells blood: 24 damage.
+[MAGE_HIT] ✨ Breth casts for 49. [MP 30→27]
+[HEAL] 🩹 Healer restores Taleth of Dockside +16 HP (-15→1).
+[TACTIC] 🏃 [TACTIC] Controlled withdrawal initiated: next encounters will be lighter.
+[BEAT_SOURCE] 👁 Ominous presence: the air shifts. Something huge is near.
+[BOSS_TELEGRAPH] 🌩 [BOSS] The ground shakes before the enemy appears.
+[BOSS_SPAWN] 👑 [BOSS] Hollow Ogre emerges!
+[BOSS_SMASH] ⚔ Hollow Ogre smashes: Taleth of Dockside takes 22 (1→-21).
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~5).
+[SPLASH_HIT] ☠ SPLASH → Breth takes 4 (40→36).
+[SPLASH_HIT] ☠ SPLASH → Quum takes 1 (45→44).
+[SPLASH_HIT] ☠ SPLASH → Selrek takes 1 (42→41).
+[BRACE_FAIL] 🪦 Taleth of Dockside is down and can't brace.
+[THIEF_EXEC] 🗡 Quum smells blood: 18 damage.
+[MAGE_HIT] ✨ Breth detonates a full cast: 58 damage. [MP 29→23]
+[HEAL] 🩹 Healer restores Taleth of Dockside +13 HP (-21→-8).
+[FINISHER] 💥 FINISHER → Breth's blast breaks the Hollow Ogre! (58)
+[BOSS_DEFEATED] 🏆 Boss defeated! +72 gold.
+[TROPHY_DROP] 🎁 Trophy drop: Slate Band.
+[EQUIP] 📦 EQUIP → Taleth of Dockside equips (trinket): Slate Band [Δ82.2].
+[EQUIP_CHANGE] 📦 Taleth of Dockside equips Slate Band.
+[STAT_ATK] 🟩 ATK 8→11.
+[STAT_DEF] 🟦 DEF 5→9 (base 6→6).
+[STAT_HP] ❤️ MAX HP 70→86.
+[CITY_ARRIVE] 🏙 The party returns to the city to recover, honor the fallen, and make hard decisions.
+[CITY_SHOP] 🛠 Taleth of Dockside receives treatment and repairs (wounds 1→0).
+[CITY_DEPART] 🚪 The party departs the city and returns to the crawl.
+📺 Episode ends. Gold=103 | Chests=2 | Merchants=2 | Rares=0 | Near-deaths=1 | Boss=DEFEATED
+📊 Party avg HP%: 72%
+📊 Beat counts: Combat=6 | Expedition=4 | Social=0 | Merchant=2 | Relief=1 | Discovery=2 | Hazard=0
+📊 Downed events=1 | Tank downed=1 | Over-budget prevented=6 | Encounter rerolls=0 | Repeat prevented=1 | Downed-loop interventions=0
+📊 Encounter budget: attempts=6 | accepted=0 | rerolled=0 | scaled=6 | degraded=0 | bestfit=0 | outcomes_total=6
+Pause event has been registered for this frame
+Pause event has been unregistered

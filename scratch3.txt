@@ -1,0 +1,139 @@
+[DEBUG] Seed -> 100010
+[DEBUG] Run started. Seed=100010
+🌟 Episode begins. Seed=100010 Zone=Dungeon
+[BEAT_SOURCE] 🗺 The party advances deeper.
+🧭 The party advances into the Dungeon.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Cult Acolyte from the encounter.
+[ENCOUNTER] ⚔ Combat: Skeleton (threat 4) NORMAL.
+[COMBAT_EXCHANGE] ⚔ Skeleton strikes: Talyx of Dockside takes 37 (70→33).
+[THIEF_HIT] 🗡 Korann the Unlucky slips in: 26 damage.
+[MAGE_HIT] ✨ Ilrek casts for 53. [MP 30→25]
+[HEAL] 🩹 Healer restores Talyx of Dockside +16 HP (33→49).
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Warg from the encounter.
+[ENCOUNTER] ⚔ Combat: Warg (threat 9) NORMAL.
+[COMBAT_EXCHANGE] ⚔ Warg strikes: Talyx of Dockside takes 53 (49→-4).
+[THIEF_EXEC] 🗡 Korann the Unlucky smells blood: 24 damage.
+[MAGE_HIT] ✨ Ilrek casts for 85. [MP 27→22]
+[HEAL] 🩹 Healer restores Talyx of Dockside +10 HP (-4→6).
+[NEAR_DEATH] 🚨 Near-death: Talyx of Dockside is under 20% HP!
+[WOUND] 🩸 Talyx of Dockside carries another lasting wound (1).
+[TACTIC] 🧱 [TACTIC] Choke point secured: incoming accuracy reduced for 2 beats.
+[BEAT_SOURCE] 🧭 Expedition: the route itself forces a decision.
+[DISCOVERY] 🗺 Faded route marks reveal a hidden bypass used by prior delvers.
+[BEAT_SOURCE] 🧭 Expedition: the route itself forces a decision.
+[HAZARD] 🌫 A spore pocket bursts from the walls.
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~4).
+[SPLASH_HIT] ☠ SPLASH → Ilrek takes 1 (40→39).
+[SPLASH_HIT] ☠ SPLASH → Korann the Unlucky takes 2 (45→43).
+[SPLASH_HIT] ☠ SPLASH → Selrek of Dockside takes 2 (42→40).
+[BEAT_SOURCE] 🧳 Encounter: a traveling merchant appears.
+[MERCHANT_OFFER] 🧳 Offer: Holy Tonic (1655g, asking 1655g).
+[MERCHANT_WARNING] ⚠ Warning: scouts report movement near the next chokepoint.
+[BEAT_SOURCE] 🛖 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: campfire. The party regroups.
+[GROUP_HEAL] ✨ Party heals +12 (group).
+[HP_DELTA]   ❤️ Talyx of Dockside HP 6→18.
+[HP_DELTA]   ❤️ Ilrek HP 39→40.
+[HP_DELTA]   ❤️ Korann the Unlucky HP 43→45.
+[HP_DELTA]   ❤️ Selrek of Dockside HP 40→42.
+[GROUP_MP] 🔷 Party restores MP +10 (group).
+[MP_DELTA]   🔷 Talyx of Dockside MP 5→5.
+[MP_DELTA]   🔷 Ilrek MP 30→30.
+[MP_DELTA]   🔷 Korann the Unlucky MP 10→10.
+[MP_DELTA]   🔷 Selrek of Dockside MP 28→28.
+[WOUND_HEAL] 🩺 Relief treatment: Talyx of Dockside recovers 1 wound(s).
+[STAT_DEF] 🟦 DEF 5→6 (wounds 1→0).
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Skeleton from the encounter.
+[ENCOUNTER] ⚔ Combat: Goblin (threat 6) NORMAL.
+[TACTIC] 🧱 [TACTIC] Choke point/cover active: enemy accuracy reduced.
+[COMBAT_EXCHANGE] ⚔ Goblin strikes: Talyx of Dockside takes 37 (18→-19).
+[THIEF_EXEC] 🗡 Korann the Unlucky smells blood: 33 damage.
+[MAGE_HIT] ✨ Ilrek casts for 57. [MP 30→26]
+[HEAL] 🩹 Healer restores Talyx of Dockside +16 HP (-19→-3).
+[DOWNED] ⚠ Talyx of Dockside is downed and stabilized at 1 HP.
+[WOUND] 🩸 Wounded: Talyx of Dockside gains a wound (1). DEF now 5.
+[TACTIC] 🏃 [TACTIC] Controlled withdrawal initiated: next encounters will be lighter.
+[BEAT_SOURCE] 🧭 Expedition: the route itself forces a decision.
+[SOCIAL] 🕯 Cult whispers echo nearby; the party catches a password and a warning.
+[RUMOR] Dungeon ahead is trapped, but a side hall avoids the kill-box.
+[BEAT_SOURCE] 🏃 Withdrawal: the party falls back through dangerous ground.
+[RETREAT_DECISION] 🏳 The party votes to pull out before the next push turns fatal.
+[BEAT_SOURCE] 🔎 Exploration find: the party spots something ahead.
+[CHEST_OPEN] 🧰 Chest found.
+[LOOT_FOUND] 💰 Loot found: 19 gold.
+[CHEST_GOLD] 🧰 Chest: +19 gold.
+[BEAT_SOURCE] 🧭 Expedition: the route itself forces a decision.
+[HAZARD] 🌫 A spore pocket bursts from the walls.
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~3).
+[SPLASH_HIT] ☠ SPLASH → Ilrek takes 2 (40→38).
+[SPLASH_HIT] ☠ SPLASH → Korann the Unlucky takes 1 (45→44).
+[BEAT_SOURCE] 🛖 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: abandoned outpost. The party regroups.
+[GROUP_HEAL] ✨ Party heals +14 (group).
+[HP_DELTA]   ❤️ Talyx of Dockside HP 1→15.
+[HP_DELTA]   ❤️ Ilrek HP 38→40.
+[HP_DELTA]   ❤️ Korann the Unlucky HP 44→45.
+[HP_DELTA]   ❤️ Selrek of Dockside HP 42→42.
+[GROUP_MP] 🔷 Party restores MP +13 (group).
+[MP_DELTA]   🔷 Talyx of Dockside MP 5→5.
+[MP_DELTA]   🔷 Ilrek MP 30→30.
+[MP_DELTA]   🔷 Korann the Unlucky MP 10→10.
+[MP_DELTA]   🔷 Selrek of Dockside MP 28→28.
+[WOUND_HEAL] 🩺 Relief treatment: Talyx of Dockside recovers 1 wound(s).
+[STAT_DEF] 🟦 DEF 5→6 (wounds 1→0).
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Skeleton from the encounter.
+[ENCOUNTER] ⚔ Combat: Skeleton (threat 5) NORMAL.
+[TACTIC] 🧱 [TACTIC] Choke point/cover active: enemy accuracy reduced.
+[TACTIC] 🏃 [TACTIC] Controlled withdrawal active: disengagement posture lowers pressure.
+[COMBAT_EXCHANGE] ⚔ Skeleton strikes: Talyx of Dockside takes 35 (15→-20).
+[THIEF_EXEC] 🗡 Korann the Unlucky smells blood: 29 damage.
+[MAGE_HIT] ✨ Ilrek casts for 61. [MP 30→24]
+[HEAL] 🩹 Healer restores Talyx of Dockside +36 HP (-20→16).
+[TACTIC] 🧱 [TACTIC] Choke point secured: incoming accuracy reduced for 2 beats.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Skeleton from the encounter.
+[ENCOUNTER] ⚔ Combat: Slime (threat 4) NORMAL.
+[TACTIC] 🧱 [TACTIC] Choke point/cover active: enemy accuracy reduced.
+[TACTIC] 🏃 [TACTIC] Controlled withdrawal active: disengagement posture lowers pressure.
+[COMBAT_EXCHANGE] ⚔ Slime strikes: Talyx of Dockside takes 39 (16→-23).
+[FLANK_HIT] 🪓 Flanking blow! Ilrek takes 16 (40→24).
+[THIEF_EXEC] 🗡 Korann the Unlucky smells blood: 32 damage.
+[MAGE_HIT] ✨ Ilrek casts for 58. [MP 26→22]
+[HEAL] 🩹 Healer restores Talyx of Dockside +13 HP (-23→-10).
+[DOWNED] ⚠ Talyx of Dockside is downed and stabilized at 1 HP.
+[WOUND] 🩸 Wounded: Talyx of Dockside gains a wound (1). DEF now 5.
+[RETREAT_VOTE] 🗳 [RETREAT_VOTE] Selrek of Dockside calls for a withdrawal after repeated knockdowns.
+[RETREAT_CALL] 🏃 Repeated knockdowns force an escape call before the fight spirals.
+[RETREAT_COST] ⚖ Retreat consequence: heightened pursuit risk.
+[TACTIC] 🏃 [TACTIC] Controlled withdrawal initiated: next encounters will be lighter.
+[BEAT_SOURCE] 👁 Ominous presence: the air shifts. Something huge is near.
+[BOSS_TELEGRAPH] 🌩 [BOSS] The ground shakes before the enemy appears.
+[BOSS_SPAWN] 👑 [BOSS] Hollow Ogre emerges!
+[BOSS_SMASH] ⚔ Hollow Ogre smashes: Talyx of Dockside takes 25 (1→-24).
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~4).
+[SPLASH_HIT] ☠ SPLASH → Ilrek takes 2 (24→22).
+[BRACE_FAIL] 🪦 Talyx of Dockside is down and can't brace.
+[THIEF_EXEC] 🗡 Korann the Unlucky smells blood: 13 damage.
+[MAGE_HIT] ✨ Ilrek detonates a full cast: 61 damage. [MP 24→18]
+[HEAL] 🩹 Healer restores Talyx of Dockside +34 HP (-24→10).
+[FINISHER] 💥 FINISHER → Ilrek's blast breaks the Hollow Ogre! (61)
+[BOSS_DEFEATED] 🏆 Boss defeated! +61 gold.
+[TROPHY_DROP] 🎁 Trophy drop: Shadow Slate Ring.
+[EQUIP] 📦 EQUIP → Talyx of Dockside equips (trinket): Shadow Slate Ring [Δ80.0].
+[EQUIP_CHANGE] 📦 Talyx of Dockside equips Shadow Slate Ring.
+[STAT_ATK] 🟩 ATK 8→12.
+[STAT_DEF] 🟦 DEF 5→9 (base 6→6).
+[CITY_ARRIVE] 🏙 The party returns to the city to recover, honor the fallen, and make hard decisions.
+[CITY_SHOP] 🛠 Talyx of Dockside receives treatment and repairs (wounds 1→0).
+[CITY_DEPART] 🚪 The party departs the city and returns to the crawl.
+📺 Episode ends. Gold=80 | Chests=1 | Merchants=1 | Rares=0 | Near-deaths=1 | Boss=DEFEATED
+📊 Party avg HP%: 67%
+📊 Beat counts: Combat=5 | Expedition=5 | Social=1 | Merchant=1 | Relief=2 | Discovery=1 | Hazard=2
+📊 Downed events=2 | Tank downed=2 | Over-budget prevented=5 | Encounter rerolls=0 | Repeat prevented=1 | Downed-loop interventions=1
+📊 Encounter budget: attempts=5 | accepted=0 | rerolled=0 | scaled=5 | degraded=0 | bestfit=0 | outcomes_total=5
+Pause event has been registered for this frame
+Pause event has been unregistered

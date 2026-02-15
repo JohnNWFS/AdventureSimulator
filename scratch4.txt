@@ -1,0 +1,275 @@
+[DEBUG] Console cleared.
+[DEBUG] Seed -> 100011
+[DEBUG] Run started. Seed=100011
+🌟 Episode begins. Seed=100011 Zone=Dungeon
+[BEAT_SOURCE] 🗺 The party advances deeper.
+🧭 The party advances into the Dungeon.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Cult Acolyte from the encounter.
+[ENCOUNTER] ⚔ Combat: Skeleton (threat 5) NORMAL.
+[COMBAT_EXCHANGE] ⚔ Skeleton strikes: Talira of Dockside takes 36 (70→34).
+[THIEF_HIT] 🗡 Quann the Scarred slips in: 23 damage.
+[MAGE_HIT] ✨ Fenum casts for 55. [MP 30→24]
+[HEAL] 🩹 Healer restores Talira of Dockside +12 HP (34→46).
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Slime from the encounter.
+[ENCOUNTER] ⚔ Combat: Goblin (threat 5) NORMAL.
+[COMBAT_EXCHANGE] ⚔ Goblin strikes: Talira of Dockside takes 51 (46→-5).
+[FLANK_HIT] 🪓 Flanking blow! Quann the Scarred takes 19 (45→26).
+[CHAOS] 💢 Chaos erupts in the scrum.
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~2).
+[THIEF_EXEC] 🗡 Quann the Scarred smells blood: 31 damage.
+[MAGE_HIT] ✨ Fenum casts for 63. [MP 26→22]
+[HEAL] 🩹 Healer restores Talira of Dockside +12 HP (-5→7).
+[NEAR_DEATH] 🚨 Near-death: Talira of Dockside is under 20% HP!
+[WOUND] 🩸 Talira of Dockside carries another lasting wound (1).
+[TACTIC] 🧱 [TACTIC] Choke point secured: incoming accuracy reduced for 2 beats.
+[BEAT_SOURCE] 🧭 Expedition: the route itself forces a decision.
+[DISCOVERY] 🧷 A wounded courier is found with a sealed map fragment.
+[DISCOVERY] The courier shares a shortcut and a small payment for escort.
+[BEAT_SOURCE] 🧭 Expedition: the route itself forces a decision.
+[DISCOVERY] 🗺 Faded route marks reveal a hidden bypass used by prior delvers.
+[BEAT_SOURCE] 🧳 Encounter: a traveling merchant appears.
+[MERCHANT_OFFER] 🧳 Offer: Obsidian Charm (62g, asking 8g).
+[MERCHANT_DISCOUNT] 🏷 The merchant marks down stock for battered travelers.
+[MERCHANT_OFFER] 🧳 Revised asking price: 21g.
+[BEAT_SOURCE] 🛖 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: abandoned outpost. The party regroups.
+[GROUP_HEAL] ✨ Party heals +16 (group).
+[HP_DELTA]   ❤️ Talira of Dockside HP 7→23.
+[HP_DELTA]   ❤️ Fenum HP 40→40.
+[HP_DELTA]   ❤️ Quann the Scarred HP 26→42.
+[HP_DELTA]   ❤️ Ravda HP 42→42.
+[GROUP_MP] 🔷 Party restores MP +8 (group).
+[MP_DELTA]   🔷 Talira of Dockside MP 5→5.
+[MP_DELTA]   🔷 Fenum MP 30→30.
+[MP_DELTA]   🔷 Quann the Scarred MP 10→10.
+[MP_DELTA]   🔷 Ravda MP 28→28.
+[WOUND_HEAL] 🩺 Relief treatment: Talira of Dockside recovers 1 wound(s).
+[STAT_DEF] 🟦 DEF 5→6 (wounds 1→0).
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Skeleton from the encounter.
+[ENCOUNTER] ⚔ Combat: Goblin (threat 3) NORMAL.
+[TACTIC] 🧱 [TACTIC] Choke point/cover active: enemy accuracy reduced.
+[COMBAT_EXCHANGE] ⚔ Goblin strikes: Talira of Dockside takes 17 (23→6).
+[THIEF_HIT] 🗡 Quann the Scarred slips in: 23 damage.
+[MAGE_HIT] ✨ Fenum casts for 36. [MP 30→27]
+[HEAL] 🩹 Healer restores Talira of Dockside +13 HP (6→19).
+[TACTIC] 🛡 [TACTIC] Defensive stance called: reduced damage taken for 2 beats.
+[BEAT_SOURCE] 🔎 Exploration find: the party spots something ahead.
+[CHEST_OPEN] 🧰 Chest found.
+[LOOT_FOUND] 💰 Loot found: 24 gold.
+[CHEST_GOLD] 🧰 Chest: +24 gold.
+[BEAT_SOURCE] 🏃 Withdrawal: the party falls back through dangerous ground.
+[GATE_VERDICT] 🚑 At the outer gate, a healer orders immediate treatment and city return.
+[BEAT_SOURCE] 🧳 Encounter: a traveling merchant appears.
+[MERCHANT_OFFER] 🧳 Offer: Bitter Vial (1513g, asking 22g).
+[MERCHANT_BUY] 🧳 Quann the Scarred buys Bitter Vial for 22g (30→8).
+[ITEM_GAIN] 🧪 Consumable acquired: Bitter Vial.
+[GROUP_HEAL] ✨ Bitter Vial heals +26 (group).
+[HP_DELTA]   ❤️ Talira of Dockside HP 19→45.
+[HP_DELTA]   ❤️ Fenum HP 40→40.
+[HP_DELTA]   ❤️ Quann the Scarred HP 42→45.
+[HP_DELTA]   ❤️ Ravda HP 42→42.
+[GROUP_MP] 🔷 Bitter Vial restores MP +10 (group).
+[MP_DELTA]   🔷 Talira of Dockside MP 5→5.
+[MP_DELTA]   🔷 Fenum MP 30→30.
+[MP_DELTA]   🔷 Quann the Scarred MP 10→10.
+[MP_DELTA]   🔷 Ravda MP 28→28.
+[WOUND_HEAL] 🩺 Bitter Vial: no wounds to treat.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🧪 Budget scale-down applied a light non-boss weakening to keep threat fair.
+[ENCOUNTER] ⚔ Combat: Bandit (threat 5) NORMAL.
+[TACTIC] 🛡 [TACTIC] Defensive stance active: incoming damage reduced this beat.
+[TACTIC] 🧱 [TACTIC] Choke point/cover active: enemy accuracy reduced.
+[COMBAT_EXCHANGE] ⚔ Bandit strikes: Talira of Dockside takes 19 (45→26).
+[THIEF_HIT] 🗡 Quann the Scarred slips in: 20 damage.
+[MAGE_HIT] ✨ Fenum casts for 42. [MP 30→27]
+[HEAL] 🩹 Healer restores Talira of Dockside +13 HP (26→39).
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Cult Acolyte from the encounter.
+[ENCOUNTER] ⚔ Combat: Skeleton, Cult Acolyte (threat 12) NORMAL.
+[TACTIC] 🛡 [TACTIC] Defensive stance active: incoming damage reduced this beat.
+[COMBAT_EXCHANGE] ⚔ Skeleton, Cult Acolyte strikes: Talira of Dockside takes 50 (39→-11).
+[THIEF_EXEC] 🗡 Quann the Scarred smells blood: 24 damage.
+[MAGE_CRIT] ✨ Fenum casts for 172 (CRIT!). [MP 29→23]
+[HEAL] 🩹 Healer restores Talira of Dockside +18 HP (-11→7).
+[WOUND] 🩸 Talira of Dockside carries another lasting wound (1).
+[TACTIC] 🛡 [TACTIC] Defensive stance called: reduced damage taken for 2 beats.
+[BEAT_SOURCE] 🛖 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: quiet corridor. The party regroups.
+[GROUP_HEAL] ✨ Party heals +16 (group).
+[HP_DELTA]   ❤️ Talira of Dockside HP 7→23.
+[HP_DELTA]   ❤️ Fenum HP 40→40.
+[HP_DELTA]   ❤️ Quann the Scarred HP 45→45.
+[HP_DELTA]   ❤️ Ravda HP 42→42.
+[GROUP_MP] 🔷 Party restores MP +7 (group).
+[MP_DELTA]   🔷 Talira of Dockside MP 5→5.
+[MP_DELTA]   🔷 Fenum MP 25→30.
+[MP_DELTA]   🔷 Quann the Scarred MP 10→10.
+[MP_DELTA]   🔷 Ravda MP 26→28.
+[WOUND_HEAL] 🩺 Relief treatment: Talira of Dockside recovers 1 wound(s).
+[STAT_DEF] 🟦 DEF 5→6 (wounds 1→0).
+[BEAT_SOURCE] 🧭 Expedition: the route itself forces a decision.
+[SOCIAL] 🕯 Cult whispers echo nearby; the party catches a password and a warning.
+[RUMOR] Dungeon ahead is trapped, but a side hall avoids the kill-box.
+[BEAT_SOURCE] 👁 Ominous presence: the air shifts. Something huge is near.
+[BOSS_TELEGRAPH] 🌩 [BOSS] The ground shakes before the enemy appears.
+[BOSS_SPAWN] 👑 [BOSS] Hollow Ogre emerges!
+[BOSS_SMASH] ⚔ Hollow Ogre smashes: Talira of Dockside takes 23 (23→0).
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~4).
+[SPLASH_HIT] ☠ SPLASH → Fenum takes 3 (40→37).
+[SPLASH_HIT] ☠ SPLASH → Ravda takes 2 (42→40).
+[BRACE_FAIL] 🪦 Talira of Dockside is down and can't brace.
+[THIEF_EXEC] 🗡 Quann the Scarred smells blood: 19 damage.
+[MAGE_HIT] ✨ Fenum detonates a full cast: 53 damage. [MP 30→24]
+[HEAL] 🩹 Healer restores Talira of Dockside +12 HP (0→12).
+[FINISHER] 💥 FINISHER → Fenum's blast breaks the Hollow Ogre! (53)
+[BOSS_DEFEATED] 🏆 Boss defeated! +83 gold.
+[TROPHY_DROP] 🎁 Trophy drop: Sturdy Slate Ring.
+[EQUIP] 📦 EQUIP → Fenum equips (trinket): Sturdy Slate Ring [Δ97.4].
+[EQUIP_CHANGE] 📦 Fenum equips Sturdy Slate Ring.
+[STAT_ATK] 🟩 ATK 12→15.
+[STAT_DEF] 🟦 DEF 2→5 (base 2→2).
+[STAT_MP] 🔷 MAX MP 30→49.
+[CITY_ARRIVE] 🏙 The party returns to the city to recover, honor the fallen, and make hard decisions.
+[CITY_DEPART] 🚪 The party departs the city and returns to the crawl.
+📺 Episode ends. Gold=91 | Chests=1 | Merchants=2 | Rares=0 | Near-deaths=2 | Boss=DEFEATED
+📊 Party avg HP%: 76%
+📊 Beat counts: Combat=5 | Expedition=4 | Social=1 | Merchant=2 | Relief=2 | Discovery=2 | Hazard=0
+📊 Downed events=0 | Tank downed=0 | Over-budget prevented=5 | Encounter rerolls=0 | Repeat prevented=4 | Downed-loop interventions=0
+📊 Encounter budget: attempts=5 | accepted=0 | rerolled=0 | scaled=5 | degraded=0 | bestfit=0 | outcomes_total=5
+[DEBUG] Console cleared.
+[DEBUG] Seed -> 100012
+[DEBUG] Run started. Seed=100012
+🌟 Episode begins. Seed=100012 Zone=Dungeon
+[BEAT_SOURCE] 🗺 The party advances deeper.
+🧭 The party advances into the Dungeon.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Goblin from the encounter.
+[ENCOUNTER] ⚔ Combat: Slime (threat 2) NORMAL.
+[COMBAT_EXCHANGE] ⚔ Slime strikes: Talos the Unlucky takes 9 (70→61).
+[THIEF_HIT] 🗡 Korda slips in: 26 damage.
+[MAGE_HIT] ✨ Brira of the West Road casts for 32. [MP 30→28]
+[HEAL] 🩹 Healer restores Talos the Unlucky +9 HP (61→70).
+[BEAT_SOURCE] 🧭 Expedition: the route itself forces a decision.
+[HAZARD] 🪨 A partial collapse forces the party to drag gear through rubble.
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~1).
+[BEAT_SOURCE] 🧭 Expedition: the route itself forces a decision.
+[SOCIAL] ⚔ A rival party crosses paths and offers terms: trade supplies for intel.
+🔷 Party restores MP +4 (group).
+[TRADE] The party trades clean water for spell salts and catches their breath.
+[BEAT_SOURCE] 🔎 Exploration find: the party spots something ahead.
+[CHEST_OPEN] 🧰 Chest found.
+[LOOT_FOUND] 💰 Loot found: 24 gold.
+[CHEST_GOLD] 🧰 Chest: +24 gold.
+[BEAT_SOURCE] 🧳 Encounter: a traveling merchant appears.
+[MERCHANT_OFFER] 🧳 Offer: Bitter Vial (177g, asking 18g).
+[MERCHANT_BUY] 🧳 Brira of the West Road buys Bitter Vial for 18g (24→6).
+[ITEM_GAIN] 🧪 Consumable acquired: Bitter Vial.
+[GROUP_HEAL] ✨ Bitter Vial heals +14 (group).
+[HP_DELTA]   ❤️ Talos the Unlucky HP 70→70.
+[HP_DELTA]   ❤️ Brira of the West Road HP 40→40.
+[HP_DELTA]   ❤️ Korda HP 45→45.
+[HP_DELTA]   ❤️ Ravann of Dockside HP 42→42.
+[GROUP_MP] 🔷 Bitter Vial restores MP +4 (group).
+[MP_DELTA]   🔷 Talos the Unlucky MP 5→5.
+[MP_DELTA]   🔷 Brira of the West Road MP 30→30.
+[MP_DELTA]   🔷 Korda MP 10→10.
+[MP_DELTA]   🔷 Ravann of Dockside MP 28→28.
+[BEAT_SOURCE] 🧭 Expedition: the route itself forces a decision.
+[DISCOVERY] 🧷 A wounded courier is found with a sealed map fragment.
+[DISCOVERY] The courier shares a shortcut and a small payment for escort.
+[BEAT_SOURCE] 🛖 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: campfire. The party regroups.
+[GROUP_HEAL] ✨ Party heals +11 (group).
+[HP_DELTA]   ❤️ Talos the Unlucky HP 70→70.
+[HP_DELTA]   ❤️ Brira of the West Road HP 40→40.
+[HP_DELTA]   ❤️ Korda HP 45→45.
+[HP_DELTA]   ❤️ Ravann of Dockside HP 42→42.
+[GROUP_MP] 🔷 Party restores MP +9 (group).
+[MP_DELTA]   🔷 Talos the Unlucky MP 5→5.
+[MP_DELTA]   🔷 Brira of the West Road MP 30→30.
+[MP_DELTA]   🔷 Korda MP 10→10.
+[MP_DELTA]   🔷 Ravann of Dockside MP 28→28.
+[BEAT_SOURCE] 🧭 Expedition: the route itself forces a decision.
+[HAZARD] 🌫 A spore pocket bursts from the walls.
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~4).
+[SPLASH_HIT] ☠ SPLASH → Brira of the West Road takes 3 (40→37).
+[SPLASH_HIT] ☠ SPLASH → Korda takes 1 (45→44).
+[SPLASH_HIT] ☠ SPLASH → Ravann of Dockside takes 2 (42→40).
+[BEAT_SOURCE] 🏃 Withdrawal: the party falls back through dangerous ground.
+[RETREAT_ROUTE] 🪜 They retrace marked passages while rear guards hold chokepoints.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Bandit from the encounter.
+[ENCOUNTER] ⚔ Combat: Skeleton, Slime (threat 7) NORMAL.
+[COMBAT_EXCHANGE] ⚔ Skeleton, Slime strikes: Talos the Unlucky takes 61 (70→9).
+[FLANK_HIT] 🪓 Flanking blow! Brira of the West Road takes 29 (37→8).
+[CHAOS] 💢 Chaos erupts in the scrum.
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~2).
+[THIEF_HIT] 🗡 Korda slips in: 28 damage.
+[MAGE_HIT] ✨ Brira of the West Road casts for 87. [MP 30→25]
+[HEAL] 🩹 Healer restores Talos the Unlucky +14 HP (9→23).
+[BEAT_SOURCE] 🧭 Expedition: the route itself forces a decision.
+[DISCOVERY] 🗺 Faded route marks reveal a hidden bypass used by prior delvers.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🧪 Budget scale-down applied a light non-boss weakening to keep threat fair.
+[ENCOUNTER] ⚔ Combat: Skeleton (threat 4) NORMAL.
+[COMBAT_EXCHANGE] ⚔ Skeleton strikes: Talos the Unlucky takes 35 (23→-12).
+[FLANK_HIT] 🪓 Flanking blow! Ravann of Dockside takes 17 (40→23).
+[THIEF_EXEC] 🗡 Korda smells blood: 24 damage.
+[MAGE_HIT] ✨ Brira of the West Road casts for 56. [MP 29→24]
+[HEAL] 🩹 Healer restores Talos the Unlucky +15 HP (-12→3).
+[NEAR_DEATH] 🚨 Near-death: Talos the Unlucky is under 20% HP!
+[WOUND] 🩸 Talos the Unlucky carries another lasting wound (1).
+[TACTIC] 🧱 [TACTIC] Choke point secured: incoming accuracy reduced for 2 beats.
+[BEAT_SOURCE] 🛖 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: healing shrine. The party regroups.
+[GROUP_HEAL] ✨ Party heals +10 (group).
+[HP_DELTA]   ❤️ Talos the Unlucky HP 3→13.
+[HP_DELTA]   ❤️ Brira of the West Road HP 8→18.
+[HP_DELTA]   ❤️ Korda HP 44→45.
+[HP_DELTA]   ❤️ Ravann of Dockside HP 23→33.
+[GROUP_MP] 🔷 Party restores MP +12 (group).
+[MP_DELTA]   🔷 Talos the Unlucky MP 5→5.
+[MP_DELTA]   🔷 Brira of the West Road MP 26→30.
+[MP_DELTA]   🔷 Korda MP 10→10.
+[MP_DELTA]   🔷 Ravann of Dockside MP 27→28.
+[WOUND_HEAL] 🩺 Relief treatment: Talos the Unlucky recovers 1 wound(s).
+[STAT_DEF] 🟦 DEF 5→6 (wounds 1→0).
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Slime from the encounter.
+[ENCOUNTER] ⚔ Combat: Goblin (threat 3) NORMAL.
+[TACTIC] 🧱 [TACTIC] Choke point/cover active: enemy accuracy reduced.
+[COMBAT_EXCHANGE] ⚔ Goblin strikes: Talos the Unlucky takes 18 (13→-5).
+[THIEF_EXEC] 🗡 Korda smells blood: 28 damage.
+[MAGE_HIT] ✨ Brira of the West Road casts for 42. [MP 30→27]
+[HEAL] 🩹 Healer restores Talos the Unlucky +13 HP (-5→8).
+[TACTIC] 🛡 [TACTIC] Defensive stance called: reduced damage taken for 2 beats.
+[BEAT_SOURCE] 👁 Ominous presence: the air shifts. Something huge is near.
+[BOSS_TELEGRAPH] 🌩 [BOSS] The ground shakes before the enemy appears.
+[BOSS_SPAWN] 👑 [BOSS] Hollow Ogre emerges!
+[BOSS_SMASH] ⚔ Hollow Ogre smashes: Talos the Unlucky takes 23 (8→-15).
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~3).
+[SPLASH_HIT] ☠ SPLASH → Korda takes 1 (45→44).
+[SPLASH_HIT] ☠ SPLASH → Ravann of Dockside takes 1 (33→32).
+[BRACE_FAIL] 🪦 Talos the Unlucky is down and can't brace.
+[THIEF_EXEC] 🗡 Korda smells blood: 14 damage.
+[MAGE_HIT] ✨ Brira of the West Road detonates a full cast: 63 damage. [MP 29→23]
+[HEAL] 🩹 Healer restores Talos the Unlucky +14 HP (-15→-1).
+[FINISHER] 💥 FINISHER → Brira of the West Road's blast breaks the Hollow Ogre! (63)
+[BOSS_DEFEATED] 🏆 Boss defeated! +87 gold.
+[TROPHY_DROP] 🎁 Trophy drop: Fine Slate Wand.
+[EQUIP] 📦 EQUIP → Korda equips (weapon): Fine Slate Wand [Δ113.8].
+[EQUIP_CHANGE] 📦 Korda equips Fine Slate Wand.
+[STAT_ATK] 🟩 ATK 10→19.
+[CITY_ARRIVE] 🏙 The party returns to the city to recover, honor the fallen, and make hard decisions.
+[CITY_SHOP] 🛠 Talos the Unlucky receives treatment and repairs (wounds 1→0).
+[CITY_DEPART] 🚪 The party departs the city and returns to the crawl.
+📺 Episode ends. Gold=102 | Chests=1 | Merchants=1 | Rares=0 | Near-deaths=1 | Boss=DEFEATED
+📊 Party avg HP%: 55%
+📊 Beat counts: Combat=4 | Expedition=6 | Social=1 | Merchant=1 | Relief=2 | Discovery=2 | Hazard=2
+📊 Downed events=1 | Tank downed=1 | Over-budget prevented=4 | Encounter rerolls=0 | Repeat prevented=2 | Downed-loop interventions=0
+📊 Encounter budget: attempts=4 | accepted=0 | rerolled=0 | scaled=4 | degraded=0 | bestfit=0 | outcomes_total=4
+Pause event has been registered for this frame
+Pause event has been unregistered

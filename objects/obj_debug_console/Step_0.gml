@@ -4,6 +4,7 @@ var k_n = keyboard_check(ord("N")); // next seed
 var k_s = keyboard_check(ord("S")); // toggle short mode
 var k_c = keyboard_check(ord("C")); // clear console
 var k_v = keyboard_check(ord("V")); // copy run log
+var k_o = keyboard_check(ord("O")); // toggle autosave-to-file
 
 if (k_c && !key_prev_c) {
     global.debug_lines = [];
@@ -34,35 +35,16 @@ if (k_v && !key_prev_v) {
     beat_output_emit("DEBUG", "Copied run log to clipboard (" + string(string_length(global.run_log_text)) + " chars).", undefined);
 }
 
+if (k_o && !key_prev_o) {
+    global.debug_autosave = !global.debug_autosave;
+    beat_output_emit("DEBUG", "Autosave-to-file: " + string(global.debug_autosave), undefined);
+}
+
+
 key_prev_r = k_r;
 key_prev_n = k_n;
 key_prev_s = k_s;
 key_prev_c = k_c;
 key_prev_v = k_v;
+key_prev_o = k_o;
 
-// Local function: start a deterministic run
-function _debug_start_run()
-{
-    // Reset counters
-    global.debug_beats_emitted = 0;
-
-    // Set RNG seed deterministically
-    rng_seed_init(global.debug_seed);
-
-    // OPTIONAL: call into your sim controller if it exists.
-    // You will need to adapt ONE line below to your project.
-    //
-    // If you have an object that starts an episode, call it here.
-    // Example patterns:
-    // with (obj_sim_controller) sim_start_episode();
-    // or global.sim_request_restart = true;
-    //
-    // For now, we just emit a line so you can wire the hook later:
-    beat_output_emit("DEBUG", "Run started. Seed=" + string(global.debug_seed), undefined);
-
-    if (object_exists(obj_sim_controller)) {
-        with (obj_sim_controller) {
-            sim_run_new(sim, episode_beats_target, global.debug_seed);
-        }
-    }
-}

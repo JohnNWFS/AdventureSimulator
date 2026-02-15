@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"sim_log",
+  "%Name":"sim_calc_party_power",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"sim_log",
+  "name":"sim_calc_party_power",
   "parent":{
-    "name":"OTHER and DEBUG",
-    "path":"folders/SCRIPTS/OTHER and DEBUG.yy",
+    "name":"PARTY",
+    "path":"folders/SCRIPTS/PARTY.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"sim_log",
+  "%Name":"sim_format_budget_line",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"sim_log",
+  "name":"sim_format_budget_line",
   "parent":{
-    "name":"OTHER and DEBUG",
-    "path":"folders/SCRIPTS/OTHER and DEBUG.yy",
+    "name":"SCRIPTS",
+    "path":"folders/SCRIPTS.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

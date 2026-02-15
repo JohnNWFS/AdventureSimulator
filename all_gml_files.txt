@@ -9,6 +9,7 @@ global.debug_short_mode = true;  // short runs by default
 // Output buffer
 global.debug_lines = [];
 global.debug_line_cap = 60;
+if (!variable_global_exists("run_log_text")) global.run_log_text = "";
 
 // Short-run limits (your sim should respect these when possible)
 global.debug_max_beats = 25;     // cap number of beat lines per run
@@ -19,16 +20,49 @@ key_prev_r = false;
 key_prev_n = false;
 key_prev_s = false;
 key_prev_c = false;
+key_prev_v = false;
 
 // A small banner so you know it's alive
 beat_output_emit("DEBUG", "Debug console online. Seed=" + string(global.debug_seed), undefined);
+if (!global.debug_enabled) exit;
+
+var margin = 560;
+var _x = margin;
+var _y = margin;
+
+var header =
+    "DEBUG CONSOLE  |  Seed: " + string(global.debug_seed) +
+    "  |  Short: " + string(global.debug_short_mode) +
+    "  |  Beats: " + string(global.debug_beats_emitted) + "/" + string(global.debug_max_beats) +
+    "\nKeys: R=rerun  N=next seed  S=toggle short  C=clear  V=copy run log";
+
+draw_set_alpha(1);
+draw_text(_x, _y, header);
+
+_y += 48;
+
+// Draw last lines
+var lines = global.debug_lines;
+var count = array_length(lines);
+
+// How many lines fit? Keep it simple: fixed max visible
+var max_visible = 24;
+var start = max(0, count - max_visible);
+
+for (var i = start; i < count; i++) {
+    draw_text(_x, _y, lines[i]);
+    _y += 16;
+}
 /// @description Insert description here
 // You can write your code in this editor
+debug_log_flush();
 // Simple key-edge detection
 var k_r = keyboard_check(ord("R")); // rerun same seed
 var k_n = keyboard_check(ord("N")); // next seed
 var k_s = keyboard_check(ord("S")); // toggle short mode
 var k_c = keyboard_check(ord("C")); // clear console
+var k_v = keyboard_check(ord("V")); // copy run log
+var k_o = keyboard_check(ord("O")); // toggle autosave-to-file
 
 if (k_c && !key_prev_c) {
     global.debug_lines = [];
@@ -53,43 +87,53 @@ if (k_r && !key_prev_r) {
     _debug_start_run();
 }
 
+if (k_v && !key_prev_v) {
+    if (!variable_global_exists("run_log_text")) global.run_log_text = "";
+    clipboard_set_text(global.run_log_text);
+    beat_output_emit("DEBUG", "Copied run log to clipboard (" + string(string_length(global.run_log_text)) + " chars).", undefined);
+}
+
+/*if (k_o && !key_prev_o) {
+    global.debug_autosave = !global.debug_autosave;
+    beat_output_emit("DEBUG", "Autosave-to-file: " + string(global.debug_autosave), undefined);
+	
+	if (global.debug_autosave) {
+	    debug_log_start_file(global.debug_seed);
+	}
+
+}*/
+
+
 key_prev_r = k_r;
 key_prev_n = k_n;
 key_prev_s = k_s;
 key_prev_c = k_c;
+key_prev_v = k_v;
+//key_prev_o = k_o;
 
-// Local function: start a deterministic run
-function _debug_start_run()
-{
-    // Reset counters
-    global.debug_beats_emitted = 0;
-
-    // Set RNG seed deterministically
-    rng_seed_init(global.debug_seed);
-
-    // OPTIONAL: call into your sim controller if it exists.
-    // You will need to adapt ONE line below to your project.
-    //
-    // If you have an object that starts an episode, call it here.
-    // Example patterns:
-    // with (obj_sim_controller) sim_start_episode();
-    // or global.sim_request_restart = true;
-    //
-    // For now, we just emit a line so you can wire the hook later:
-    beat_output_emit("DEBUG", "Run started. Seed=" + string(global.debug_seed), undefined);
-}
 /// obj_sim_controller :: Create
 episode_beats_target = 120; // 120 beats ≈ 10 minutes if you later map 1 beat ≈ 5 sec
+episode_beats_target_short = 36;
+episode_beats_target_very_short = 16;
 auto_run = true;
 beats_per_step = 1;         // crank this up to 5/10 for turbo simulation
 ui_max_lines = 26;
 
 sim = {};                   // will hold run state + party
-sim_run_new(sim, episode_beats_target); // new seed, new run
+if (!variable_global_exists("debug_seed")) global.debug_seed = 100001;
+if (!variable_global_exists("debug_seed_step")) global.debug_seed_step = 1;
+if (!variable_global_exists("debug_short_mode")) global.debug_short_mode = false;
+if (!variable_global_exists("debug_very_short_mode")) global.debug_very_short_mode = false;
+if (!variable_global_exists("debug_verbose")) global.debug_verbose = false;
+if (!variable_global_exists("debug_multi_seed_count")) global.debug_multi_seed_count = 4;
+
+var run_target = global.debug_very_short_mode ? episode_beats_target_very_short : (global.debug_short_mode ? episode_beats_target_short : episode_beats_target);
+sim_run_new(sim, run_target, global.debug_seed);
 
 //loot_debug_dump(sim, 20, { source: "chest", zone: "Dungeon", tier_target: 2 });
 //loot_debug_dump(sim, 10, { source: "merchant", zone: "Town", tier_target: 4 });
 //loot_debug_dump(sim, 10, { source: "boss", zone: "Castle", tier_target: 7 });
+
 
 /// obj_sim_controller :: Draw GUI
 draw_set_font(-1);
@@ -132,28 +176,44 @@ for (var i = 0; i < array_length(sim.party); i++) {
     gui_y += 18;
 }
 
-
-
-
-
-
-y += 8;
-draw_text(x, y, "Controls: ENTER=new seed | R=replay seed | SPACE=toggle run | N=step (when paused)");
-y += 22;
+gui_y += 8;
+draw_text(gui_x, gui_y,
+    "Controls: ENTER=new seed | R=replay seed | T=toggle short | V=toggle very short | Q=4-seed short test | SPACE=toggle run | N=step (paused)"
+);
+gui_y += 22;
 
 // Log (last N lines)
 var start = max(0, array_length(sim.log) - ui_max_lines);
 for (var j = start; j < array_length(sim.log); j++) {
-    draw_text(x, y, sim.log[j]);
-    y += 16;
+    draw_text(gui_x, gui_y, sim.log[j]);
+    gui_y += 16;
 }
 /// obj_sim_controller :: Step
 // Controls
 if (keyboard_check_pressed(vk_return)) {
-    sim_run_new(sim, episode_beats_target); // new seed
+    global.debug_seed += global.debug_seed_step;
+    var run_target = global.debug_very_short_mode ? episode_beats_target_very_short : (global.debug_short_mode ? episode_beats_target_short : episode_beats_target);
+    sim_run_new(sim, run_target, global.debug_seed);
 }
 if (keyboard_check_pressed(ord("R"))) {
     sim_run_restart_same_seed(sim);         // replay same seed
+}
+if (keyboard_check_pressed(ord("T"))) {
+    global.debug_short_mode = !global.debug_short_mode;
+    if (global.debug_short_mode) global.debug_very_short_mode = false;
+    sim_log_tag(sim, "DEBUG_MODE", "🧪 Short run mode: " + string(global.debug_short_mode));
+    var run_target = global.debug_very_short_mode ? episode_beats_target_very_short : (global.debug_short_mode ? episode_beats_target_short : episode_beats_target);
+    sim_run_new(sim, run_target, global.debug_seed);
+}
+if (keyboard_check_pressed(ord("V"))) {
+    global.debug_very_short_mode = !global.debug_very_short_mode;
+    if (global.debug_very_short_mode) global.debug_short_mode = true;
+    sim_log_tag(sim, "DEBUG_MODE", "⚡ Very short mode: " + string(global.debug_very_short_mode));
+    var run_target = global.debug_very_short_mode ? episode_beats_target_very_short : (global.debug_short_mode ? episode_beats_target_short : episode_beats_target);
+    sim_run_new(sim, run_target, global.debug_seed);
+}
+if (keyboard_check_pressed(ord("Q"))) {
+    sim_run_multi_seed_short_test(sim, global.debug_seed, global.debug_multi_seed_count, episode_beats_target_short);
 }
 if (keyboard_check_pressed(vk_space)) {
     auto_run = !auto_run;
@@ -180,27 +240,132 @@ if (auto_run && !sim.finished) {
 
 function beat_output_emit(tag, text, data)
 {
+    // ---- Ensure core globals exist (backward compatible) ----
     if (!variable_global_exists("debug_lines")) {
         global.debug_lines = [];
+    }
+    if (!variable_global_exists("debug_line_cap")) {
         global.debug_line_cap = 80; // default cap
     }
 
+    // Optional: capture full run text for clipboard/paste
+    if (!variable_global_exists("run_log_text")) {
+        global.run_log_text = "";
+    }
+
+    // Optional: autosave-to-file (off by default)
+    if (!variable_global_exists("debug_autosave")) {
+        global.debug_autosave = true;
+    }
+    if (!variable_global_exists("debug_log_path")) {
+        global.debug_log_path = ""; // set by debug_log_start_file(seed)
+    }
+    if (!variable_global_exists("debug_log_pending")) {
+        global.debug_log_pending = ""; // batched file output
+    }
+    if (!variable_global_exists("debug_log_pending_lines")) {
+        global.debug_log_pending_lines = 0;
+    }
+
+    // ---- Normalize inputs ----
     if (!is_string(tag) || tag == "") tag = "UNTAGGED";
     if (!is_string(text)) text = string(text);
 
     // Normalize final line
     var line = "[" + tag + "] " + text;
 
-    // Keep buffer capped
+    // ---- On-screen buffer (existing behavior) ----
     array_push(global.debug_lines, line);
     var cap = global.debug_line_cap;
     while (array_length(global.debug_lines) > cap) {
         array_delete(global.debug_lines, 0, 1);
     }
 
-    // Also send to Output / console for normal debugging
+    // ---- Full run capture (safe, additive) ----
+    // Keep it simple: append with newline; caller can clear at run start.
+    global.run_log_text += line + "\n";
+
+    // ---- Autosave-to-file (Expectation #3) ----
+    // Only writes if autosave is enabled AND a log path has been set.
+    // Uses batching to avoid heavy I/O.
+	if (global.debug_autosave && is_string(global.debug_log_path) && global.debug_log_path != "") {
+	        global.debug_log_pending += line + "\n";
+	        global.debug_log_pending_lines += 1;
+	        // Flush every 25 lines (tweakable)
+	        if (global.debug_log_pending_lines >= 25) {
+	            var f = file_text_open_append(global.debug_log_path);
+	            file_text_write_string(f, global.debug_log_pending);
+	            file_text_close(f);
+	            global.debug_log_pending = "";
+	            global.debug_log_pending_lines = 0;
+	        }
+	    }
+
+    // ---- Output / console (existing behavior) ----
     show_debug_message(line);
 }
+function debug_log_append_line(line)
+{
+    if (!variable_global_exists("debug_log_path")) return;
+    if (!variable_global_exists("debug_log_pending")) global.debug_log_pending = "";
+    if (!variable_global_exists("debug_log_pending_lines")) global.debug_log_pending_lines = 0;
+
+    // Batch to reduce file I/O
+    global.debug_log_pending += line + "\n";
+    global.debug_log_pending_lines += 1;
+
+    // Flush every 25 lines (tweak as you like)
+    if (global.debug_log_pending_lines >= 25) debug_log_flush();
+}
+
+function debug_log_end_file()
+{
+    debug_log_flush();
+    // keep debug_log_path around so you can print it if you want
+}
+function debug_log_flush()
+{
+    if (!variable_global_exists("debug_log_path")) return;
+    if (!variable_global_exists("debug_log_pending")) return;
+    if (global.debug_log_pending == "") return;
+
+    var f = file_text_open_append(global.debug_log_path);
+    file_text_write_string(f, global.debug_log_pending);
+    file_text_close(f);
+
+    global.debug_log_pending = "";
+    global.debug_log_pending_lines = 0;
+}
+
+function debug_log_start_file(seed)
+{
+    var dir = "logs";
+    if (!directory_exists(dir)) directory_create(dir);
+
+	var ts =
+	    string(date_get_year(date_current_datetime())) +
+	    _zero_pad(date_get_month(date_current_datetime()), 2) +
+	    _zero_pad(date_get_day(date_current_datetime()), 2) + "_" +
+	    _zero_pad(date_get_hour(date_current_datetime()), 2) +
+	    _zero_pad(date_get_minute(date_current_datetime()), 2) +
+	    _zero_pad(date_get_second(date_current_datetime()), 2);
+
+    global.debug_log_path = dir + "/run_" + ts + "_seed_" + string(seed) + ".txt";
+    global.debug_log_pending = "";
+    global.debug_log_pending_lines = 0;
+
+    // HARD GUARANTEE: create the file right now + print where it is
+    var f = file_text_open_append(global.debug_log_path);
+    file_text_write_string(f, "=== RUN START seed=" + string(seed) + " ===\n");
+    file_text_close(f);
+
+    show_debug_message("LOG_FILE=" + game_save_id + global.debug_log_path);
+}
+
+
+
+
+
 function loot_build_name(prefix, material, base, suffix) {
     var name = "";
 
@@ -792,9 +957,8 @@ function sim_apply_party_damage(sim, base_dmg) {
     for (var i = 0; i < array_length(sim.party); i++) {
         var p = sim.party[i];
 
-        // Skip dead/retired bodies (they're handled at end-of-beat)
-        if (p.dead || p.retired) {
-            sim_log_tag(sim, "SPLASH_HIT", "☠ SPLASH → " + p.name + " is gone already.");
+        // Skip dead/retired/downed bodies
+        if (p.dead || p.retired || p.status_state == "downed") {
             continue;
         }
 
@@ -804,10 +968,13 @@ function sim_apply_party_damage(sim, base_dmg) {
 
         p.hp -= dmg;
 
-        sim_log_tag(sim, "SPLASH_HIT",
-            "☠ SPLASH → " + p.name + " takes " + string(dmg) +
-            " (" + string(before) + "→" + string(p.hp) + ")."
-        );
+        var verbose = variable_global_exists("debug_verbose") ? global.debug_verbose : false;
+        if (dmg > 0 || verbose) {
+            sim_log_tag(sim, "SPLASH_HIT",
+                "☠ SPLASH → " + p.name + " takes " + string(dmg) +
+                " (" + string(before) + "→" + string(p.hp) + ")."
+            );
+        }
 
         // Immediate downed cue (animation-friendly)
         if (before > 0 && p.hp <= 0) {
@@ -826,7 +993,6 @@ function sim_auto_heal(sim) {
     for (var i = 0; i < array_length(sim.party); i++) {
         var p = sim.party[i];
 
-        if (p.downed_this_beat) continue;
         if (p.dead || p.retired) continue;
 
         var pct = p.hp / max(1, p.max_hp);
@@ -842,7 +1008,12 @@ function sim_auto_heal(sim) {
         var heal_raw  = sim_rand_range(sim, 8, 18) + sim.difficulty * 2;
         var before_hp = target.hp;
 
-        target.hp = min(target.max_hp, target.hp + heal_raw);
+        if (target.status_state == "downed") {
+            target.hp = max(2, min(target.max_hp, heal_raw));
+            target.status_state = "alive";
+        } else {
+            target.hp = min(target.max_hp, target.hp + heal_raw);
+        }
         healer.mp -= 3;
 
         var healed_amt = target.hp - before_hp;
@@ -871,14 +1042,44 @@ function sim_best_upgrade_candidate(sim, new_item) {
 
     return { idx: best_idx, delta: best_delta, slot: slot };
 }
+function sim_calc_party_power(sim) {
+    var party_power = 0;
+
+    for (var i = 0; i < array_length(sim.party); i++) {
+        var p = sim.party[i];
+        if (p.dead || p.retired) continue;
+
+        sim_recalc_derived(p);
+
+        var hp_weight = floor(p.max_hp * 0.10);
+        var atk_weight = floor(p.atk * 0.90);
+        var def_weight = floor(p.def * 1.10);
+        var mp_weight = ((p.role == "Mage") || (p.role == "Healer")) ? floor(p.max_mp * 0.08) : 0;
+
+        var tier_bonus = 0;
+        if (is_struct(p.equip)) {
+            var ew = p.equip.weapon;
+            var ea = p.equip.armor;
+            var et = p.equip.trinket;
+            if (!is_undefined(ew) && is_struct(ew) && variable_struct_exists(ew, "tier")) tier_bonus += floor(ew.tier * 0.6);
+            if (!is_undefined(ea) && is_struct(ea) && variable_struct_exists(ea, "tier")) tier_bonus += floor(ea.tier * 0.6);
+            if (!is_undefined(et) && is_struct(et) && variable_struct_exists(et, "tier")) tier_bonus += floor(et.tier * 0.5);
+        }
+
+        party_power += max(1, hp_weight + atk_weight + def_weight + mp_weight + tier_bonus);
+    }
+
+    return max(8, party_power);
+}
 function sim_chance(sim, pct) {
     return sim_rand_range(sim, 1, 100) <= pct;
 }
 function sim_check_party_health(sim) {
 
-    var RETIRE_WOUNDS_MIN = 6;
-    var RETIRE_WOUNDS_HARD = 10;
+    var RETIRE_WOUNDS_MIN = 4;
+    var RETIRE_WOUNDS_HARD = 7;
     var WOUND_RETREAT_THRESHOLD = variable_struct_exists(sim, "wound_retreat_threshold") ? sim.wound_retreat_threshold : 3;
+    var DOWNED_WINDOW = 10;
     var RESOLVE_HIT_KD = 12;
 
     for (var i = 0; i < array_length(sim.party); i++) {
@@ -891,81 +1092,162 @@ function sim_check_party_health(sim) {
 
         if (p.hp <= -p.max_hp) {
             p.dead = true;
+            p.status_state = "dead";
+            p.pending_honor = true;
+            p.hp = min(p.hp, -1);
             sim_log_tag(sim, "DEATH",
-                "💀 " + p.name + " suffers catastrophic damage and dies (HP " +
-                string(p.hp) + " vs -" + string(p.max_hp) + ")."
+                "💀 " + p.name + " falls. Their body is carried back for honors."
             );
-            p.downed_this_beat = true;
+            sim.city_scene_pending = true;
             continue;
         }
 
         if (p.hp <= 0) {
+            p.status_state = "downed";
             p.hp = 1;
-            p.wounds += 1;
-            p.def = max(0, p.base_def - p.wounds);
+            var chain_from_near_death = (variable_struct_exists(p, "near_death_triggered_this_beat") && p.near_death_triggered_this_beat);
+
+            if (!chain_from_near_death) {
+                p.wounds += 1;
+                p.def = max(0, p.base_def - p.wounds);
+            }
 
             if (is_struct(sim.stats) && variable_struct_exists(sim.stats, "knockdowns")) {
                 sim.stats.knockdowns += 1;
             }
+            if (is_struct(sim.stats) && variable_struct_exists(sim.stats, "downed_events")) {
+                sim.stats.downed_events += 1;
+            }
+            if (is_struct(sim.stats) && variable_struct_exists(sim.stats, "total_downed_count")) {
+                sim.stats.total_downed_count += 1;
+            }
+            if (p.role == "Tank" && is_struct(sim.stats) && variable_struct_exists(sim.stats, "tank_downed_count")) {
+                sim.stats.tank_downed_count += 1;
+            }
+
+            if (!is_array(p.recent_downed_beats)) p.recent_downed_beats = [];
+            array_push(p.recent_downed_beats, sim.beat);
+            var k = 0;
+            while (k < array_length(p.recent_downed_beats)) {
+                if (sim.beat - p.recent_downed_beats[k] > DOWNED_WINDOW) {
+                    array_delete(p.recent_downed_beats, k, 1);
+                } else {
+                    k += 1;
+                }
+            }
 
             p.resolve = clamp(p.resolve - RESOLVE_HIT_KD, 0, 100);
 
-            sim_log_tag(sim, "KNOCKDOWN",
-                "⚠ " + p.name + " collapses but is dragged onward (HP set to 1)."
-            );
-            sim_log_tag(sim, "WOUND",
-                "🩸 Wounded: " + p.name + " gains a wound (" + string(p.wounds) +
-                "). DEF now " + string(p.def) + "."
-            );
+            if (!p.downed_this_beat) {
+                sim_log_tag(sim, "DOWNED",
+                    "⚠ " + p.name + " is downed and stabilized at 1 HP."
+                );
+                if (!chain_from_near_death) {
+                    sim_log_tag(sim, "WOUND",
+                        "🩸 Wounded: " + p.name + " gains a wound (" + string(p.wounds) +
+                        "). DEF now " + string(p.def) + "."
+                    );
+                }
+            }
+            p.downed_this_beat = true;
 
             if (!sim.retreat_to_city && p.wounds >= WOUND_RETREAT_THRESHOLD) {
                 sim.retreat_to_city = true;
                 sim.city_scene_pending = true;
-                sim.retreat_beats_left = sim_rand_range(sim, 3, 5);
+                sim.retreat_beats_left = sim_rand_range(sim, 1, 2);
+                sim.director.retreat_bridge_left = sim_rand_range(sim, 1, 2);
                 sim_log_tag(sim, "RETREAT_CALL",
-                    "⚠ " + p.name + " has taken too many wounds. The party turns back toward the city."
+                    "⚠ The party breaks off and heads to the city before someone dies."
                 );
             }
 
-            if (!p.retire_notice && p.wounds >= RETIRE_WOUNDS_MIN) {
+            if (!sim.retreat_to_city && array_length(p.recent_downed_beats) >= 2) {
+                sim.retreat_to_city = true;
+                sim.city_scene_pending = true;
+                sim.retreat_beats_left = max(sim.retreat_beats_left, 2);
+                sim.director.retreat_bridge_left = max(sim.director.retreat_bridge_left, 1);
+                sim.director.downed_loop_interventions += 1;
+                var caller = "the party";
+                if (array_length(sim.party) > 3) {
+                    var healer = sim.party[3];
+                    if (!healer.dead && !healer.retired) caller = healer.name;
+                }
+                sim_log_tag(sim, "RETREAT_VOTE",
+                    "🗳 [RETREAT_VOTE] " + caller + " calls for a withdrawal after repeated knockdowns."
+                );
+                sim_log_tag(sim, "RETREAT_CALL",
+                    "🏃 Repeated knockdowns force an escape call before the fight spirals."
+                );
+                var retreat_cost = choose("lost time", "reduced loot chance", "heightened pursuit risk");
+                sim_log_tag(sim, "RETREAT_COST",
+                    "⚖ Retreat consequence: " + retreat_cost + "."
+                );
+            }
+
+            if (!p.retire_notice && (p.wounds >= RETIRE_WOUNDS_MIN || p.near_death_count >= 3)) {
                 p.retire_notice = true;
                 p.exit_flagged = true;
                 p.exit_mode = "retire";
                 sim_log_tag(sim, "RETIRE_NOTICE",
-                    "🪦 " + p.name + " looks shaken. Retirement is on the table."
+                    "🪦 " + p.name + " is badly battered and may retire in town."
                 );
+                sim.city_scene_pending = true;
             }
+        } else if (p.status_state == "downed") {
+            p.status_state = "alive";
         }
 
         var hp_pct = p.hp / max(1, p.max_hp);
 
-        // Count near-death pressure continuously so persistent danger is visible in stats
         if (hp_pct < 0.20) {
-            if (is_struct(sim.stats) && variable_struct_exists(sim.stats, "near_deaths")) {
-                sim.stats.near_deaths += 1;
-            }
             if (!p.near_death_flag) {
                 p.near_death_flag = true;
-                sim_log_tag(sim, "NEAR_DEATH",
-                    "🚨 Near-death: " + p.name + " is under 20% HP!"
+                p.near_death_triggered_this_beat = true;
+                p.near_death_count += 1;
+                p.wounds += 1;
+                p.def = max(0, p.base_def - p.wounds);
+                if (is_struct(sim.stats) && variable_struct_exists(sim.stats, "near_deaths")) {
+                    sim.stats.near_deaths += 1;
+                }
+                if (!p.near_death_logged_once) {
+                    p.near_death_logged_once = true;
+                    sim_log_tag(sim, "NEAR_DEATH",
+                        "🚨 Near-death: " + p.name + " is under 20% HP!"
+                    );
+                }
+                sim_log_tag(sim, "WOUND",
+                    "🩸 " + p.name + " carries another lasting wound (" + string(p.wounds) + ")."
                 );
             }
         } else if (p.near_death_flag && hp_pct > 0.35) {
             p.near_death_flag = false;
         }
 
+        p.near_death_triggered_this_beat = false;
         p.downed_this_beat = false;
 
-        if (!p.retire_notice && p.wounds >= RETIRE_WOUNDS_HARD) {
+        if (!p.retire_notice && (p.wounds >= RETIRE_WOUNDS_HARD || p.near_death_count >= 4)) {
             p.retire_notice = true;
             p.exit_flagged = true;
             p.exit_mode = "retire";
             sim_log_tag(sim, "RETIRE_NOTICE",
-                "🪦 " + p.name + " has had enough. They'll likely retire at the next safe stop."
+                "🪦 " + p.name + " has had enough. Retirement is likely at the next city return."
             );
+            sim.city_scene_pending = true;
         }
     }
 }
+function sim_director_recent_count(sim, ev_name, window) {
+    if (!is_array(sim.recent_beats)) return 0;
+
+    var count = 0;
+    var start = max(0, array_length(sim.recent_beats) - window);
+    for (var i = start; i < array_length(sim.recent_beats); i++) {
+        if (sim.recent_beats[i] == ev_name) count += 1;
+    }
+    return count;
+}
+
 function sim_director_next_event(sim) {
     // Big beats
     if (sim.beat == 0) return "intro";
@@ -975,12 +1257,33 @@ function sim_director_next_event(sim) {
         sim.director.beats_since_relief = 0;
     }
 
-    if (sim.city_scene_pending) {
-        return "city_scene";
+    var route_mod = sim.director.route_mod;
+    if (!is_struct(route_mod)) {
+        route_mod = { ambush_mult: 1.0, loot_mult: 1.0, hazard_mult: 1.0, social_mult: 1.0, relief_mult: 1.0, risk_mult: 1.0, ttl: 0, label: "" };
     }
 
-    // Retreat flow: only relief + city scene + eventual boss cap
+    // Short-run coverage guarantees for quick validation.
+    if (variable_struct_exists(sim, "debug_very_short_mode") && sim.debug_very_short_mode) {
+        if (sim.coverage.combat == 0 && sim.beat >= 1) return "combat";
+        if (sim.coverage.exploration == 0 && sim.beat >= 3) return "adventure";
+        if (sim.coverage.merchant == 0 && sim.beat >= 5) return "merchant";
+        if (sim.coverage.relief == 0 && sim.beat >= 7) return "relief";
+        if (sim.coverage.retreat == 0 && sim.beat >= 9) return "retreat_bridge";
+    } else if (variable_struct_exists(sim, "debug_short_mode") && sim.debug_short_mode) {
+        if (sim.coverage.combat == 0 && sim.beat >= 2) return "combat";
+        if (sim.coverage.exploration == 0 && sim.beat >= 3) return "adventure";
+        if (sim.coverage.merchant == 0 && sim.beat >= 5) return "merchant";
+        if (sim.coverage.relief == 0 && sim.beat >= 7) return "relief";
+    }
+
+    // Retreat flow: bridge beats -> city scene -> relief beats.
     if (sim.retreat_to_city) {
+        if (sim.director.retreat_bridge_left > 0) {
+            sim.city_scene_pending = false;
+            sim.director.retreat_bridge_left -= 1;
+            return "retreat_bridge";
+        }
+
         if (!sim.city_scene_played) {
             sim.city_scene_pending = true;
             return "city_scene";
@@ -991,7 +1294,11 @@ function sim_director_next_event(sim) {
             return "relief";
         }
 
-        return "boss";
+        sim.retreat_to_city = false;
+    }
+
+    if (sim.city_scene_pending) {
+        return "city_scene";
     }
 
     var avg_hp_pct = sim_party_avg_hp_pct(sim);
@@ -1007,30 +1314,56 @@ function sim_director_next_event(sim) {
         if (p.wounds >= 2) wounded_members += 1;
     }
 
-    // Guaranteed relief cadence to avoid gauntlets
-    if (sim.director.beats_since_relief >= 7) {
+    var emergency = (worst_hp_pct <= 0.12 || avg_hp_pct < 0.30 || sim.retreat_to_city);
+    var relief_gap = sim.director.relief_min_gap;
+    var relief_max_gap = sim.director.relief_max_gap;
+
+    // Guaranteed relief cadence with spacing.
+    if (sim.director.beats_since_relief >= relief_max_gap) {
         return "relief";
     }
 
-    // Recovery pressure checks: worst member matters, not just average
-    if (worst_hp_pct <= 0.20 || avg_hp_pct < 0.45 || sim.tension > 75) {
+    var relief_ready = (sim.director.beats_since_relief >= relief_gap);
+    if (!relief_ready && !emergency && sim_chance(sim, 15)) {
+        sim.director.repeat_prevented += 1;
+    }
+
+    if (relief_ready && (worst_hp_pct <= 0.16 || avg_hp_pct < 0.38 || sim.tension > 82)) {
         return "relief";
     }
 
-    // If wounds are building, push more relief opportunities
-    if (wounded_members > 0 && sim.director.beats_since_relief >= 3 && sim_chance(sim, 60)) {
+    if (relief_ready && wounded_members > 0 && sim.director.beats_since_relief >= (relief_gap + 1) && sim_chance(sim, 50)) {
         return "relief";
     }
 
-    // Merchant: respect cooldown and per-zone cap
-    if (sim.director.merchant_cd == 0 && sim.director.merchants_this_zone < 2 && sim_chance(sim, 12)) {
+    // Merchant: respect cooldown and per-zone cap.
+    if (sim.director.merchant_cd == 0 && sim.director.merchants_this_zone < 2 && sim_chance(sim, floor(13 * route_mod.loot_mult))) {
         return "merchant";
     }
 
-    // Chest: respect cooldown
-    if (sim.director.chest_cd == 0 && sim_chance(sim, 16)) {
+    // Chest: respect cooldown.
+    if (sim.director.chest_cd == 0 && sim_chance(sim, floor(12 * route_mod.loot_mult))) {
         sim.director.chest_cd = 4;
         return "chest";
+    }
+
+    // Adventure beats actively compete with combat.
+    if (sim.director.adventure_cd == 0) {
+        var adv_pressure = 34;
+        if (sim.tension > 70) adv_pressure += 10;
+        if (sim.zone == "Wilderness" || sim.zone == "Dungeon") adv_pressure += 8;
+        adv_pressure = floor(adv_pressure * route_mod.social_mult);
+
+        if (sim_chance(sim, adv_pressure)) {
+            sim.director.adventure_cd = 1;
+            return "adventure";
+        }
+    }
+
+    // Combat pressure reacts to route modifiers and repeat suppression.
+    var repeat_combat = sim_director_recent_count(sim, "combat", sim.director.repeat_window);
+    if (repeat_combat >= 4 && sim_chance(sim, 65)) {
+        return "adventure";
     }
 
     // Default
@@ -1051,6 +1384,19 @@ function sim_find_best_recipient(sim, item, slot) {
 
     return { idx: best_idx, delta: best_delta };
 }
+function sim_format_budget_line(party_power, encounter_threat, cap_used, tag, result_tag) {
+    var safe_party = max(1, party_power);
+    var ratio = encounter_threat / safe_party;
+    var line =
+        "[ENCOUNTER_BUDGET] party=" + string(party_power) +
+        " threat=" + string(encounter_threat) +
+        " ratio=" + string_format(ratio, 1, 2) +
+        " cap=" + string_format(cap_used, 1, 2) +
+        " tag=" + tag +
+        " result=" + result_tag;
+    return line;
+}
+
 function sim_get_equipped_item(p, slot) {
     // If equip doesn't exist yet (legacy party members), treat as empty
     if (!variable_struct_exists(p, "equip") || !is_struct(p.equip)) {
@@ -1177,6 +1523,9 @@ function sim_give_item(sim, item) {
         sim_log_tag(sim, "EQUIP",
             "📦 EQUIP → " + p.name + " equips (" + slot + "): " + item.name +
             " [Δ" + string_format(delta, 1, 1) + "]."
+        );
+        sim_log_tag(sim, "EQUIP_CHANGE",
+            "📦 " + p.name + " equips " + item.name + "."
         );
 
         if (p.atk != before_atk) {
@@ -1368,12 +1717,197 @@ function sim_log(sim, text) {
     // Keep in-memory
     array_push(sim.log, text);
 
+    if (variable_global_exists("debug_enabled") && global.debug_enabled) {
+        if (!variable_global_exists("run_log_text")) global.run_log_text = "";
+        if (global.run_log_text == "") global.run_log_text = text;
+        else global.run_log_text += "\n" + text;
+    }
+
     // Also dump to Output console for sharing back
     show_debug_message(text);
 }
 function sim_log_tag(sim, tag, msg) {
     sim_log(sim, "[" + string(tag) + "] " + msg);
 }
+function sim_make_combat_encounter(sim, party_power) {
+    var MAX_REROLLS_PER_ENCOUNTER = 10;
+    var BOSS_CAP_RATIO = 1.80;
+
+    var pool = [
+        { name: "Skeleton", base: 5 },
+        { name: "Bandit", base: 6 },
+        { name: "Goblin", base: 4 },
+        { name: "Slime", base: 3 },
+        { name: "Warg", base: 7 },
+        { name: "Cult Acolyte", base: 6 },
+        { name: "Ogre Brute", base: 11 }
+    ];
+
+    var tier_pick = sim_pick_encounter_tier(sim);
+    var tag = tier_pick.tier;
+    var cap_ratio = tier_pick.max_ratio;
+
+    var min_budget = floor(party_power * tier_pick.min_ratio);
+    var max_budget = floor(party_power * tier_pick.max_ratio);
+    var boss_cap = floor(party_power * BOSS_CAP_RATIO);
+    max_budget = min(max_budget, boss_cap);
+
+    var debug_budget = variable_global_exists("debug_verbose") ? global.debug_verbose : false;
+    var rerolls = 0;
+    var prevented = 0;
+    var attempts = 0;
+    var candidates = [];
+
+    for (var attempt = 0; attempt < MAX_REROLLS_PER_ENCOUNTER; attempt++) {
+        var group_size = sim_rand_range(sim, 1, 3);
+        var total = 0;
+        var names = "";
+        var enemies = [];
+
+        for (var i = 0; i < group_size; i++) {
+            var e = pool[sim_rand_range(sim, 0, array_length(pool) - 1)];
+            var per_enemy = floor((e.base + sim_rand_range(sim, -1, 2)) * (1 + sim.difficulty * 0.08));
+
+            // Smooth non-boss spikes.
+            var non_boss_cap = max(3, floor(party_power * 0.45));
+            per_enemy = clamp(per_enemy, 2, non_boss_cap);
+
+            total += per_enemy;
+            if (names != "") names += ", ";
+            names += e.name;
+            array_push(enemies, { name: e.name, threat: per_enemy });
+        }
+
+        attempts += 1;
+
+        var ratio = total / max(1, party_power);
+        var candidate = {
+            names: names,
+            total: total,
+            tag: tag,
+            party_power: party_power,
+            ratio: ratio,
+            cap_ratio: cap_ratio,
+            enemies: enemies
+        };
+        array_push(candidates, candidate);
+
+        if (total > boss_cap) {
+            prevented += 1;
+            rerolls += 1;
+            if (debug_budget) sim_log_tag(sim, "ENCOUNTER_BUDGET", sim_format_budget_line(party_power, total, cap_ratio, tag, "REROLL"));
+            continue;
+        }
+
+        if (total >= min_budget && total <= max_budget) {
+            if (debug_budget) sim_log_tag(sim, "ENCOUNTER_BUDGET", sim_format_budget_line(party_power, total, cap_ratio, tag, "ACCEPT"));
+            return {
+                degraded: false,
+                scaled: false,
+                bestfit_selected: false,
+                names: names,
+                total: total,
+                tag: tag,
+                rerolls: rerolls,
+                prevented: prevented,
+                attempts: attempts
+            };
+        }
+
+        var scaled_attempt = sim_try_scale_encounter(candidate, cap_ratio, BOSS_CAP_RATIO, false);
+        if (!is_undefined(scaled_attempt)) {
+            prevented += 1;
+            if (debug_budget) sim_log_tag(sim, "ENCOUNTER_BUDGET", sim_format_budget_line(party_power, total, cap_ratio, tag, "SCALED"));
+            return {
+                degraded: false,
+                scaled: true,
+                bestfit_selected: false,
+                names: scaled_attempt.names,
+                total: scaled_attempt.total,
+                tag: tag,
+                rerolls: rerolls,
+                prevented: prevented,
+                attempts: attempts,
+                removed_enemy_name: scaled_attempt.removed_enemy_name,
+                weakened_only: scaled_attempt.weakened_only
+            };
+        }
+
+        rerolls += 1;
+        if (total > max_budget) prevented += 1;
+        if (debug_budget) sim_log_tag(sim, "ENCOUNTER_BUDGET", sim_format_budget_line(party_power, total, cap_ratio, tag, "REROLL"));
+    }
+
+    var bestfit_under_cap = undefined;
+    for (var c = 0; c < array_length(candidates); c++) {
+        var cand = candidates[c];
+        if (cand.ratio <= cap_ratio) {
+            if (is_undefined(bestfit_under_cap) || cand.ratio > bestfit_under_cap.ratio) {
+                bestfit_under_cap = cand;
+            }
+        }
+    }
+
+    if (!is_undefined(bestfit_under_cap)) {
+        if (debug_budget) sim_log_tag(sim, "ENCOUNTER_BUDGET", sim_format_budget_line(party_power, bestfit_under_cap.total, cap_ratio, tag, "ACCEPT"));
+        return {
+            degraded: false,
+            scaled: false,
+            bestfit_selected: true,
+            names: bestfit_under_cap.names,
+            total: bestfit_under_cap.total,
+            tag: tag,
+            rerolls: rerolls,
+            prevented: prevented,
+            attempts: attempts + 1
+        };
+    }
+
+    var lowest_over_cap = undefined;
+    for (var m = 0; m < array_length(candidates); m++) {
+        var over = candidates[m];
+        if (is_undefined(lowest_over_cap) || over.ratio < lowest_over_cap.ratio) lowest_over_cap = over;
+    }
+
+    if (!is_undefined(lowest_over_cap)) {
+        var scaled_fallback = sim_try_scale_encounter(lowest_over_cap, cap_ratio, BOSS_CAP_RATIO, true);
+        if (!is_undefined(scaled_fallback)) {
+            prevented += 1;
+            if (debug_budget) sim_log_tag(sim, "ENCOUNTER_BUDGET", sim_format_budget_line(party_power, lowest_over_cap.total, cap_ratio, tag, "SCALED"));
+            return {
+                degraded: false,
+                scaled: true,
+                bestfit_selected: false,
+                names: scaled_fallback.names,
+                total: scaled_fallback.total,
+                tag: tag,
+                rerolls: rerolls,
+                prevented: prevented,
+                attempts: attempts + 1,
+                removed_enemy_name: scaled_fallback.removed_enemy_name,
+                weakened_only: scaled_fallback.weakened_only
+            };
+        }
+    }
+
+    if (debug_budget) {
+        var threat_log = is_undefined(lowest_over_cap) ? 0 : lowest_over_cap.total;
+        sim_log_tag(sim, "ENCOUNTER_BUDGET", sim_format_budget_line(party_power, threat_log, cap_ratio, tag, "DEGRADED"));
+    }
+
+    return {
+        degraded: true,
+        scaled: false,
+        bestfit_selected: false,
+        tag: tag,
+        rerolls: rerolls,
+        prevented: prevented + 1,
+        attempts: attempts + 1,
+        total: 0,
+        names: ""
+    };
+}
+
 function sim_make_party_member(role, name, max_hp, max_mp, atk, def) {
     return {
         role: role,
@@ -1407,8 +1941,12 @@ function sim_make_party_member(role, name, max_hp, max_mp, atk, def) {
         status: [],
 
         wounds: 0,
+        near_death_count: 0,
         near_death_flag: false,
+        near_death_logged_once: false,
+        near_death_triggered_this_beat: false,
         downed_this_beat: false,
+        recent_downed_beats: [],
 
         // NEW death/retire system
         dead: false,
@@ -1416,6 +1954,7 @@ function sim_make_party_member(role, name, max_hp, max_mp, atk, def) {
 
         // Legacy-ish state string (kept in sync)
         status_state: "alive",
+        pending_honor: false,
 
         // Resolve system
         resolve: 100,
@@ -1502,80 +2041,29 @@ function sim_party_heal(sim, amount) {
 }
 function sim_party_process_exits(sim, ev) {
 
-    // Only allow retirement rolls at safer beats unless we're retreating.
     var safe_stop = (ev == "merchant" || ev == "relief" || ev == "city_scene" || sim.retreat_to_city);
 
     for (var i = 0; i < array_length(sim.party); i++) {
         var p = sim.party[i];
 
-        // Keep explicit exit flags in sync with resolve-based retire notices.
-        if (p.retire_notice) {
-            p.exit_flagged = true;
-            p.exit_mode = "retire";
-        }
-
-        // Retreat-to-city should hard-commit retirements for flagged members.
-        if (sim.retreat_to_city && p.exit_flagged && p.exit_mode == "retire" && !p.dead && !p.retired) {
-            p.retired = true;
-        }
-
-        // --- Retirement roll (probabilistic) ---
-        if (safe_stop && !p.dead && !p.retired) {
-            if (p.retire_notice) {
-                // Chance rises with wounds and low resolve.
-                var wound_push = max(0, (p.wounds - 3) * 8);
-                var resolve_pull = max(0, (70 - p.resolve));
-                var chance = clamp(12 + wound_push + resolve_pull, 12, 85);
-
-                if (sim_chance(sim, chance)) {
-                    p.retired = true;
-                }
-            }
-        }
-
-        if (p.retired) {
-            if (is_struct(sim.stats) && variable_struct_exists(sim.stats, "retirements")) {
-                sim.stats.retirements += 1;
-            }
-
-            sim_log_tag(sim, "RETIRE",
-                "🏳 " + p.name + " retires: \"I'm done tempting fate.\""
-            );
-
-            // Legacy bump for survivors
-            sim_party_apply_legacy(sim, p, "retire");
-        }
-
-        // --- Death replacement ---
         if (p.dead) {
-            if (is_struct(sim.stats) && variable_struct_exists(sim.stats, "deaths")) {
-                sim.stats.deaths += 1;
-            }
-
-            sim_log_tag(sim, "FUNERAL",
-                "⚰ The party carries " + p.name + " onward in grim silence."
-            );
-
-            sim_party_apply_legacy(sim, p, "death");
+            p.status_state = "dead";
+            p.pending_honor = true;
+            sim.city_scene_pending = true;
+            continue;
         }
 
-        // --- Replace if needed (keeps archetype in same slot) ---
-        if (p.dead || p.retired) {
-            var role_key = "tank";
-            var role_name = "Tank";
-            var hp = 70, mp = 5, atk = 8, def = 6;
+        if (!p.retired && !p.dead && p.retire_notice && safe_stop) {
+            var wound_push = max(0, (p.wounds - 3) * 10);
+            var near_death_push = p.near_death_count * 8;
+            var resolve_pull = max(0, (70 - p.resolve));
+            var chance = clamp(20 + wound_push + near_death_push + resolve_pull, 20, 95);
 
-            if (i == 1) { role_key = "mage"; role_name = "Mage"; hp = 40; mp = 30; atk = 12; def = 2; }
-            if (i == 2) { role_key = "thief"; role_name = "Thief"; hp = 45; mp = 10; atk = 10; def = 3; }
-            if (i == 3) { role_key = "healer"; role_name = "Healer"; hp = 42; mp = 28; atk = 6; def = 3; }
-
-            var new_name = sim_name_pick(sim, role_key);
-
-            sim.party[i] = sim_make_party_member(role_name, new_name, hp, mp, atk, def);
-
-            sim_log_tag(sim, "RECRUIT",
-                "🧑 New " + role_name + " joins: " + sim.party[i].name + "."
-            );
+            if (sim_chance(sim, chance)) {
+                p.exit_flagged = true;
+                p.exit_mode = "retire";
+                sim.city_scene_pending = true;
+            }
         }
     }
 }
@@ -1584,27 +2072,79 @@ function sim_resolve_city_scene(sim) {
     sim.city_scene_pending = false;
     sim.city_scene_played = true;
 
-    sim_log_tag(sim, "CITY_SCENE",
-        "🏙 The party reaches the city walls to triage wounds, mourn losses, and regroup."
+    sim_log_tag(sim, "CITY_ARRIVE",
+        "🏙 The party returns to the city to recover, honor the fallen, and make hard decisions."
     );
 
-    // Clear any stale exit flags from pre-retreat state.
     for (var i = 0; i < array_length(sim.party); i++) {
         var p = sim.party[i];
-        if (p.dead || p.retired) continue;
 
-        if (p.wounds > 0) {
-            var heal_wounds = min(2, p.wounds);
-            p.wounds -= heal_wounds;
+        if (p.dead && p.pending_honor) {
+            sim_log_tag(sim, "HONOR_FALLEN", "⚰ Bells ring for " + p.name + ". Their deeds are remembered.");
+            p.pending_honor = false;
+
+            if (is_struct(sim.stats) && variable_struct_exists(sim.stats, "deaths")) {
+                sim.stats.deaths += 1;
+            }
+            sim_party_apply_legacy(sim, p, "death");
+        }
+
+        if (!p.dead && !p.retired && p.exit_flagged && p.exit_mode == "retire") {
+            p.retired = true;
+            p.status_state = "retired";
+
+            sim_log_tag(sim, "RETIRE_DECISION",
+                "🏳 " + p.name + " retires after too many close calls."
+            );
+
+            if (is_struct(sim.stats) && variable_struct_exists(sim.stats, "retirements")) {
+                sim.stats.retirements += 1;
+            }
+            sim_party_apply_legacy(sim, p, "retire");
+        }
+
+        if (!p.dead && !p.retired && p.wounds > 0) {
+            var wound_heal = min(2, p.wounds);
+            var before_wounds = p.wounds;
+            p.wounds -= wound_heal;
+            p.hp = max(2, p.hp);
+            p.status_state = "alive";
             sim_recalc_derived(p);
-            sim_log_tag(sim, "CITY_CARE",
-                "🩺 " + p.name + " receives city care (wounds -" + string(heal_wounds) + ")."
+            sim_log_tag(sim, "CITY_SHOP",
+                "🛠 " + p.name + " receives treatment and repairs (wounds " + string(before_wounds) + "→" + string(p.wounds) + ")."
             );
         }
 
         p.exit_flagged = false;
         p.exit_mode = "none";
+        p.retire_notice = false;
     }
+
+    for (var j = 0; j < array_length(sim.party); j++) {
+        var out = sim.party[j];
+        if (!out.dead && !out.retired) continue;
+
+        var role_key = "tank";
+        var role_name = "Tank";
+        var hp = 70, mp = 5, atk = 8, def = 6;
+
+        if (j == 1) { role_key = "mage"; role_name = "Mage"; hp = 40; mp = 30; atk = 12; def = 2; }
+        if (j == 2) { role_key = "thief"; role_name = "Thief"; hp = 45; mp = 10; atk = 10; def = 3; }
+        if (j == 3) { role_key = "healer"; role_name = "Healer"; hp = 42; mp = 28; atk = 6; def = 3; }
+
+        var new_name = sim_name_pick(sim, role_key);
+        sim.party[j] = sim_make_party_member(role_name, new_name, hp, mp, atk, def);
+
+        sim_log_tag(sim, "RECRUIT_JOIN",
+            "🧑 " + sim.party[j].name + " joins as the new " + role_name + "."
+        );
+    }
+
+    sim_log_tag(sim, "CITY_DEPART", "🚪 The party departs the city and returns to the crawl.");
+
+    sim.retreat_to_city = false;
+    sim.retreat_beats_left = 0;
+    sim.director.retreat_bridge_left = 0;
 }
 
 function sim_party_restore_mp(sim, amount) {
@@ -1613,6 +2153,33 @@ function sim_party_restore_mp(sim, amount) {
         p.mp = min(p.max_mp, p.mp + amount);
     }
     sim_log(sim, "🔷 Party restores MP +" + string(amount) + " (group).");
+}
+
+function sim_pick_encounter_tier(sim) {
+    var normal_cap_ratio = 1.25;
+    var hard_cap_ratio = 1.45;
+
+    var tier = "NORMAL";
+    var min_ratio = 0.75;
+    var max_ratio = normal_cap_ratio;
+
+    var hard_chance = 10 + ((sim.tension > 72) ? 6 : 0);
+    if (sim_chance(sim, hard_chance)) {
+        tier = "HARD";
+        min_ratio = 1.10;
+        max_ratio = hard_cap_ratio;
+    }
+
+    if (is_struct(sim.director) && variable_struct_exists(sim.director, "tank_tactic_state")) {
+        var state = sim.director.tank_tactic_state;
+        if (state.withdrawal_left > 0) {
+            tier = "NORMAL";
+            min_ratio = 0.75;
+            max_ratio = min(normal_cap_ratio, 0.95);
+        }
+    }
+
+    return { tier: tier, min_ratio: min_ratio, max_ratio: max_ratio };
 }
 
 function sim_pick_origin(sim) {
@@ -1645,6 +2212,39 @@ function sim_pick_quirk(sim, role) {
     }
 
     return list[sim_rand_range(sim, 0, array_length(list) - 1)];
+}
+function sim_push_tank_crisis(sim, crisis_add) {
+    if (!is_struct(sim.director)) return 0;
+
+    if (!variable_struct_exists(sim.director, "tank_crisis_window")) {
+        sim.director.tank_crisis_window = 10;
+    }
+
+    if (!variable_struct_exists(sim.director, "tank_crisis_history") || !is_array(sim.director.tank_crisis_history)) {
+        sim.director.tank_crisis_history = [];
+    }
+
+    // Store this beat's contribution (use a clear field name)
+    array_push(sim.director.tank_crisis_history, { beat: sim.beat, delta: crisis_add });
+
+    // Trim to rolling window
+    var k = 0;
+    while (k < array_length(sim.director.tank_crisis_history)) {
+        var entry = sim.director.tank_crisis_history[k];
+        if (sim.beat - entry.beat >= sim.director.tank_crisis_window) {
+            array_delete(sim.director.tank_crisis_history, k, 1);
+        } else {
+            k += 1;
+        }
+    }
+
+    // Sum contributions in window
+    var _score = 0;
+    for (var i = 0; i < array_length(sim.director.tank_crisis_history); i++) {
+        _score += sim.director.tank_crisis_history[i].delta;
+    }
+
+    return _score;
 }
 function sim_rand_range(sim, a, b) {
     var r = sim_rng_next(sim);
@@ -1782,8 +2382,21 @@ function sim_replace_party_member(sim, idx, role) {
 }
 function sim_resolve_boss(sim) {
     var boss = (sim.zone == "Castle") ? "Iron Warden" : "Hollow Ogre";
-    sim_log_tag(sim, "BOSS_SPAWN", "👑 BOSS: " + boss + " emerges!");
+    sim_log_tag(sim, "BOSS_TELEGRAPH", "🌩 [BOSS] The ground shakes before the enemy appears.");
+    sim_log_tag(sim, "BOSS_SPAWN", "👑 [BOSS] " + boss + " emerges!");
 
+
+    var party_power = sim_calc_party_power(sim);
+    var boss_threat = floor(party_power * clamp(1.35 + sim.difficulty * 0.04, 1.30, 1.70));
+    var verbose = variable_global_exists("debug_verbose") ? global.debug_verbose : false;
+    if (verbose) {
+        sim_log_tag(sim, "ENCOUNTER_BUDGET",
+            "[ENCOUNTER_BUDGET] party=" + string(party_power) +
+            " threat=" + string(boss_threat) +
+            " ratio=" + string_format(boss_threat / max(1, party_power), 1, 2) +
+            " cap=1.80 tag=BOSS result=ACCEPT"
+        );
+    }
     var tank   = sim.party[0];
     var mage   = sim.party[1];
     var thief  = sim.party[2];
@@ -1794,7 +2407,7 @@ function sim_resolve_boss(sim) {
     sim_recalc_derived(thief);
 
     // --- BOSS: smash tank ---
-    var boss_hit = (sim.difficulty * 6 + sim_rand_range(sim, 10, 22));
+    var boss_hit = floor((sim.difficulty * 6 + sim_rand_range(sim, 10, 22)) * (boss_threat / max(1, party_power)));
     var dmg_tank = max(0, boss_hit - tank.def);
 
     var before_hp = tank.hp;
@@ -1827,13 +2440,16 @@ function sim_resolve_boss(sim) {
     }
 
     // Thief hit (always happens as a counter action)
-    var thief_hit = max(1, thief.atk + sim_rand_range(sim, 2, 10));
-    var thief_crit = sim_chance(sim, 20);
-    if (thief_crit) thief_hit *= 2;
+    var thief_hit = 0;
+    if (!thief.dead && !thief.retired && thief.status_state != "downed") {
+        thief_hit = max(1, thief.atk + sim_rand_range(sim, 2, 10));
+        var thief_crit = sim_chance(sim, 20);
+        if (thief_crit) thief_hit *= 2;
 
-    sim_log_tag(sim, thief_crit ? "THIEF_CRIT" : "THIEF_EXEC",
-        "🗡 " + thief.name + " smells blood: " + string(thief_hit) + " damage" + (thief_crit ? " (CRIT!)." : ".")
-    );
+        sim_log_tag(sim, thief_crit ? "THIEF_CRIT" : "THIEF_EXEC",
+            "🗡 " + thief.name + " smells blood: " + string(thief_hit) + " damage" + (thief_crit ? " (CRIT!)." : ".")
+        );
+    }
 
     // Mage boss output: expensive big cast if possible, otherwise weaker fallback
     var mp_cost = clamp(6 + floor(sim.difficulty / 2), 6, 10);
@@ -1843,20 +2459,24 @@ function sim_resolve_boss(sim) {
     var mage_hit;
     var mage_crit = sim_chance(sim, cast ? 18 : 8);
 
-    if (cast) {
+    if (cast && !mage.dead && !mage.retired && mage.status_state != "downed") {
         mage.mp -= mp_cost;
         mage_hit = max(1, mage.atk * 3 + sim.difficulty * 2 + sim_rand_range(sim, 10, 26));
-    } else {
+    } else if (!mage.dead && !mage.retired && mage.status_state != "downed") {
         mage_hit = max(1, mage.atk + sim_rand_range(sim, 3, 12));
+    } else {
+        mage_hit = 0;
     }
 
     if (mage_crit) mage_hit *= 2;
 
-    sim_log_tag(sim, mage_crit ? "MAGE_CRIT" : "MAGE_HIT",
-        "✨ " + mage.name + (cast ? " detonates a full cast" : " sputters a weak zap") +
-        ": " + string(mage_hit) + " damage" + (mage_crit ? " (CRIT!)." : ".") +
-        (cast ? (" [MP " + string(before_mp) + "→" + string(mage.mp) + "]") : " [NO MP]")
-    );
+    if (mage_hit > 0) {
+        sim_log_tag(sim, mage_crit ? "MAGE_CRIT" : "MAGE_HIT",
+            "✨ " + mage.name + (cast ? " detonates a full cast" : " sputters a weak zap") +
+            ": " + string(mage_hit) + " damage" + (mage_crit ? " (CRIT!)." : ".") +
+            (cast ? (" [MP " + string(before_mp) + "→" + string(mage.mp) + "]") : " [NO MP]")
+        );
+    }
 
     // Healer reaction
     sim_auto_heal(sim);
@@ -1940,6 +2560,7 @@ function sim_resolve_chest(sim) {
         var gold = sim_rand_range(sim, 10, 28) + floor(sim.difficulty / 2);
         sim.gold_total += gold;
 
+        sim_log_tag(sim, "LOOT_FOUND", "💰 Loot found: " + string(gold) + " gold.");
         sim_log_tag(sim, "CHEST_GOLD", "🧰 Chest: +" + string(gold) + " gold.");
         return;
     }
@@ -1950,8 +2571,10 @@ function sim_resolve_chest(sim) {
 
     if (item.is_named || item.rarity == "rare" || item.rarity == "epic" || item.rarity == "legendary") {
         sim.stats.rares_found += 1;
+        sim_log_tag(sim, "LOOT_FOUND", "🎁 Loot found: " + item.name + " (rare).");
         sim_log_tag(sim, "CHEST_RARE", "🧰 Chest: RARE find! " + item.name + ".");
     } else {
+        sim_log_tag(sim, "LOOT_FOUND", "🎁 Loot found: " + item.name + ".");
         sim_log_tag(sim, "CHEST_ITEM", "🧰 Chest: found " + item.name + ".");
     }
 
@@ -1971,24 +2594,76 @@ function sim_resolve_combat(sim) {
             boss_defeated: false,
             deaths: 0,
             retirements: 0,
-            legacies: 0
+            legacies: 0,
+            downed_events: 0,
+            tank_downed_count: 0,
+            total_downed_count: 0,
+            encounters_over_budget_prevented: 0,
+            rerolls_count: 0,
+            encounter_attempts: 0,
+            encounter_accepted: 0,
+            encounter_rerolled: 0,
+            encounter_scaled_down: 0,
+            encounter_degraded: 0,
+            encounter_bestfit_selected: 0
         };
     }
     if (!variable_struct_exists(sim.stats, "combats")) sim.stats.combats = 0;
+    if (!variable_struct_exists(sim.stats, "encounters_over_budget_prevented")) sim.stats.encounters_over_budget_prevented = 0;
+    if (!variable_struct_exists(sim.stats, "rerolls_count")) sim.stats.rerolls_count = 0;
+    if (!variable_struct_exists(sim.stats, "encounter_attempts")) sim.stats.encounter_attempts = 0;
+    if (!variable_struct_exists(sim.stats, "encounter_accepted")) sim.stats.encounter_accepted = 0;
+    if (!variable_struct_exists(sim.stats, "encounter_rerolled")) sim.stats.encounter_rerolled = 0;
+    if (!variable_struct_exists(sim.stats, "encounter_scaled_down")) sim.stats.encounter_scaled_down = 0;
+    if (!variable_struct_exists(sim.stats, "encounter_degraded")) sim.stats.encounter_degraded = 0;
+    if (!variable_struct_exists(sim.stats, "encounter_bestfit_selected")) sim.stats.encounter_bestfit_selected = 0;
 
     sim.stats.combats += 1;
 
-    var foe = choose("Skeleton", "Bandit", "Goblin", "Slime", "Warg", "Cult Acolyte");
-    var threat = sim_rand_range(sim, 1, 6) + floor(sim.difficulty / 2);
+    var party_power = sim_calc_party_power(sim);
+    var enc = sim_make_combat_encounter(sim, party_power);
+
+    sim.stats.encounters_over_budget_prevented += enc.prevented;
+    sim.stats.rerolls_count += enc.rerolls;
+    sim.stats.encounter_attempts += enc.attempts;
+    sim.stats.encounter_rerolled += enc.rerolls;
+
+    if (enc.degraded) {
+        sim.stats.encounter_degraded += 1;
+        sim_log_tag(sim, "ENCOUNTER_SHIFT",
+            "🧯 Threat budget rejected repeated over-cap rolls; encounter degrades into an escape hazard."
+        );
+        sim_log_tag(sim, "ESCAPE",
+            "🏃 [TACTIC] Controlled withdrawal through unstable ground buys time but costs momentum."
+        );
+        sim.tension = clamp(sim.tension + 4, 0, 100);
+        return;
+    }
+
+    if (enc.scaled) {
+        sim.stats.encounter_scaled_down += 1;
+        if (enc.weakened_only) {
+            sim_log_tag(sim, "ENCOUNTER_SHIFT", "🧪 Budget scale-down applied a light non-boss weakening to keep threat fair.");
+        } else if (!is_undefined(enc.removed_enemy_name) && enc.removed_enemy_name != "") {
+            sim_log_tag(sim, "ENCOUNTER_SHIFT", "🪓 Budget scale-down removed " + enc.removed_enemy_name + " from the encounter.");
+        }
+    } else {
+        sim.stats.encounter_accepted += 1;
+    }
+
+    if (enc.bestfit_selected) sim.stats.encounter_bestfit_selected += 1;
+
+    var tag_label = enc.tag;
+    if (tag_label == "HARD") tag_label = "[HARD]";
+
+    sim_log_tag(sim, "ENCOUNTER",
+        "⚔ Combat: " + enc.names + " (threat " + string(enc.total) + ") " + tag_label + "."
+    );
 
     // Optional micro-modifier for variety (combat-only)
     var _mod = sim_roll_encounter_mod(sim);
+    var threat = enc.total;
     if (is_struct(_mod)) threat += _mod.threat_add;
-
-    sim_log_tag(sim, "ENCOUNTER",
-        "⚔ Combat: " + foe + " (threat " + string(threat) + ")."
-    );
-    if (is_struct(_mod)) sim_log_tag(sim, _mod.tag, _mod.desc);
 
     // Party roles (canonical order)
     var tank   = sim.party[0];
@@ -2002,6 +2677,29 @@ function sim_resolve_combat(sim) {
     sim_recalc_derived(thief);
     sim_recalc_derived(healer);
 
+    // Crisis tactics state
+    var tactics = sim.director.tank_tactic_state;
+    var dmg_taken_mult = 1.0;
+    var flank_base_chance = 18;
+    var party_out_mult = 1.0;
+
+    if (tactics.defensive_left > 0) {
+        dmg_taken_mult *= 0.70;
+        party_out_mult *= 0.80;
+        tactics.defensive_left -= 1;
+        sim_log_tag(sim, "TACTIC", "🛡 [TACTIC] Defensive stance active: incoming damage reduced this beat.");
+    }
+    if (tactics.cover_left > 0) {
+        flank_base_chance = 8;
+        tactics.cover_left -= 1;
+        sim_log_tag(sim, "TACTIC", "🧱 [TACTIC] Choke point/cover active: enemy accuracy reduced.");
+    }
+    if (tactics.withdrawal_left > 0) {
+        dmg_taken_mult *= 0.85;
+        tactics.withdrawal_left -= 1;
+        sim_log_tag(sim, "TACTIC", "🏃 [TACTIC] Controlled withdrawal active: disengagement posture lowers pressure.");
+    }
+
     // --- AMBUSH pre-strike ---
     if (is_struct(_mod) && _mod.pre_strike) {
         var j = sim_rand_range(sim, 1, array_length(sim.party) - 1);
@@ -2010,7 +2708,7 @@ function sim_resolve_combat(sim) {
         sim_recalc_derived(v);
 
         var pre_raw = sim_rand_range(sim, 3, 9) + floor(threat / 2) - v.def;
-        var pre_dmg = max(1, pre_raw);
+        var pre_dmg = max(1, floor(pre_raw * dmg_taken_mult));
 
         var vb = v.hp;
         v.hp -= pre_dmg;
@@ -2028,24 +2726,27 @@ function sim_resolve_combat(sim) {
     var def_mult = (is_struct(_mod)) ? _mod.def_mult : 1.0;
 
     var base_dmg = ((threat * 6) + sim_rand_range(sim, 3, 10));
-    base_dmg = floor(base_dmg * dmg_mult);
+    base_dmg = floor(base_dmg * dmg_mult * dmg_taken_mult);
 
     var eff_def = floor(tank.def * def_mult);
     var dmg_to_tank = max(0, base_dmg - eff_def);
 
     var before_tank = tank.hp;
+    var pre_wounds = tank.wounds;
+    var pre_tank_downed = sim.stats.tank_downed_count;
+
     tank.hp -= dmg_to_tank;
 
     sim_log_tag(sim, "COMBAT_EXCHANGE",
-        "⚔ " + foe + " strikes: " + tank.name + " takes " + string(dmg_to_tank) +
+        "⚔ " + enc.names + " strikes: " + tank.name + " takes " + string(dmg_to_tank) +
         " (" + string(before_tank) + "→" + string(tank.hp) + ")."
     );
 
-    if (sim_chance(sim, 18)) {
+    if (sim_chance(sim, flank_base_chance)) {
         var off_i = sim_rand_range(sim, 1, array_length(sim.party) - 1);
         var off_target = sim.party[off_i];
-        if (!off_target.dead && !off_target.retired) {
-            var flank_dmg = max(1, floor((base_dmg * sim_rand_range(sim, 30, 50)) / 100) - floor(off_target.def * 0.5));
+        if (!off_target.dead && !off_target.retired && off_target.status_state != "downed") {
+            var flank_dmg = max(1, floor(((base_dmg * sim_rand_range(sim, 30, 50)) / 100) * dmg_taken_mult) - floor(off_target.def * 0.5));
             var before_off = off_target.hp;
             off_target.hp -= flank_dmg;
             sim_log_tag(sim, "FLANK_HIT",
@@ -2066,35 +2767,37 @@ function sim_resolve_combat(sim) {
     // --- Mid-fight chaos (allow execution blows) ---
     if (is_struct(_mod) && _mod.extra_splash > 0) {
         sim_log_tag(sim, "CHAOS", "💢 Chaos erupts in the scrum.");
-        sim_apply_party_damage(sim, _mod.extra_splash);
+        sim_apply_party_damage(sim, floor(_mod.extra_splash * dmg_taken_mult));
     }
 
     // --- Thief identity: Execution mode ---
     var avg_hp_pct = sim_party_avg_hp_pct(sim);
     var exec_mode = (tank.hp <= 0) || (avg_hp_pct < 0.45) || (sim.tension > 75);
 
-    var thief_base = max(1, thief.atk * 2 + sim_rand_range(sim, 2, 8));
-    var thief_bonus = exec_mode ? sim_rand_range(sim, 2, 8) : 0;
-    var thief_hit = thief_base + thief_bonus;
+    if (!thief.dead && !thief.retired && thief.status_state != "downed") {
+        var thief_base = max(1, thief.atk * 2 + sim_rand_range(sim, 2, 8));
+        var thief_bonus = exec_mode ? sim_rand_range(sim, 2, 8) : 0;
+        var thief_hit = floor((thief_base + thief_bonus) * party_out_mult);
 
-    var thief_crit = sim_chance(sim, exec_mode ? 28 : 16);
-    if (thief_crit) thief_hit *= 2;
+        var thief_crit = sim_chance(sim, exec_mode ? 28 : 16);
+        if (thief_crit) thief_hit *= 2;
 
-    var thief_tag;
-    if (exec_mode) thief_tag = thief_crit ? "THIEF_EXEC_CRIT" : "THIEF_EXEC";
-    else           thief_tag = thief_crit ? "THIEF_CRIT"      : "THIEF_HIT";
+        var thief_tag;
+        if (exec_mode) thief_tag = thief_crit ? "THIEF_EXEC_CRIT" : "THIEF_EXEC";
+        else           thief_tag = thief_crit ? "THIEF_CRIT"      : "THIEF_HIT";
 
-    sim_log_tag(sim, thief_tag,
-        "🗡 " + thief.name +
-        (exec_mode ? " smells blood" : " slips in") +
-        ": " + string(thief_hit) + " damage" + (thief_crit ? " (CRIT!)." : ".")
-    );
+        sim_log_tag(sim, thief_tag,
+            "🗡 " + thief.name +
+            (exec_mode ? " smells blood" : " slips in") +
+            ": " + string(thief_hit) + " damage" + (thief_crit ? " (CRIT!)." : ".")
+        );
+    }
 
     // --- Mage hits back (MP matters) ---
     var mp_add = (is_struct(_mod)) ? _mod.mp_cost_add : 0;
     var mp_cost = clamp(2 + floor(threat / 3) + mp_add, 2, 8);
 
-    var cast = (mage.mp >= mp_cost);
+    var cast = (!mage.dead && !mage.retired && mage.status_state != "downed" && mage.mp >= mp_cost);
     var before_mp = mage.mp;
 
     var mage_crit = sim_chance(sim, cast ? 18 : 10);
@@ -2102,18 +2805,22 @@ function sim_resolve_combat(sim) {
 
     if (cast) {
         mage.mp -= mp_cost;
-        mage_hit = (threat * 7) + sim_rand_range(sim, 6, 18) + floor(mage.atk * 0.5);
+        mage_hit = floor(((threat * 7) + sim_rand_range(sim, 6, 18) + floor(mage.atk * 0.5)) * party_out_mult);
+    } else if (!mage.dead && !mage.retired && mage.status_state != "downed") {
+        mage_hit = floor(((threat * 3) + sim_rand_range(sim, 2, 10)) * party_out_mult);
     } else {
-        mage_hit = (threat * 3) + sim_rand_range(sim, 2, 10);
+        mage_hit = 0;
     }
 
     if (mage_crit) mage_hit *= 2;
 
-    sim_log_tag(sim, mage_crit ? "MAGE_CRIT" : "MAGE_HIT",
-        "✨ " + mage.name + (cast ? " casts" : " jabs") +
-        " for " + string(mage_hit) + (mage_crit ? " (CRIT!)." : ".") +
-        (cast ? (" [MP " + string(before_mp) + "→" + string(mage.mp) + "]") : " [NO MP]")
-    );
+    if (mage_hit > 0) {
+        sim_log_tag(sim, mage_crit ? "MAGE_CRIT" : "MAGE_HIT",
+            "✨ " + mage.name + (cast ? " casts" : " jabs") +
+            " for " + string(mage_hit) + (mage_crit ? " (CRIT!)." : ".") +
+            (cast ? (" [MP " + string(before_mp) + "→" + string(mage.mp) + "]") : " [NO MP]")
+        );
+    }
 
     // --- Healer reacts ---
     sim_auto_heal(sim);
@@ -2121,74 +2828,288 @@ function sim_resolve_combat(sim) {
     // --- Knockdowns / near-death / death consistency ---
     sim_check_party_health(sim);
 
+    // Tank crisis tracking and anti-loop interventions.
+    var crisis_add = 0;
+    if (tank.hp < floor(tank.max_hp * 0.25)) crisis_add += 1;
+    if (dmg_to_tank >= floor(tank.max_hp * 0.30)) crisis_add += 2;
+    if (tank.wounds > pre_wounds) crisis_add += 2;
+    if (sim.stats.tank_downed_count > pre_tank_downed) crisis_add += 4;
+
+    var crisis_score = sim_push_tank_crisis(sim, crisis_add);
+
+    if (crisis_score >= 10 && tactics.withdrawal_left <= 0) {
+        tactics.withdrawal_left = 2;
+        sim_log_tag(sim, "TACTIC", "🏃 [TACTIC] Controlled withdrawal initiated: next encounters will be lighter.");
+    } else if (crisis_score >= 7 && tactics.cover_left <= 0) {
+        tactics.cover_left = 2;
+        sim_log_tag(sim, "TACTIC", "🧱 [TACTIC] Choke point secured: incoming accuracy reduced for 2 beats.");
+    } else if (crisis_score >= 4 && tactics.defensive_left <= 0) {
+        tactics.defensive_left = 2;
+        sim_log_tag(sim, "TACTIC", "🛡 [TACTIC] Defensive stance called: reduced damage taken for 2 beats.");
+    }
+
     // --- Tension climbs ---
     sim.tension = clamp(sim.tension + sim_rand_range(sim, 6, 14), 0, 100);
 }
 function sim_resolve_intro(sim) {
     sim_log(sim, "🧭 The party advances into the " + sim.zone + ".");
 }
+
+function sim_apply_route_modifier(sim, mode) {
+    var ttl = sim_rand_range(sim, 1, 3);
+
+    if (mode == "fast") {
+        sim.director.route_mod = {
+            ambush_mult: 1.45,
+            loot_mult: 1.30,
+            hazard_mult: 0.90,
+            social_mult: 0.80,
+            relief_mult: 0.75,
+            risk_mult: 1.20,
+            ttl: ttl,
+            label: "fast ledge"
+        };
+    } else if (mode == "safe") {
+        sim.director.route_mod = {
+            ambush_mult: 0.75,
+            loot_mult: 0.90,
+            hazard_mult: 1.25,
+            social_mult: 1.30,
+            relief_mult: 1.15,
+            risk_mult: 0.90,
+            ttl: ttl,
+            label: "safer tunnel"
+        };
+    } else {
+        sim.director.route_mod = {
+            ambush_mult: 0.70,
+            loot_mult: 0.70,
+            hazard_mult: 0.80,
+            social_mult: 0.95,
+            relief_mult: 1.20,
+            risk_mult: 0.80,
+            ttl: ttl,
+            label: "backtrack"
+        };
+    }
+
+    sim_log_tag(sim, "NAV_STATE",
+        "🧭 Route modifier active: " + sim.director.route_mod.label +
+        " for " + string(ttl) + " beats."
+    );
+}
+
+function sim_resolve_adventure(sim) {
+    var beat = sim_rand_range(sim, 0, 7);
+
+    switch (beat) {
+        case 0:
+            sim_log_tag(sim, "NAV_CHOICE", "🧭 Two routes split ahead: a fast ledge path, a safer tunnel, or a backtrack.");
+            var nav_roll = sim_rand_range(sim, 0, 99);
+            if (nav_roll < 40) {
+                sim_apply_route_modifier(sim, "fast");
+                sim.gold_total += sim_rand_range(sim, 6, 14);
+                sim_log_tag(sim, "NAV_RESULT", "The party sprints the ledge and recovers dropped coin caches.");
+            } else if (nav_roll < 75) {
+                sim_apply_route_modifier(sim, "safe");
+                sim.tension = clamp(sim.tension + 3, 0, 100);
+                sim_log_tag(sim, "NAV_RESULT", "They take the safer tunnel and trade speed for control.");
+            } else {
+                sim_apply_route_modifier(sim, "backtrack");
+                sim.tension = clamp(sim.tension - 4, 0, 100);
+                sim_log_tag(sim, "NAV_RESULT", "The party backtracks to reset footing, losing time but avoiding pressure.");
+            }
+            break;
+        case 1:
+            sim.coverage.hazard += 1;
+            sim_log_tag(sim, "HAZARD", "🌫 A spore pocket bursts from the walls.");
+            sim_apply_party_damage(sim, sim_rand_range(sim, 2, 5));
+            break;
+        case 2:
+            sim.coverage.discovery += 1;
+            sim_log_tag(sim, "DISCOVERY", "🗺 Faded route marks reveal a hidden bypass used by prior delvers.");
+            sim.tension = clamp(sim.tension - 7, 0, 100);
+            break;
+        case 3:
+            sim.coverage.social += 1;
+            sim_log_tag(sim, "SOCIAL", "🕯 Cult whispers echo nearby; the party catches a password and a warning.");
+            sim_log_tag(sim, "RUMOR", "" + sim.zone + " ahead is trapped, but a side hall avoids the kill-box.");
+            break;
+        case 4:
+            sim.coverage.hazard += 1;
+            sim_log_tag(sim, "HAZARD", "🪨 A partial collapse forces the party to drag gear through rubble.");
+            sim.tension = clamp(sim.tension + 5, 0, 100);
+            if (sim_chance(sim, 35)) sim_apply_party_damage(sim, sim_rand_range(sim, 1, 4));
+            break;
+        case 5:
+            if (!sim.director.discovery_courier_seen) {
+                sim.director.discovery_courier_seen = true;
+                sim.coverage.discovery += 1;
+                sim_log_tag(sim, "DISCOVERY", "🧷 A wounded courier is found with a sealed map fragment.");
+                sim.gold_total += sim_rand_range(sim, 4, 10);
+                sim_log_tag(sim, "DISCOVERY", "The courier shares a shortcut and a small payment for escort.");
+            } else {
+                sim.director.repeat_prevented += 1;
+                sim_log_tag(sim, "DISCOVERY_PREVENTED", "🧷 Courier discovery suppressed (once per episode). The party finds old camp notes instead.");
+                sim.tension = clamp(sim.tension - 2, 0, 100);
+            }
+            break;
+        case 6:
+            sim.coverage.social += 1;
+            sim_log_tag(sim, "SOCIAL", "⚔ A rival party crosses paths and offers terms: trade supplies for intel.");
+            if (sim_chance(sim, 50)) {
+                sim_party_restore_mp(sim, sim_rand_range(sim, 2, 6));
+                sim_log_tag(sim, "TRADE", "The party trades clean water for spell salts and catches their breath.");
+            } else {
+                sim.tension = clamp(sim.tension + 4, 0, 100);
+                sim_log_tag(sim, "TRADE", "Negotiations stall; both groups leave wary and armed.");
+            }
+            break;
+        default:
+            if (!sim.director.discovery_major_seen) {
+                sim.director.discovery_major_seen = true;
+                sim.coverage.discovery += 1;
+                sim_log_tag(sim, "DISCOVERY", "📜 Wall runes describe the boss's old rituals and weak points.");
+                sim.tension = clamp(sim.tension - 4, 0, 100);
+            } else {
+                sim.director.repeat_prevented += 1;
+                sim_log_tag(sim, "DISCOVERY_PREVENTED", "📜 Major discovery already logged this episode; details are noted without another breakthrough beat.");
+            }
+            break;
+    }
+}
+
+function sim_resolve_retreat_bridge(sim) {
+    var bridge = sim_rand_range(sim, 0, 2);
+
+    switch (bridge) {
+        case 0:
+            sim_log_tag(sim, "RETREAT_DECISION", "🏳 The party votes to pull out before the next push turns fatal.");
+            break;
+        case 1:
+            sim_log_tag(sim, "RETREAT_ROUTE", "🪜 They retrace marked passages while rear guards hold chokepoints.");
+            if (sim_chance(sim, 40)) sim_apply_party_damage(sim, sim_rand_range(sim, 1, 3));
+            break;
+        default:
+            sim_log_tag(sim, "GATE_VERDICT", "🚑 At the outer gate, a healer orders immediate treatment and city return.");
+            break;
+    }
+}
 function sim_resolve_merchant(sim) {
-    // --- Harden stats (prevents "field not set" crashes) ---
     if (!is_struct(sim.stats)) sim.stats = {};
     if (!variable_struct_exists(sim.stats, "merchants_seen")) sim.stats.merchants_seen = 0;
     if (!variable_struct_exists(sim.stats, "merchants_bought")) sim.stats.merchants_bought = 0;
 
-    sim.stats.merchants_seen += 1;
+    var recent_merchants = sim_director_recent_count(sim, "merchant", 3);
+    if (recent_merchants > 0) {
+        sim.director.repeat_prevented += 1;
+        var alt = sim_rand_range(sim, 0, 2);
+        if (alt == 0) {
+            sim_log_tag(sim, "SCAVENGER", "🛞 A broken merchant cart is picked clean for scraps.");
+            sim.gold_total += sim_rand_range(sim, 3, 8);
+        } else if (alt == 1) {
+            sim_log_tag(sim, "SCAVENGER", "🧿 A scavenger offers rumor and salvage instead of trade.");
+            sim.tension = clamp(sim.tension - 4, 0, 100);
+        } else {
+            sim_log_tag(sim, "SCAVENGER", "📦 An abandoned stash replaces a repeat merchant stop.");
+            sim_give_item(sim, loot_generate_item(sim, { source: "merchant", zone: sim.zone, tier_target: max(1, floor(sim.difficulty / 2)) }));
+        }
+        return;
+    }
 
-    // Generate a merchant item
-    var tier_target = clamp(2 + floor(sim.difficulty / 2), 1, 10);
+    sim.stats.merchants_seen += 1;
+    sim.director.merchant_cd = 3;
+    sim.director.merchants_this_zone += 1;
+
+    var gold_band = clamp(floor(sim.gold_total / 30), 0, 5);
+    var tier_target = clamp(1 + floor(sim.difficulty / 2) + floor(gold_band / 2), 1, 10);
     var offer = loot_generate_item(sim, { source: "merchant", zone: sim.zone, tier_target: tier_target });
 
-    // If merchant rolled treasure, reroll once (merchant should feel like "gear + tools", not pure treasure)
     if (is_struct(offer) && variable_struct_exists(offer, "type") && offer.type == "treasure") {
         offer = loot_generate_item(sim, { source: "merchant", zone: sim.zone, tier_target: tier_target });
     }
 
-    // Compute buy cost
-    var cost = (is_struct(offer) && variable_struct_exists(offer, "buy_price"))
+    var list_price = (is_struct(offer) && variable_struct_exists(offer, "buy_price"))
         ? offer.buy_price
         : max(10, floor(offer.value * 1.10));
 
-    // Determine equip slot if this is gear
-    var slot = sim_item_slot_from_type(offer.type);
+    var cost = list_price;
+    if (sim.stats.merchants_bought == 0 && sim.gold_total > 0) {
+        cost = min(cost, max(8, floor(sim.gold_total * 0.75)));
+    }
 
-    // Default buyer (in case non-gear)
+    var slot = sim_item_slot_from_type(offer.type);
     var buyer_idx = sim_rand_range(sim, 0, array_length(sim.party) - 1);
     var delta = 0;
 
-    // --- If gear: pick best recipient and decide whether it's worth buying ---
     if (slot != "") {
         var pick = sim_find_best_recipient(sim, offer, slot);
         buyer_idx = pick.idx;
         delta = pick.delta;
 
-        // If nobody can reasonably use it (or recipient invalid), skip
         if (buyer_idx < 0 || buyer_idx >= array_length(sim.party)) {
             sim_log_tag(sim, "MERCHANT_SKIP",
-                "🧳 Merchant: party ignores " + offer.name + " (" + string(cost) + "g) [no valid recipient]."
+                "🧳 Merchant packs up " + offer.name + " (" + string(cost) + "g): no valid recipient."
             );
-            return; // NOTE: sim_run_step will process exits after this beat
+            return;
         }
 
-        // Threshold: below this, upgrades feel like noise
-        var THRESH = 2.5;
+        var THRESH = 2.0;
         if (delta < THRESH) {
-            sim_log_tag(sim, "MERCHANT_SKIP",
-                "🧳 Merchant: party passes on " + offer.name + " (" + string(cost) + "g) [no upgrades]."
+            sim_log_tag(sim, "MERCHANT_OFFER",
+                "🧳 Offer: " + offer.name + " for " + string(cost) + "g [minor upgrade]."
             );
+            sim_log_tag(sim, "MERCHANT_SKIP", "🧳 The party saves coin for a better find.");
             return;
         }
     }
 
-    // Can't afford
+    sim_log_tag(sim, "MERCHANT_OFFER",
+        "🧳 Offer: " + offer.name + " (" + string(list_price) + "g, asking " + string(cost) + "g)."
+    );
+
     if (sim.gold_total < cost) {
-        sim_log_tag(sim, "MERCHANT_SKIP",
-            "🧳 Merchant: party browses, can't afford " + offer.name + " (" + string(cost) + "g)."
-        );
+        var fallback = sim_rand_range(sim, 0, 5);
+        switch (fallback) {
+            case 0:
+                sim_log_tag(sim, "MERCHANT_REPAIR", "🛠 The merchant offers field repairs instead of a sale.");
+                sim_party_heal(sim, sim_rand_range(sim, 4, 8));
+                break;
+            case 1:
+                sim_log_tag(sim, "MERCHANT_SUPPLY", "🧪 The merchant trades cheap poultices for future favors.");
+                sim_party_restore_mp(sim, sim_rand_range(sim, 4, 7));
+                break;
+            case 2:
+                sim_log_tag(sim, "MERCHANT_TRADE", "🔁 A barter swap nets the party a practical consumable.");
+                sim_give_item(sim, loot_generate_item(sim, { source: "merchant", zone: sim.zone, tier_target: max(1, tier_target - 1) }));
+                break;
+            case 3:
+                sim_log_tag(sim, "MERCHANT_RUMOR", "🗣 Rumor: a safer side route avoids a recent ambush point.");
+                sim.tension = clamp(sim.tension - 6, 0, 100);
+                break;
+            case 4:
+                var drip = max(4, floor(list_price * 0.35));
+                sim_log_tag(sim, "MERCHANT_DISCOUNT", "🏷 The merchant marks down stock for battered travelers.");
+                sim_log_tag(sim, "MERCHANT_OFFER", "🧳 Revised asking price: " + string(drip) + "g.");
+                if (sim.gold_total >= drip) {
+                    sim.gold_total -= drip;
+                    sim.stats.merchants_bought += 1;
+                    sim_log_tag(sim, "MERCHANT_BUY", "🧳 The party scrapes together " + string(drip) + "g and buys " + offer.name + ".");
+                    if (slot != "") {
+                        sim_set_equipped_item(sim.party[buyer_idx], slot, offer);
+                        sim_recalc_derived(sim.party[buyer_idx]);
+                    } else {
+                        sim_give_item(sim, offer);
+                    }
+                }
+                break;
+            default:
+                sim_log_tag(sim, "MERCHANT_WARNING", "⚠ Warning: scouts report movement near the next chokepoint.");
+                break;
+        }
         return;
     }
 
-    // Buy it
     var buyer = sim.party[buyer_idx];
     var gold_before = sim.gold_total;
 
@@ -2196,62 +3117,44 @@ function sim_resolve_merchant(sim) {
     sim.stats.merchants_bought += 1;
 
     sim_log_tag(sim, "MERCHANT_BUY",
-        "🧳 Merchant: " + buyer.name + " buys " + offer.name +
-        " for " + string(cost) + " gold (" +
-        string(gold_before) + "→" + string(sim.gold_total) + ")."
+        "🧳 " + buyer.name + " buys " + offer.name +
+        " for " + string(cost) + "g (" + string(gold_before) + "→" + string(sim.gold_total) + ")."
     );
 
-    // --- Gear: equip immediately and log deltas ---
     if (slot != "") {
         var p = sim.party[buyer_idx];
-
-        // If the selected recipient is somehow dead/retired, don't crash; just skip equip.
         if ((variable_struct_exists(p, "dead") && p.dead) || (variable_struct_exists(p, "retired") && p.retired)) {
-            sim_log_tag(sim, "MERCHANT_SKIP",
-                "🧳 Merchant: the intended buyer is unavailable. The party moves on."
-            );
+            sim_log_tag(sim, "MERCHANT_SKIP", "🧳 The intended buyer is unavailable.");
             return;
         }
 
-        // Ensure equip/base fields exist before touching gear
         sim_recalc_derived(p);
-
-        var before_atk    = p.atk;
-        var before_def    = p.def;
-        var before_max_hp = p.max_hp;
-        var before_max_mp = p.max_mp;
 
         sim_set_equipped_item(p, slot, offer);
         sim_recalc_derived(p);
 
-        sim_log_tag(sim, "EQUIP",
-            "📦 EQUIP → " + p.name + " equips (" + slot + "): " + offer.name +
-            " [Δ" + string_format(delta, 1, 1) + "]."
+        sim_log_tag(sim, "EQUIP_CHANGE",
+            "📦 " + p.name + " equips " + offer.name + " (" + slot + ")."
         );
 
-        if (p.atk != before_atk) {
-            sim_log_tag(sim, "STAT_ATK", "🟩 ATK " + string(before_atk) + "→" + string(p.atk) + ".");
-        }
-        if (p.def != before_def) {
-            sim_log_tag(sim, "STAT_DEF", "🟦 DEF " + string(before_def) + "→" + string(p.def) + ".");
-        }
-        if (p.max_hp != before_max_hp) {
-            sim_log_tag(sim, "STAT_HP", "❤️ MAX HP " + string(before_max_hp) + "→" + string(p.max_hp) + ".");
-        }
-        if (p.max_mp != before_max_mp) {
-            sim_log_tag(sim, "STAT_MP", "🔷 MAX MP " + string(before_max_mp) + "→" + string(p.max_mp) + ".");
-        }
-
-        return; // NOTE: sim_run_step will process exits after this beat
+        return;
     }
 
-    // --- Non-gear: use existing pipeline ---
     sim_give_item(sim, offer);
-
-    // NOTE: no sim_party_process_exits() here; sim_run_step handles it once per beat
 }
 function sim_resolve_relief(sim) {
-    var relief_type = choose("campfire", "healing shrine", "abandoned outpost", "quiet corridor");
+    var relief_opts = ["campfire", "healing shrine", "abandoned outpost", "quiet corridor"];
+    var relief_type = relief_opts[sim_rand_range(sim, 0, array_length(relief_opts) - 1)];
+
+    if (variable_struct_exists(sim.director, "last_relief_type") && sim.director.last_relief_type == relief_type) {
+        relief_type = relief_opts[(sim_rand_range(sim, 0, array_length(relief_opts) - 2) + 1) mod array_length(relief_opts)];
+    }
+
+    if (variable_struct_exists(sim.director, "last_relief_type") && sim.director.last_relief_type == "healing shrine" && relief_type == "quiet corridor") {
+        relief_type = "abandoned outpost";
+    }
+
+    sim.director.last_relief_type = relief_type;
 
     sim_log_tag(sim, "RELIEF_START",
         "🕯 Relief: " + relief_type + ". The party regroups."
@@ -2300,8 +3203,7 @@ function sim_resolve_relief(sim) {
         if (w.wounds <= 0) continue;
 
         var wound_heal = 1;
-        if (w.wounds >= 8) wound_heal = 3;
-        else if (w.wounds >= 5) wound_heal = 2;
+        if (w.wounds >= 8) wound_heal = 2;
 
         var before_wounds = w.wounds;
         var before_def = w.def;
@@ -2494,7 +3396,13 @@ function sim_run_finalize(sim) {
 
     sim.finished = true;
 
+    if (!sim.city_scene_played || sim_party_any_dead(sim)) {
+        sim.city_scene_pending = true;
+        sim_resolve_city_scene(sim);
+    }
+
     // Score quick summary
+    if (sim.stats.near_deaths <= 0 && sim.stats.total_downed_count > 0) sim.stats.near_deaths = sim.stats.total_downed_count;
     var avg_hp_pct = sim_party_avg_hp_pct(sim);
     sim_log(sim, "📺 Episode ends. Gold=" + string(sim.gold_total) +
         " | Chests=" + string(sim.stats.chests_opened) +
@@ -2504,13 +3412,46 @@ function sim_run_finalize(sim) {
         " | Boss=" + (sim.stats.boss_defeated ? "DEFEATED" : "NO"));
 
     sim_log(sim, "📊 Party avg HP%: " + string(round(avg_hp_pct * 100)) + "%");
+    sim_log(sim,
+        "📊 Beat counts: Combat=" + string(sim.coverage.combat) +
+        " | Expedition=" + string(sim.coverage.exploration) +
+        " | Social=" + string(sim.coverage.social) +
+        " | Merchant=" + string(sim.coverage.merchant) +
+        " | Relief=" + string(sim.coverage.relief) +
+        " | Discovery=" + string(sim.coverage.discovery) +
+        " | Hazard=" + string(sim.coverage.hazard)
+    );
+    sim_log(sim,
+        "📊 Downed events=" + string(sim.stats.total_downed_count) +
+        " | Tank downed=" + string(sim.stats.tank_downed_count) +
+        " | Over-budget prevented=" + string(sim.stats.encounters_over_budget_prevented) +
+        " | Encounter rerolls=" + string(sim.stats.rerolls_count) +
+        " | Repeat prevented=" + string(sim.director.repeat_prevented) +
+        " | Downed-loop interventions=" + string(sim.director.downed_loop_interventions)
+    );
+
+    var encounter_outcome_total = sim.stats.encounter_accepted + sim.stats.encounter_scaled_down + sim.stats.encounter_degraded;
+    sim_log(sim,
+        "📊 Encounter budget: attempts=" + string(sim.stats.encounter_attempts) +
+        " | accepted=" + string(sim.stats.encounter_accepted) +
+        " | rerolled=" + string(sim.stats.encounter_rerolled) +
+        " | scaled=" + string(sim.stats.encounter_scaled_down) +
+        " | degraded=" + string(sim.stats.encounter_degraded) +
+        " | bestfit=" + string(sim.stats.encounter_bestfit_selected) +
+        " | outcomes_total=" + string(encounter_outcome_total)
+    );
 }
 function sim_run_init(sim, seed, beats_target) {
+    var short_mode = (variable_global_exists("debug_short_mode") && global.debug_short_mode);
+    var very_short_mode = (variable_global_exists("debug_very_short_mode") && global.debug_very_short_mode);
+
     // Core run state
+    global.debug_seed = seed;
     sim.seed = seed;
     sim.rng = seed;
     sim.beat = 0;
-    sim.beats_target = beats_target;
+    var target_cap = very_short_mode ? 16 : (short_mode ? 36 : beats_target);
+    sim.beats_target = min(beats_target, target_cap);
     sim.finished = false;
 
     sim.zone = "Dungeon";
@@ -2518,7 +3459,7 @@ function sim_run_init(sim, seed, beats_target) {
     sim.tension = 10;
     sim.gold_total = 0;
 
-    sim.wound_retreat_threshold = 3;
+    sim.wound_retreat_threshold = very_short_mode ? 2 : (short_mode ? 2 : 3);
     sim.retreat_to_city = false;
     sim.retreat_beats_left = 0;
     sim.city_scene_pending = false;
@@ -2528,13 +3469,65 @@ function sim_run_init(sim, seed, beats_target) {
         merchant_cd: 0,
         chest_cd: 0,
         merchants_this_zone: 0,
-        beats_since_relief: 0
+        beats_since_relief: 0,
+        adventure_cd: 0,
+        relief_min_gap: 4,
+        relief_max_gap: 9,
+        repeat_window: 6,
+        route_mod: {
+            ambush_mult: 1.0,
+            loot_mult: 1.0,
+            hazard_mult: 1.0,
+            social_mult: 1.0,
+            relief_mult: 1.0,
+            risk_mult: 1.0,
+            ttl: 0,
+            label: ""
+        },
+        last_relief_type: "",
+        relief_context_lock: 0,
+        retreat_bridge_left: 0,
+        discovery_courier_seen: false,
+        discovery_major_seen: false,
+        repeat_prevented: 0,
+        downed_loop_interventions: 0,
+        tank_crisis_window: 10,
+        tank_crisis_history: [],
+        tank_tactic_state: {
+            defensive_left: 0,
+            cover_left: 0,
+            withdrawal_left: 0
+        }
     };
 
+    sim.debug_short_mode = short_mode;
+    sim.debug_very_short_mode = very_short_mode;
+    sim.coverage = {
+        combat: 0,
+        exploration: 0,
+        social: 0,
+        hazard: 0,
+        discovery: 0,
+        relief: 0,
+        merchant: 0,
+        retreat: 0
+    };
+
+    sim.recent_beats = [];
     sim.prev_zone = sim.zone;
 
     sim.log = [];
-    sim_log(sim, "🌟 Episode begins. Seed=" + string(sim.seed) + " Zone=" + sim.zone);
+    if (variable_global_exists("debug_enabled") && global.debug_enabled) {
+        global.run_log_text = "";
+        clipboard_set_text("");
+    }
+    sim.episode_begun_logged = false;
+    if (!sim.episode_begun_logged) {
+        sim_log(sim, "🌟 Episode begins. Seed=" + string(sim.seed) + " Zone=" + sim.zone);
+        var verbose = variable_global_exists("debug_verbose") ? global.debug_verbose : false;
+        if (verbose) sim_log_tag(sim, "NEAR_DEATH_DEF", "near_death is tracked as HP <= 35% max HP.");
+        sim.episode_begun_logged = true;
+    }
 
     // Party
     sim.party = [];
@@ -2564,6 +3557,17 @@ function sim_run_init(sim, seed, beats_target) {
         merchants_bought: 0,
         rares_found: 0,
         boss_defeated: false,
+        downed_events: 0,
+        tank_downed_count: 0,
+        total_downed_count: 0,
+        encounters_over_budget_prevented: 0,
+        rerolls_count: 0,
+        encounter_attempts: 0,
+        encounter_accepted: 0,
+        encounter_rerolled: 0,
+        encounter_scaled_down: 0,
+        encounter_degraded: 0,
+        encounter_bestfit_selected: 0,
 
         deaths: 0,
         retirements: 0,
@@ -2571,12 +3575,109 @@ function sim_run_init(sim, seed, beats_target) {
     };
 }
 function sim_run_new(sim, beats_target) {
-    // New run with a new seed
-    var seed = irandom_range(100000, 999999);
-    sim_run_init(sim, seed, beats_target);
+    // Canonical run seed source: global.debug_seed
+    var seed;
+
+    if (argument_count >= 3) {
+        seed = argument[2];
+    } else if (variable_global_exists("debug_seed")) {
+        seed = global.debug_seed;
+    } else {
+        seed = irandom_range(100000, 999999);
+        global.debug_seed = seed;
+    }
+
+    global.debug_seed = seed;
+    rng_seed_init(global.debug_seed);
+    sim_run_init(sim, global.debug_seed, beats_target);
+}
+
+function sim_run_multi_seed_short_test(sim, base_seed, run_count, beats_target_short) {
+    var original_seed = sim.seed;
+    var original_short = variable_global_exists("debug_short_mode") ? global.debug_short_mode : false;
+    var original_very_short = variable_global_exists("debug_very_short_mode") ? global.debug_very_short_mode : false;
+
+    var total_combats = 0;
+    var total_exploration = 0;
+    var total_merchant = 0;
+    var total_relief = 0;
+    var total_discovery = 0;
+    var total_hazard = 0;
+    var total_social = 0;
+    var total_downed = 0;
+    var total_tank_downed = 0;
+    var total_over_budget_prevented = 0;
+    var total_rerolls = 0;
+    var total_prevented = 0;
+
+    global.debug_short_mode = true;
+    global.debug_very_short_mode = false;
+
+    for (var i = 0; i < run_count; i++) {
+        var test_seed = base_seed + i;
+
+        sim.log = [];
+        sim_log(sim, "=== Test Run " + string(i + 1) + " (Seed " + string(test_seed) + ") ===");
+
+        sim_run_new(sim, beats_target_short, test_seed);
+        sim_log(sim, "=== Test Run " + string(i + 1) + " (Seed " + string(test_seed) + ") ===");
+        while (!sim.finished) {
+            sim_run_step(sim);
+        }
+
+        sim_log(sim,
+            "Run " + string(i + 1) + " summary: " +
+            "combat=" + string(sim.coverage.combat) +
+            ", exploration=" + string(sim.coverage.exploration) +
+            ", social=" + string(sim.coverage.social) +
+            ", merchant=" + string(sim.coverage.merchant) +
+            ", relief=" + string(sim.coverage.relief) +
+            ", discovery=" + string(sim.coverage.discovery) +
+            ", hazard=" + string(sim.coverage.hazard) +
+            " , downed=" + string(sim.stats.total_downed_count) +
+            ", tank downed=" + string(sim.stats.tank_downed_count) +
+            ", budget prevented=" + string(sim.stats.encounters_over_budget_prevented) +
+            ", rerolls=" + string(sim.stats.rerolls_count) +
+            ", repeats prevented=" + string(sim.director.repeat_prevented)
+        );
+
+        total_combats += sim.coverage.combat;
+        total_exploration += sim.coverage.exploration;
+        total_merchant += sim.coverage.merchant;
+        total_relief += sim.coverage.relief;
+        total_discovery += sim.coverage.discovery;
+        total_hazard += sim.coverage.hazard;
+        total_social += sim.coverage.social;
+        total_downed += sim.stats.total_downed_count;
+        total_tank_downed += sim.stats.tank_downed_count;
+        total_over_budget_prevented += sim.stats.encounters_over_budget_prevented;
+        total_rerolls += sim.stats.rerolls_count;
+        total_prevented += sim.director.repeat_prevented;
+    }
+
+    global.debug_seed = original_seed;
+    global.debug_short_mode = original_short;
+    global.debug_very_short_mode = original_very_short;
+    sim_log(sim,
+        "Combined summary: combat=" + string(total_combats) +
+        ", exploration=" + string(total_exploration) +
+        ", social=" + string(total_social) +
+        ", merchant=" + string(total_merchant) +
+        ", relief=" + string(total_relief) +
+        ", discovery=" + string(total_discovery) +
+        ", hazard=" + string(total_hazard) +
+        " , downed=" + string(total_downed) +
+        ", tank downed=" + string(total_tank_downed) +
+        ", budget prevented=" + string(total_over_budget_prevented) +
+        ", rerolls=" + string(total_rerolls) +
+        ", repeats prevented=" + string(total_prevented)
+    );
+    sim_log(sim, "=== End multi-seed short test ===");
 }
 function sim_run_restart_same_seed(sim) {
     // Replay exact run deterministically
+    global.debug_seed = sim.seed;
+    rng_seed_init(global.debug_seed);
     sim_run_init(sim, sim.seed, sim.beats_target);
 }
 function sim_run_step(sim) {
@@ -2600,6 +3701,8 @@ function sim_run_step(sim) {
         sim.prev_zone = sim.zone;
     }
 
+    if (!is_array(sim.recent_beats)) sim.recent_beats = [];
+
     // Difficulty ramps
     if (sim.beat > 0 && sim.beat % 20 == 0) sim.difficulty += 1;
 
@@ -2618,10 +3721,18 @@ function sim_run_step(sim) {
     // Director picks the next beat event
     var ev = sim_director_next_event(sim);
 
+    if (ev == "merchant" && sim.director.merchant_cd > 0) {
+        sim.director.repeat_prevented += 1;
+        ev = "adventure";
+    }
+
     // Playback: why this beat is happening (source cue)
     switch (ev) {
         case "chest":
             sim_log_tag(sim, "BEAT_SOURCE", "🔎 Exploration find: the party spots something ahead.");
+            break;
+        case "adventure":
+            sim_log_tag(sim, "BEAT_SOURCE", "🧭 Expedition: the route itself forces a decision.");
             break;
         case "merchant":
             sim_log_tag(sim, "BEAT_SOURCE", "🧳 Encounter: a traveling merchant appears.");
@@ -2634,6 +3745,9 @@ function sim_run_step(sim) {
             break;
         case "boss":
             sim_log_tag(sim, "BEAT_SOURCE", "👁 Ominous presence: the air shifts. Something huge is near.");
+            break;
+        case "retreat_bridge":
+            sim_log_tag(sim, "BEAT_SOURCE", "🏃 Withdrawal: the party falls back through dangerous ground.");
             break;
         case "intro":
             sim_log_tag(sim, "BEAT_SOURCE", "🗺 The party advances deeper.");
@@ -2648,8 +3762,10 @@ function sim_run_step(sim) {
         case "intro":      sim_resolve_intro(sim); break;
         case "combat":     sim_resolve_combat(sim); break;
         case "chest":      sim_resolve_chest(sim); break;
+        case "adventure":  sim_resolve_adventure(sim); break;
         case "merchant":   sim_resolve_merchant(sim); break;
         case "relief":     sim_resolve_relief(sim); break;
+        case "retreat_bridge": sim_resolve_retreat_bridge(sim); break;
         case "city_scene": sim_resolve_city_scene(sim); break;
         case "boss":       sim_resolve_boss(sim); break;
         default:             sim_resolve_combat(sim); break;
@@ -2657,9 +3773,15 @@ function sim_run_step(sim) {
 
     if (ev == "relief") {
         sim.director.beats_since_relief = 0;
-    } else if (ev == "combat") {
+    } else if (ev == "combat" || ev == "adventure" || ev == "retreat_bridge") {
         sim.director.beats_since_relief += 1;
     }
+
+    if (ev == "combat") sim.coverage.combat += 1;
+    if (ev == "adventure" || ev == "chest") sim.coverage.exploration += 1;
+    if (ev == "retreat_bridge") sim.coverage.retreat += 1;
+    if (ev == "merchant") sim.coverage.merchant += 1;
+    if (ev == "relief") sim.coverage.relief += 1;
 
     // Process retirements/deaths and recruit replacements
     sim_party_process_exits(sim, ev);
@@ -2671,6 +3793,29 @@ function sim_run_step(sim) {
 
     sim.director.merchant_cd = max(0, sim.director.merchant_cd - 1);
     sim.director.chest_cd = max(0, sim.director.chest_cd - 1);
+    sim.director.adventure_cd = max(0, sim.director.adventure_cd - 1);
+
+    if (is_struct(sim.director.route_mod) && sim.director.route_mod.ttl > 0) {
+        sim.director.route_mod.ttl -= 1;
+        if (sim.director.route_mod.ttl <= 0) {
+            sim.director.route_mod = {
+                ambush_mult: 1.0,
+                loot_mult: 1.0,
+                hazard_mult: 1.0,
+                social_mult: 1.0,
+                relief_mult: 1.0,
+                risk_mult: 1.0,
+                ttl: 0,
+                label: ""
+            };
+            sim_log_tag(sim, "NAV_STATE", "🧭 Route modifier fades; selection weights normalize.");
+        }
+    }
+
+    array_push(sim.recent_beats, ev);
+    if (array_length(sim.recent_beats) > 20) {
+        array_delete(sim.recent_beats, 0, 1);
+    }
 }
 function sim_set_equipped_item(p, slot, item) {
     // Ensure equip struct exists (prevents draw-time crashes on legacy party members)
@@ -2694,6 +3839,64 @@ function sim_set_equipped_item(p, slot, item) {
     p.armor   = sim_item_name(p.equip.armor);
     p.trinket = sim_item_name(p.equip.trinket);
 }
+function sim_try_scale_encounter(enc, cap_ratio, boss_cap_ratio, force_scale) {
+    if (!is_struct(enc) || !variable_struct_exists(enc, "enemies") || !is_array(enc.enemies)) return undefined;
+    if (enc.tag == "BOSS") return undefined;
+
+    var party_power = max(1, enc.party_power);
+    var ratio = enc.total / party_power;
+    if (!force_scale && ratio > cap_ratio + 0.20) return undefined;
+
+    var enemies = enc.enemies;
+    var enemy_count = array_length(enemies);
+    if (enemy_count <= 0) return undefined;
+
+    var removed_name = "";
+    var scaled_total = enc.total;
+
+    if (enemy_count > 1) {
+        var remove_idx = 0;
+        var remove_threat = enemies[0].threat;
+        for (var i = 1; i < enemy_count; i++) {
+            if (enemies[i].threat > remove_threat) {
+                remove_threat = enemies[i].threat;
+                remove_idx = i;
+            }
+        }
+        removed_name = enemies[remove_idx].name;
+        array_delete(enemies, remove_idx, 1);
+
+        scaled_total = 0;
+        for (var j = 0; j < array_length(enemies); j++) {
+            scaled_total += enemies[j].threat;
+        }
+    } else {
+        scaled_total = floor(enc.total * 0.90);
+    }
+
+    var scaled_ratio = scaled_total / party_power;
+    if (scaled_ratio > boss_cap_ratio + 0.35) return undefined;
+
+    var names = "";
+    for (var n = 0; n < array_length(enemies); n++) {
+        if (names != "") names += ", ";
+        names += enemies[n].name;
+    }
+
+    return {
+        names: names,
+        total: max(1, scaled_total),
+        tag: enc.tag,
+        scaled: true,
+        removed_enemy_name: removed_name,
+        weakened_only: (enemy_count <= 1),
+        party_power: enc.party_power,
+        cap_ratio: cap_ratio,
+        enemies: enemies
+    };
+}
+
+
 function sim_upgrade_delta(p, slot, new_item) {
     var old_item = sim_get_equipped_item(p, slot);
     if (!is_struct(old_item)) return sim_role_weighted_score(p, new_item);
@@ -2701,4 +3904,36 @@ function sim_upgrade_delta(p, slot, new_item) {
     var new_score = sim_role_weighted_score(p, new_item);
     var old_score = sim_role_weighted_score(p, old_item);
     return (new_score - old_score);
+}
+function _debug_start_run()
+{
+    global.debug_beats_emitted = 0;
+
+    // Flush previous run's leftover lines
+    debug_log_flush();
+
+    // Clear run log text
+    global.run_log_text = "";
+    clipboard_set_text("");
+
+    // Seed the RNG
+    rng_seed_init(global.debug_seed);
+
+    // Start ONE new log file (if autosave is on)
+    if (global.debug_autosave) {
+        debug_log_start_file(global.debug_seed);
+    }
+
+    beat_output_emit("DEBUG", "Run started. Seed=" + string(global.debug_seed), undefined);
+
+    if (object_exists(obj_sim_controller)) {
+        with (obj_sim_controller) {
+            sim_run_new(sim, episode_beats_target, global.debug_seed);
+        }
+    }
+}
+function _zero_pad(val, digits) {
+    var s = string(floor(val));
+    while (string_length(s) < digits) s = "0" + s;
+    return s;
 }

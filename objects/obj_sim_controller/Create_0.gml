@@ -20,3 +20,5 @@ sim_run_new(sim, run_target, global.debug_seed);
 //loot_debug_dump(sim, 20, { source: "chest", zone: "Dungeon", tier_target: 2 });
 //loot_debug_dump(sim, 10, { source: "merchant", zone: "Town", tier_target: 4 });
 //loot_debug_dump(sim, 10, { source: "boss", zone: "Castle", tier_target: 7 });
+
+

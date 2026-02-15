@@ -1,1063 +1,538 @@
-***************************************
- *     GameMaker v2024.14.3.260    *
-***************************************
-Setting scheduler resolution to 1
-Set process priority to HIGH_PRIORITY_CLASS
-Set main thread priority to HIGHEST
-Registered with MMCSS 'Games' task
-Set MMCSS thread priority to CRITICAL
-Reading File C:\Users\hoffe\AppData\Local\GameMakerStudio2\GMS2TEMP\AdventureSimulator_79264BB7_VM\AdventureSimulator.win took 0 ms
-DirectX11: Using hardware device
-DXGI_FEATURE_PRESENT_ALLOW_TEARING is supported - variable refresh rate displays will work correctly
-Window overlaps with output 0 (\\.\DISPLAY1) by 1115274 pixels
-Restricting swap chain to output: \\.\DISPLAY1 (HMONITOR: 0x0000000000010001)
-Creating swap chain at 1366 by 768
-Using IDXGIFactory2::CreateSwapChainForHwnd (modern API for windowed mode)
-Adding DXGI_SWAP_CHAIN_FLAG_ALLOW_TEARING to swap chain flags
-Set swap chain maximum frame latency to 1
-Setting viewport to 1366 by 768
-
-Resizing swap chain to 1366 by 768...
-Setting viewport to 1366 by 768
-
-Collision Event time(microsecs)=1
-Variable_Global_Init()
-PrepareGame()
-Audio_Init()
-Audio group 0 -> Loaded
-Attempting to set gamepadcount to 12
-Game_Prepare()
-Script_Prepare() 
-TimeLine_Prepare() 
-Object_Prepare() 
-Room_Prepare() 
-Finished PrepareGame() 
-Run_Start
-Done g_EffectsManager.Init()
-Done RenderStateManager
-CreateColPairs took 0.000000s 0 usecs for 2 object types obj_col_numb=0 physobjcount=0 resizes 0 final size 0
-Done ObjectLists
-Done Extension_Initialize
-About to startroom
-🎬 Episode begins. Seed=353356 Zone=Dungeon
-Total memory used = 39011358 (0x0253441e) bytes 37.20MB
-Free memory = 6142640 (0x005dbab0) bytes 5.86MB
-Peak memory used = 39011358 (0x0253441e) bytes 37.20MB
-**********************************.
-Entering main loop.
-**********************************.
-[BEAT_SOURCE] 🧭 The party advances deeper.
+[DEBUG] Short mode: 0
+[DEBUG] Short mode: 1
+[DEBUG] Seed -> 100003
+[DEBUG] Run started. Seed=100003
+🌟 Episode begins. Seed=100003 Zone=Dungeon
+[BEAT_SOURCE] 🗺 The party advances deeper.
 🧭 The party advances into the Dungeon.
-GM_Size setting canvas width height to 1366 by 768
 [BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Skeleton (threat 6).
-[CURSED_GROUND] 🜏 Cursed ground: spells feel heavier and more expensive.
-[COMBAT_EXCHANGE] ⚔ Skeleton strikes: Malum of Dockside takes 35 (70→35).
-[THIEF_HIT] 🗡 Brris slips in: 26 damage.
-[MAGE_HIT] ✨ Toros the Unlucky casts for 64. [MP 30→24]
-[HEAL] 🩹 Healer restores Malum of Dockside +10 HP (35→45).
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Warg from the encounter.
+[ENCOUNTER] ⚔ Combat: Goblin (threat 3) NORMAL.
+[COMBAT_EXCHANGE] ⚔ Goblin strikes: Taliel takes 18 (70→52).
+[FLANK_HIT] 🪓 Flanking blow! Ilyx the Scarred takes 8 (42→34).
+[THIEF_HIT] 🗡 Selen slips in: 25 damage.
+[MAGE_HIT] ✨ Brum of Dockside casts for 39. [MP 30→27]
+[HEAL] 🩹 Healer restores Taliel +17 HP (52→69).
 [BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Cult Acolyte (threat 5).
-[CURSED_GROUND] 🜏 Cursed ground: spells feel heavier and more expensive.
-[COMBAT_EXCHANGE] ⚔ Cult Acolyte strikes: Malum of Dockside takes 32 (45→13).
-[THIEF_HIT] 🗡 Brris slips in: 23 damage.
-[MAGE_CRIT] ✨ Toros the Unlucky casts for 98 (CRIT!). [MP 24→19]
-[HEAL] 🩹 Healer restores Malum of Dockside +12 HP (13→25).
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Warg from the encounter.
+[ENCOUNTER] ⚔ Combat: Cult Acolyte (threat 7) NORMAL.
+[AMBUSH_HIT] 🕳 AMBUSH → Brum of Dockside takes 6 (40→34).
+[COMBAT_EXCHANGE] ⚔ Cult Acolyte strikes: Taliel takes 49 (69→20).
+[THIEF_HIT] 🗡 Selen slips in: 24 damage.
+[MAGE_HIT] ✨ Brum of Dockside casts for 68. [MP 29→25]
+[HEAL] 🩹 Healer restores Taliel +15 HP (20→35).
+[BEAT_SOURCE] 🧭 Expedition: the route itself forces a decision.
+[SOCIAL] 🕯 Cult whispers echo nearby; the party catches a password and a warning.
+[RUMOR] Dungeon ahead is trapped, but a side hall avoids the kill-box.
 [BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Goblin (threat 4).
-[COMBAT_EXCHANGE] ⚔ Goblin strikes: Malum of Dockside takes 27 (25→-2).
-[THIEF_EXEC] 🗡 Brris smells blood: 30 damage.
-[MAGE_HIT] ✨ Toros the Unlucky casts for 45. [MP 19→16]
-[HEAL] 🩹 Healer restores Malum of Dockside +12 HP (-2→10).
-[NEAR_DEATH] 🚨 Near-death: Malum of Dockside is under 20% HP!
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Skeleton (threat 4).
-[BERSERK] 🔥 Berserk rush: the enemy swings wild and hard.
-[COMBAT_EXCHANGE] ⚔ Skeleton strikes: Malum of Dockside takes 32 (10→-22).
-[CHAOS] 💢 Chaos erupts in the scrum.
-[SPLASH_BEGIN] ☠ Splash damage begins (base ~1).
-[EXECUTION_BLOW] 🩸 EXECUTION BLOW → Malum of Dockside takes 1 (-22→-23).
-[SPLASH_HIT] ☠ SPLASH → Toros the Unlucky takes 1 (40→39).
-[SPLASH_HIT] ☠ SPLASH → Brris takes 1 (45→44).
-[SPLASH_HIT] ☠ SPLASH → Harris takes 1 (42→41).
-[THIEF_EXEC] 🗡 Brris smells blood: 33 damage.
-[MAGE_HIT] ✨ Toros the Unlucky casts for 50. [MP 16→13]
-[HEAL] 🩹 Healer restores Malum of Dockside +11 HP (-23→-12).
-[KNOCKDOWN] ⚠ Malum of Dockside collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Malum of Dockside gains a wound (1). DEF now 6.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Goblin (threat 5).
-[COMBAT_EXCHANGE] ⚔ Goblin strikes: Malum of Dockside takes 33 (1→-32).
-[THIEF_EXEC] 🗡 Brris smells blood: 30 damage.
-[MAGE_HIT] ✨ Toros the Unlucky casts for 52. [MP 13→10]
-[HEAL] 🩹 Healer restores Malum of Dockside +7 HP (-32→-25).
-[KNOCKDOWN] ⚠ Malum of Dockside collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Malum of Dockside gains a wound (2). DEF now 5.
-[BEAT_SOURCE] 🧭 Exploration find: the party spots something ahead.
-[CHEST_OPEN] 🧰 Chest found.
-[CHEST_GOLD] 🧰 Chest: +26 gold.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Slime (threat 5).
-[CURSED_GROUND] 🜏 Cursed ground: spells feel heavier and more expensive.
-[COMBAT_EXCHANGE] ⚔ Slime strikes: Malum of Dockside takes 37 (1→-36).
-[THIEF_EXEC_CRIT] 🗡 Brris smells blood: 54 damage (CRIT!).
-[MAGE_HIT] ✨ Toros the Unlucky casts for 56. [MP 10→5]
-[HEAL] 🩹 Healer restores Malum of Dockside +12 HP (-36→-24).
-[CRACKING] 🫠 Malum of Dockside looks shaken (38→20).
-[KNOCKDOWN] ⚠ Malum of Dockside collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Malum of Dockside gains a wound (3). DEF now 4.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Cult Acolyte (threat 6).
-[AMBUSH] 🕳 Ambush! Something lashes out before you can set formation.
-[AMBUSH_HIT] 🕳 AMBUSH → Toros the Unlucky takes 7 (39→32).
-[COMBAT_EXCHANGE] ⚔ Cult Acolyte strikes: Malum of Dockside takes 36 (1→-35).
-[THIEF_EXEC] 🗡 Brris smells blood: 30 damage.
-[MAGE_HIT] ✨ Toros the Unlucky casts for 61. [MP 5→1]
-[HEAL] 🩹 Healer restores Malum of Dockside +13 HP (-35→-22).
-[RETIRE_NOTICE] 🏳 Malum of Dockside mutters: 'After this… I'm done.'
-[KNOCKDOWN] ⚠ Malum of Dockside collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Malum of Dockside gains a wound (4). DEF now 3.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Skeleton (threat 6).
-[COMBAT_EXCHANGE] ⚔ Skeleton strikes: Malum of Dockside takes 42 (1→-41).
-[THIEF_EXEC] 🗡 Brris smells blood: 32 damage.
-[MAGE_CRIT] ✨ Toros the Unlucky jabs for 56 (CRIT!). [NO MP]
-[HEAL] 🩹 Healer restores Malum of Dockside +7 HP (-41→-34).
-[KNOCKDOWN] ⚠ Malum of Dockside collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Malum of Dockside gains a wound (5). DEF now 2.
-Resizing swap chain to 1366 by 768...
-Setting viewport to 1366 by 768
-
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: quiet corridor. The party regroups.
-[GROUP_HEAL] ✨ Party heals +8 (group).
-[HP_DELTA]   ❤️ Malum of Dockside HP 1→9.
-[HP_DELTA]   ❤️ Toros the Unlucky HP 32→40.
-[HP_DELTA]   ❤️ Brris HP 44→45.
-[HP_DELTA]   ❤️ Harris HP 41→44.
-[GROUP_MP] 🔷 Party restores MP +6 (group).
-[MP_DELTA]   🔷 Malum of Dockside MP 5→5.
-[MP_DELTA]   🔷 Toros the Unlucky MP 1→7.
-[MP_DELTA]   🔷 Brris MP 10→11.
-[MP_DELTA]   🔷 Harris MP 4→10.
-[WOUND_HEAL] 🩺 Relief treatment: Malum of Dockside recovers 1 wound.
-[STAT_DEF] 🟦 DEF 2→3 (wounds 5→4).
-[RESOLVE] 🧠 Malum of Dockside steadies (0→15).
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Skeleton (threat 3).
-[AMBUSH] 🕳 Ambush! Something lashes out before you can set formation.
-[AMBUSH_HIT] 🕳 AMBUSH → Toros the Unlucky takes 3 (40→37).
-[COMBAT_EXCHANGE] ⚔ Skeleton strikes: Malum of Dockside takes 25 (9→-16).
-[THIEF_EXEC_CRIT] 🗡 Brris smells blood: 62 damage (CRIT!).
-[MAGE_HIT] ✨ Toros the Unlucky casts for 35. [MP 7→4]
-[HEAL] 🩹 Healer restores Malum of Dockside +6 HP (-16→-10).
-[RETIRE_NOTICE] 🏳 Malum of Dockside mutters: 'After this… I'm done.'
-[KNOCKDOWN] ⚠ Malum of Dockside collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Malum of Dockside gains a wound (5). DEF now 2.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Slime (threat 2).
-[COMBAT_EXCHANGE] ⚔ Slime strikes: Malum of Dockside takes 15 (1→-14).
-[THIEF_EXEC_CRIT] 🗡 Brris smells blood: 62 damage (CRIT!).
-[MAGE_HIT] ✨ Toros the Unlucky casts for 36. [MP 4→2]
-[HEAL] 🩹 Healer restores Malum of Dockside +12 HP (-14→-2).
-[KNOCKDOWN] ⚠ Malum of Dockside collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Malum of Dockside gains a wound (6). DEF now 1.
-[BEAT_SOURCE] 🧭 Exploration find: the party spots something ahead.
-[CHEST_OPEN] 🧰 Chest found.
-[CHEST_GOLD] 🧰 Chest: +23 gold.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Cult Acolyte (threat 1).
-[COMBAT_EXCHANGE] ⚔ Cult Acolyte strikes: Malum of Dockside takes 9 (1→-8).
-[THIEF_EXEC_CRIT] 🗡 Brris smells blood: 64 damage (CRIT!).
-[MAGE_HIT] ✨ Toros the Unlucky casts for 22. [MP 2→0]
-[HEAL] 🩹 Healer restores Malum of Dockside +11 HP (-8→3).
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: campfire. The party regroups.
-[GROUP_HEAL] ✨ Party heals +11 (group).
-[HP_DELTA]   ❤️ Malum of Dockside HP 3→14.
-[HP_DELTA]   ❤️ Toros the Unlucky HP 37→40.
-[HP_DELTA]   ❤️ Brris HP 45→45.
-[HP_DELTA]   ❤️ Harris HP 44→44.
-[GROUP_MP] 🔷 Party restores MP +8 (group).
-[MP_DELTA]   🔷 Malum of Dockside MP 5→5.
-[MP_DELTA]   🔷 Toros the Unlucky MP 0→8.
-[MP_DELTA]   🔷 Brris MP 11→11.
-[MP_DELTA]   🔷 Harris MP 1→9.
-[WOUND_HEAL] 🩺 Relief treatment: Malum of Dockside recovers 1 wound.
-[STAT_DEF] 🟦 DEF 1→2 (wounds 6→5).
-[RESOLVE] 🧠 Malum of Dockside steadies (0→11).
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Slime (threat 8).
-[REINFORCEMENTS] 🪓 Reinforcements: more shapes join the fight from the dark.
-[COMBAT_EXCHANGE] ⚔ Slime strikes: Malum of Dockside takes 54 (14→-40).
-[CHAOS] 💢 Chaos erupts in the scrum.
-[SPLASH_BEGIN] ☠ Splash damage begins (base ~2).
-[EXECUTION_BLOW] 🩸 EXECUTION BLOW → Malum of Dockside takes 1 (-40→-41).
-[SPLASH_HIT] ☠ SPLASH → Toros the Unlucky takes 1 (40→39).
-[SPLASH_HIT] ☠ SPLASH → Brris takes 1 (45→44).
-[SPLASH_HIT] ☠ SPLASH → Harris takes 1 (44→43).
-[THIEF_EXEC_CRIT] 🗡 Brris smells blood: 66 damage (CRIT!).
-[MAGE_HIT] ✨ Toros the Unlucky casts for 75. [MP 8→4]
-[HEAL] 🩹 Healer restores Malum of Dockside +7 HP (-41→-34).
-[RETIRE_NOTICE] 🏳 Malum of Dockside mutters: 'After this… I'm done.'
-[KNOCKDOWN] ⚠ Malum of Dockside collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Malum of Dockside gains a wound (6). DEF now 1.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Skeleton (threat 2).
-[COMBAT_EXCHANGE] ⚔ Skeleton strikes: Malum of Dockside takes 19 (1→-18).
-[THIEF_EXEC_CRIT] 🗡 Brris smells blood: 58 damage (CRIT!).
-[MAGE_HIT] ✨ Toros the Unlucky casts for 34. [MP 4→2]
-[HEAL] 🩹 Healer restores Malum of Dockside +8 HP (-18→-10).
-[KNOCKDOWN] ⚠ Malum of Dockside collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Malum of Dockside gains a wound (7). DEF now 0.
-[BEAT_SOURCE] 🧭 Exploration find: the party spots something ahead.
-[CHEST_OPEN] 🧰 Chest found.
-[CHEST_TRAP] 🧰 Chest: it's a trap! Poison needles.
-[SPLASH_BEGIN] ☠ Splash damage begins (base ~6).
-[SPLASH_HIT] ☠ SPLASH → Malum of Dockside takes 6 (1→-5).
-[DOWNED] ⚠ Malum of Dockside is down!
-[SPLASH_HIT] ☠ SPLASH → Toros the Unlucky takes 3 (39→36).
-[SPLASH_HIT] ☠ SPLASH → Brris takes 4 (44→40).
-[SPLASH_HIT] ☠ SPLASH → Harris takes 2 (43→41).
-[BEAT_SOURCE] 🧭 Encounter: a traveling merchant appears.
-[MERCHANT_SKIP] 🧿 Merchant: party browses, can't afford Keen Iron Sword (296g).
-[RETIRE] 🏳 Malum of Dockside retires. 'Not today. Not anymore.'
-[RECRUIT] 🧑‍🤝‍🧑 Recruit joins: Tank Morris (Sewer-raised, Scarred).
-[BEAT_SOURCE] 🧭 Encounter: a traveling merchant appears.
-[MERCHANT_SKIP] 🧿 Merchant: party browses, can't afford Iron Wraps (163g).
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Skeleton (threat 3).
-[COMBAT_EXCHANGE] ⚔ Skeleton strikes: Morris takes 15 (74→59).
-[THIEF_CRIT] 🗡 Brris slips in: 48 damage (CRIT!).
-[MAGE_HIT] ✨ Toros the Unlucky jabs for 16. [NO MP]
-[HEAL] 🩹 Healer restores Morris +10 HP (59→69).
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Warg (threat 2).
-[COMBAT_EXCHANGE] ⚔ Warg strikes: Morris takes 11 (69→58).
-[THIEF_HIT] 🗡 Brris slips in: 23 damage.
-[MAGE_HIT] ✨ Toros the Unlucky casts for 32. [MP 2→0]
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: quiet corridor. The party regroups.
-[GROUP_HEAL] ✨ Party heals +6 (group).
-[HP_DELTA]   ❤️ Morris HP 58→64.
-[HP_DELTA]   ❤️ Toros the Unlucky HP 36→40.
-[HP_DELTA]   ❤️ Brris HP 40→45.
-[HP_DELTA]   ❤️ Harris HP 41→44.
-[GROUP_MP] 🔷 Party restores MP +9 (group).
-[MP_DELTA]   🔷 Morris MP 5→5.
-[MP_DELTA]   🔷 Toros the Unlucky MP 0→9.
-[MP_DELTA]   🔷 Brris MP 11→11.
-[MP_DELTA]   🔷 Harris MP 0→9.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Warg (threat 6).
-[COMBAT_EXCHANGE] ⚔ Warg strikes: Morris takes 35 (64→29).
-[THIEF_CRIT] 🗡 Brris slips in: 50 damage (CRIT!).
-[MAGE_HIT] ✨ Toros the Unlucky casts for 54. [MP 9→5]
-[HEAL] 🩹 Healer restores Morris +7 HP (29→36).
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Bandit (threat 7).
-[COMBAT_EXCHANGE] ⚔ Bandit strikes: Morris takes 44 (36→-8).
-[THIEF_EXEC_CRIT] 🗡 Brris smells blood: 64 damage (CRIT!).
-[MAGE_HIT] ✨ Toros the Unlucky casts for 63. [MP 5→1]
-[HEAL] 🩹 Healer restores Morris +7 HP (-8→-1).
-[KNOCKDOWN] ⚠ Morris collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Morris gains a wound (1). DEF now 5.
-[NEAR_DEATH] 🚨 Near-death: Morris is under 20% HP!
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Bandit (threat 6).
-[COMBAT_EXCHANGE] ⚔ Bandit strikes: Morris takes 34 (1→-33).
-[THIEF_EXEC] 🗡 Brris smells blood: 35 damage.
-[MAGE_HIT] ✨ Toros the Unlucky jabs for 23. [NO MP]
-[HEAL] 🩹 Healer restores Morris +11 HP (-33→-22).
-[KNOCKDOWN] ⚠ Morris collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Morris gains a wound (2). DEF now 4.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Bandit (threat 2).
-[COMBAT_EXCHANGE] ⚔ Bandit strikes: Morris takes 16 (1→-15).
-[THIEF_EXEC] 🗡 Brris smells blood: 33 damage.
-[MAGE_HIT] ✨ Toros the Unlucky jabs for 8. [NO MP]
-[CRACKING] 🫠 Morris looks shaken (38→20).
-[KNOCKDOWN] ⚠ Morris collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Morris gains a wound (3). DEF now 3.
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: campfire. The party regroups.
-[GROUP_HEAL] ✨ Party heals +6 (group).
-[HP_DELTA]   ❤️ Morris HP 1→7.
-[HP_DELTA]   ❤️ Toros the Unlucky HP 40→40.
-[HP_DELTA]   ❤️ Brris HP 45→45.
-[HP_DELTA]   ❤️ Harris HP 44→44.
-[GROUP_MP] 🔷 Party restores MP +7 (group).
-[MP_DELTA]   🔷 Morris MP 5→5.
-[MP_DELTA]   🔷 Toros the Unlucky MP 1→8.
-[MP_DELTA]   🔷 Brris MP 11→11.
-[MP_DELTA]   🔷 Harris MP 0→7.
-[WOUND_HEAL] 🩺 Relief treatment: Morris recovers 1 wound.
-[STAT_DEF] 🟦 DEF 3→4 (wounds 3→2).
-[RESOLVE] 🧠 Morris steadies (12→24).
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Cult Acolyte (threat 5).
-[AMBUSH] 🕳 Ambush! Something lashes out before you can set formation.
-[AMBUSH_HIT] 🕳 AMBUSH → Harris takes 7 (44→37).
-[COMBAT_EXCHANGE] ⚔ Cult Acolyte strikes: Morris takes 33 (7→-26).
-[THIEF_EXEC] 🗡 Brris smells blood: 34 damage.
-[MAGE_HIT] ✨ Toros the Unlucky casts for 48. [MP 8→5]
-[HEAL] 🩹 Healer restores Morris +12 HP (-26→-14).
-[RETIRE_NOTICE] 🏳 Morris mutters: 'After this… I'm done.'
-[KNOCKDOWN] ⚠ Morris collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Morris gains a wound (3). DEF now 3.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Warg (threat 7).
-[COMBAT_EXCHANGE] ⚔ Warg strikes: Morris takes 48 (1→-47).
-[THIEF_EXEC] 🗡 Brris smells blood: 27 damage.
-[MAGE_CRIT] ✨ Toros the Unlucky casts for 144 (CRIT!). [MP 5→1]
-[HEAL] 🩹 Healer restores Morris +10 HP (-47→-37).
-[KNOCKDOWN] ⚠ Morris collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Morris gains a wound (4). DEF now 2.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Cult Acolyte (threat 5).
-[SLIPPERY] 🧊 Slippery ground: footing is bad, armor helps less than usual.
-[COMBAT_EXCHANGE] ⚔ Cult Acolyte strikes: Morris takes 36 (1→-35).
-[THIEF_EXEC] 🗡 Brris smells blood: 28 damage.
-[MAGE_HIT] ✨ Toros the Unlucky jabs for 18. [NO MP]
-[KNOCKDOWN] ⚠ Morris collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Morris gains a wound (5). DEF now 1.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Skeleton (threat 7).
-[COMBAT_EXCHANGE] ⚔ Skeleton strikes: Morris takes 47 (1→-46).
-[THIEF_EXEC_CRIT] 🗡 Brris smells blood: 64 damage (CRIT!).
-[MAGE_HIT] ✨ Toros the Unlucky jabs for 24. [NO MP]
-[KNOCKDOWN] ⚠ Morris collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Morris gains a wound (6). DEF now 0.
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: healing shrine. The party regroups.
-[GROUP_HEAL] ✨ Party heals +11 (group).
-[HP_DELTA]   ❤️ Morris HP 1→12.
-[HP_DELTA]   ❤️ Toros the Unlucky HP 40→40.
-[HP_DELTA]   ❤️ Brris HP 45→45.
-[HP_DELTA]   ❤️ Harris HP 37→44.
-[GROUP_MP] 🔷 Party restores MP +6 (group).
-[MP_DELTA]   🔷 Morris MP 5→5.
-[MP_DELTA]   🔷 Toros the Unlucky MP 1→7.
-[MP_DELTA]   🔷 Brris MP 11→11.
-[MP_DELTA]   🔷 Harris MP 1→7.
-[WOUND_HEAL] 🩺 Relief treatment: Morris recovers 1 wound.
-[STAT_DEF] 🟦 DEF 0→1 (wounds 6→5).
-[RESOLVE] 🧠 Morris steadies (0→10).
-[BEAT_SOURCE] 🧭 Encounter: a traveling merchant appears.
-[MERCHANT_SKIP] 🧿 Merchant: party browses, can't afford Iron Cuirass (187g).
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Goblin (threat 4).
-[SLIPPERY] 🧊 Slippery ground: footing is bad, armor helps less than usual.
-[COMBAT_EXCHANGE] ⚔ Goblin strikes: Morris takes 36 (12→-24).
-[THIEF_EXEC] 🗡 Brris smells blood: 29 damage.
-[MAGE_HIT] ✨ Toros the Unlucky casts for 41. [MP 7→4]
-[HEAL] 🩹 Healer restores Morris +11 HP (-24→-13).
-[KNOCKDOWN] ⚠ Morris collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Morris gains a wound (6). DEF now 0.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Goblin (threat 4).
-[BERSERK] 🔥 Berserk rush: the enemy swings wild and hard.
-[COMBAT_EXCHANGE] ⚔ Goblin strikes: Morris takes 37 (1→-36).
-[CHAOS] 💢 Chaos erupts in the scrum.
-[SPLASH_BEGIN] ☠ Splash damage begins (base ~1).
-[EXECUTION_BLOW] 🩸 EXECUTION BLOW → Morris takes 1 (-36→-37).
-[SPLASH_HIT] ☠ SPLASH → Toros the Unlucky takes 1 (40→39).
-[SPLASH_HIT] ☠ SPLASH → Brris takes 1 (45→44).
-[SPLASH_HIT] ☠ SPLASH → Harris takes 1 (44→43).
-[THIEF_EXEC_CRIT] 🗡 Brris smells blood: 70 damage (CRIT!).
-[MAGE_HIT] ✨ Toros the Unlucky casts for 50. [MP 4→1]
-[HEAL] 🩹 Healer restores Morris +10 HP (-37→-27).
-[KNOCKDOWN] ⚠ Morris collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Morris gains a wound (7). DEF now 0.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Warg (threat 6).
-[COMBAT_EXCHANGE] ⚔ Warg strikes: Morris takes 41 (1→-40).
-[THIEF_EXEC] 🗡 Brris smells blood: 31 damage.
-[MAGE_CRIT] ✨ Toros the Unlucky jabs for 56 (CRIT!). [NO MP]
-[KNOCKDOWN] ⚠ Morris collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Morris gains a wound (8). DEF now 0.
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: campfire. The party regroups.
-[GROUP_HEAL] ✨ Party heals +10 (group).
-[HP_DELTA]   ❤️ Morris HP 1→11.
-[HP_DELTA]   ❤️ Toros the Unlucky HP 39→40.
-[HP_DELTA]   ❤️ Brris HP 44→45.
-[HP_DELTA]   ❤️ Harris HP 43→44.
-[GROUP_MP] 🔷 Party restores MP +5 (group).
-[MP_DELTA]   🔷 Morris MP 5→5.
-[MP_DELTA]   🔷 Toros the Unlucky MP 1→6.
-[MP_DELTA]   🔷 Brris MP 11→11.
-[MP_DELTA]   🔷 Harris MP 1→6.
-[WOUND_HEAL] 🩺 Relief treatment: Morris recovers 1 wound.
-[STAT_DEF] 🟦 DEF 0→0 (wounds 8→7).
-[RESOLVE] 🧠 Morris steadies (0→17).
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Slime (threat 7).
-[COMBAT_EXCHANGE] ⚔ Slime strikes: Morris takes 52 (11→-41).
-[THIEF_EXEC_CRIT] 🗡 Brris smells blood: 54 damage (CRIT!).
-[MAGE_CRIT] ✨ Toros the Unlucky casts for 132 (CRIT!). [MP 6→2]
-[HEAL] 🩹 Healer restores Morris +14 HP (-41→-27).
-[RETIRE_NOTICE] 🏳 Morris mutters: 'After this… I'm done.'
-[KNOCKDOWN] ⚠ Morris collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Morris gains a wound (8). DEF now 0.
-[BEAT_SOURCE] 🧭 Encounter: a traveling merchant appears.
-[MERCHANT_SKIP] 🧿 Merchant: party browses, can't afford Fortifying Tonic (194g).
-[RETIRE] 🏳 Morris retires. 'Not today. Not anymore.'
-[RECRUIT] 🧑‍🤝‍🧑 Recruit joins: Tank Jenann the Unlucky (Ruins scholar, Stubborn).
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Skeleton (threat 5).
-[COMBAT_EXCHANGE] ⚔ Skeleton strikes: Jenann the Unlucky takes 26 (82→56).
-[THIEF_HIT] 🗡 Brris slips in: 28 damage.
-[MAGE_HIT] ✨ Toros the Unlucky jabs for 22. [NO MP]
-[HEAL] 🩹 Healer restores Jenann the Unlucky +10 HP (56→66).
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Cult Acolyte (threat 5).
-[COMBAT_EXCHANGE] ⚔ Cult Acolyte strikes: Jenann the Unlucky takes 33 (66→33).
-[THIEF_HIT] 🗡 Brris slips in: 26 damage.
-[MAGE_HIT] ✨ Toros the Unlucky jabs for 22. [NO MP]
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Bandit (threat 9).
-[REINFORCEMENTS] 🪓 Reinforcements: more shapes join the fight from the dark.
-[COMBAT_EXCHANGE] ⚔ Bandit strikes: Jenann the Unlucky takes 55 (33→-22).
-[CHAOS] 💢 Chaos erupts in the scrum.
-[SPLASH_BEGIN] ☠ Splash damage begins (base ~2).
-[EXECUTION_BLOW] 🩸 EXECUTION BLOW → Jenann the Unlucky takes 1 (-22→-23).
-[SPLASH_HIT] ☠ SPLASH → Toros the Unlucky takes 1 (40→39).
-[SPLASH_HIT] ☠ SPLASH → Brris takes 1 (45→44).
-[SPLASH_HIT] ☠ SPLASH → Harris takes 1 (44→43).
-[THIEF_EXEC] 🗡 Brris smells blood: 24 damage.
-[MAGE_HIT] ✨ Toros the Unlucky jabs for 31. [NO MP]
-[KNOCKDOWN] ⚠ Jenann the Unlucky collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Jenann the Unlucky gains a wound (1). DEF now 6.
-[NEAR_DEATH] 🚨 Near-death: Jenann the Unlucky is under 20% HP!
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: healing shrine. The party regroups.
-[GROUP_HEAL] ✨ Party heals +11 (group).
-[HP_DELTA]   ❤️ Jenann the Unlucky HP 1→12.
-[HP_DELTA]   ❤️ Toros the Unlucky HP 39→40.
-[HP_DELTA]   ❤️ Brris HP 44→45.
-[HP_DELTA]   ❤️ Harris HP 43→44.
-[GROUP_MP] 🔷 Party restores MP +7 (group).
-[MP_DELTA]   🔷 Jenann the Unlucky MP 5→5.
-[MP_DELTA]   🔷 Toros the Unlucky MP 2→9.
-[MP_DELTA]   🔷 Brris MP 11→11.
-[MP_DELTA]   🔷 Harris MP 0→7.
-[WOUND_HEAL] 🩺 Relief treatment: Jenann the Unlucky recovers 1 wound.
-[STAT_DEF] 🟦 DEF 6→7 (wounds 1→0).
-[BEAT_SOURCE] 🧭 Exploration find: the party spots something ahead.
-[CHEST_OPEN] 🧰 Chest found.
-[CHEST_ITEM] 🧰 Chest: found Engraved Coin Cache.
-[TREASURE] 💰 Treasure: Engraved Coin Cache converts to +156 gold.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Skeleton (threat 5).
-[COMBAT_EXCHANGE] ⚔ Skeleton strikes: Jenann the Unlucky takes 32 (12→-20).
-[THIEF_EXEC_CRIT] 🗡 Brris smells blood: 64 damage (CRIT!).
-[MAGE_HIT] ✨ Toros the Unlucky casts for 55. [MP 9→6]
-[HEAL] 🩹 Healer restores Jenann the Unlucky +13 HP (-20→-7).
-[KNOCKDOWN] ⚠ Jenann the Unlucky collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Jenann the Unlucky gains a wound (1). DEF now 6.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Goblin (threat 7).
-[COMBAT_EXCHANGE] ⚔ Goblin strikes: Jenann the Unlucky takes 42 (1→-41).
-[THIEF_EXEC_CRIT] 🗡 Brris smells blood: 50 damage (CRIT!).
-[MAGE_HIT] ✨ Toros the Unlucky casts for 69. [MP 6→2]
-[HEAL] 🩹 Healer restores Jenann the Unlucky +15 HP (-41→-26).
-[CRACKING] 🫠 Jenann the Unlucky looks shaken (30→22).
-[KNOCKDOWN] ⚠ Jenann the Unlucky collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Jenann the Unlucky gains a wound (2). DEF now 5.
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: healing shrine. The party regroups.
-[GROUP_HEAL] ✨ Party heals +9 (group).
-[HP_DELTA]   ❤️ Jenann the Unlucky HP 1→10.
-[HP_DELTA]   ❤️ Toros the Unlucky HP 40→40.
-[HP_DELTA]   ❤️ Brris HP 45→45.
-[HP_DELTA]   ❤️ Harris HP 44→44.
-[GROUP_MP] 🔷 Party restores MP +6 (group).
-[MP_DELTA]   🔷 Jenann the Unlucky MP 5→5.
-[MP_DELTA]   🔷 Toros the Unlucky MP 2→8.
-[MP_DELTA]   🔷 Brris MP 11→11.
-[MP_DELTA]   🔷 Harris MP 1→7.
-[WOUND_HEAL] 🩺 Relief treatment: Jenann the Unlucky recovers 1 wound.
-[STAT_DEF] 🟦 DEF 5→6 (wounds 2→1).
-[RESOLVE] 🧠 Jenann the Unlucky steadies (22→36).
-[BEAT_SOURCE] 🧭 Exploration find: the party spots something ahead.
-[CHEST_OPEN] 🧰 Chest found.
-[CHEST_TRAP] 🧰 Chest: it's a trap! Poison needles.
-[SPLASH_BEGIN] ☠ Splash damage begins (base ~8).
-[SPLASH_HIT] ☠ SPLASH → Jenann the Unlucky takes 3 (10→7).
-[SPLASH_HIT] ☠ SPLASH → Toros the Unlucky takes 6 (40→34).
-[SPLASH_HIT] ☠ SPLASH → Brris takes 5 (45→40).
-[SPLASH_HIT] ☠ SPLASH → Harris takes 5 (44→39).
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Warg (threat 6).
-[AMBUSH] 🕳 Ambush! Something lashes out before you can set formation.
-[AMBUSH_HIT] 🕳 AMBUSH → Harris takes 3 (39→36).
-[COMBAT_EXCHANGE] ⚔ Warg strikes: Jenann the Unlucky takes 36 (7→-29).
-[THIEF_EXEC] 🗡 Brris smells blood: 30 damage.
-[MAGE_HIT] ✨ Toros the Unlucky casts for 60. [MP 8→4]
-[HEAL] 🩹 Healer restores Jenann the Unlucky +14 HP (-29→-15).
-[CRACKING] 🫠 Jenann the Unlucky looks shaken (36→18).
-[RETIRE_NOTICE] 🏳 Jenann the Unlucky mutters: 'After this… I'm done.'
-[KNOCKDOWN] ⚠ Jenann the Unlucky collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Jenann the Unlucky gains a wound (2). DEF now 5.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Goblin (threat 7).
-[CURSED_GROUND] 🜏 Cursed ground: spells feel heavier and more expensive.
-[COMBAT_EXCHANGE] ⚔ Goblin strikes: Jenann the Unlucky takes 46 (1→-45).
-[THIEF_EXEC_CRIT] 🗡 Brris smells blood: 68 damage (CRIT!).
-[MAGE_HIT] ✨ Toros the Unlucky jabs for 29. [NO MP]
-[HEAL] 🩹 Healer restores Jenann the Unlucky +13 HP (-45→-32).
-[KNOCKDOWN] ⚠ Jenann the Unlucky collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Jenann the Unlucky gains a wound (3). DEF now 4.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Bandit (threat 6).
-[COMBAT_EXCHANGE] ⚔ Bandit strikes: Jenann the Unlucky takes 38 (1→-37).
-[THIEF_EXEC] 🗡 Brris smells blood: 29 damage.
-[MAGE_HIT] ✨ Toros the Unlucky casts for 64. [MP 4→0]
-[KNOCKDOWN] ⚠ Jenann the Unlucky collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Jenann the Unlucky gains a wound (4). DEF now 3.
-[BEAT_SOURCE] 🧭 Encounter: a traveling merchant appears.
-[MERCHANT_SKIP] 🧿 Merchant: party browses, can't afford Bone Shield (363g).
-[RETIRE] 🏳 Jenann the Unlucky retires. 'Not today. Not anymore.'
-[RECRUIT] 🧑‍🤝‍🧑 Recruit joins: Tank Selira the Unlucky (Temple-run, Stubborn).
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Goblin (threat 3).
-[COMBAT_EXCHANGE] ⚔ Goblin strikes: Selira the Unlucky takes 21 (82→61).
-[THIEF_HIT] 🗡 Brris slips in: 24 damage.
-[MAGE_HIT] ✨ Toros the Unlucky jabs for 19. [NO MP]
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: healing shrine. The party regroups.
-[GROUP_HEAL] ✨ Party heals +14 (group).
-[HP_DELTA]   ❤️ Selira the Unlucky HP 61→75.
-[HP_DELTA]   ❤️ Toros the Unlucky HP 34→40.
-[HP_DELTA]   ❤️ Brris HP 40→45.
-[HP_DELTA]   ❤️ Harris HP 36→44.
-[GROUP_MP] 🔷 Party restores MP +7 (group).
-[MP_DELTA]   🔷 Selira the Unlucky MP 5→5.
-[MP_DELTA]   🔷 Toros the Unlucky MP 0→7.
-[MP_DELTA]   🔷 Brris MP 11→11.
-[MP_DELTA]   🔷 Harris MP 1→8.
-[BEAT_SOURCE] 🧭 Exploration find: the party spots something ahead.
-[CHEST_OPEN] 🧰 Chest found.
-[CHEST_GOLD] 🧰 Chest: +25 gold.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Slime (threat 4).
-[BERSERK] 🔥 Berserk rush: the enemy swings wild and hard.
-[COMBAT_EXCHANGE] ⚔ Slime strikes: Selira the Unlucky takes 38 (75→37).
-[CHAOS] 💢 Chaos erupts in the scrum.
-[SPLASH_BEGIN] ☠ Splash damage begins (base ~1).
-[SPLASH_HIT] ☠ SPLASH → Selira the Unlucky takes 1 (37→36).
-[SPLASH_HIT] ☠ SPLASH → Toros the Unlucky takes 1 (40→39).
-[SPLASH_HIT] ☠ SPLASH → Brris takes 1 (45→44).
-[SPLASH_HIT] ☠ SPLASH → Harris takes 1 (44→43).
-[THIEF_HIT] 🗡 Brris slips in: 28 damage.
-[MAGE_CRIT] ✨ Toros the Unlucky casts for 96 (CRIT!). [MP 7→4]
-[HEAL] 🩹 Healer restores Selira the Unlucky +15 HP (36→51).
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Skeleton (threat 3).
-[CURSED_GROUND] 🜏 Cursed ground: spells feel heavier and more expensive.
-[COMBAT_EXCHANGE] ⚔ Skeleton strikes: Selira the Unlucky takes 22 (51→29).
-[THIEF_HIT] 🗡 Brris slips in: 23 damage.
-[MAGE_HIT] ✨ Toros the Unlucky jabs for 14. [NO MP]
-[HEAL] 🩹 Healer restores Selira the Unlucky +10 HP (29→39).
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Skeleton (threat 7).
-[REINFORCEMENTS] 🪓 Reinforcements: more shapes join the fight from the dark.
-[COMBAT_EXCHANGE] ⚔ Skeleton strikes: Selira the Unlucky takes 43 (39→-4).
-[CHAOS] 💢 Chaos erupts in the scrum.
-[SPLASH_BEGIN] ☠ Splash damage begins (base ~2).
-[EXECUTION_BLOW] 🩸 EXECUTION BLOW → Selira the Unlucky takes 1 (-4→-5).
-[SPLASH_HIT] ☠ SPLASH → Toros the Unlucky takes 1 (39→38).
-[SPLASH_HIT] ☠ SPLASH → Brris takes 1 (44→43).
-[SPLASH_HIT] ☠ SPLASH → Harris takes 1 (43→42).
-[THIEF_EXEC] 🗡 Brris smells blood: 28 damage.
-[MAGE_HIT] ✨ Toros the Unlucky casts for 61. [MP 4→0]
-[KNOCKDOWN] ⚠ Selira the Unlucky collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Selira the Unlucky gains a wound (1). DEF now 6.
-[NEAR_DEATH] 🚨 Near-death: Selira the Unlucky is under 20% HP!
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Slime (threat 5).
-[ELITE] 👁 Elite foe: tougher, meaner, and weirdly proud of it.
-[COMBAT_EXCHANGE] ⚔ Slime strikes: Selira the Unlucky takes 40 (1→-39).
-[THIEF_EXEC_CRIT] 🗡 Brris smells blood: 56 damage (CRIT!).
-[MAGE_HIT] ✨ Toros the Unlucky jabs for 25. [NO MP]
-[KNOCKDOWN] ⚠ Selira the Unlucky collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Selira the Unlucky gains a wound (2). DEF now 5.
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Bandit from the encounter.
+[ENCOUNTER] ⚔ Combat: Goblin, Warg (threat 9) NORMAL.
+[COMBAT_EXCHANGE] ⚔ Goblin, Warg strikes: Taliel takes 78 (35→-43).
+[THIEF_EXEC] 🗡 Selen smells blood: 32 damage.
+[MAGE_CRIT] ✨ Brum of Dockside casts for 198 (CRIT!). [MP 29→24]
+[HEAL] 🩹 Healer restores Taliel +20 HP (-43→-23).
+[DOWNED] ⚠ Taliel is downed and stabilized at 1 HP.
+[WOUND] 🩸 Wounded: Taliel gains a wound (1). DEF now 5.
+[NEAR_DEATH] 🚨 Near-death: Taliel is under 20% HP!
+[WOUND] 🩸 Taliel carries another lasting wound (2).
+[TACTIC] 🏃 [TACTIC] Controlled withdrawal initiated: next encounters will be lighter.
+[BEAT_SOURCE] 🧳 Encounter: a traveling merchant appears.
+[MERCHANT_OFFER] 🧳 Offer: Iron Wand (280g, asking 280g).
+[MERCHANT_DISCOUNT] 🏷 The merchant marks down stock for battered travelers.
+[MERCHANT_OFFER] 🧳 Revised asking price: 98g.
+[BEAT_SOURCE] 🛖 Rest stop: the party finds a safe pocket to regroup.
 [RELIEF_START] 🕯 Relief: abandoned outpost. The party regroups.
-[GROUP_HEAL] ✨ Party heals +8 (group).
-[HP_DELTA]   ❤️ Selira the Unlucky HP 1→9.
-[HP_DELTA]   ❤️ Toros the Unlucky HP 38→40.
-[HP_DELTA]   ❤️ Brris HP 43→45.
-[HP_DELTA]   ❤️ Harris HP 42→44.
-[GROUP_MP] 🔷 Party restores MP +7 (group).
-[MP_DELTA]   🔷 Selira the Unlucky MP 5→5.
-[MP_DELTA]   🔷 Toros the Unlucky MP 0→7.
-[MP_DELTA]   🔷 Brris MP 11→11.
-[MP_DELTA]   🔷 Harris MP 2→9.
-[WOUND_HEAL] 🩺 Relief treatment: Selira the Unlucky recovers 1 wound.
-[STAT_DEF] 🟦 DEF 5→6 (wounds 2→1).
+[GROUP_HEAL] ✨ Party heals +16 (group).
+[HP_DELTA]   ❤️ Taliel HP 1→17.
+[HP_DELTA]   ❤️ Brum of Dockside HP 34→40.
+[HP_DELTA]   ❤️ Selen HP 45→45.
+[HP_DELTA]   ❤️ Ilyx the Scarred HP 34→42.
+[GROUP_MP] 🔷 Party restores MP +11 (group).
+[MP_DELTA]   🔷 Taliel MP 5→5.
+[MP_DELTA]   🔷 Brum of Dockside MP 28→30.
+[MP_DELTA]   🔷 Selen MP 10→10.
+[MP_DELTA]   🔷 Ilyx the Scarred MP 28→28.
+[WOUND_HEAL] 🩺 Relief treatment: Taliel recovers 1 wound(s).
+[STAT_DEF] 🟦 DEF 4→5 (wounds 2→1).
+[BEAT_SOURCE] 🧭 Expedition: the route itself forces a decision.
+[SOCIAL] 🕯 Cult whispers echo nearby; the party catches a password and a warning.
+[RUMOR] Dungeon ahead is trapped, but a side hall avoids the kill-box.
 [BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Goblin (threat 7).
-[SLIPPERY] 🧊 Slippery ground: footing is bad, armor helps less than usual.
-[COMBAT_EXCHANGE] ⚔ Goblin strikes: Selira the Unlucky takes 49 (9→-40).
-[THIEF_EXEC] 🗡 Brris smells blood: 33 damage.
-[MAGE_HIT] ✨ Toros the Unlucky casts for 70. [MP 7→3]
-[HEAL] 🩹 Healer restores Selira the Unlucky +10 HP (-40→-30).
-[KNOCKDOWN] ⚠ Selira the Unlucky collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Selira the Unlucky gains a wound (2). DEF now 5.
+[ENCOUNTER_SHIFT] 🧪 Budget scale-down applied a light non-boss weakening to keep threat fair.
+[ENCOUNTER] ⚔ Combat: Slime (threat 1) NORMAL.
+[TACTIC] 🏃 [TACTIC] Controlled withdrawal active: disengagement posture lowers pressure.
+[COMBAT_EXCHANGE] ⚔ Slime strikes: Taliel takes 4 (17→13).
+[THIEF_HIT] 🗡 Selen slips in: 24 damage.
+[MAGE_HIT] ✨ Brum of Dockside casts for 20. [MP 30→28]
+[HEAL] 🩹 Healer restores Taliel +-2 HP (13→11).
+[TACTIC] 🧱 [TACTIC] Choke point secured: incoming accuracy reduced for 2 beats.
+[BEAT_SOURCE] 🏃 Withdrawal: the party falls back through dangerous ground.
+[RETREAT_ROUTE] 🪜 They retrace marked passages while rear guards hold chokepoints.
+[BEAT_SOURCE] 🔎 Exploration find: the party spots something ahead.
+[CHEST_OPEN] 🧰 Chest found.
+[LOOT_FOUND] 🎁 Loot found: Royal Relic (rare).
+[CHEST_RARE] 🧰 Chest: RARE find! Royal Relic.
+[TREASURE] 💰 Treasure: Royal Relic converts to +251 gold.
 [BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Bandit (threat 3).
-[COMBAT_EXCHANGE] ⚔ Bandit strikes: Selira the Unlucky takes 18 (1→-17).
-[THIEF_EXEC] 🗡 Brris smells blood: 27 damage.
-[MAGE_HIT] ✨ Toros the Unlucky casts for 33. [MP 3→0]
-[HEAL] 🩹 Healer restores Selira the Unlucky +15 HP (-17→-2).
-[CRACKING] 🫠 Selira the Unlucky looks shaken (27→9).
-[RETIRE_NOTICE] 🏳 Selira the Unlucky mutters: 'After this… I'm done.'
-[KNOCKDOWN] ⚠ Selira the Unlucky collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Selira the Unlucky gains a wound (3). DEF now 4.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Goblin (threat 10).
-[ELITE] 👁 Elite foe: tougher, meaner, and weirdly proud of it.
-[COMBAT_EXCHANGE] ⚔ Goblin strikes: Selira the Unlucky takes 75 (1→-74).
-[THIEF_EXEC_CRIT] 🗡 Brris smells blood: 68 damage (CRIT!).
-[MAGE_HIT] ✨ Toros the Unlucky jabs for 32. [NO MP]
-[HEAL] 🩹 Healer restores Selira the Unlucky +13 HP (-74→-61).
-[KNOCKDOWN] ⚠ Selira the Unlucky collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Selira the Unlucky gains a wound (4). DEF now 3.
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Bandit from the encounter.
+[ENCOUNTER] ⚔ Combat: Slime, Goblin (threat 8) NORMAL.
+[TACTIC] 🧱 [TACTIC] Choke point/cover active: enemy accuracy reduced.
+[TACTIC] 🏃 [TACTIC] Controlled withdrawal active: disengagement posture lowers pressure.
+[AMBUSH_HIT] 🕳 AMBUSH → Selen takes 6 (45→39).
+[COMBAT_EXCHANGE] ⚔ Slime, Goblin strikes: Taliel takes 45 (11→-34).
+[THIEF_EXEC] 🗡 Selen smells blood: 34 damage.
+[MAGE_HIT] ✨ Brum of Dockside casts for 83. [MP 30→25]
+[HEAL] 🩹 Healer restores Taliel +10 HP (-34→-24).
+[DOWNED] ⚠ Taliel is downed and stabilized at 1 HP.
+[WOUND] 🩸 Wounded: Taliel gains a wound (2). DEF now 4.
+[RETREAT_CALL] ⚠ The party breaks off and heads to the city before someone dies.
+[TACTIC] 🏃 [TACTIC] Controlled withdrawal initiated: next encounters will be lighter.
+[BEAT_SOURCE] 🏃 Withdrawal: the party falls back through dangerous ground.
+[RETREAT_DECISION] 🏳 The party votes to pull out before the next push turns fatal.
+[BEAT_SOURCE] 🏙 Return: the party pivots back to city streets.
+[CITY_ARRIVE] 🏙 The party returns to the city to recover, honor the fallen, and make hard decisions.
+[CITY_SHOP] 🛠 Taliel receives treatment and repairs (wounds 2→0).
+[CITY_DEPART] 🚪 The party departs the city and returns to the crawl.
+[BEAT_SOURCE] 🛖 Rest stop: the party finds a safe pocket to regroup.
 [RELIEF_START] 🕯 Relief: quiet corridor. The party regroups.
-[GROUP_HEAL] ✨ Party heals +10 (group).
-[HP_DELTA]   ❤️ Selira the Unlucky HP 1→11.
-[HP_DELTA]   ❤️ Toros the Unlucky HP 40→40.
-[HP_DELTA]   ❤️ Brris HP 45→45.
-[HP_DELTA]   ❤️ Harris HP 44→44.
-[GROUP_MP] 🔷 Party restores MP +6 (group).
-[MP_DELTA]   🔷 Selira the Unlucky MP 5→5.
-[MP_DELTA]   🔷 Toros the Unlucky MP 0→6.
-[MP_DELTA]   🔷 Brris MP 11→11.
-[MP_DELTA]   🔷 Harris MP 0→6.
-[WOUND_HEAL] 🩺 Relief treatment: Selira the Unlucky recovers 1 wound.
-[STAT_DEF] 🟦 DEF 3→4 (wounds 4→3).
-[RESOLVE] 🧠 Selira the Unlucky steadies (0→16).
+[GROUP_HEAL] ✨ Party heals +17 (group).
+[HP_DELTA]   ❤️ Taliel HP 2→19.
+[HP_DELTA]   ❤️ Brum of Dockside HP 40→40.
+[HP_DELTA]   ❤️ Selen HP 39→45.
+[HP_DELTA]   ❤️ Ilyx the Scarred HP 42→42.
+[GROUP_MP] 🔷 Party restores MP +12 (group).
+[MP_DELTA]   🔷 Taliel MP 5→5.
+[MP_DELTA]   🔷 Brum of Dockside MP 30→30.
+[MP_DELTA]   🔷 Selen MP 10→10.
+[MP_DELTA]   🔷 Ilyx the Scarred MP 28→28.
+[BEAT_SOURCE] 👁 Ominous presence: the air shifts. Something huge is near.
+[BOSS_TELEGRAPH] 🌩 [BOSS] The ground shakes before the enemy appears.
+[BOSS_SPAWN] 👑 [BOSS] Hollow Ogre emerges!
+[BOSS_SMASH] ⚔ Hollow Ogre smashes: Taliel takes 29 (19→-10).
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~2).
+[BRACE_FAIL] 🪦 Taliel is down and can't brace.
+[THIEF_EXEC] 🗡 Selen smells blood: 18 damage.
+[MAGE_HIT] ✨ Brum of Dockside detonates a full cast: 60 damage. [MP 30→24]
+[HEAL] 🩹 Healer restores Taliel +11 HP (-10→1).
+[FINISHER] 💥 FINISHER → Brum of Dockside's blast breaks the Hollow Ogre! (60)
+[BOSS_DEFEATED] 🏆 Boss defeated! +52 gold.
+[TROPHY_DROP] 🎁 Trophy drop: Slate Band.
+[EQUIP] 📦 EQUIP → Taliel equips (trinket): Slate Band [Δ43.0].
+[EQUIP_CHANGE] 📦 Taliel equips Slate Band.
+[STAT_ATK] 🟩 ATK 8→10.
+[STAT_DEF] 🟦 DEF 6→8 (base 6→6).
+📺 Episode ends. Gold=303 | Chests=1 | Merchants=1 | Rares=1 | Near-deaths=1 | Boss=DEFEATED
+📊 Party avg HP%: 75%
+📊 Beat counts: Combat=5 | Expedition=3 | Social=2 | Merchant=1 | Relief=2 | Discovery=0 | Hazard=0
+📊 Downed events=2 | Tank downed=2 | Over-budget prevented=5 | Encounter rerolls=0 | Repeat prevented=1 | Downed-loop interventions=0
+📊 Encounter budget: attempts=5 | accepted=0 | rerolled=0 | scaled=5 | degraded=0 | bestfit=0 | outcomes_total=5
+[DEBUG] Seed -> 100004
+[DEBUG] Run started. Seed=100004
+🌟 Episode begins. Seed=100004 Zone=Dungeon
+[BEAT_SOURCE] 🗺 The party advances deeper.
+🧭 The party advances into the Dungeon.
 [BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Slime (threat 7).
-[COMBAT_EXCHANGE] ⚔ Slime strikes: Selira the Unlucky takes 41 (11→-30).
-[THIEF_EXEC] 🗡 Brris smells blood: 31 damage.
-[MAGE_HIT] ✨ Toros the Unlucky casts for 67. [MP 6→2]
-[HEAL] 🩹 Healer restores Selira the Unlucky +14 HP (-30→-16).
-[RETIRE_NOTICE] 🏳 Selira the Unlucky mutters: 'After this… I'm done.'
-[KNOCKDOWN] ⚠ Selira the Unlucky collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Selira the Unlucky gains a wound (4). DEF now 3.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Ogre Brute from the encounter.
+[ENCOUNTER] ⚔ Combat: Ogre Brute (threat 11) NORMAL.
+[COMBAT_EXCHANGE] ⚔ Ogre Brute strikes: Talann the Scarred takes 81 (70→-11).
+[FLANK_HIT] 🪓 Flanking blow! Ilira of Dockside takes 27 (40→13).
+[THIEF_EXEC_CRIT] 🗡 Brira of Dockside smells blood: 70 damage (CRIT!).
+[MAGE_HIT] ✨ Ilira of Dockside casts for 102. [MP 30→24]
+[HEAL] 🩹 Healer restores Talann the Scarred +10 HP (-11→-1).
+[DOWNED] ⚠ Talann the Scarred is downed and stabilized at 1 HP.
+[WOUND] 🩸 Wounded: Talann the Scarred gains a wound (1). DEF now 5.
+[NEAR_DEATH] 🚨 Near-death: Talann the Scarred is under 20% HP!
+[WOUND] 🩸 Talann the Scarred carries another lasting wound (2).
+[TACTIC] 🧱 [TACTIC] Choke point secured: incoming accuracy reduced for 2 beats.
 [BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Goblin (threat 6).
-[COMBAT_EXCHANGE] ⚔ Goblin strikes: Selira the Unlucky takes 42 (1→-41).
-[THIEF_EXEC] 🗡 Brris smells blood: 30 damage.
-[MAGE_HIT] ✨ Toros the Unlucky jabs for 28. [NO MP]
-[HEAL] 🩹 Healer restores Selira the Unlucky +16 HP (-41→-25).
-[KNOCKDOWN] ⚠ Selira the Unlucky collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Selira the Unlucky gains a wound (5). DEF now 2.
-[BEAT_SOURCE] 🧭 Encounter: a traveling merchant appears.
-[MERCHANT_SKIP] 🧿 Merchant: party browses, can't afford Oak Axe (315g).
-[RETIRE] 🏳 Selira the Unlucky retires. 'Not today. Not anymore.'
-[RECRUIT] 🧑‍🤝‍🧑 Recruit joins: Tank Haryx (Old garrison, Scarred).
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Goblin from the encounter.
+[ENCOUNTER] ⚔ Combat: Goblin, Warg (threat 10) NORMAL.
+[TACTIC] 🧱 [TACTIC] Choke point/cover active: enemy accuracy reduced.
+[COMBAT_EXCHANGE] ⚔ Goblin, Warg strikes: Talann the Scarred takes 59 (1→-58).
+[THIEF_EXEC_CRIT] 🗡 Brira of Dockside smells blood: 68 damage (CRIT!).
+[MAGE_CRIT] ✨ Ilira of Dockside casts for 170 (CRIT!). [MP 26→21]
+[HEAL] 🩹 Healer restores Talann the Scarred +72 HP (-58→14).
+[TACTIC] 🏃 [TACTIC] Controlled withdrawal initiated: next encounters will be lighter.
+[BEAT_SOURCE] 🧭 Expedition: the route itself forces a decision.
+[SOCIAL] 🕯 Cult whispers echo nearby; the party catches a password and a warning.
+[RUMOR] Dungeon ahead is trapped, but a side hall avoids the kill-box.
 [BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Cult Acolyte (threat 4).
-[COMBAT_EXCHANGE] ⚔ Cult Acolyte strikes: Haryx takes 26 (86→60).
-[THIEF_HIT] 🗡 Brris slips in: 25 damage.
-[MAGE_HIT] ✨ Toros the Unlucky jabs for 22. [NO MP]
-[BEAT_SOURCE] 🧭 Encounter: a traveling merchant appears.
-[MERCHANT_BUY] 🧿 Merchant: Haryx buys Brass Ring for 217 gold (230→13).
-[EQUIP] 📦 EQUIP → Haryx equips (trinket): Brass Ring [Δ23.0].
-[STAT_ATK] 🟩 ATK 10→11.
-[STAT_DEF] 🟦 DEF 7→8 (base 7→7).
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Bandit from the encounter.
+[ENCOUNTER] ⚔ Combat: Cult Acolyte (threat 8) NORMAL.
+[TACTIC] 🧱 [TACTIC] Choke point/cover active: enemy accuracy reduced.
+[TACTIC] 🏃 [TACTIC] Controlled withdrawal active: disengagement posture lowers pressure.
+[AMBUSH_HIT] 🕳 AMBUSH → Ileth of the West Road takes 7 (42→35).
+[COMBAT_EXCHANGE] ⚔ Cult Acolyte strikes: Talann the Scarred takes 52 (14→-38).
+[FLANK_HIT] 🪓 Flanking blow! Brira of Dockside takes 21 (45→24).
+[THIEF_EXEC] 🗡 Brira of Dockside smells blood: 30 damage.
+[MAGE_CRIT] ✨ Ilira of Dockside casts for 164 (CRIT!). [MP 25→20]
+[HEAL] 🩹 Healer restores Talann the Scarred +16 HP (-38→-22).
+[DOWNED] ⚠ Talann the Scarred is downed and stabilized at 1 HP.
+[WOUND] 🩸 Wounded: Talann the Scarred gains a wound (3). DEF now 3.
+[RETREAT_CALL] ⚠ The party breaks off and heads to the city before someone dies.
+[TACTIC] 🧱 [TACTIC] Choke point secured: incoming accuracy reduced for 2 beats.
+[BEAT_SOURCE] 🧳 Encounter: a traveling merchant appears.
+[MERCHANT_OFFER] 🧳 Offer: Fine Onyx Charm (101g, asking 101g).
+[MERCHANT_DISCOUNT] 🏷 The merchant marks down stock for battered travelers.
+[MERCHANT_OFFER] 🧳 Revised asking price: 35g.
+[BEAT_SOURCE] 🏃 Withdrawal: the party falls back through dangerous ground.
+[GATE_VERDICT] 🚑 At the outer gate, a healer orders immediate treatment and city return.
+[BEAT_SOURCE] 🛖 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: abandoned outpost. The party regroups.
+[GROUP_HEAL] ✨ Party heals +16 (group).
+[HP_DELTA]   ❤️ Talann the Scarred HP 1→17.
+[HP_DELTA]   ❤️ Ilira of Dockside HP 13→29.
+[HP_DELTA]   ❤️ Brira of Dockside HP 24→40.
+[HP_DELTA]   ❤️ Ileth of the West Road HP 35→42.
+[GROUP_MP] 🔷 Party restores MP +14 (group).
+[MP_DELTA]   🔷 Talann the Scarred MP 5→5.
+[MP_DELTA]   🔷 Ilira of Dockside MP 26→30.
+[MP_DELTA]   🔷 Brira of Dockside MP 10→10.
+[MP_DELTA]   🔷 Ileth of the West Road MP 28→28.
+[WOUND_HEAL] 🩺 Relief treatment: Talann the Scarred recovers 1 wound(s).
+[STAT_DEF] 🟦 DEF 3→4 (wounds 3→2).
+[BEAT_SOURCE] 🏃 Withdrawal: the party falls back through dangerous ground.
+[GATE_VERDICT] 🚑 At the outer gate, a healer orders immediate treatment and city return.
+[BEAT_SOURCE] 🏙 Return: the party pivots back to city streets.
+[CITY_ARRIVE] 🏙 The party returns to the city to recover, honor the fallen, and make hard decisions.
+[CITY_SHOP] 🛠 Talann the Scarred receives treatment and repairs (wounds 2→0).
+[CITY_DEPART] 🚪 The party departs the city and returns to the crawl.
 [BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Slime (threat 8).
-[COMBAT_EXCHANGE] ⚔ Slime strikes: Haryx takes 50 (60→10).
-[THIEF_HIT] 🗡 Brris slips in: 23 damage.
-[MAGE_HIT] ✨ Toros the Unlucky jabs for 31. [NO MP]
-[NEAR_DEATH] 🚨 Near-death: Haryx is under 20% HP!
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Slime (threat 5).
-[COMBAT_EXCHANGE] ⚔ Slime strikes: Haryx takes 28 (10→-18).
-[THIEF_EXEC_CRIT] 🗡 Brris smells blood: 68 damage (CRIT!).
-[MAGE_HIT] ✨ Toros the Unlucky jabs for 19. [NO MP]
-[KNOCKDOWN] ⚠ Haryx collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Haryx gains a wound (1). DEF now 7.
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Cult Acolyte from the encounter.
+[ENCOUNTER] ⚔ Combat: Bandit (threat 8) NORMAL.
+[TACTIC] 🧱 [TACTIC] Choke point/cover active: enemy accuracy reduced.
+[TACTIC] 🏃 [TACTIC] Controlled withdrawal active: disengagement posture lowers pressure.
+[COMBAT_EXCHANGE] ⚔ Bandit strikes: Talann the Scarred takes 37 (17→-20).
+[THIEF_EXEC] 🗡 Brira of Dockside smells blood: 27 damage.
+[MAGE_CRIT] ✨ Ilira of Dockside casts for 160 (CRIT!). [MP 30→26]
+[HEAL] 🩹 Healer restores Talann the Scarred +16 HP (-20→-4).
+[DOWNED] ⚠ Talann the Scarred is downed and stabilized at 1 HP.
+[WOUND] 🩸 Wounded: Talann the Scarred gains a wound (1). DEF now 5.
+[RETREAT_VOTE] 🗳 [RETREAT_VOTE] Ileth of the West Road calls for a withdrawal after repeated knockdowns.
+[RETREAT_CALL] 🏃 Repeated knockdowns force an escape call before the fight spirals.
+[RETREAT_COST] ⚖ Retreat consequence: lost time.
+[TACTIC] 🏃 [TACTIC] Controlled withdrawal initiated: next encounters will be lighter.
+[BEAT_SOURCE] 🏃 Withdrawal: the party falls back through dangerous ground.
+[GATE_VERDICT] 🚑 At the outer gate, a healer orders immediate treatment and city return.
+[BEAT_SOURCE] 🛖 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: quiet corridor. The party regroups.
+[GROUP_HEAL] ✨ Party heals +12 (group).
+[HP_DELTA]   ❤️ Talann the Scarred HP 1→13.
+[HP_DELTA]   ❤️ Ilira of Dockside HP 29→40.
+[HP_DELTA]   ❤️ Brira of Dockside HP 40→45.
+[HP_DELTA]   ❤️ Ileth of the West Road HP 42→42.
+[GROUP_MP] 🔷 Party restores MP +9 (group).
+[MP_DELTA]   🔷 Talann the Scarred MP 5→5.
+[MP_DELTA]   🔷 Ilira of Dockside MP 30→30.
+[MP_DELTA]   🔷 Brira of Dockside MP 10→10.
+[MP_DELTA]   🔷 Ileth of the West Road MP 28→28.
+[WOUND_HEAL] 🩺 Relief treatment: Talann the Scarred recovers 1 wound(s).
+[STAT_DEF] 🟦 DEF 5→6 (wounds 1→0).
+[BEAT_SOURCE] 🛖 Rest stop: the party finds a safe pocket to regroup.
 [RELIEF_START] 🕯 Relief: healing shrine. The party regroups.
-[GROUP_HEAL] ✨ Party heals +6 (group).
-[HP_DELTA]   ❤️ Haryx HP 1→7.
-[HP_DELTA]   ❤️ Toros the Unlucky HP 40→40.
-[HP_DELTA]   ❤️ Brris HP 45→45.
-[HP_DELTA]   ❤️ Harris HP 44→44.
-[GROUP_MP] 🔷 Party restores MP +6 (group).
-[MP_DELTA]   🔷 Haryx MP 5→5.
-[MP_DELTA]   🔷 Toros the Unlucky MP 2→8.
-[MP_DELTA]   🔷 Brris MP 11→11.
-[MP_DELTA]   🔷 Harris MP 0→6.
-[WOUND_HEAL] 🩺 Relief treatment: Haryx recovers 1 wound.
+[GROUP_HEAL] ✨ Party heals +17 (group).
+[HP_DELTA]   ❤️ Talann the Scarred HP 13→30.
+[HP_DELTA]   ❤️ Ilira of Dockside HP 40→40.
+[HP_DELTA]   ❤️ Brira of Dockside HP 45→45.
+[HP_DELTA]   ❤️ Ileth of the West Road HP 42→42.
+[GROUP_MP] 🔷 Party restores MP +11 (group).
+[MP_DELTA]   🔷 Talann the Scarred MP 5→5.
+[MP_DELTA]   🔷 Ilira of Dockside MP 30→30.
+[MP_DELTA]   🔷 Brira of Dockside MP 10→10.
+[MP_DELTA]   🔷 Ileth of the West Road MP 28→28.
+[BEAT_SOURCE] 🔎 Exploration find: the party spots something ahead.
+[CHEST_OPEN] 🧰 Chest found.
+[LOOT_FOUND] 💰 Loot found: 17 gold.
+[CHEST_GOLD] 🧰 Chest: +17 gold.
+[BEAT_SOURCE] 👁 Ominous presence: the air shifts. Something huge is near.
+[BOSS_TELEGRAPH] 🌩 [BOSS] The ground shakes before the enemy appears.
+[BOSS_SPAWN] 👑 [BOSS] Hollow Ogre emerges!
+[BOSS_SMASH] ⚔ Hollow Ogre smashes: Talann the Scarred takes 23 (30→7).
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~4).
+[SPLASH_HIT] ☠ SPLASH → Ilira of Dockside takes 3 (40→37).
+[SPLASH_HIT] ☠ SPLASH → Brira of Dockside takes 2 (45→43).
+[SPLASH_HIT] ☠ SPLASH → Ileth of the West Road takes 1 (42→41).
+[BRACE] 🛡 Talann the Scarred braces and holds the line.
+[THIEF_EXEC] 🗡 Brira of Dockside smells blood: 15 damage.
+[MAGE_CRIT] ✨ Ilira of Dockside detonates a full cast: 112 damage (CRIT!). [MP 30→24]
+[HEAL] 🩹 Healer restores Talann the Scarred +6 HP (7→13).
+[FINISHER] 💥 FINISHER → Ilira of Dockside's blast breaks the Hollow Ogre! (112)
+[BOSS_DEFEATED] 🏆 Boss defeated! +81 gold.
+[TROPHY_DROP] 🎁 Trophy drop: Runed Onyx Ring.
+[EQUIP] 📦 EQUIP → Ilira of Dockside equips (trinket): Runed Onyx Ring [Δ129.9].
+[EQUIP_CHANGE] 📦 Ilira of Dockside equips Runed Onyx Ring.
+[STAT_ATK] 🟩 ATK 12→16.
+[STAT_DEF] 🟦 DEF 2→6 (base 2→2).
+[STAT_HP] ❤️ MAX HP 40→61.
+[STAT_MP] 🔷 MAX MP 30→51.
+📺 Episode ends. Gold=98 | Chests=1 | Merchants=1 | Rares=0 | Near-deaths=1 | Boss=DEFEATED
+📊 Party avg HP%: 68%
+📊 Beat counts: Combat=4 | Expedition=2 | Social=1 | Merchant=1 | Relief=3 | Discovery=0 | Hazard=0
+📊 Downed events=3 | Tank downed=3 | Over-budget prevented=4 | Encounter rerolls=0 | Repeat prevented=0 | Downed-loop interventions=1
+📊 Encounter budget: attempts=4 | accepted=0 | rerolled=0 | scaled=4 | degraded=0 | bestfit=0 | outcomes_total=4
+[DEBUG] Seed -> 100005
+[DEBUG] Run started. Seed=100005
+🌟 Episode begins. Seed=100005 Zone=Dungeon
+[BEAT_SOURCE] 🗺 The party advances deeper.
+🧭 The party advances into the Dungeon.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Warg from the encounter.
+[ENCOUNTER] ⚔ Combat: Goblin (threat 3) NORMAL.
+[COMBAT_EXCHANGE] ⚔ Goblin strikes: Talda the Scarred takes 33 (70→37).
+[CHAOS] 💢 Chaos erupts in the scrum.
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~1).
+[THIEF_CRIT] 🗡 Selos slips in: 52 damage (CRIT!).
+[MAGE_HIT] ✨ Feneth the Scarred casts for 48. [MP 30→27]
+[HEAL] 🩹 Healer restores Talda the Scarred +14 HP (37→51).
+[BEAT_SOURCE] 🧭 Expedition: the route itself forces a decision.
+[NAV_CHOICE] 🧭 Two routes split ahead: a fast ledge path, a safer tunnel, or a backtrack.
+[NAV_STATE] 🧭 Route modifier active: fast ledge for 3 beats.
+[NAV_RESULT] The party sprints the ledge and recovers dropped coin caches.
+[BEAT_SOURCE] 🧳 Encounter: a traveling merchant appears.
+[MERCHANT_OFFER] 🧳 Offer: Slate Dagger (94g, asking 8g).
+[MERCHANT_BUY] 🧳 Selos buys Slate Dagger for 8g (10→2).
+[EQUIP_CHANGE] 📦 Selos equips Slate Dagger (weapon).
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🧪 Budget scale-down applied a light non-boss weakening to keep threat fair.
+[ENCOUNTER] ⚔ Combat: Cult Acolyte (threat 6) NORMAL.
+[COMBAT_EXCHANGE] ⚔ Cult Acolyte strikes: Talda the Scarred takes 48 (51→3).
+[THIEF_HIT] 🗡 Selos slips in: 26 damage.
+[MAGE_HIT] ✨ Feneth the Scarred casts for 71. [MP 30→26]
+[HEAL] 🩹 Healer restores Talda the Scarred +16 HP (3→19).
+[TACTIC] 🛡 [TACTIC] Defensive stance called: reduced damage taken for 2 beats.
+[NAV_STATE] 🧭 Route modifier fades; selection weights normalize.
+[BEAT_SOURCE] 🧭 Expedition: the route itself forces a decision.
+[NAV_CHOICE] 🧭 Two routes split ahead: a fast ledge path, a safer tunnel, or a backtrack.
+[NAV_STATE] 🧭 Route modifier active: fast ledge for 3 beats.
+[NAV_RESULT] The party sprints the ledge and recovers dropped coin caches.
+[BEAT_SOURCE] 🧳 Encounter: a traveling merchant appears.
+[SCAVENGER] 🧿 A scavenger offers rumor and salvage instead of trade.
+[BEAT_SOURCE] 🛖 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: healing shrine. The party regroups.
+[GROUP_HEAL] ✨ Party heals +12 (group).
+[HP_DELTA]   ❤️ Talda the Scarred HP 19→31.
+[HP_DELTA]   ❤️ Feneth the Scarred HP 40→40.
+[HP_DELTA]   ❤️ Selos HP 45→45.
+[HP_DELTA]   ❤️ Qulen HP 42→42.
+[GROUP_MP] 🔷 Party restores MP +15 (group).
+[MP_DELTA]   🔷 Talda the Scarred MP 5→5.
+[MP_DELTA]   🔷 Feneth the Scarred MP 30→30.
+[MP_DELTA]   🔷 Selos MP 10→10.
+[MP_DELTA]   🔷 Qulen MP 28→28.
+[NAV_STATE] 🧭 Route modifier fades; selection weights normalize.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Slime from the encounter.
+[ENCOUNTER] ⚔ Combat: Slime (threat 4) NORMAL.
+[TACTIC] 🛡 [TACTIC] Defensive stance active: incoming damage reduced this beat.
+[COMBAT_EXCHANGE] ⚔ Slime strikes: Talda the Scarred takes 13 (31→18).
+[THIEF_HIT] 🗡 Selos slips in: 19 damage.
+[MAGE_HIT] ✨ Feneth the Scarred casts for 38. [MP 30→27]
+[HEAL] 🩹 Healer restores Talda the Scarred +18 HP (18→36).
+[BEAT_SOURCE] 🏃 Withdrawal: the party falls back through dangerous ground.
+[GATE_VERDICT] 🚑 At the outer gate, a healer orders immediate treatment and city return.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Ogre Brute from the encounter.
+[ENCOUNTER] ⚔ Combat: Cult Acolyte, Slime (threat 11) NORMAL.
+[TACTIC] 🛡 [TACTIC] Defensive stance active: incoming damage reduced this beat.
+[COMBAT_EXCHANGE] ⚔ Cult Acolyte, Slime strikes: Talda the Scarred takes 55 (36→-19).
+[THIEF_EXEC] 🗡 Selos smells blood: 23 damage.
+[MAGE_CRIT] ✨ Feneth the Scarred casts for 160 (CRIT!). [MP 30→22]
+[HEAL] 🩹 Healer restores Talda the Scarred +13 HP (-19→-6).
+[DOWNED] ⚠ Talda the Scarred is downed and stabilized at 1 HP.
+[WOUND] 🩸 Wounded: Talda the Scarred gains a wound (1). DEF now 5.
+[NEAR_DEATH] 🚨 Near-death: Talda the Scarred is under 20% HP!
+[WOUND] 🩸 Talda the Scarred carries another lasting wound (2).
+[TACTIC] 🏃 [TACTIC] Controlled withdrawal initiated: next encounters will be lighter.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Ogre Brute from the encounter.
+[ENCOUNTER] ⚔ Combat: Cult Acolyte (threat 6) NORMAL.
+[TACTIC] 🏃 [TACTIC] Controlled withdrawal active: disengagement posture lowers pressure.
+[COMBAT_EXCHANGE] ⚔ Cult Acolyte strikes: Talda the Scarred takes 34 (1→-33).
+[FLANK_HIT] 🪓 Flanking blow! Feneth the Scarred takes 11 (40→29).
+[THIEF_EXEC_CRIT] 🗡 Selos smells blood: 60 damage (CRIT!).
+[MAGE_HIT] ✨ Feneth the Scarred casts for 55. [MP 24→20]
+[HEAL] 🩹 Healer restores Talda the Scarred +46 HP (-33→13).
+[TACTIC] 🧱 [TACTIC] Choke point secured: incoming accuracy reduced for 2 beats.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Ogre Brute from the encounter.
+[ENCOUNTER] ⚔ Combat: Bandit (threat 6) NORMAL.
+[TACTIC] 🧱 [TACTIC] Choke point/cover active: enemy accuracy reduced.
+[TACTIC] 🏃 [TACTIC] Controlled withdrawal active: disengagement posture lowers pressure.
+[COMBAT_EXCHANGE] ⚔ Bandit strikes: Talda the Scarred takes 53 (13→-40).
+[CHAOS] 💢 Chaos erupts in the scrum.
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~0).
+[THIEF_EXEC] 🗡 Selos smells blood: 34 damage.
+[MAGE_HIT] ✨ Feneth the Scarred casts for 73. [MP 22→18]
+[HEAL] 🩹 Healer restores Talda the Scarred +11 HP (-40→-29).
+[DOWNED] ⚠ Talda the Scarred is downed and stabilized at 1 HP.
+[WOUND] 🩸 Wounded: Talda the Scarred gains a wound (3). DEF now 3.
+[RETREAT_CALL] ⚠ The party breaks off and heads to the city before someone dies.
+[TACTIC] 🏃 [TACTIC] Controlled withdrawal initiated: next encounters will be lighter.
+[BEAT_SOURCE] 🏃 Withdrawal: the party falls back through dangerous ground.
+[RETREAT_DECISION] 🏳 The party votes to pull out before the next push turns fatal.
+[BEAT_SOURCE] 🏙 Return: the party pivots back to city streets.
+[CITY_ARRIVE] 🏙 The party returns to the city to recover, honor the fallen, and make hard decisions.
+[CITY_SHOP] 🛠 Talda the Scarred receives treatment and repairs (wounds 3→1).
+[CITY_DEPART] 🚪 The party departs the city and returns to the crawl.
+[BEAT_SOURCE] 👁 Ominous presence: the air shifts. Something huge is near.
+[BOSS_TELEGRAPH] 🌩 [BOSS] The ground shakes before the enemy appears.
+[BOSS_SPAWN] 👑 [BOSS] Hollow Ogre emerges!
+[BOSS_SMASH] ⚔ Hollow Ogre smashes: Talda the Scarred takes 29 (2→-27).
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~2).
+[BRACE_FAIL] 🪦 Talda the Scarred is down and can't brace.
+[THIEF_EXEC] 🗡 Selos smells blood: 14 damage.
+[MAGE_HIT] ✨ Feneth the Scarred detonates a full cast: 60 damage. [MP 24→18]
+[HEAL] 🩹 Healer restores Talda the Scarred +16 HP (-27→-11).
+[RETREAT_CALL] ⚠ The party breaks off and heads to the city before someone dies.
+[FINISHER] 💥 FINISHER → Feneth the Scarred's blast breaks the Hollow Ogre! (60)
+[BOSS_DEFEATED] 🏆 Boss defeated! +63 gold.
+[TROPHY_DROP] 🎁 Trophy drop: Bone Wand.
+[EQUIP] 📦 EQUIP → Feneth the Scarred equips (weapon): Bone Wand [Δ117.3].
+[EQUIP_CHANGE] 📦 Feneth the Scarred equips Bone Wand.
+[STAT_ATK] 🟩 ATK 12→22.
+📺 Episode ends. Gold=76 | Chests=0 | Merchants=1 | Rares=0 | Near-deaths=1 | Boss=DEFEATED
+📊 Party avg HP%: 68%
+📊 Beat counts: Combat=6 | Expedition=2 | Social=0 | Merchant=2 | Relief=1 | Discovery=0 | Hazard=0
+📊 Downed events=3 | Tank downed=3 | Over-budget prevented=6 | Encounter rerolls=0 | Repeat prevented=1 | Downed-loop interventions=0
+📊 Encounter budget: attempts=6 | accepted=0 | rerolled=0 | scaled=6 | degraded=0 | bestfit=0 | outcomes_total=6
+[DEBUG] Seed -> 100006
+[DEBUG] Run started. Seed=100006
+🌟 Episode begins. Seed=100006 Zone=Dungeon
+[BEAT_SOURCE] 🗺 The party advances deeper.
+🧭 The party advances into the Dungeon.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Warg from the encounter.
+[ENCOUNTER] ⚔ Combat: Goblin (threat 6) [HARD].
+[COMBAT_EXCHANGE] ⚔ Goblin strikes: Talrek the Scarred takes 37 (70→33).
+[THIEF_HIT] 🗡 Koros slips in: 22 damage.
+[MAGE_HIT] ✨ Brrek the Scarred casts for 61. [MP 30→26]
+[HEAL] 🩹 Healer restores Talrek the Scarred +10 HP (33→43).
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🧪 Budget scale-down applied a light non-boss weakening to keep threat fair.
+[ENCOUNTER] ⚔ Combat: Bandit (threat 4) [HARD].
+[COMBAT_EXCHANGE] ⚔ Bandit strikes: Talrek the Scarred takes 39 (43→4).
+[CHAOS] 💢 Chaos erupts in the scrum.
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~2).
+[SPLASH_HIT] ☠ SPLASH → Brrek the Scarred takes 1 (40→39).
+[THIEF_HIT] 🗡 Koros slips in: 26 damage.
+[MAGE_HIT] ✨ Brrek the Scarred casts for 58. [MP 28→24]
+[HEAL] 🩹 Healer restores Talrek the Scarred +20 HP (4→24).
+[TACTIC] 🛡 [TACTIC] Defensive stance called: reduced damage taken for 2 beats.
+[BEAT_SOURCE] 🧭 Expedition: the route itself forces a decision.
+[SOCIAL] ⚔ A rival party crosses paths and offers terms: trade supplies for intel.
+🔷 Party restores MP +5 (group).
+[TRADE] The party trades clean water for spell salts and catches their breath.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Warg from the encounter.
+[ENCOUNTER] ⚔ Combat: Goblin (threat 5) NORMAL.
+[TACTIC] 🛡 [TACTIC] Defensive stance active: incoming damage reduced this beat.
+[COMBAT_EXCHANGE] ⚔ Goblin strikes: Talrek the Scarred takes 30 (24→-6).
+[THIEF_EXEC] 🗡 Koros smells blood: 24 damage.
+[MAGE_HIT] ✨ Brrek the Scarred casts for 46. [MP 30→26]
+[HEAL] 🩹 Healer restores Talrek the Scarred +19 HP (-6→13).
+[NEAR_DEATH] 🚨 Near-death: Talrek the Scarred is under 20% HP!
+[WOUND] 🩸 Talrek the Scarred carries another lasting wound (1).
+[TACTIC] 🧱 [TACTIC] Choke point secured: incoming accuracy reduced for 2 beats.
+[BEAT_SOURCE] 🧳 Encounter: a traveling merchant appears.
+[MERCHANT_OFFER] 🧳 Offer: Holy Vial (104g, asking 104g).
+[MERCHANT_TRADE] 🔁 A barter swap nets the party a practical consumable.
+[EQUIP] 📦 EQUIP → Talrek the Scarred equips (armor): Sturdy Bone Cuirass [Δ28.1].
+[EQUIP_CHANGE] 📦 Talrek the Scarred equips Sturdy Bone Cuirass.
+[STAT_DEF] 🟦 DEF 5→7 (base 6→6).
+[BEAT_SOURCE] 🔎 Exploration find: the party spots something ahead.
+[CHEST_OPEN] 🧰 Chest found.
+[LOOT_FOUND] 💰 Loot found: 10 gold.
+[CHEST_GOLD] 🧰 Chest: +10 gold.
+[BEAT_SOURCE] 🛖 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: campfire. The party regroups.
+[GROUP_HEAL] ✨ Party heals +13 (group).
+[HP_DELTA]   ❤️ Talrek the Scarred HP 13→26.
+[HP_DELTA]   ❤️ Brrek the Scarred HP 39→40.
+[HP_DELTA]   ❤️ Koros HP 45→45.
+[HP_DELTA]   ❤️ Qulen the Unlucky HP 42→42.
+[GROUP_MP] 🔷 Party restores MP +11 (group).
+[MP_DELTA]   🔷 Talrek the Scarred MP 5→5.
+[MP_DELTA]   🔷 Brrek the Scarred MP 30→30.
+[MP_DELTA]   🔷 Koros MP 10→10.
+[MP_DELTA]   🔷 Qulen the Unlucky MP 28→28.
+[WOUND_HEAL] 🩺 Relief treatment: Talrek the Scarred recovers 1 wound(s).
 [STAT_DEF] 🟦 DEF 7→8 (wounds 1→0).
 [BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Bandit (threat 7).
-[CURSED_GROUND] 🜏 Cursed ground: spells feel heavier and more expensive.
-[COMBAT_EXCHANGE] ⚔ Bandit strikes: Haryx takes 47 (7→-40).
-[THIEF_EXEC_CRIT] 🗡 Brris smells blood: 66 damage (CRIT!).
-[MAGE_HIT] ✨ Toros the Unlucky casts for 63. [MP 8→2]
-[HEAL] 🩹 Healer restores Haryx +14 HP (-40→-26).
-[KNOCKDOWN] ⚠ Haryx collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Haryx gains a wound (1). DEF now 7.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Bandit (threat 8).
-[AMBUSH] 🕳 Ambush! Something lashes out before you can set formation.
-[AMBUSH_HIT] 🕳 AMBUSH → Toros the Unlucky takes 9 (40→31).
-[COMBAT_EXCHANGE] ⚔ Bandit strikes: Haryx takes 52 (1→-51).
-[THIEF_EXEC] 🗡 Brris smells blood: 33 damage.
-[MAGE_HIT] ✨ Toros the Unlucky jabs for 30. [NO MP]
-[HEAL] 🩹 Healer restores Haryx +9 HP (-51→-42).
-[CRACKING] 🫠 Haryx looks shaken (32→24).
-[KNOCKDOWN] ⚠ Haryx collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Haryx gains a wound (2). DEF now 6.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Goblin (threat 7).
-[CURSED_GROUND] 🜏 Cursed ground: spells feel heavier and more expensive.
-[COMBAT_EXCHANGE] ⚔ Goblin strikes: Haryx takes 49 (1→-48).
-[THIEF_EXEC] 🗡 Brris smells blood: 31 damage.
-[MAGE_HIT] ✨ Toros the Unlucky jabs for 28. [NO MP]
-[RETIRE_NOTICE] 🏳 Haryx mutters: 'After this… I'm done.'
-[KNOCKDOWN] ⚠ Haryx collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Haryx gains a wound (3). DEF now 5.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Bandit (threat 4).
-[AMBUSH] 🕳 Ambush! Something lashes out before you can set formation.
-[AMBUSH_HIT] 🕳 AMBUSH → Toros the Unlucky takes 9 (31→22).
-[COMBAT_EXCHANGE] ⚔ Bandit strikes: Haryx takes 27 (1→-26).
-[THIEF_EXEC] 🗡 Brris smells blood: 29 damage.
-[MAGE_HIT] ✨ Toros the Unlucky jabs for 20. [NO MP]
-[KNOCKDOWN] ⚠ Haryx collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Haryx gains a wound (4). DEF now 4.
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: campfire. The party regroups.
-[GROUP_HEAL] ✨ Party heals +8 (group).
-[HP_DELTA]   ❤️ Haryx HP 1→9.
-[HP_DELTA]   ❤️ Toros the Unlucky HP 22→30.
-[HP_DELTA]   ❤️ Brris HP 45→45.
-[HP_DELTA]   ❤️ Harris HP 44→44.
-[GROUP_MP] 🔷 Party restores MP +8 (group).
-[MP_DELTA]   🔷 Haryx MP 5→5.
-[MP_DELTA]   🔷 Toros the Unlucky MP 2→10.
-[MP_DELTA]   🔷 Brris MP 11→11.
-[MP_DELTA]   🔷 Harris MP 0→8.
-[WOUND_HEAL] 🩺 Relief treatment: Haryx recovers 1 wound.
-[STAT_DEF] 🟦 DEF 4→5 (wounds 4→3).
-[RESOLVE] 🧠 Haryx steadies (0→11).
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Warg (threat 6).
-[AMBUSH] 🕳 Ambush! Something lashes out before you can set formation.
-[AMBUSH_HIT] 🕳 AMBUSH → Toros the Unlucky takes 8 (30→22).
-[COMBAT_EXCHANGE] ⚔ Warg strikes: Haryx takes 38 (9→-29).
-[THIEF_EXEC] 🗡 Brris smells blood: 30 damage.
-[MAGE_HIT] ✨ Toros the Unlucky casts for 58. [MP 10→6]
-[HEAL] 🩹 Healer restores Haryx +12 HP (-29→-17).
-[RETIRE_NOTICE] 🏳 Haryx mutters: 'After this… I'm done.'
-[KNOCKDOWN] ⚠ Haryx collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Haryx gains a wound (4). DEF now 4.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Bandit (threat 5).
-[BERSERK] 🔥 Berserk rush: the enemy swings wild and hard.
-[COMBAT_EXCHANGE] ⚔ Bandit strikes: Haryx takes 44 (1→-43).
-[CHAOS] 💢 Chaos erupts in the scrum.
-[SPLASH_BEGIN] ☠ Splash damage begins (base ~1).
-[EXECUTION_BLOW] 🩸 EXECUTION BLOW → Haryx takes 1 (-43→-44).
-[SPLASH_HIT] ☠ SPLASH → Toros the Unlucky takes 1 (22→21).
-[SPLASH_HIT] ☠ SPLASH → Brris takes 1 (45→44).
-[SPLASH_HIT] ☠ SPLASH → Harris takes 1 (44→43).
-[THIEF_EXEC] 🗡 Brris smells blood: 31 damage.
-[MAGE_HIT] ✨ Toros the Unlucky casts for 59. [MP 6→3]
-[HEAL] 🩹 Healer restores Haryx +8 HP (-44→-36).
-[KNOCKDOWN] ⚠ Haryx collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Haryx gains a wound (5). DEF now 3.
-[BEAT_SOURCE] 🧭 Encounter: a traveling merchant appears.
-[MERCHANT_SKIP] 🧿 Merchant: party browses, can't afford Warden's Sigil (1092g).
-[RETIRE] 🏳 Haryx retires. 'Not today. Not anymore.'
-[RECRUIT] 🧑‍🤝‍🧑 Recruit joins: Tank Valar the Scarred (Highroad drifter, Stubborn).
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Slime (threat 6).
-[SLIPPERY] 🧊 Slippery ground: footing is bad, armor helps less than usual.
-[COMBAT_EXCHANGE] ⚔ Slime strikes: Valar the Scarred takes 38 (90→52).
-[THIEF_HIT] 🗡 Brris slips in: 23 damage.
-[MAGE_HIT] ✨ Toros the Unlucky jabs for 27. [NO MP]
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Goblin (threat 6).
-[AMBUSH] 🕳 Ambush! Something lashes out before you can set formation.
-[AMBUSH_HIT] 🕳 AMBUSH → Toros the Unlucky takes 5 (21→16).
-[COMBAT_EXCHANGE] ⚔ Goblin strikes: Valar the Scarred takes 32 (52→20).
-[THIEF_HIT] 🗡 Brris slips in: 24 damage.
-[MAGE_HIT] ✨ Toros the Unlucky jabs for 22. [NO MP]
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: quiet corridor. The party regroups.
-[GROUP_HEAL] ✨ Party heals +7 (group).
-[HP_DELTA]   ❤️ Valar the Scarred HP 20→27.
-[HP_DELTA]   ❤️ Toros the Unlucky HP 16→23.
-[HP_DELTA]   ❤️ Brris HP 44→45.
-[HP_DELTA]   ❤️ Harris HP 43→44.
-[GROUP_MP] 🔷 Party restores MP +5 (group).
-[MP_DELTA]   🔷 Valar the Scarred MP 5→5.
-[MP_DELTA]   🔷 Toros the Unlucky MP 3→8.
-[MP_DELTA]   🔷 Brris MP 11→11.
-[MP_DELTA]   🔷 Harris MP 2→7.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Goblin (threat 7).
-[COMBAT_EXCHANGE] ⚔ Goblin strikes: Valar the Scarred takes 39 (27→-12).
-[THIEF_EXEC] 🗡 Brris smells blood: 25 damage.
-[MAGE_HIT] ✨ Toros the Unlucky casts for 71. [MP 8→4]
-[HEAL] 🩹 Healer restores Valar the Scarred +8 HP (-12→-4).
-[KNOCKDOWN] ⚠ Valar the Scarred collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Valar the Scarred gains a wound (1). DEF now 7.
-[NEAR_DEATH] 🚨 Near-death: Valar the Scarred is under 20% HP!
-[BEAT_SOURCE] 🧭 Encounter: a traveling merchant appears.
-[MERCHANT_SKIP] 🧿 Merchant: party browses, can't afford Iron Cuirass (264g).
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Bandit (threat 5).
-[COMBAT_EXCHANGE] ⚔ Bandit strikes: Valar the Scarred takes 32 (1→-31).
-[THIEF_EXEC] 🗡 Brris smells blood: 32 damage.
-[MAGE_HIT] ✨ Toros the Unlucky casts for 57. [MP 4→1]
-[HEAL] 🩹 Healer restores Valar the Scarred +10 HP (-31→-21).
-[KNOCKDOWN] ⚠ Valar the Scarred collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Valar the Scarred gains a wound (2). DEF now 6.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Goblin (threat 6).
-[COMBAT_EXCHANGE] ⚔ Goblin strikes: Valar the Scarred takes 38 (1→-37).
-[THIEF_EXEC] 🗡 Brris smells blood: 34 damage.
-[MAGE_CRIT] ✨ Toros the Unlucky jabs for 52 (CRIT!). [NO MP]
-[CRACKING] 🫠 Valar the Scarred looks shaken (38→20).
-[KNOCKDOWN] ⚠ Valar the Scarred collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Valar the Scarred gains a wound (3). DEF now 5.
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: healing shrine. The party regroups.
-[GROUP_HEAL] ✨ Party heals +7 (group).
-[HP_DELTA]   ❤️ Valar the Scarred HP 1→8.
-[HP_DELTA]   ❤️ Toros the Unlucky HP 23→30.
-[HP_DELTA]   ❤️ Brris HP 45→45.
-[HP_DELTA]   ❤️ Harris HP 44→44.
-[GROUP_MP] 🔷 Party restores MP +4 (group).
-[MP_DELTA]   🔷 Valar the Scarred MP 5→5.
-[MP_DELTA]   🔷 Toros the Unlucky MP 1→5.
-[MP_DELTA]   🔷 Brris MP 11→11.
-[MP_DELTA]   🔷 Harris MP 1→5.
-[WOUND_HEAL] 🩺 Relief treatment: Valar the Scarred recovers 1 wound.
-[STAT_DEF] 🟦 DEF 5→6 (wounds 3→2).
-[RESOLVE] 🧠 Valar the Scarred steadies (12→23).
-[BEAT_SOURCE] 🧭 Encounter: a traveling merchant appears.
-[MERCHANT_SKIP] 🧿 Merchant: party browses, can't afford Sturdy Steel Wraps (562g).
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Slime (threat 8).
-[COMBAT_EXCHANGE] ⚔ Slime strikes: Valar the Scarred takes 45 (8→-37).
-[THIEF_EXEC] 🗡 Brris smells blood: 28 damage.
-[MAGE_CRIT] ✨ Toros the Unlucky casts for 156 (CRIT!). [MP 5→1]
-[HEAL] 🩹 Healer restores Valar the Scarred +14 HP (-37→-23).
-[RETIRE_NOTICE] 🏳 Valar the Scarred mutters: 'After this… I'm done.'
-[KNOCKDOWN] ⚠ Valar the Scarred collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Valar the Scarred gains a wound (3). DEF now 5.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Warg (threat 7).
-[COMBAT_EXCHANGE] ⚔ Warg strikes: Valar the Scarred takes 47 (1→-46).
-[THIEF_EXEC] 🗡 Brris smells blood: 26 damage.
-[MAGE_HIT] ✨ Toros the Unlucky jabs for 24. [NO MP]
-[KNOCKDOWN] ⚠ Valar the Scarred collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Valar the Scarred gains a wound (4). DEF now 4.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Slime (threat 6).
-[BERSERK] 🔥 Berserk rush: the enemy swings wild and hard.
-[COMBAT_EXCHANGE] ⚔ Slime strikes: Valar the Scarred takes 58 (1→-57).
-[CHAOS] 💢 Chaos erupts in the scrum.
-[SPLASH_BEGIN] ☠ Splash damage begins (base ~1).
-[EXECUTION_BLOW] 🩸 EXECUTION BLOW → Valar the Scarred takes 1 (-57→-58).
-[SPLASH_HIT] ☠ SPLASH → Toros the Unlucky takes 1 (30→29).
-[SPLASH_HIT] ☠ SPLASH → Brris takes 1 (45→44).
-[SPLASH_HIT] ☠ SPLASH → Harris takes 1 (44→43).
-[THIEF_EXEC] 🗡 Brris smells blood: 28 damage.
-[MAGE_HIT] ✨ Toros the Unlucky jabs for 28. [NO MP]
-[KNOCKDOWN] ⚠ Valar the Scarred collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Valar the Scarred gains a wound (5). DEF now 3.
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: abandoned outpost. The party regroups.
-[GROUP_HEAL] ✨ Party heals +8 (group).
-[HP_DELTA]   ❤️ Valar the Scarred HP 1→9.
-[HP_DELTA]   ❤️ Toros the Unlucky HP 29→37.
-[HP_DELTA]   ❤️ Brris HP 44→45.
-[HP_DELTA]   ❤️ Harris HP 43→44.
-[GROUP_MP] 🔷 Party restores MP +5 (group).
-[MP_DELTA]   🔷 Valar the Scarred MP 5→5.
-[MP_DELTA]   🔷 Toros the Unlucky MP 1→6.
-[MP_DELTA]   🔷 Brris MP 11→11.
-[MP_DELTA]   🔷 Harris MP 2→7.
-[WOUND_HEAL] 🩺 Relief treatment: Valar the Scarred recovers 1 wound.
-[STAT_DEF] 🟦 DEF 3→4 (wounds 5→4).
-[RESOLVE] 🧠 Valar the Scarred steadies (0→12).
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Warg (threat 4).
-[BERSERK] 🔥 Berserk rush: the enemy swings wild and hard.
-[COMBAT_EXCHANGE] ⚔ Warg strikes: Valar the Scarred takes 39 (9→-30).
-[CHAOS] 💢 Chaos erupts in the scrum.
-[SPLASH_BEGIN] ☠ Splash damage begins (base ~1).
-[EXECUTION_BLOW] 🩸 EXECUTION BLOW → Valar the Scarred takes 1 (-30→-31).
-[SPLASH_HIT] ☠ SPLASH → Toros the Unlucky takes 1 (37→36).
-[SPLASH_HIT] ☠ SPLASH → Brris takes 1 (45→44).
-[SPLASH_HIT] ☠ SPLASH → Harris takes 1 (44→43).
-[THIEF_EXEC] 🗡 Brris smells blood: 26 damage.
-[MAGE_HIT] ✨ Toros the Unlucky casts for 48. [MP 6→3]
-[HEAL] 🩹 Healer restores Valar the Scarred +10 HP (-31→-21).
-[RETIRE_NOTICE] 🏳 Valar the Scarred mutters: 'After this… I'm done.'
-[KNOCKDOWN] ⚠ Valar the Scarred collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Valar the Scarred gains a wound (5). DEF now 3.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Slime (threat 4).
-[COMBAT_EXCHANGE] ⚔ Slime strikes: Valar the Scarred takes 30 (1→-29).
-[THIEF_EXEC_CRIT] 🗡 Brris smells blood: 58 damage (CRIT!).
-[MAGE_CRIT] ✨ Toros the Unlucky casts for 80 (CRIT!). [MP 3→0]
-[HEAL] 🩹 Healer restores Valar the Scarred +8 HP (-29→-21).
-[KNOCKDOWN] ⚠ Valar the Scarred collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Valar the Scarred gains a wound (6). DEF now 2.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Skeleton (threat 6).
-[COMBAT_EXCHANGE] ⚔ Skeleton strikes: Valar the Scarred takes 42 (1→-41).
-[THIEF_EXEC] 🗡 Brris smells blood: 34 damage.
-[MAGE_HIT] ✨ Toros the Unlucky jabs for 22. [NO MP]
-[KNOCKDOWN] ⚠ Valar the Scarred collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Valar the Scarred gains a wound (7). DEF now 1.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Bandit (threat 7).
-[REINFORCEMENTS] 🪓 Reinforcements: more shapes join the fight from the dark.
-[COMBAT_EXCHANGE] ⚔ Bandit strikes: Valar the Scarred takes 54 (1→-53).
-[CHAOS] 💢 Chaos erupts in the scrum.
-[SPLASH_BEGIN] ☠ Splash damage begins (base ~2).
-[EXECUTION_BLOW] 🩸 EXECUTION BLOW → Valar the Scarred takes 1 (-53→-54).
-[SPLASH_HIT] ☠ SPLASH → Toros the Unlucky takes 1 (36→35).
-[SPLASH_HIT] ☠ SPLASH → Brris takes 1 (44→43).
-[SPLASH_HIT] ☠ SPLASH → Harris takes 1 (43→42).
-[THIEF_EXEC] 🗡 Brris smells blood: 31 damage.
-[MAGE_HIT] ✨ Toros the Unlucky jabs for 25. [NO MP]
-[KNOCKDOWN] ⚠ Valar the Scarred collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Valar the Scarred gains a wound (8). DEF now 0.
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: healing shrine. The party regroups.
-[GROUP_HEAL] ✨ Party heals +11 (group).
-[HP_DELTA]   ❤️ Valar the Scarred HP 1→12.
-[HP_DELTA]   ❤️ Toros the Unlucky HP 35→40.
-[HP_DELTA]   ❤️ Brris HP 43→45.
-[HP_DELTA]   ❤️ Harris HP 42→44.
-[GROUP_MP] 🔷 Party restores MP +7 (group).
-[MP_DELTA]   🔷 Valar the Scarred MP 5→5.
-[MP_DELTA]   🔷 Toros the Unlucky MP 0→7.
-[MP_DELTA]   🔷 Brris MP 11→11.
-[MP_DELTA]   🔷 Harris MP 1→8.
-[WOUND_HEAL] 🩺 Relief treatment: Valar the Scarred recovers 1 wound.
-[STAT_DEF] 🟦 DEF 0→1 (wounds 8→7).
-[RESOLVE] 🧠 Valar the Scarred steadies (0→14).
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Goblin (threat 7).
-[COMBAT_EXCHANGE] ⚔ Goblin strikes: Valar the Scarred takes 48 (12→-36).
-[THIEF_EXEC_CRIT] 🗡 Brris smells blood: 62 damage (CRIT!).
-[MAGE_HIT] ✨ Toros the Unlucky casts for 67. [MP 7→3]
-[HEAL] 🩹 Healer restores Valar the Scarred +16 HP (-36→-20).
-[RETIRE_NOTICE] 🏳 Valar the Scarred mutters: 'After this… I'm done.'
-[KNOCKDOWN] ⚠ Valar the Scarred collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Valar the Scarred gains a wound (8). DEF now 0.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Slime (threat 5).
-[COMBAT_EXCHANGE] ⚔ Slime strikes: Valar the Scarred takes 34 (1→-33).
-[THIEF_EXEC] 🗡 Brris smells blood: 29 damage.
-[MAGE_HIT] ✨ Toros the Unlucky casts for 51. [MP 3→0]
-[HEAL] 🩹 Healer restores Valar the Scarred +13 HP (-33→-20).
-[KNOCKDOWN] ⚠ Valar the Scarred collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Valar the Scarred gains a wound (9). DEF now 0.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Slime (threat 7).
-[COMBAT_EXCHANGE] ⚔ Slime strikes: Valar the Scarred takes 52 (1→-51).
-[THIEF_EXEC_CRIT] 🗡 Brris smells blood: 52 damage (CRIT!).
-[MAGE_HIT] ✨ Toros the Unlucky jabs for 26. [NO MP]
-[KNOCKDOWN] ⚠ Valar the Scarred collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Valar the Scarred gains a wound (10). DEF now 0.
-[BEAT_SOURCE] 🧭 Rest stop: the party finds a safe pocket to regroup.
-[RELIEF_START] 🕯 Relief: quiet corridor. The party regroups.
-[GROUP_HEAL] ✨ Party heals +11 (group).
-[HP_DELTA]   ❤️ Valar the Scarred HP 1→12.
-[HP_DELTA]   ❤️ Toros the Unlucky HP 40→40.
-[HP_DELTA]   ❤️ Brris HP 45→45.
-[HP_DELTA]   ❤️ Harris HP 44→44.
-[GROUP_MP] 🔷 Party restores MP +7 (group).
-[MP_DELTA]   🔷 Valar the Scarred MP 5→5.
-[MP_DELTA]   🔷 Toros the Unlucky MP 0→7.
-[MP_DELTA]   🔷 Brris MP 11→11.
-[MP_DELTA]   🔷 Harris MP 2→9.
-[WOUND_HEAL] 🩺 Relief treatment: Valar the Scarred recovers 1 wound.
-[STAT_DEF] 🟦 DEF 0→0 (wounds 10→9).
-[RESOLVE] 🧠 Valar the Scarred steadies (0→13).
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Bandit (threat 6).
-[COMBAT_EXCHANGE] ⚔ Bandit strikes: Valar the Scarred takes 42 (12→-30).
-[THIEF_EXEC] 🗡 Brris smells blood: 35 damage.
-[MAGE_HIT] ✨ Toros the Unlucky casts for 56. [MP 7→3]
-[HEAL] 🩹 Healer restores Valar the Scarred +16 HP (-30→-14).
-[RETIRE_NOTICE] 🏳 Valar the Scarred mutters: 'After this… I'm done.'
-[KNOCKDOWN] ⚠ Valar the Scarred collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Valar the Scarred gains a wound (10). DEF now 0.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Skeleton (threat 5).
-[COMBAT_EXCHANGE] ⚔ Skeleton strikes: Valar the Scarred takes 37 (1→-36).
-[THIEF_EXEC] 🗡 Brris smells blood: 30 damage.
-[MAGE_CRIT] ✨ Toros the Unlucky casts for 110 (CRIT!). [MP 3→0]
-[HEAL] 🩹 Healer restores Valar the Scarred +16 HP (-36→-20).
-[KNOCKDOWN] ⚠ Valar the Scarred collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Valar the Scarred gains a wound (11). DEF now 0.
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Slime (threat 6).
-[AMBUSH] 🕳 Ambush! Something lashes out before you can set formation.
-[AMBUSH_HIT] 🕳 AMBUSH → Harris takes 3 (44→41).
-[COMBAT_EXCHANGE] ⚔ Slime strikes: Valar the Scarred takes 48 (1→-47).
-[THIEF_EXEC] 🗡 Brris smells blood: 31 damage.
-[MAGE_HIT] ✨ Toros the Unlucky jabs for 27. [NO MP]
-[HEAL] 🩹 Healer restores Valar the Scarred +14 HP (-47→-33).
-[KNOCKDOWN] ⚠ Valar the Scarred collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Valar the Scarred gains a wound (12). DEF now 0.
-[BEAT_SOURCE] 🧭 Encounter: a traveling merchant appears.
-[MERCHANT_SKIP] 🧿 Merchant: party browses, can't afford Ember Draught (319g).
-[RETIRE] 🏳 Valar the Scarred retires. 'Not today. Not anymore.'
-[RECRUIT] 🧑‍🤝‍🧑 Recruit joins: Tank Quen the Scarred (Dockside, Stubborn).
-[BEAT_SOURCE] 🧭 Exploration find: the party spots something ahead.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Ogre Brute from the encounter.
+[ENCOUNTER] ⚔ Combat: Skeleton (threat 6) NORMAL.
+[TACTIC] 🛡 [TACTIC] Defensive stance active: incoming damage reduced this beat.
+[TACTIC] 🧱 [TACTIC] Choke point/cover active: enemy accuracy reduced.
+[COMBAT_EXCHANGE] ⚔ Skeleton strikes: Talrek the Scarred takes 22 (26→4).
+[THIEF_HIT] 🗡 Koros slips in: 20 damage.
+[MAGE_HIT] ✨ Brrek the Scarred casts for 52. [MP 30→26]
+[HEAL] 🩹 Healer restores Talrek the Scarred +12 HP (4→16).
+[TACTIC] 🏃 [TACTIC] Controlled withdrawal initiated: next encounters will be lighter.
+[BEAT_SOURCE] 🏃 Withdrawal: the party falls back through dangerous ground.
+[RETREAT_DECISION] 🏳 The party votes to pull out before the next push turns fatal.
+[BEAT_SOURCE] 🔎 Exploration find: the party spots something ahead.
 [CHEST_OPEN] 🧰 Chest found.
-[CHEST_TRAP] 🧰 Chest: it's a trap! Poison needles.
-[SPLASH_BEGIN] ☠ Splash damage begins (base ~8).
-[SPLASH_HIT] ☠ SPLASH → Quen the Scarred takes 1 (94→93).
-[SPLASH_HIT] ☠ SPLASH → Toros the Unlucky takes 5 (40→35).
-[SPLASH_HIT] ☠ SPLASH → Brris takes 6 (45→39).
-[SPLASH_HIT] ☠ SPLASH → Harris takes 4 (41→37).
-[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
-[ENCOUNTER] ⚔ Combat: Slime (threat 8).
-[COMBAT_EXCHANGE] ⚔ Slime strikes: Quen the Scarred takes 45 (93→48).
-[THIEF_HIT] 🗡 Brris slips in: 26 damage.
-[MAGE_HIT] ✨ Toros the Unlucky jabs for 31. [NO MP]
-[BEAT_SOURCE] 🧭 Ominous presence: the air shifts. Something huge is near.
-[BOSS_SPAWN] 👑 BOSS: Iron Warden emerges!
-[BOSS_SMASH] ⚔ Iron Warden smashes: Quen the Scarred takes 48 (48→0).
+[LOOT_FOUND] 💰 Loot found: 27 gold.
+[CHEST_GOLD] 🧰 Chest: +27 gold.
+[BEAT_SOURCE] 🧭 Expedition: the route itself forces a decision.
+[HAZARD] 🌫 A spore pocket bursts from the walls.
 [SPLASH_BEGIN] ☠ Splash damage begins (base ~4).
-[EXECUTION_BLOW] 🩸 EXECUTION BLOW → Quen the Scarred takes 1 (0→-1).
-[SPLASH_HIT] ☠ SPLASH → Toros the Unlucky takes 2 (35→33).
-[SPLASH_HIT] ☠ SPLASH → Brris takes 1 (39→38).
-[SPLASH_HIT] ☠ SPLASH → Harris takes 1 (37→36).
-[BRACE_FAIL] 🪦 Quen the Scarred can't brace.
-[THIEF_EXEC] 🗡 Brris smells blood: 20 damage.
-[MAGE_HIT] ✨ Toros the Unlucky sputters a weak zap: 24 damage. [NO MP]
-[KNOCKDOWN] ⚠ Quen the Scarred collapses but is dragged onward (HP set to 1).
-[WOUND] 🩸 Wounded: Quen the Scarred gains a wound (1). DEF now 7.
-[NEAR_DEATH] 🚨 Near-death: Quen the Scarred is under 20% HP!
-[FINISHER] 💥 FINISHER → Toros the Unlucky's blast breaks the Iron Warden! (24)
-[BOSS_DEFEATED] 🏆 Boss defeated! +70 gold.
-[TROPHY_DROP] 🎁 Trophy drop: Fine Gold Charm.
-[EQUIP] 📦 EQUIP → Toros the Unlucky equips (trinket): Fine Gold Charm [Δ88.1].
-[STAT_ATK] 🟩 ATK 13→16.
-[STAT_DEF] 🟦 DEF 2→5 (base 2→2).
-[STAT_MP] 🔷 MAX MP 30→46.
-📺 Episode ends. Gold=83 | Chests=4 | Merchants=1 | Rares=0 | Near-deaths=7 | Boss=DEFEATED
-📊 Party avg HP%: 62%
+[SPLASH_HIT] ☠ SPLASH → Brrek the Scarred takes 3 (40→37).
+[SPLASH_HIT] ☠ SPLASH → Koros takes 1 (45→44).
+[SPLASH_HIT] ☠ SPLASH → Qulen the Unlucky takes 2 (42→40).
+[BEAT_SOURCE] 🧭 Expedition: the route itself forces a decision.
+[DISCOVERY] 📜 Wall runes describe the boss's old rituals and weak points.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Ogre Brute from the encounter.
+[ENCOUNTER] ⚔ Combat: Goblin, Bandit (threat 10) NORMAL.
+[TACTIC] 🧱 [TACTIC] Choke point/cover active: enemy accuracy reduced.
+[TACTIC] 🏃 [TACTIC] Controlled withdrawal active: disengagement posture lowers pressure.
+[COMBAT_EXCHANGE] ⚔ Goblin, Bandit strikes: Talrek the Scarred takes 50 (16→-34).
+[THIEF_EXEC] 🗡 Koros smells blood: 34 damage.
+[MAGE_HIT] ✨ Brrek the Scarred casts for 90. [MP 30→25]
+[HEAL] 🩹 Healer restores Talrek the Scarred +18 HP (-34→-16).
+[DOWNED] ⚠ Talrek the Scarred is downed and stabilized at 1 HP.
+[WOUND] 🩸 Wounded: Talrek the Scarred gains a wound (1). DEF now 5.
+[TACTIC] 🧱 [TACTIC] Choke point secured: incoming accuracy reduced for 2 beats.
+[BEAT_SOURCE] 🛖 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: abandoned outpost. The party regroups.
+[GROUP_HEAL] ✨ Party heals +12 (group).
+[HP_DELTA]   ❤️ Talrek the Scarred HP 1→13.
+[HP_DELTA]   ❤️ Brrek the Scarred HP 37→40.
+[HP_DELTA]   ❤️ Koros HP 44→45.
+[HP_DELTA]   ❤️ Qulen the Unlucky HP 40→42.
+[GROUP_MP] 🔷 Party restores MP +14 (group).
+[MP_DELTA]   🔷 Talrek the Scarred MP 5→5.
+[MP_DELTA]   🔷 Brrek the Scarred MP 27→30.
+[MP_DELTA]   🔷 Koros MP 10→10.
+[MP_DELTA]   🔷 Qulen the Unlucky MP 27→28.
+[WOUND_HEAL] 🩺 Relief treatment: Talrek the Scarred recovers 1 wound(s).
+[STAT_DEF] 🟦 DEF 5→8 (wounds 1→0).
+[BEAT_SOURCE] 👁 Ominous presence: the air shifts. Something huge is near.
+[BOSS_TELEGRAPH] 🌩 [BOSS] The ground shakes before the enemy appears.
+[BOSS_SPAWN] 👑 [BOSS] Hollow Ogre emerges!
+[BOSS_SMASH] ⚔ Hollow Ogre smashes: Talrek the Scarred takes 29 (13→-16).
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~5).
+[SPLASH_HIT] ☠ SPLASH → Brrek the Scarred takes 2 (40→38).
+[SPLASH_HIT] ☠ SPLASH → Koros takes 3 (45→42).
+[SPLASH_HIT] ☠ SPLASH → Qulen the Unlucky takes 2 (42→40).
+[BRACE_FAIL] 🪦 Talrek the Scarred is down and can't brace.
+[THIEF_EXEC] 🗡 Koros smells blood: 13 damage.
+[MAGE_HIT] ✨ Brrek the Scarred detonates a full cast: 60 damage. [MP 30→24]
+[HEAL] 🩹 Healer restores Talrek the Scarred +33 HP (-16→17).
+[FINISHER] 💥 FINISHER → Brrek the Scarred's blast breaks the Hollow Ogre! (60)
+[BOSS_DEFEATED] 🏆 Boss defeated! +76 gold.
+[TROPHY_DROP] 🎁 Trophy drop: Onyx Ring.
+[EQUIP] 📦 EQUIP → Talrek the Scarred equips (trinket): Onyx Ring [Δ61.3].
+[EQUIP_CHANGE] 📦 Talrek the Scarred equips Onyx Ring.
+[STAT_ATK] 🟩 ATK 8→10.
+[STAT_DEF] 🟦 DEF 8→10 (base 6→6).
+[STAT_HP] ❤️ MAX HP 70→84.
+[CITY_ARRIVE] 🏙 The party returns to the city to recover, honor the fallen, and make hard decisions.
+[CITY_DEPART] 🚪 The party departs the city and returns to the crawl.
+📺 Episode ends. Gold=113 | Chests=2 | Merchants=1 | Rares=0 | Near-deaths=1 | Boss=DEFEATED
+📊 Party avg HP%: 76%
+📊 Beat counts: Combat=5 | Expedition=5 | Social=1 | Merchant=1 | Relief=2 | Discovery=1 | Hazard=1
+📊 Downed events=1 | Tank downed=1 | Over-budget prevented=5 | Encounter rerolls=0 | Repeat prevented=1 | Downed-loop interventions=0
+📊 Encounter budget: attempts=5 | accepted=0 | rerolled=0 | scaled=5 | degraded=0 | bestfit=0 | outcomes_total=5
+Pause event has been registered for this frame
+Pause event has been unregistered

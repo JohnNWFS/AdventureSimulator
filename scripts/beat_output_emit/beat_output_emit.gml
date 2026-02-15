@@ -6,24 +6,67 @@
 
 function beat_output_emit(tag, text, data)
 {
+    // ---- Ensure core globals exist (backward compatible) ----
     if (!variable_global_exists("debug_lines")) {
         global.debug_lines = [];
+    }
+    if (!variable_global_exists("debug_line_cap")) {
         global.debug_line_cap = 80; // default cap
     }
 
+    // Optional: capture full run text for clipboard/paste
+    if (!variable_global_exists("run_log_text")) {
+        global.run_log_text = "";
+    }
+
+    // Optional: autosave-to-file (off by default)
+    if (!variable_global_exists("debug_autosave")) {
+        global.debug_autosave = false;
+    }
+    if (!variable_global_exists("debug_log_path")) {
+        global.debug_log_path = ""; // set by debug_log_start_file(seed)
+    }
+    if (!variable_global_exists("debug_log_pending")) {
+        global.debug_log_pending = ""; // batched file output
+    }
+    if (!variable_global_exists("debug_log_pending_lines")) {
+        global.debug_log_pending_lines = 0;
+    }
+
+    // ---- Normalize inputs ----
     if (!is_string(tag) || tag == "") tag = "UNTAGGED";
     if (!is_string(text)) text = string(text);
 
     // Normalize final line
     var line = "[" + tag + "] " + text;
 
-    // Keep buffer capped
+    // ---- On-screen buffer (existing behavior) ----
     array_push(global.debug_lines, line);
     var cap = global.debug_line_cap;
     while (array_length(global.debug_lines) > cap) {
         array_delete(global.debug_lines, 0, 1);
     }
 
-    // Also send to Output / console for normal debugging
+    // ---- Full run capture (safe, additive) ----
+    // Keep it simple: append with newline; caller can clear at run start.
+    global.run_log_text += line + "\n";
+
+    // ---- Autosave-to-file (Expectation #3) ----
+    // Only writes if autosave is enabled AND a log path has been set.
+    // Uses batching to avoid heavy I/O.
+	if (global.debug_autosave && is_string(global.debug_log_path) && global.debug_log_path != "") {
+	        global.debug_log_pending += line + "\n";
+	        global.debug_log_pending_lines += 1;
+	        // Flush every 25 lines (tweakable)
+	        if (global.debug_log_pending_lines >= 25) {
+	            var f = file_text_open_append(global.debug_log_path);
+	            file_text_write_string(f, global.debug_log_pending);
+	            file_text_close(f);
+	            global.debug_log_pending = "";
+	            global.debug_log_pending_lines = 0;
+	        }
+	    }
+
+    // ---- Output / console (existing behavior) ----
     show_debug_message(line);
 }

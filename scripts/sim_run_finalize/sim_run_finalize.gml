@@ -47,4 +47,7 @@ function sim_run_finalize(sim) {
         " | bestfit=" + string(sim.stats.encounter_bestfit_selected) +
         " | outcomes_total=" + string(encounter_outcome_total)
     );
+	
+	  debug_log_flush();
+	  
 }
