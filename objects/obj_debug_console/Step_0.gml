@@ -60,6 +60,18 @@ if (k_o && !key_prev_o) {
     beat_output_emit("DEBUG", "Autosave-to-file: " + string(global.debug_autosave), undefined);
 }
 
+if (keyboard_check_pressed(vk_f10)) {
+    macro_active = true;
+    macro_step = 0;
+    macro_runs_done = 0;
+
+    macro_waiting_run = false;
+    macro_wait_deadline_ms = 0;
+
+    alarm[0] = 1;
+    beat_output_emit("DEBUG", "Macro start: " + string(macro_runs_target) + " runs", undefined);
+}
+
 
 key_prev_r = k_r;
 key_prev_n = k_n;

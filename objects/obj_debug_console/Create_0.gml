@@ -15,6 +15,20 @@ if (!variable_global_exists("run_log_text")) global.run_log_text = "";
 global.debug_max_beats = 25;     // cap number of beat lines per run
 global.debug_beats_emitted = 0;  // reset each run
 
+// Macro config
+macro_runs_target = 8;   // <-- change this later (e.g., 4, 12, etc.)
+
+// Macro state
+macro_active = false;
+macro_step = 0;
+macro_runs_done = 0;
+
+// Run-wait state
+macro_waiting_run = false;
+macro_wait_deadline_ms = 0;
+macro_wait_timeout_ms = 20000; // safety net: 20 seconds
+
+
 // Input latch
 key_prev_r = false;
 key_prev_n = false;
