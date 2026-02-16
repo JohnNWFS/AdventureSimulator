@@ -154,6 +154,7 @@ function sim_resolve_combat(sim) {
     var tactics = sim.director.tank_tactic_state;
     if (!variable_struct_exists(tactics, "stagger_left")) tactics.stagger_left = 0;
     if (!variable_struct_exists(tactics, "withdrawal_announced")) tactics.withdrawal_announced = false;
+    if (!variable_struct_exists(tactics, "last_tank_downed_beat")) tactics.last_tank_downed_beat = -999;
 
     var dmg_taken_mult = 1.0;
     var flank_base_chance = 18;
@@ -212,7 +213,12 @@ function sim_resolve_combat(sim) {
     var dmg_mult = (is_struct(_mod)) ? _mod.dmg_mult : 1.0;
     var def_mult = (is_struct(_mod)) ? _mod.def_mult : 1.0;
 
-    var base_dmg = ((threat * 2.8) + floor(sqrt(max(0, threat)) * 6) + sim_rand_range(sim, 3, 10));
+    var safe_party = max(1, party_power);
+    var ratio = threat / safe_party;
+    var base = floor(tank.max_hp * 0.18);
+    var swing = sim_rand_range(sim, 0, floor(tank.max_hp * 0.06));
+    var scale = clamp(ratio, 0.60, 1.45);
+    var base_dmg = floor((base + swing) * scale);
     base_dmg = floor(base_dmg * dmg_mult * dmg_taken_mult);
 
     var eff_def = floor(tank.def * def_mult);
@@ -220,10 +226,12 @@ function sim_resolve_combat(sim) {
     var per_hit_cap = floor(tank.max_hp * 0.55);
     if (enc.tag != "BOSS") dmg_to_tank = min(dmg_to_tank, per_hit_cap);
 
-    if (enc.tag != "BOSS" && variable_struct_exists(sim.director, "last_tank_downed_beat") && (sim.beat - sim.director.last_tank_downed_beat) <= 2) {
+    if (enc.tag != "BOSS" && (sim.beat - tactics.last_tank_downed_beat) <= 2) {
         var floor_cap = -floor(tank.max_hp * 0.15);
-        var min_hp_after = max(floor_cap, tank.hp - dmg_to_tank);
-        dmg_to_tank = tank.hp - min_hp_after;
+        var projected_hp = tank.hp - dmg_to_tank;
+        if (projected_hp < floor_cap) {
+            dmg_to_tank = max(0, tank.hp - floor_cap);
+        }
     }
 
     var before_tank = tank.hp;
@@ -423,6 +431,7 @@ function sim_resolve_combat(sim) {
 
     // Tank crisis tracking and anti-loop interventions.
     var tank_downed_happened = (sim.stats.tank_downed_count > pre_tank_downed);
+    if (tank_downed_happened) tactics.last_tank_downed_beat = sim.beat;
 
     var crisis_add = 0;
     if (tank.hp < floor(tank.max_hp * 0.25)) crisis_add += 1;
