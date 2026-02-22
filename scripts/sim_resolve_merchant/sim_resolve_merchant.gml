@@ -51,8 +51,8 @@ function sim_resolve_merchant(sim) {
         delta = pick.delta;
 
         if (buyer_idx < 0 || buyer_idx >= array_length(sim.party)) {
-            sim_log_tag(sim, "MERCHANT_SKIP",
-                "🧳 Merchant packs up " + offer.name + " (" + string(cost) + "g): no valid recipient."
+            sim_log_tag(sim, "MERCHANT_DECLINE",
+                "🧳 Decline: not useful right now (no valid recipient for " + offer.name + ")."
             );
             return;
         }
@@ -62,7 +62,7 @@ function sim_resolve_merchant(sim) {
             sim_log_tag(sim, "MERCHANT_OFFER",
                 "🧳 Offer: " + offer.name + " for " + string(cost) + "g [minor upgrade]."
             );
-            sim_log_tag(sim, "MERCHANT_SKIP", "🧳 The party saves coin for a better find.");
+            sim_log_tag(sim, "MERCHANT_DECLINE", "🧳 Decline: not useful enough; saving gold for a better find.");
             return;
         }
     }
@@ -72,48 +72,43 @@ function sim_resolve_merchant(sim) {
     );
 
     if (sim.gold_total < cost) {
-        var fallback = sim_rand_range(sim, 0, 5);
+        var drip = max(4, floor(list_price * 0.35));
+        if (sim.gold_total >= drip) {
+            sim.gold_total -= drip;
+            sim.stats.merchants_bought += 1;
+            sim_log_tag(sim, "MERCHANT_BUY", "🧳 The party scrapes together " + string(drip) + "g and buys " + offer.name + ".");
+            if (slot != "") {
+                sim_set_equipped_item(sim.party[buyer_idx], slot, offer);
+                sim_recalc_derived(sim.party[buyer_idx]);
+            } else {
+                sim_give_item(sim, offer);
+            }
+            return;
+        }
+
+        var fallback = sim_rand_range(sim, 0, 2);
         switch (fallback) {
             case 0:
-                sim_log_tag(sim, "MERCHANT_REPAIR", "🛠 The merchant offers field repairs instead of a sale.");
+                sim_log_tag(sim, "MERCHANT_REPAIR", "🛠 Repair instead of sale: too expensive at " + string(cost) + "g.");
                 sim_party_heal(sim, sim_rand_range(sim, 4, 8));
                 break;
             case 1:
-                sim_log_tag(sim, "MERCHANT_SUPPLY", "🧪 The merchant trades cheap poultices for future favors.");
-                sim_party_restore_mp(sim, sim_rand_range(sim, 4, 7));
-                break;
-            case 2:
-                sim_log_tag(sim, "MERCHANT_TRADE", "🔁 A barter swap nets the party a practical consumable.");
-                sim_give_item(sim, loot_generate_item(sim, { source: "merchant", zone: sim.zone, tier_target: max(1, tier_target - 1) }));
-                break;
-            case 3:
-                sim_log_tag(sim, "MERCHANT_RUMOR", "🗣 Rumor: a safer side route avoids a recent ambush point.");
+                sim_log_tag(sim, "MERCHANT_RUMOR", "🗣 Rumor instead of sale: too expensive at " + string(cost) + "g.");
                 sim.tension = clamp(sim.tension - 6, 0, 100);
                 break;
-            case 4:
-                var drip = max(4, floor(list_price * 0.35));
-                sim_log_tag(sim, "MERCHANT_DISCOUNT", "🏷 The merchant marks down stock for battered travelers.");
-                sim_log_tag(sim, "MERCHANT_OFFER", "🧳 Revised asking price: " + string(drip) + "g.");
-                if (sim.gold_total >= drip) {
-                    sim.gold_total -= drip;
-                    sim.stats.merchants_bought += 1;
-                    sim_log_tag(sim, "MERCHANT_BUY", "🧳 The party scrapes together " + string(drip) + "g and buys " + offer.name + ".");
-                    if (slot != "") {
-                        sim_set_equipped_item(sim.party[buyer_idx], slot, offer);
-                        sim_recalc_derived(sim.party[buyer_idx]);
-                    } else {
-                        sim_give_item(sim, offer);
-                    }
-                }
-                break;
             default:
-                sim_log_tag(sim, "MERCHANT_WARNING", "⚠ Warning: scouts report movement near the next chokepoint.");
+                sim_log_tag(sim, "MERCHANT_DECLINE", "🧳 Decline: too expensive (" + string(cost) + "g), saving gold.");
                 break;
         }
         return;
     }
 
     var buyer = sim.party[buyer_idx];
+    if (slot != "" && ((variable_struct_exists(buyer, "dead") && buyer.dead) || (variable_struct_exists(buyer, "retired") && buyer.retired))) {
+        sim_log_tag(sim, "MERCHANT_DECLINE", "🧳 Decline: not useful right now (intended buyer unavailable).");
+        return;
+    }
+
     var gold_before = sim.gold_total;
 
     sim.gold_total -= cost;
@@ -126,11 +121,6 @@ function sim_resolve_merchant(sim) {
 
     if (slot != "") {
         var p = sim.party[buyer_idx];
-        if ((variable_struct_exists(p, "dead") && p.dead) || (variable_struct_exists(p, "retired") && p.retired)) {
-            sim_log_tag(sim, "MERCHANT_SKIP", "🧳 The intended buyer is unavailable.");
-            return;
-        }
-
         sim_recalc_derived(p);
 
         sim_set_equipped_item(p, slot, offer);
