@@ -99,6 +99,23 @@ function sim_resolve_city_scene(sim) {
         );
     }
 
+    var tank_name = "Unknown";
+    var thief_name = "Unknown";
+    var mage_name = "Unknown";
+    var healer_name = "Unknown";
+
+    for (var k = 0; k < array_length(sim.party); k++) {
+        var member = sim.party[k];
+        if (member.role == "Tank") tank_name = member.name;
+        else if (member.role == "Thief") thief_name = member.name;
+        else if (member.role == "Mage") mage_name = member.name;
+        else if (member.role == "Healer") healer_name = member.name;
+    }
+
+    sim_log_tag(sim, "PARTY_ROSTER",
+        "Tank=" + tank_name + "; Thief=" + thief_name + "; Mage=" + mage_name + "; Healer=" + healer_name + "."
+    );
+
     sim_log_tag(sim, "CITY_DEPART", "🚪 The party departs the city and returns to the crawl.");
 
     sim.retreat_to_city = false;

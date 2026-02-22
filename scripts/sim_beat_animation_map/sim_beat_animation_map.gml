@@ -24,6 +24,8 @@ function sim_beat_animation_map_table()
             RETREAT_CALL:   { anim_id: "retreat_call", lane: "overlay" },
             DOWNED:         { anim_id: "party_downed", lane: "overlay" },
             DEATH:          { anim_id: "party_death", lane: "overlay" },
+            ADVENTURE_START:{ anim_id: "adventure_start", lane: "scene" },
+            PARTY_ROSTER:   { anim_id: "party_roster_pose", lane: "overlay" },
             CITY_ARRIVE:    { anim_id: "city_arrive", lane: "scene" },
             CITY_DEPART:    { anim_id: "city_depart", lane: "scene" }
         };
