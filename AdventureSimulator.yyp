@@ -57,6 +57,7 @@
     {"id":{"name":"loot_roll_stats","path":"scripts/loot_roll_stats/loot_roll_stats.yy",},},
     {"id":{"name":"rng_seed_init","path":"scripts/rng_seed_init/rng_seed_init.yy",},},
     {"id":{"name":"Script65","path":"scripts/Script65/Script65.yy",},},
+    {"id":{"name":"sim_beat_animation_map","path":"scripts/sim_beat_animation_map/sim_beat_animation_map.yy",},},
     {"id":{"name":"sim_adjust_resolve","path":"scripts/sim_adjust_resolve/sim_adjust_resolve.yy",},},
     {"id":{"name":"sim_apply_party_damage","path":"scripts/sim_apply_party_damage/sim_apply_party_damage.yy",},},
     {"id":{"name":"sim_apply_route_modifier","path":"scripts/sim_apply_route_modifier/sim_apply_route_modifier.yy",},},
