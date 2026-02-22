@@ -8,7 +8,9 @@ function debug_log_append_line(line)
     global.debug_log_pending += line + "\n";
     global.debug_log_pending_lines += 1;
 
+    if (!variable_global_exists("debug_log_text")) global.debug_log_text = "";
+    global.debug_log_text += line + "\n";
+
     // Flush every 25 lines (tweak as you like)
     if (global.debug_log_pending_lines >= 25) debug_log_flush();
 }
-

@@ -19,6 +19,13 @@ function beat_output_emit(tag, text, data)
         global.run_log_text = "";
     }
 
+    if (!variable_global_exists("beat_log_text")) {
+        global.beat_log_text = "";
+    }
+    if (!variable_global_exists("debug_log_text")) {
+        global.debug_log_text = "";
+    }
+
     // Optional: autosave-to-file (off by default)
     if (!variable_global_exists("debug_autosave")) {
         global.debug_autosave = false;
@@ -26,11 +33,20 @@ function beat_output_emit(tag, text, data)
     if (!variable_global_exists("debug_log_path")) {
         global.debug_log_path = ""; // set by debug_log_start_file(seed)
     }
+    if (!variable_global_exists("beat_log_path")) {
+        global.beat_log_path = "";
+    }
     if (!variable_global_exists("debug_log_pending")) {
         global.debug_log_pending = ""; // batched file output
     }
     if (!variable_global_exists("debug_log_pending_lines")) {
         global.debug_log_pending_lines = 0;
+    }
+    if (!variable_global_exists("beat_log_pending")) {
+        global.beat_log_pending = "";
+    }
+    if (!variable_global_exists("beat_log_pending_lines")) {
+        global.beat_log_pending_lines = 0;
     }
 
     // ---- Normalize inputs ----
@@ -39,6 +55,13 @@ function beat_output_emit(tag, text, data)
 
     // Normalize final line
     var line = "[" + tag + "] " + text;
+    var route = (is_struct(data) && variable_struct_exists(data, "route")) ? string(data.route) : "both";
+    var to_debug = (route != "beat");
+    var to_beat = (route != "debug");
+
+    if (tag == "DEBUG" || tag == "CALIB" || tag == "SIM") {
+        to_beat = false;
+    }
 
     // ---- On-screen buffer (existing behavior) ----
     array_push(global.debug_lines, line);
@@ -51,21 +74,25 @@ function beat_output_emit(tag, text, data)
     // Keep it simple: append with newline; caller can clear at run start.
     global.run_log_text += line + "\n";
 
+    if (to_debug) global.debug_log_text += line + "\n";
+    if (to_beat) global.beat_log_text += line + "\n";
+
     // ---- Autosave-to-file (Expectation #3) ----
     // Only writes if autosave is enabled AND a log path has been set.
     // Uses batching to avoid heavy I/O.
-	if (global.debug_autosave && is_string(global.debug_log_path) && global.debug_log_path != "") {
-	        global.debug_log_pending += line + "\n";
-	        global.debug_log_pending_lines += 1;
-	        // Flush every 25 lines (tweakable)
-	        if (global.debug_log_pending_lines >= 25) {
-	            var f = file_text_open_append(global.debug_log_path);
-	            file_text_write_string(f, global.debug_log_pending);
-	            file_text_close(f);
-	            global.debug_log_pending = "";
-	            global.debug_log_pending_lines = 0;
-	        }
-	    }
+    if (global.debug_autosave) {
+        if (to_debug && is_string(global.debug_log_path) && global.debug_log_path != "") {
+            global.debug_log_pending += line + "\n";
+            global.debug_log_pending_lines += 1;
+        }
+        if (to_beat && is_string(global.beat_log_path) && global.beat_log_path != "") {
+            global.beat_log_pending += line + "\n";
+            global.beat_log_pending_lines += 1;
+        }
+        if (global.debug_log_pending_lines >= 25 || global.beat_log_pending_lines >= 25) {
+            debug_log_flush();
+        }
+    }
 
     // ---- Output / console (existing behavior) ----
     show_debug_message(line);
