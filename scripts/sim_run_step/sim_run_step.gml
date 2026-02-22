@@ -1,6 +1,7 @@
 function sim_run_step(sim) {
     if (sim.finished) return;
     if (!variable_struct_exists(sim, "flags") || !is_struct(sim.flags)) sim.flags = {};
+    if (!variable_struct_exists(sim.flags, "boss_begun")) sim.flags.boss_begun = false;
 
     // End condition
     if (sim.beat >= sim.beats_target) {
@@ -90,13 +91,15 @@ function sim_run_step(sim) {
         default:             sim_resolve_combat(sim); break;
     }
 
+    if (ev == "boss") sim.flags.boss_begun = true;
+
     var middle_start = floor(sim.beats_target / 3);
     var middle_end = floor((sim.beats_target * 2) / 3);
     if ((!variable_struct_exists(sim.flags, "complication_emitted") || !sim.flags.complication_emitted)
     && sim.beat >= 2
     && sim.beat >= middle_start
     && sim.beat < middle_end
-    && ev != "boss") {
+    && !sim.flags.boss_begun) {
         sim.flags.complication_emitted = true;
         sim_log(sim, "[COMPLICATION] A sudden blockade forces the party to burn supplies just to stay on schedule.");
     }
