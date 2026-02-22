@@ -12,6 +12,12 @@ function sim_run_init(sim, seed, beats_target) {
     sim.finished = false;
     if (!variable_struct_exists(sim, "episode_begun_logged")) sim.episode_begun_logged = false;
 
+    // ---- Episode flags reset (must reset each run; sim struct is reused) ----
+    if (!variable_struct_exists(sim, "flags") || !is_struct(sim.flags)) sim.flags = {};
+    sim.flags.hook_emitted = false;
+    sim.flags.complication_emitted = false;
+    sim.flags.boss_begun = false;
+
     sim.zone = "Dungeon";
     sim.difficulty = 1;
     sim.tension = 10;
