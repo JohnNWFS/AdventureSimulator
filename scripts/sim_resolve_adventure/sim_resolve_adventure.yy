@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"sim_resolve_adventure",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"sim_resolve_adventure",
+  "parent":{
+    "name":"RESOLVE",
+    "path":"folders/SCRIPTS/RESOLVE.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

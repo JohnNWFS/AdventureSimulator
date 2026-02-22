@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"sim_apply_route_modifier",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"sim_apply_route_modifier",
+  "parent":{
+    "name":"RESOLVE",
+    "path":"folders/SCRIPTS/RESOLVE.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
