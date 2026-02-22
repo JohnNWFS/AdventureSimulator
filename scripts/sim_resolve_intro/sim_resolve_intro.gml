@@ -48,6 +48,10 @@ function sim_apply_route_modifier(sim, mode) {
 
 function sim_resolve_adventure(sim) {
     var beat = sim_rand_range(sim, 0, 7);
+    if (variable_struct_exists(sim.director, "last_adventure_beat") && beat == sim.director.last_adventure_beat) {
+        beat = sim_rand_range(sim, 0, 7);
+    }
+    sim.director.last_adventure_beat = beat;
 
     switch (beat) {
         case 0:
@@ -104,12 +108,24 @@ function sim_resolve_adventure(sim) {
         case 6:
             sim.coverage.social += 1;
             sim_log_tag(sim, "SOCIAL", "⚔ A rival party crosses paths and offers terms: trade supplies for intel.");
-            if (sim_chance(sim, 50)) {
+            var rivals_roll = sim_rand_range(sim, 0, 99);
+            if (rivals_roll < 25) {
                 sim_party_restore_mp(sim, sim_rand_range(sim, 2, 6));
-                sim_log_tag(sim, "TRADE", "The party trades clean water for spell salts and catches their breath.");
-            } else {
+                sim_log_tag(sim, "RIVALS_TRADE", "The party trades clean water for spell salts and catches their breath.");
+            } else if (rivals_roll < 50) {
+                sim_apply_party_damage(sim, sim_rand_range(sim, 1, 3));
+                sim.tension = clamp(sim.tension + 6, 0, 100);
+                sim_log_tag(sim, "RIVALS_AMBUSH", "Talks are a feint; crossbows snap from the dark before the rivals disengage.");
+            } else if (rivals_roll < 75) {
+                sim.tension = clamp(sim.tension - 3, 0, 100);
+                sim_log_tag(sim, "RIVALS_INFO", "A tense map-side exchange reveals a trapped corridor and a cleaner flank route.");
+            } else if (!sim.director.rivals_stall_seen) {
+                sim.director.rivals_stall_seen = true;
                 sim.tension = clamp(sim.tension + 4, 0, 100);
                 sim_log_tag(sim, "TRADE", "Negotiations stall; both groups leave wary and armed.");
+            } else {
+                sim.tension = clamp(sim.tension - 5, 0, 100);
+                sim_log_tag(sim, "RIVALS_ALLIANCE", "Neither side trusts the other, but they coordinate patrol lanes to avoid a mutual wipe.");
             }
             break;
         default:
