@@ -52,6 +52,20 @@ function sim_resolve_combat(sim) {
 
     sim.stats.combats += 1;
 
+    // ---- Cinematic combat shape (deterministic) ----
+    // Shapes:
+    //  - standard: enemy hits tank, thief, mage, healer (end)
+    //  - mage_opens: mage narrates first, then enemy hits tank, thief, healer (end)
+    //  - healer_mid: enemy hits tank, healer reacts mid, thief, mage
+    var shape_roll = sim_rand_range(sim, 0, 99);
+    var combat_shape = "standard";
+    if (shape_roll >= 50 && shape_roll < 75) {
+        combat_shape = "mage_opens";
+    } else if (shape_roll >= 75) {
+        combat_shape = "healer_mid";
+    }
+    sim_log_tag(sim, "COMBAT_SHAPE", "🎬 shape=" + combat_shape);
+
     var debug_budget = variable_global_exists("debug_verbose") ? global.debug_verbose : false;
     var party_power = sim_calc_party_power(sim);
     var enc = sim_make_combat_encounter(sim, party_power);
@@ -186,7 +200,49 @@ function sim_resolve_combat(sim) {
         }
     }
 
+    // Local flags used later
     var had_ambush_pre_strike = false;
+    var had_chaos_splash = false;
+    var thief_misstep = false;
+    var mage_overchanneled = false;
+
+    // Pre values used later (must exist regardless of shape)
+    var before_tank = tank.hp;
+    var pre_wounds = tank.wounds;
+    var pre_tank_downed = sim.stats.tank_downed_count;
+    var dmg_to_tank = 0;
+
+    // ---- Mage opens (shape variant) ----
+    if (combat_shape == "mage_opens") {
+
+        // --- Mage hits first (MP matters) ---
+        var mp_add_open = (is_struct(_mod)) ? _mod.mp_cost_add : 0;
+        var mp_cost_open = clamp(2 + floor(threat / 3) + mp_add_open, 2, 8);
+
+        var cast_open = (!mage.dead && !mage.retired && mage.status_state != "downed" && mage.mp >= mp_cost_open);
+        var before_mp_open = mage.mp;
+
+        var mage_crit_open = sim_chance(sim, cast_open ? 18 : 10);
+        var mage_hit_open = 0;
+
+        if (cast_open) {
+            mage.mp -= mp_cost_open;
+            mage_hit_open = floor(((threat * 7) + sim_rand_range(sim, 6, 18) + floor(mage.atk * 0.5)) * party_out_mult);
+        } else if (!mage.dead && !mage.retired && mage.status_state != "downed") {
+            mage_hit_open = floor(((threat * 3) + sim_rand_range(sim, 2, 10)) * party_out_mult);
+        }
+
+        if (mage_crit_open) mage_hit_open *= 2;
+
+        if (mage_hit_open > 0) {
+            sim_log_tag(sim, mage_crit_open ? "MAGE_CRIT" : "MAGE_HIT",
+                "✨ " + mage.name + (cast_open ? " opens" : " opens") +
+                " for " + string(mage_hit_open) + (mage_crit_open ? " (CRIT!)." : ".") +
+                (cast_open ? (" [MP " + string(before_mp_open) + "→" + string(mage.mp) + "]") : " [NO MP]")
+            );
+        }
+    }
+
     // --- AMBUSH pre-strike ---
     if (is_struct(_mod) && _mod.pre_strike) {
         had_ambush_pre_strike = true;
@@ -222,7 +278,7 @@ function sim_resolve_combat(sim) {
     base_dmg = floor(base_dmg * dmg_mult * dmg_taken_mult);
 
     var eff_def = floor(tank.def * def_mult);
-    var dmg_to_tank = max(0, base_dmg - eff_def);
+    dmg_to_tank = max(0, base_dmg - eff_def);
     var per_hit_cap = floor(tank.max_hp * 0.55);
     if (enc.tag != "BOSS") dmg_to_tank = min(dmg_to_tank, per_hit_cap);
 
@@ -234,9 +290,9 @@ function sim_resolve_combat(sim) {
         }
     }
 
-    var before_tank = tank.hp;
-    var pre_wounds = tank.wounds;
-    var pre_tank_downed = sim.stats.tank_downed_count;
+    before_tank = tank.hp;
+    pre_wounds = tank.wounds;
+    pre_tank_downed = sim.stats.tank_downed_count;
 
     tank.hp -= dmg_to_tank;
 
@@ -246,6 +302,7 @@ function sim_resolve_combat(sim) {
         sim_log_tag(sim, "TANK_STAGGER", "🪨 " + tank.name + " staggers; formation slips.");
     }
 
+    // COMBAT_EXCHANGE: enemy strike always logs (mage_opens already logged above)
     sim_log_tag(sim, "COMBAT_EXCHANGE",
         "⚔ " + enc.names + " strikes: " + tank.name + " takes " + string(dmg_to_tank) +
         " (" + string(before_tank) + "→" + string(tank.hp) + ")."
@@ -273,7 +330,6 @@ function sim_resolve_combat(sim) {
         sim_log_tag(sim, "DEATH", "☠ " + tank.name + " is shattered in one awful moment.");
     }
 
-    var had_chaos_splash = false;
     // --- Mid-fight chaos (allow execution blows) ---
     if (is_struct(_mod) && _mod.extra_splash > 0) {
         had_chaos_splash = true;
@@ -281,10 +337,25 @@ function sim_resolve_combat(sim) {
         sim_apply_party_damage(sim, floor(_mod.extra_splash * dmg_taken_mult));
     }
 
+    // --- HEALER timing support (shape variant) ---
+    var healer_done = false;
+
+    // Capture pre-heal arrays BEFORE any heal (mid or end)
+    var pre_heal_hp = [];
+    var pre_heal_max_hp = [];
+    for (var p = 0; p < array_length(sim.party); p++) {
+        pre_heal_hp[p] = sim.party[p].hp;
+        pre_heal_max_hp[p] = sim.party[p].max_hp;
+    }
+
+    if (combat_shape == "healer_mid") {
+        sim_auto_heal(sim);
+        healer_done = true;
+    }
+
     // --- Thief identity: Execution mode ---
     var avg_hp_pct = sim_party_avg_hp_pct(sim);
     var exec_mode = (tank.hp <= 0) || (avg_hp_pct < 0.45) || (sim.tension > 75);
-    var thief_misstep = false;
 
     if (!thief.dead && !thief.retired && thief.status_state != "downed") {
         var thief_base = max(1, thief.atk * 2 + sim_rand_range(sim, 2, 8));
@@ -330,65 +401,71 @@ function sim_resolve_combat(sim) {
     }
 
     // --- Mage hits back (MP matters) ---
-    var mp_add = (is_struct(_mod)) ? _mod.mp_cost_add : 0;
-    var mp_cost = clamp(2 + floor(threat / 3) + mp_add, 2, 8);
+    // If mage_opens, we already logged mage first. Still allow a follow-up "hits back" in standard/healer_mid only.
+    if (combat_shape != "mage_opens") {
 
-    var cast = (!mage.dead && !mage.retired && mage.status_state != "downed" && mage.mp >= mp_cost);
-    var before_mp = mage.mp;
+        var mp_add = (is_struct(_mod)) ? _mod.mp_cost_add : 0;
+        var mp_cost = clamp(2 + floor(threat / 3) + mp_add, 2, 8);
 
-    var mage_crit = sim_chance(sim, cast ? 18 : 10);
-    var mage_hit;
-    var mage_overchanneled = false;
+        var cast = (!mage.dead && !mage.retired && mage.status_state != "downed" && mage.mp >= mp_cost);
+        var before_mp = mage.mp;
 
-    if (cast) {
-        var high_tension = (sim.tension >= 70) || (tank.hp <= 0) || (tactics.stagger_left > 0);
-        if (mage.mp >= (mp_cost + 2) && high_tension && sim_chance(sim, 25)) {
-            mage_overchanneled = true;
-            mage.mp -= (mp_cost + 2);
-            mage_hit = floor((((threat * 7) + sim_rand_range(sim, 6, 18) + floor(mage.atk * 0.5)) * 1.25) * party_out_mult);
-            var backlash = sim_rand_range(sim, 2, 6);
-            var mage_before_hp = mage.hp;
-            mage.hp -= backlash;
-            sim_log_tag(sim, "MAGE_OVERCHANNEL",
-                "⚡ " + mage.name + " overchannels: " + string(mage_hit) +
-                " damage [MP " + string(before_mp) + "→" + string(mage.mp) + "] (backlash " + string(backlash) +
-                ", HP " + string(mage_before_hp) + "→" + string(mage.hp) + ")."
-            );
+        var mage_crit = sim_chance(sim, cast ? 18 : 10);
+        var mage_hit;
+        mage_overchanneled = false;
+
+        if (cast) {
+            var high_tension = (sim.tension >= 70) || (tank.hp <= 0) || (tactics.stagger_left > 0);
+            if (mage.mp >= (mp_cost + 2) && high_tension && sim_chance(sim, 25)) {
+                mage_overchanneled = true;
+                mage.mp -= (mp_cost + 2);
+                mage_hit = floor((((threat * 7) + sim_rand_range(sim, 6, 18) + floor(mage.atk * 0.5)) * 1.25) * party_out_mult);
+                var backlash = sim_rand_range(sim, 2, 6);
+                var mage_before_hp = mage.hp;
+                mage.hp -= backlash;
+                sim_log_tag(sim, "MAGE_OVERCHANNEL",
+                    "⚡ " + mage.name + " overchannels: " + string(mage_hit) +
+                    " damage [MP " + string(before_mp) + "→" + string(mage.mp) + "] (backlash " + string(backlash) +
+                    ", HP " + string(mage_before_hp) + "→" + string(mage.hp) + ")."
+                );
+            } else {
+                mage.mp -= mp_cost;
+                mage_hit = floor(((threat * 7) + sim_rand_range(sim, 6, 18) + floor(mage.atk * 0.5)) * party_out_mult);
+            }
+        } else if (!mage.dead && !mage.retired && mage.status_state != "downed") {
+            if (mage.mp < mp_cost && sim_chance(sim, 20)) {
+                tactics.cover_left += 1;
+                mage_hit = 0;
+                sim_log_tag(sim, "MAGE_REPOSITION", "🌀 " + mage.name + " shifts the line; enemies lose their angle.");
+            } else {
+                mage_hit = floor(((threat * 3) + sim_rand_range(sim, 2, 10)) * party_out_mult);
+            }
         } else {
-            mage.mp -= mp_cost;
-            mage_hit = floor(((threat * 7) + sim_rand_range(sim, 6, 18) + floor(mage.atk * 0.5)) * party_out_mult);
-        }
-    } else if (!mage.dead && !mage.retired && mage.status_state != "downed") {
-        if (mage.mp < mp_cost && sim_chance(sim, 20)) {
-            tactics.cover_left += 1;
             mage_hit = 0;
-            sim_log_tag(sim, "MAGE_REPOSITION", "🌀 " + mage.name + " shifts the line; enemies lose their angle.");
-        } else {
-            mage_hit = floor(((threat * 3) + sim_rand_range(sim, 2, 10)) * party_out_mult);
         }
-    } else {
-        mage_hit = 0;
+
+        if (mage_crit) mage_hit *= 2;
+
+        if (mage_hit > 0 && !mage_overchanneled) {
+            sim_log_tag(sim, mage_crit ? "MAGE_CRIT" : "MAGE_HIT",
+                "✨ " + mage.name + (cast ? " casts" : " jabs") +
+                " for " + string(mage_hit) + (mage_crit ? " (CRIT!)." : ".") +
+                (cast ? (" [MP " + string(before_mp) + "→" + string(mage.mp) + "]") : " [NO MP]")
+            );
+        }
     }
 
-    if (mage_crit) mage_hit *= 2;
+    // Healer at end for standard + mage_opens
+    if (!healer_done) {
+        // Re-capture pre-heal if healer is end-of-beat (so the analysis reflects this heal, not the earlier snapshot)
+        for (var p2 = 0; p2 < array_length(sim.party); p2++) {
+            pre_heal_hp[p2] = sim.party[p2].hp;
+            pre_heal_max_hp[p2] = sim.party[p2].max_hp;
+        }
 
-    if (mage_hit > 0 && !mage_overchanneled) {
-        sim_log_tag(sim, mage_crit ? "MAGE_CRIT" : "MAGE_HIT",
-            "✨ " + mage.name + (cast ? " casts" : " jabs") +
-            " for " + string(mage_hit) + (mage_crit ? " (CRIT!)." : ".") +
-            (cast ? (" [MP " + string(before_mp) + "→" + string(mage.mp) + "]") : " [NO MP]")
-        );
+        sim_auto_heal(sim);
+        healer_done = true;
     }
-
-    // --- Healer reacts ---
-    var pre_heal_hp = [];
-    var pre_heal_max_hp = [];
-    for (var p = 0; p < array_length(sim.party); p++) {
-        pre_heal_hp[p] = sim.party[p].hp;
-        pre_heal_max_hp[p] = sim.party[p].max_hp;
-    }
-
-    sim_auto_heal(sim);
 
     var heal_note_done = false;
     var had_clutch = false;
