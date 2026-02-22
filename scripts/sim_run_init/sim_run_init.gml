@@ -116,6 +116,35 @@ function sim_run_init(sim, seed, beats_target) {
         sim_recalc_derived(sim.party[i]);
     }
 
+    var prologue_options = [
+        "The party meets in an inn.",
+        "The party convenes at the Adventurers' Guild.",
+        "The party gathers in the town center.",
+        "The party receives a blessing at the local church.",
+        "The party consults a priest at the temple.",
+        "The party regroups after a battle.",
+        "The party arrives by ship and takes rooms near the docks."
+    ];
+    var prologue_idx = sim_rand_range(sim, 0, array_length(prologue_options) - 1);
+    sim_log_tag(sim, "ADVENTURE_START", prologue_options[prologue_idx]);
+
+    var tank_name = "Unknown";
+    var thief_name = "Unknown";
+    var mage_name = "Unknown";
+    var healer_name = "Unknown";
+
+    for (var j = 0; j < array_length(sim.party); j++) {
+        var member = sim.party[j];
+        if (member.role == "Tank") tank_name = member.name;
+        else if (member.role == "Thief") thief_name = member.name;
+        else if (member.role == "Mage") mage_name = member.name;
+        else if (member.role == "Healer") healer_name = member.name;
+    }
+
+    sim_log_tag(sim, "PARTY_ROSTER",
+        "Tank=" + tank_name + "; Thief=" + thief_name + "; Mage=" + mage_name + "; Healer=" + healer_name + "."
+    );
+
     // Stats (ensure combats exists)
     sim.stats = {
         combats: 0,
