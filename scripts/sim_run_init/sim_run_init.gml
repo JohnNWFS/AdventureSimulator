@@ -17,6 +17,7 @@ function sim_run_init(sim, seed, beats_target) {
     sim.flags.hook_emitted = false;
     sim.flags.complication_emitted = false;
     sim.flags.boss_begun = false;
+    sim.flags.adventure_start_emitted = false;
 
     sim.intel = {
         trap_warning: false,
