@@ -20,11 +20,26 @@ function loot_generate_item(sim, context) {
     // Name parts
     var base = "Trinket";
     switch (item_type) {
-        case "weapon": base = choose("Sword", "Axe", "Dagger", "Wand"); break;
-        case "armor": base = choose("Helm", "Shield", "Cuirass", "Wraps"); break;
-        case "trinket": base = choose("Ring", "Charm", "Band", "Sigil"); break;
-        case "consumable": base = choose("Tonic", "Vial", "Draught"); break;
-        case "treasure": base = choose("Gem", "Idol", "Relic", "Coin Cache"); break;
+        case "weapon":
+            var weapon_bases = ["Sword", "Axe", "Dagger", "Wand"];
+            base = weapon_bases[sim_rand_range(sim, 0, array_length(weapon_bases) - 1)];
+            break;
+        case "armor":
+            var armor_bases = ["Helm", "Shield", "Cuirass", "Wraps"];
+            base = armor_bases[sim_rand_range(sim, 0, array_length(armor_bases) - 1)];
+            break;
+        case "trinket":
+            var trinket_bases = ["Ring", "Charm", "Band", "Sigil"];
+            base = trinket_bases[sim_rand_range(sim, 0, array_length(trinket_bases) - 1)];
+            break;
+        case "consumable":
+            var consumable_bases = ["Tonic", "Vial", "Draught"];
+            base = consumable_bases[sim_rand_range(sim, 0, array_length(consumable_bases) - 1)];
+            break;
+        case "treasure":
+            var treasure_bases = ["Gem", "Idol", "Relic", "Coin Cache"];
+            base = treasure_bases[sim_rand_range(sim, 0, array_length(treasure_bases) - 1)];
+            break;
     }
 
     var aff = loot_pick_affixes(sim, item_type, rarity, zone);
