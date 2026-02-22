@@ -62,6 +62,17 @@ function sim_director_next_event(sim) {
         return "city_scene";
     }
 
+    var recent_len = is_array(sim.recent_beats) ? array_length(sim.recent_beats) : 0;
+    var last_ev = (recent_len > 0) ? sim.recent_beats[recent_len - 1] : "";
+    var prev_ev = (recent_len > 1) ? sim.recent_beats[recent_len - 2] : "";
+    var last_two_merchant = (last_ev == "merchant" && prev_ev == "merchant");
+    var last_two_combat = (last_ev == "combat" && prev_ev == "combat");
+
+    var boss_lead_in_active = false;
+    if (is_struct(sim.director) && variable_struct_exists(sim.director, "boss_lead_in_active")) {
+        boss_lead_in_active = sim.director.boss_lead_in_active;
+    }
+
     var avg_hp_pct = sim_party_avg_hp_pct(sim);
     var worst_hp_pct = 1.0;
     var wounded_members = 0;
@@ -99,6 +110,24 @@ function sim_director_next_event(sim) {
 
     // Merchant: respect cooldown and per-zone cap.
     if (sim.director.merchant_cd == 0 && sim.director.merchants_this_zone < 2 && sim_chance(sim, floor(13 * route_mod.loot_mult))) {
+        if (last_two_merchant) {
+            sim.director.repeat_prevented += 1;
+
+            var reroute_merchant = "combat";
+            if (sim.director.chest_cd == 0) {
+                sim.director.chest_cd = 4;
+                reroute_merchant = "chest";
+            } else if (sim.director.adventure_cd == 0) {
+                sim.director.adventure_cd = 1;
+                reroute_merchant = "adventure";
+            } else if (sim.director.beats_since_relief >= relief_gap) {
+                reroute_merchant = "relief";
+            }
+
+            sim_log_tag(sim, "DIRECTOR_REROUTE", "🧠 reason=merchant_recent_repeat from=merchant to=" + reroute_merchant);
+            return reroute_merchant;
+        }
+
         return "merchant";
     }
 
@@ -125,6 +154,30 @@ function sim_director_next_event(sim) {
     var repeat_combat = sim_director_recent_count(sim, "combat", sim.director.repeat_window);
     if (repeat_combat >= 4 && sim_chance(sim, 65)) {
         return "adventure";
+    }
+
+    if (last_two_combat && !boss_lead_in_active) {
+        sim.director.repeat_prevented += 1;
+
+        var reroute_combat = "relief";
+        if (sim.director.adventure_cd == 0 && sim_chance(sim, 65)) {
+            sim.director.adventure_cd = 1;
+            reroute_combat = "adventure";
+        } else if (sim.director.chest_cd == 0 && sim_chance(sim, floor(70 * route_mod.loot_mult))) {
+            sim.director.chest_cd = 4;
+            reroute_combat = "chest";
+        } else if (sim.director.beats_since_relief < relief_gap) {
+            if (sim.director.adventure_cd == 0) {
+                sim.director.adventure_cd = 1;
+                reroute_combat = "adventure";
+            } else if (sim.director.chest_cd == 0) {
+                sim.director.chest_cd = 4;
+                reroute_combat = "chest";
+            }
+        }
+
+        sim_log_tag(sim, "DIRECTOR_REROUTE", "🧠 reason=combat_recent_repeat from=combat to=" + reroute_combat);
+        return reroute_combat;
     }
 
     // Default
