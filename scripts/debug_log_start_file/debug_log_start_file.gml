@@ -22,6 +22,7 @@ function debug_log_start_file(seed)
 
     // HARD GUARANTEE: create the files right now + print where they are
     var f_beat = file_text_open_append(global.beat_log_path);
+    file_text_write_string(f_beat, chr($FEFF));
     file_text_close(f_beat);
 
     var f = file_text_open_append(global.debug_log_path);

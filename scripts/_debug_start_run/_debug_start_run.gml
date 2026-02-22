@@ -7,7 +7,6 @@ function _debug_start_run()
 
     // Clear run log text
     global.run_log_text = "";
-    global.opening_beat_last_line = "";
     clipboard_set_text("");
 
     // Seed the RNG

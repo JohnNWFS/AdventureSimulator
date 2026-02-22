@@ -56,19 +56,6 @@ function beat_output_emit(tag, text, data)
     // Normalize final line
     var line = "[" + tag + "] " + text;
 
-    // Guard against accidental immediate duplicate opening beats.
-    // This keeps run-start cinematic tags stable even if start wiring emits twice.
-    if (!variable_global_exists("opening_beat_last_line")) {
-        global.opening_beat_last_line = "";
-    }
-    if ((tag == "ADVENTURE_START" || tag == "PARTY_ROSTER") && global.opening_beat_last_line == line) {
-        return;
-    }
-    if (tag == "ADVENTURE_START" || tag == "PARTY_ROSTER") {
-        global.opening_beat_last_line = line;
-    } else {
-        global.opening_beat_last_line = "";
-    }
     var route = (is_struct(data) && variable_struct_exists(data, "route")) ? string(data.route) : "both";
     var to_debug = (route != "beat");
     var to_beat = (route != "debug");

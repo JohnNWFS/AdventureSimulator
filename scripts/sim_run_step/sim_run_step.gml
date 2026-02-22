@@ -2,7 +2,7 @@ function sim_run_step(sim) {
     if (sim.finished) return;
     if (!variable_struct_exists(sim, "flags") || !is_struct(sim.flags)) sim.flags = {};
     if (!variable_struct_exists(sim.flags, "boss_begun")) sim.flags.boss_begun = false;
-    if (!variable_struct_exists(sim.flags, "adventure_start_emitted")) sim.flags.adventure_start_emitted = false;
+    if (!variable_struct_exists(sim, "cine_opening_emitted")) sim.cine_opening_emitted = false;
 
     // End condition
     if (sim.beat >= sim.beats_target) {
@@ -10,9 +10,7 @@ function sim_run_step(sim) {
         return;
     }
 
-    if (!sim.flags.adventure_start_emitted) {
-        sim.flags.adventure_start_emitted = true;
-
+    if (!sim.cine_opening_emitted) {
         var prologue_options = [
             "The party meets in an inn.",
             "The party convenes at the Adventurers' Guild.",
@@ -41,6 +39,7 @@ function sim_run_step(sim) {
         sim_log_tag(sim, "PARTY_ROSTER",
             "Tank=" + tank_name + "; Thief=" + thief_name + "; Mage=" + mage_name + "; Healer=" + healer_name + "."
         );
+        sim.cine_opening_emitted = true;
     }
 
     // Zone shifts
