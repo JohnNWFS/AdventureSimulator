@@ -60,7 +60,57 @@ if (k_o && !key_prev_o) {
     beat_output_emit("DEBUG", "Autosave-to-file: " + string(global.debug_autosave), undefined);
 }
 
+if (keyboard_check_pressed(vk_f9)) {
+    if (global.debug_find_enabled && !macro_active) {
+        global.debug_batch_mode = "find";
+        macro_active = true;
+        macro_step = 0;
+        macro_runs_done = 0;
+
+        macro_waiting_run = false;
+        macro_wait_deadline_ms = 0;
+
+        global.debug_find_active = true;
+        global.debug_find_index = 0;
+        global.debug_find_hits = 0;
+        global.debug_find_results = [];
+
+        var raw_token = global.debug_find_string;
+        var safe_token = "";
+        var token_len = string_length(raw_token);
+        for (var ti = 1; ti <= token_len; ti++) {
+            var ch = string_char_at(raw_token, ti);
+            var ok = false;
+            if (ch >= "a" && ch <= "z") ok = true;
+            if (ch >= "A" && ch <= "Z") ok = true;
+            if (ch >= "0" && ch <= "9") ok = true;
+            if (ok) safe_token += ch; else safe_token += "_";
+        }
+        if (string_length(safe_token) > 24) safe_token = string_copy(safe_token, 1, 24);
+        if (safe_token == "") safe_token = "token";
+
+        var now = date_current_datetime();
+        var ts =
+            string(date_get_year(now)) +
+            _zero_pad(date_get_month(now), 2) +
+            _zero_pad(date_get_day(now), 2) + "_" +
+            _zero_pad(date_get_hour(now), 2) +
+            _zero_pad(date_get_minute(now), 2) +
+            _zero_pad(date_get_second(now), 2);
+
+        global.debug_find_results_filename =
+            "logs/find_" + ts +
+            "_seed" + string(global.debug_find_seed_start) +
+            "_n" + string(global.debug_find_repeats) +
+            "_" + safe_token + ".txt";
+
+        alarm[0] = 1;
+        beat_output_emit("DEBUG", "[DEBUG_FIND] Starting find batch: string='" + global.debug_find_string + "' repeats=" + string(global.debug_find_repeats) + " seed_start=" + string(global.debug_find_seed_start) + " step=" + string(global.debug_find_seed_step), undefined);
+    }
+}
+
 if (keyboard_check_pressed(vk_f10)) {
+    global.debug_batch_mode = "runs";
     macro_active = true;
     macro_step = 0;
     macro_runs_done = 0;
@@ -80,4 +130,3 @@ key_prev_c = k_c;
 key_prev_v = k_v;
 key_prev_o = k_o;
 key_prev_hash = k_hash;
-

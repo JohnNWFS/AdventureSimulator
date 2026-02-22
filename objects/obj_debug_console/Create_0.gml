@@ -22,11 +22,27 @@ macro_runs_target = 8;   // <-- change this later (e.g., 4, 12, etc.)
 macro_active = false;
 macro_step = 0;
 macro_runs_done = 0;
+global.debug_batch_mode = "runs";
 
 // Run-wait state
 macro_waiting_run = false;
 macro_wait_deadline_ms = 0;
 macro_wait_timeout_ms = 20000; // safety net: 20 seconds
+
+// Debug find config
+global.debug_find_enabled = true;
+global.debug_find_string = "[EPISODE_HOOK]";
+global.debug_find_repeats = 100;
+global.debug_find_seed_start = 100000;
+global.debug_find_seed_step = 1;
+global.debug_find_stop_on_first = false;
+
+// Debug find runtime state
+global.debug_find_active = false;
+global.debug_find_index = 0;
+global.debug_find_hits = 0;
+global.debug_find_results = [];
+global.debug_find_results_filename = "";
 
 
 // Input latch
