@@ -1,6 +1,5 @@
 function sim_resolve_merchant(sim) {
-    var outcome_tag = "";
-    var outcome_text = "";
+    var outcome_emitted = false;
 
     if (!is_struct(sim.stats)) sim.stats = {};
     if (!variable_struct_exists(sim.stats, "merchants_seen")) sim.stats.merchants_seen = 0;
@@ -20,8 +19,7 @@ function sim_resolve_merchant(sim) {
             sim_log_tag(sim, "SCAVENGER", "📦 An abandoned stash replaces a repeat merchant stop.");
             sim_give_item(sim, loot_generate_item(sim, { source: "merchant", zone: sim.zone, tier_target: max(1, floor(sim.difficulty / 2)) }));
         }
-        if (outcome_tag == "") { outcome_tag = "MERCHANT_DECLINE"; outcome_text = "🤝 They pass for now (reason=unclear_path)."; }
-        sim_log_tag(sim, outcome_tag, outcome_text);
+        if (!outcome_emitted) { sim_log_tag(sim, "MERCHANT_DECLINE", "🤝 They pass for now (reason=repeat_stop_replaced)."); outcome_emitted = true; }
         return;
     }
 
@@ -56,11 +54,12 @@ function sim_resolve_merchant(sim) {
         delta = pick.delta;
 
         if (buyer_idx < 0 || buyer_idx >= array_length(sim.party)) {
-            sim_log_tag(sim, "MERCHANT_DECLINE",
-                "🧳 Decline: not useful right now (no valid recipient for " + offer.name + ")."
-            );
-            if (outcome_tag == "") { outcome_tag = "MERCHANT_DECLINE"; outcome_text = "🤝 They pass for now (reason=unclear_path)."; }
-            sim_log_tag(sim, outcome_tag, outcome_text);
+            if (!outcome_emitted) {
+                sim_log_tag(sim, "MERCHANT_DECLINE",
+                    "🧳 Decline: not useful right now (no valid recipient for " + offer.name + ")."
+                );
+                outcome_emitted = true;
+            }
             return;
         }
 
@@ -69,7 +68,7 @@ function sim_resolve_merchant(sim) {
             sim_log_tag(sim, "MERCHANT_OFFER",
                 "🧳 Offer: " + offer.name + " for " + string(cost) + "g [minor upgrade]."
             );
-            sim_log_tag(sim, "MERCHANT_DECLINE", "🧳 Decline: not useful enough; saving gold for a better find.");
+            if (!outcome_emitted) { sim_log_tag(sim, "MERCHANT_DECLINE", "🧳 Decline: not useful enough; saving gold for a better find."); outcome_emitted = true; }
             return;
         }
     }
@@ -83,7 +82,7 @@ function sim_resolve_merchant(sim) {
         if (sim.gold_total >= drip) {
             sim.gold_total -= drip;
             sim.stats.merchants_bought += 1;
-            sim_log_tag(sim, "MERCHANT_BUY", "🧳 The party scrapes together " + string(drip) + "g and buys " + offer.name + ".");
+            if (!outcome_emitted) { sim_log_tag(sim, "MERCHANT_BUY", "🧳 The party scrapes together " + string(drip) + "g and buys " + offer.name + "."); outcome_emitted = true; }
             if (slot != "") {
                 sim_set_equipped_item(sim.party[buyer_idx], slot, offer);
                 sim_recalc_derived(sim.party[buyer_idx]);
@@ -96,25 +95,23 @@ function sim_resolve_merchant(sim) {
         var fallback = sim_rand_range(sim, 0, 2);
         switch (fallback) {
             case 0:
-                sim_log_tag(sim, "MERCHANT_REPAIR", "🛠 Repair instead of sale: too expensive at " + string(cost) + "g.");
+                if (!outcome_emitted) { sim_log_tag(sim, "MERCHANT_REPAIR", "🛠 Repair instead of sale: too expensive at " + string(cost) + "g."); outcome_emitted = true; }
                 sim_party_heal(sim, sim_rand_range(sim, 4, 8));
                 break;
             case 1:
-                sim_log_tag(sim, "MERCHANT_RUMOR", "🗣 Rumor instead of sale: too expensive at " + string(cost) + "g.");
+                if (!outcome_emitted) { sim_log_tag(sim, "MERCHANT_RUMOR", "🗣 Rumor instead of sale: too expensive at " + string(cost) + "g."); outcome_emitted = true; }
                 sim.tension = clamp(sim.tension - 6, 0, 100);
                 break;
             default:
-                sim_log_tag(sim, "MERCHANT_DECLINE", "🧳 Decline: too expensive (" + string(cost) + "g), saving gold.");
+                if (!outcome_emitted) { sim_log_tag(sim, "MERCHANT_DECLINE", "🧳 Decline: too expensive (" + string(cost) + "g), saving gold."); outcome_emitted = true; }
                 break;
         }
-        if (outcome_tag == "") { outcome_tag = "MERCHANT_DECLINE"; outcome_text = "🤝 They pass for now (reason=unclear_path)."; }
-        sim_log_tag(sim, outcome_tag, outcome_text);
         return;
     }
 
     var buyer = sim.party[buyer_idx];
     if (slot != "" && ((variable_struct_exists(buyer, "dead") && buyer.dead) || (variable_struct_exists(buyer, "retired") && buyer.retired))) {
-        sim_log_tag(sim, "MERCHANT_DECLINE", "🧳 Decline: not useful right now (intended buyer unavailable).");
+        if (!outcome_emitted) { sim_log_tag(sim, "MERCHANT_DECLINE", "🧳 Decline: not useful right now (intended buyer unavailable)."); outcome_emitted = true; }
         return;
     }
 
@@ -122,9 +119,6 @@ function sim_resolve_merchant(sim) {
 
     sim.gold_total -= cost;
     sim.stats.merchants_bought += 1;
-
-    outcome_tag = "MERCHANT_BUY";
-    outcome_text = "🧳 " + buyer.name + " buys " + offer.name + ".";
 
     if (slot != "") {
         var p = sim.party[buyer_idx];
@@ -137,13 +131,11 @@ function sim_resolve_merchant(sim) {
             "📦 " + p.name + " equips " + offer.name + " (" + slot + ")."
         );
 
-        if (outcome_tag == "") { outcome_tag = "MERCHANT_DECLINE"; outcome_text = "🤝 They pass for now (reason=unclear_path)."; }
-        sim_log_tag(sim, outcome_tag, outcome_text);
+        if (!outcome_emitted) { sim_log_tag(sim, "MERCHANT_BUY", "🧳 " + buyer.name + " buys " + offer.name + "."); outcome_emitted = true; }
         return;
     }
 
     sim_give_item(sim, offer);
 
-    if (outcome_tag == "") { outcome_tag = "MERCHANT_DECLINE"; outcome_text = "🤝 They pass for now (reason=no_offer_taken)."; }
-    sim_log_tag(sim, outcome_tag, outcome_text);
+    if (!outcome_emitted) { sim_log_tag(sim, "MERCHANT_BUY", "🧳 " + buyer.name + " buys " + offer.name + "."); outcome_emitted = true; }
 }
