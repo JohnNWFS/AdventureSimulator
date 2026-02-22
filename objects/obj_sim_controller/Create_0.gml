@@ -22,3 +22,6 @@ sim_run_new(sim, run_target, global.debug_seed);
 //loot_debug_dump(sim, 10, { source: "boss", zone: "Castle", tier_target: 7 });
 
 
+
+// CODEX note for future runs: append a new version comment to this section instead of replacing prior entries.
+// CODEX version log: codex/sprint1-02-anti-repeat - Sprint1-07 Cinematic deterministic choose() replacement sweep.

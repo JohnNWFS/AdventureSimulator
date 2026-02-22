@@ -103,7 +103,8 @@ function sim_check_party_health(sim) {
                 sim_log_tag(sim, "RETREAT_CALL",
                     "🏃 Repeated knockdowns force an escape call before the fight spirals."
                 );
-                var retreat_cost = choose("lost time", "reduced loot chance", "heightened pursuit risk");
+                var retreat_costs = ["lost time", "reduced loot chance", "heightened pursuit risk"];
+                var retreat_cost = retreat_costs[sim_rand_range(sim, 0, array_length(retreat_costs) - 1)];
                 sim_log_tag(sim, "RETREAT_COST",
                     "⚖ Retreat consequence: " + retreat_cost + "."
                 );

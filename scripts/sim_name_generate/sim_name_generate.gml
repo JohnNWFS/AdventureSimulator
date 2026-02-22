@@ -9,10 +9,22 @@ function sim_name_generate(sim, role) {
     // Role nudges: occasionally prefer a known iconic from your old pools
     if (sim_chance(sim, 18)) {
         switch (role) {
-            case "Tank":   first = choose("Brann", "Korda", "Hollis", "Marek"); break;
-            case "Mage":   first = choose("Veya", "Sorin", "Ilyra", "Quen"); break;
-            case "Thief":  first = choose("Pip", "Nyx", "Ravel", "Tams"); break;
-            case "Healer": first = choose("Edda", "Mira", "Sel", "Jonel"); break;
+            case "Tank":
+                var tank_names = ["Brann", "Korda", "Hollis", "Marek"];
+                first = tank_names[sim_rand_range(sim, 0, array_length(tank_names) - 1)];
+                break;
+            case "Mage":
+                var mage_names = ["Veya", "Sorin", "Ilyra", "Quen"];
+                first = mage_names[sim_rand_range(sim, 0, array_length(mage_names) - 1)];
+                break;
+            case "Thief":
+                var thief_names = ["Pip", "Nyx", "Ravel", "Tams"];
+                first = thief_names[sim_rand_range(sim, 0, array_length(thief_names) - 1)];
+                break;
+            case "Healer":
+                var healer_names = ["Edda", "Mira", "Sel", "Jonel"];
+                first = healer_names[sim_rand_range(sim, 0, array_length(healer_names) - 1)];
+                break;
         }
     }
 
