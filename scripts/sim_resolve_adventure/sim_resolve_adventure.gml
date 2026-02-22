@@ -71,7 +71,7 @@ function sim_resolve_adventure(sim) {
             } else if (rivals_roll < 75) {
                 sim.tension = clamp(sim.tension - 3, 0, 100);
                 sim_log_tag(sim, "RIVALS_INFO", "A tense map-side exchange reveals a trapped corridor and a cleaner flank route.");
-            } else if (!sim.director.rivals_stall_seen) {
+            } else if (!variable_struct_exists(sim.director, "rivals_stall_seen") || !sim.director.rivals_stall_seen) {
                 sim.director.rivals_stall_seen = true;
                 sim.tension = clamp(sim.tension + 4, 0, 100);
                 sim_log_tag(sim, "TRADE", "Negotiations stall; both groups leave wary and armed.");
