@@ -18,6 +18,11 @@ function sim_run_init(sim, seed, beats_target) {
     sim.flags.complication_emitted = false;
     sim.flags.boss_begun = false;
 
+    sim.intel = {
+        trap_warning: false,
+        boss_weakness_known: false
+    };
+
     sim.zone = "Dungeon";
     sim.difficulty = 1;
     sim.tension = 10;

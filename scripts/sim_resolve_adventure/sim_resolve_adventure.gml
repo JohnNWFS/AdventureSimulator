@@ -37,6 +37,7 @@ function sim_resolve_adventure(sim) {
             sim.coverage.social += 1;
             sim_log_tag(sim, "SOCIAL", "🕯 Cult whispers echo nearby; the party catches a password and a warning.");
             sim_log_tag(sim, "RUMOR", "" + sim.zone + " ahead is trapped, but a side hall avoids the kill-box.");
+            sim.intel.trap_warning = true;
             break;
         case 4:
             sim.coverage.hazard += 1;
@@ -85,6 +86,7 @@ function sim_resolve_adventure(sim) {
                 sim.director.discovery_major_seen = true;
                 sim.coverage.discovery += 1;
                 sim_log_tag(sim, "DISCOVERY", "📜 Wall runes describe the boss's old rituals and weak points.");
+                sim.intel.boss_weakness_known = true;
                 sim.tension = clamp(sim.tension - 4, 0, 100);
             } else {
                 sim.director.repeat_prevented += 1;
