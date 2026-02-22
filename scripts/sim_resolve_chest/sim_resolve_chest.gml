@@ -4,9 +4,14 @@ function sim_resolve_chest(sim) {
 
     // Trap chance
     if (sim_chance(sim, 15)) {
-        sim_log_tag(sim, "CHEST_TRAP", "🧰 Chest: it's a trap! Poison needles.");
-        sim_apply_party_damage(sim, sim_rand_range(sim, 4, 8));
-        return;
+        if (sim.intel.trap_warning && sim_chance(sim, 70)) {
+            sim.intel.trap_warning = false;
+            sim_log_tag(sim, "TRAP_AVOIDED", "[TRAP_AVOIDED] The party spots the needle latch in time and disarms it.");
+        } else {
+            sim_log_tag(sim, "CHEST_TRAP", "🧰 Chest: it's a trap! Poison needles.");
+            sim_apply_party_damage(sim, sim_rand_range(sim, 4, 8));
+            return;
+        }
     }
 
     // Gold chest (most common)

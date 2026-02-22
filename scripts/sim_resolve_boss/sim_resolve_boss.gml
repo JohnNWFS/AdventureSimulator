@@ -6,6 +6,11 @@ function sim_resolve_boss(sim) {
 
     var party_power = sim_calc_party_power(sim);
     var boss_threat = floor(party_power * clamp(1.35 + sim.difficulty * 0.04, 1.30, 1.70));
+    if (sim.intel.boss_weakness_known) {
+        boss_threat = floor(boss_threat * 0.92);
+        sim.intel.boss_weakness_known = false;
+        sim_log_tag(sim, "BOSS_INTEL", "[BOSS_INTEL] The party exploits old rune notes to blunt the boss's opening pattern.");
+    }
     var verbose = variable_global_exists("debug_verbose") ? global.debug_verbose : false;
     if (verbose) {
         sim_log_tag(sim, "ENCOUNTER_BUDGET",
