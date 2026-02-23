@@ -24,7 +24,51 @@ function sim_run_init(sim, seed, beats_target) {
         boss_weakness_known: false
     };
 
-    sim.zone = "Dungeon";
+    // A biome is just the kind of outdoor place the party travels through,
+    // like Forest, Swamp, or Road.
+    //
+    // HOW TO ADD A NEW BIOME (step by step):
+    // 1) Add the new biome name to this biome_options list.
+    // 2) Add a matching monster pool for that biome in sim_make_combat_encounter.
+    //    If you skip step 2, the code falls back to generic Wilderness monsters.
+    // 3) Optional: add biome-flavored travel text where route messages are built.
+    var biome_options = ["Fields", "Foothills", "Mountains", "Forest", "Woods", "Swamp", "Coast", "Road"];
+
+    // A dungeon type is the scary final place, like Ruined Castle or Cave System.
+    //
+    // HOW TO ADD A NEW DUNGEON TYPE (step by step):
+    // 1) Add the new type name to this dungeon_type_options list.
+    // 2) Add a matching monster pool for that dungeon type in sim_make_combat_encounter.
+    // 3) Optional: add special merchant/travel flavor text for that type.
+    var dungeon_type_options = ["Ruined Castle", "Cursed Temple", "Cave System", "Ancient Dungeon"];
+
+    var biome_a_idx = sim_rand_range(sim, 0, array_length(biome_options) - 1);
+    var biome_b_idx = sim_rand_range(sim, 0, array_length(biome_options) - 1);
+    while (biome_b_idx == biome_a_idx) {
+        biome_b_idx = sim_rand_range(sim, 0, array_length(biome_options) - 1);
+    }
+
+    var biome_a = biome_options[biome_a_idx];
+    var biome_b = biome_options[biome_b_idx];
+    var dungeon_type = dungeon_type_options[sim_rand_range(sim, 0, array_length(dungeon_type_options) - 1)];
+
+    sim.route_segments = [
+        { zone: "Town", biome: "City", dungeon_type: "" },
+        { zone: "Wilderness", biome: biome_a, dungeon_type: "" },
+        { zone: "Wilderness", biome: biome_b, dungeon_type: "" },
+        { zone: "Dungeon", biome: "", dungeon_type: dungeon_type }
+    ];
+    sim.route_index = 0;
+
+    var seg0 = sim.route_segments[0];
+    sim.zone = seg0.zone;
+    sim.overland_biome = seg0.biome;
+    sim.dungeon_type = seg0.dungeon_type;
+
+    sim.route_milestone_1 = 2;
+    sim.route_milestone_2 = max(sim.route_milestone_1 + 1, floor(sim.beats_target / 3));
+    sim.route_milestone_3 = max(sim.route_milestone_2 + 1, floor((sim.beats_target * 2) / 3));
+
     sim.difficulty = 1;
     sim.tension = 10;
     sim.gold_total = 0;
@@ -99,6 +143,16 @@ function sim_run_init(sim, seed, beats_target) {
         var verbose = variable_global_exists("debug_verbose") ? global.debug_verbose : false;
         if (verbose) sim_log_tag(sim, "NEAR_DEATH_DEF", "near_death is tracked as HP <= 35% max HP.");
         sim.episode_begun_logged = true;
+    }
+
+    sim_log(sim, "[DEBUG] Route segments generated (4 total):");
+    for (var route_i = 0; route_i < array_length(sim.route_segments); route_i++) {
+        var seg = sim.route_segments[route_i];
+        sim_log(sim,
+            "[DEBUG] segment[" + string(route_i) + "] zone=" + seg.zone +
+            " biome=" + seg.biome +
+            " dungeon_type=" + seg.dungeon_type
+        );
     }
 
     // Party

@@ -1,4 +1,7 @@
 // Debug system defaults
+// Sprint1-10 note: runs now follow a deterministic 4-zone cinematic route
+// (Town -> Wilderness biome A -> Wilderness biome B -> Dungeon type).
+// Debug logs include [DEBUG] route segments, route_index advances, and early encounter pool picks.
 global.debug_enabled = true;
 
 // Deterministic debug seed controls
@@ -55,4 +58,4 @@ key_prev_o = false;
 key_prev_hash = false;
 
 // A small banner so you know it's alive
-beat_output_emit("DEBUG", "Debug console online. Seed=" + string(global.debug_seed), undefined);
+beat_output_emit("DEBUG", "Debug console online (4-zone route debug enabled). Seed=" + string(global.debug_seed), undefined);

@@ -1,4 +1,9 @@
 function sim_resolve_adventure(sim) {
+    var area_label = sim.zone;
+    if (sim.zone == "Wilderness") area_label = sim.overland_biome + " wilderness";
+    else if (sim.zone == "Dungeon") area_label = sim.dungeon_type;
+    else if (sim.zone == "Town") area_label = "town streets";
+
     var beat = sim_rand_range(sim, 0, 7);
     if (variable_struct_exists(sim.director, "last_adventure_beat") && beat == sim.director.last_adventure_beat) {
         beat = sim_rand_range(sim, 0, 7);
@@ -25,23 +30,23 @@ function sim_resolve_adventure(sim) {
             break;
         case 1:
             sim.coverage.hazard += 1;
-            sim_log_tag(sim, "HAZARD", "🌫 A spore pocket bursts from the walls.");
+            sim_log_tag(sim, "HAZARD", "🌫 In the " + area_label + ", a spore pocket bursts from the walls.");
             sim_apply_party_damage(sim, sim_rand_range(sim, 2, 5));
             break;
         case 2:
             sim.coverage.discovery += 1;
-            sim_log_tag(sim, "DISCOVERY", "🗺 Faded route marks reveal a hidden bypass used by prior delvers.");
+            sim_log_tag(sim, "DISCOVERY", "🗺 In the " + area_label + ", faded route marks reveal a hidden bypass used by prior travelers.");
             sim.tension = clamp(sim.tension - 7, 0, 100);
             break;
         case 3:
             sim.coverage.social += 1;
-            sim_log_tag(sim, "SOCIAL", "🕯 Cult whispers echo nearby; the party catches a password and a warning.");
-            sim_log_tag(sim, "RUMOR", "" + sim.zone + " ahead is trapped, but a side hall avoids the kill-box.");
+            sim_log_tag(sim, "SOCIAL", "🕯 Whispers ride through the " + area_label + "; the party catches a password and a warning.");
+            sim_log_tag(sim, "RUMOR", "" + area_label + " ahead is trapped, but a side path avoids the kill-box.");
             sim.intel.trap_warning = true;
             break;
         case 4:
             sim.coverage.hazard += 1;
-            sim_log_tag(sim, "HAZARD", "🪨 A partial collapse forces the party to drag gear through rubble.");
+            sim_log_tag(sim, "HAZARD", "🪨 A partial collapse in the " + area_label + " forces the party to drag gear through rubble.");
             sim.tension = clamp(sim.tension + 5, 0, 100);
             if (sim_chance(sim, 35)) sim_apply_party_damage(sim, sim_rand_range(sim, 1, 4));
             break;
@@ -49,7 +54,7 @@ function sim_resolve_adventure(sim) {
             if (!sim.director.discovery_courier_seen) {
                 sim.director.discovery_courier_seen = true;
                 sim.coverage.discovery += 1;
-                sim_log_tag(sim, "DISCOVERY", "🧷 A wounded courier is found with a sealed map fragment.");
+                sim_log_tag(sim, "DISCOVERY", "🧷 A wounded courier is found in the " + area_label + " with a sealed map fragment.");
                 sim.gold_total += sim_rand_range(sim, 4, 10);
                 sim_log_tag(sim, "DISCOVERY", "The courier shares a shortcut and a small payment for escort.");
             } else {
@@ -60,7 +65,7 @@ function sim_resolve_adventure(sim) {
             break;
         case 6:
             sim.coverage.social += 1;
-            sim_log_tag(sim, "SOCIAL", "⚔ A rival party crosses paths and offers terms: trade supplies for intel.");
+            sim_log_tag(sim, "SOCIAL", "⚔ A rival party crosses paths in the " + area_label + " and offers terms: trade supplies for intel.");
             var rivals_roll = sim_rand_range(sim, 0, 99);
             if (rivals_roll < 25) {
                 sim_party_restore_mp(sim, sim_rand_range(sim, 2, 6));
@@ -85,7 +90,7 @@ function sim_resolve_adventure(sim) {
             if (!sim.director.discovery_major_seen) {
                 sim.director.discovery_major_seen = true;
                 sim.coverage.discovery += 1;
-                sim_log_tag(sim, "DISCOVERY", "📜 Wall runes describe the boss's old rituals and weak points.");
+                sim_log_tag(sim, "DISCOVERY", "📜 Clues in the " + area_label + " describe the boss's old rituals and weak points.");
                 sim.intel.boss_weakness_known = true;
                 sim.tension = clamp(sim.tension - 4, 0, 100);
             } else {

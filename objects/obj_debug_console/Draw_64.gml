@@ -8,7 +8,8 @@ var header =
     "DEBUG CONSOLE  |  Seed: " + string(global.debug_seed) +
     "  |  Short: " + string(global.debug_short_mode) +
     "  |  Beats: " + string(global.debug_beats_emitted) + "/" + string(global.debug_max_beats) +
-    "\nKeys: R=rerun  N=next seed  S=toggle short  C=clear  V=copy run log  F7 - randomize seed";
+    "\nKeys: R=rerun  N=next seed  S=toggle short  C=clear  V=copy run log  F7=randomize seed" +
+    "\nF9=run debug find batch (searches debug_find_string across repeated seeded runs)  F10=macro runs";
 
 draw_set_alpha(1);
 draw_text(_x, _y, header);

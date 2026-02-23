@@ -42,11 +42,27 @@ function sim_run_step(sim) {
         sim.cine_opening_emitted = true;
     }
 
-    // Zone shifts
-    if (sim.beat == 0) sim.zone = "Dungeon";
-    if (sim.beat == 35) sim.zone = "Wilderness";
-    if (sim.beat == 70) sim.zone = "Town";
-    if (sim.beat == 85) sim.zone = "Castle";
+    var next_route_index = sim.route_index;
+    if (sim.beat >= sim.route_milestone_3) next_route_index = 3;
+    else if (sim.beat >= sim.route_milestone_2) next_route_index = 2;
+    else if (sim.beat >= sim.route_milestone_1) next_route_index = 1;
+
+    if (next_route_index != sim.route_index) {
+        sim_log(sim,
+            "[DEBUG] route_index advanced " + string(sim.route_index) + "->" + string(next_route_index) +
+            " at beat=" + string(sim.beat)
+        );
+        sim.route_index = next_route_index;
+    }
+
+    var active_seg = sim.route_segments[sim.route_index];
+    sim.zone = active_seg.zone;
+    sim.overland_biome = active_seg.biome;
+    sim.dungeon_type = active_seg.dungeon_type;
+
+    var route_label = sim.zone;
+    if (sim.zone == "Wilderness") route_label = "Wilderness (" + sim.overland_biome + ")";
+    else if (sim.zone == "Dungeon") route_label = "Dungeon (" + sim.dungeon_type + ")";
 
     // Reset per-zone merchant cap
     if (sim.zone != sim.prev_zone) {
@@ -82,32 +98,32 @@ function sim_run_step(sim) {
     // Playback: why this beat is happening (source cue)
     switch (ev) {
         case "chest":
-            sim_log_tag(sim, "BEAT_SOURCE", "🔎 Exploration find: the party spots something ahead.");
+            sim_log_tag(sim, "BEAT_SOURCE", "🔎 Exploration find: the party spots something ahead in " + route_label + ".");
             break;
         case "adventure":
-            sim_log_tag(sim, "BEAT_SOURCE", "🧭 Expedition: the route itself forces a decision.");
+            sim_log_tag(sim, "BEAT_SOURCE", "🧭 Expedition: the " + route_label + " route itself forces a decision.");
             break;
         case "merchant":
-            sim_log_tag(sim, "BEAT_SOURCE", "🧳 Encounter: a traveling merchant appears.");
+            sim_log_tag(sim, "BEAT_SOURCE", "🧳 Encounter: a merchant appears on the " + route_label + " route.");
             break;
         case "relief":
-            sim_log_tag(sim, "BEAT_SOURCE", "🛖 Rest stop: the party finds a safe pocket to regroup.");
+            sim_log_tag(sim, "BEAT_SOURCE", "🛖 Rest stop: the party finds a safe pocket to regroup in " + route_label + ".");
             break;
         case "city_scene":
-            sim_log_tag(sim, "BEAT_SOURCE", "🏙 Return: the party pivots back to city streets.");
+            sim_log_tag(sim, "BEAT_SOURCE", "🏙 Return: the party pivots back to city streets before rejoining " + route_label + ".");
             break;
         case "boss":
-            sim_log_tag(sim, "BEAT_SOURCE", "👁 Ominous presence: the air shifts. Something huge is near.");
+            sim_log_tag(sim, "BEAT_SOURCE", "👁 Ominous presence: the air shifts near " + route_label + ". Something huge is near.");
             break;
         case "retreat_bridge":
-            sim_log_tag(sim, "BEAT_SOURCE", "🏃 Withdrawal: the party falls back through dangerous ground.");
+            sim_log_tag(sim, "BEAT_SOURCE", "🏃 Withdrawal: the party falls back through dangerous ground in " + route_label + ".");
             break;
         case "intro":
-            sim_log_tag(sim, "BEAT_SOURCE", "🗺 The party advances deeper.");
+            sim_log_tag(sim, "BEAT_SOURCE", "🗺 The party advances deeper into " + route_label + ".");
             break;
         case "combat":
         default:
-            sim_log_tag(sim, "BEAT_SOURCE", "🧭 Danger: movement in the shadows.");
+            sim_log_tag(sim, "BEAT_SOURCE", "🧭 Danger: movement in the shadows of " + route_label + ".");
             break;
     }
 
