@@ -3,15 +3,117 @@ function sim_make_combat_encounter(sim, party_power) {
     var BOSS_CAP_RATIO = 1.80;
     var NON_BOSS_CAP_RATIO = 0.42;
 
-    var pool = [
-        { name: "Skeleton", base: 5 },
+    // Monster pools are grouped by route context.
+    //
+    // HOW TO ADD A NEW MONSTER NAME (step by step):
+    // 1) Add the monster name string to the correct pool array below.
+    // 2) Keep the base threat number in line with similar enemies.
+    // 3) Make sure the name already exists in this project's enemy vocabulary.
+    //    (We are NOT adding a new enemy system here.)
+    var town_pool = [
+        { name: "Bandit", base: 6 },
+        { name: "Goblin", base: 4 },
+        { name: "Cult Acolyte", base: 7 },
+        { name: "Slime", base: 3 }
+    ];
+
+    var wilderness_default_pool = [
         { name: "Bandit", base: 6 },
         { name: "Goblin", base: 4 },
         { name: "Slime", base: 3 },
-        { name: "Warg", base: 8 },
+        { name: "Warg", base: 8 }
+    ];
+
+    var wilderness_pool_map = {
+        "Fields": [
+            { name: "Bandit", base: 6 },
+            { name: "Goblin", base: 4 },
+            { name: "Warg", base: 8 }
+        ],
+        "Road": [
+            { name: "Bandit", base: 6 },
+            { name: "Goblin", base: 4 },
+            { name: "Warg", base: 8 }
+        ],
+        "Forest": [
+            { name: "Warg", base: 8 },
+            { name: "Goblin", base: 4 },
+            { name: "Slime", base: 3 }
+        ],
+        "Woods": [
+            { name: "Warg", base: 8 },
+            { name: "Goblin", base: 4 },
+            { name: "Slime", base: 3 }
+        ],
+        "Foothills": [
+            { name: "Ogre Brute", base: 11 },
+            { name: "Goblin", base: 4 },
+            { name: "Bandit", base: 6 }
+        ],
+        "Mountains": [
+            { name: "Ogre Brute", base: 11 },
+            { name: "Goblin", base: 4 },
+            { name: "Bandit", base: 6 }
+        ],
+        "Swamp": [
+            { name: "Slime", base: 3 },
+            { name: "Cult Acolyte", base: 7 },
+            { name: "Warg", base: 8 }
+        ],
+        "Coast": [
+            { name: "Bandit", base: 6 },
+            { name: "Slime", base: 3 },
+            { name: "Goblin", base: 4 }
+        ]
+    };
+
+    var dungeon_default_pool = [
+        { name: "Skeleton", base: 5 },
         { name: "Cult Acolyte", base: 7 },
         { name: "Ogre Brute", base: 11 }
     ];
+
+    var dungeon_pool_map = {
+        "Ruined Castle": [
+            { name: "Skeleton", base: 5 },
+            { name: "Bandit", base: 6 },
+            { name: "Ogre Brute", base: 11 }
+        ],
+        "Cursed Temple": [
+            { name: "Cult Acolyte", base: 7 },
+            { name: "Skeleton", base: 5 },
+            { name: "Slime", base: 3 }
+        ],
+        "Cave System": [
+            { name: "Slime", base: 3 },
+            { name: "Warg", base: 8 },
+            { name: "Goblin", base: 4 }
+        ],
+        "Ancient Dungeon": [
+            { name: "Skeleton", base: 5 },
+            { name: "Cult Acolyte", base: 7 },
+            { name: "Ogre Brute", base: 11 }
+        ]
+    };
+
+    // HOW TO EXTEND POOLS SAFELY:
+    // - New biome: add it in sim_run_init biome list, then add a key in wilderness_pool_map.
+    // - New dungeon type: add it in sim_run_init dungeon list, then add a key in dungeon_pool_map.
+    // - If a key is missing, code falls back to the default wilderness/dungeon pool.
+    var pool = town_pool;
+    if (sim.zone == "Wilderness") {
+        if (variable_struct_exists(wilderness_pool_map, sim.overland_biome)) {
+            pool = variable_struct_get(wilderness_pool_map, sim.overland_biome);
+        } else {
+            pool = wilderness_default_pool;
+        }
+    } else if (sim.zone == "Dungeon") {
+        if (variable_struct_exists(dungeon_pool_map, sim.dungeon_type)) {
+            pool = variable_struct_get(dungeon_pool_map, sim.dungeon_type);
+        } else {
+            pool = dungeon_default_pool;
+        }
+    }
 
     var tier_pick = sim_pick_encounter_tier(sim);
     var tag = tier_pick.tier;
@@ -120,7 +222,10 @@ function sim_make_combat_encounter(sim, party_power) {
                 party_power: party_power,
                 ratio: ratio,
                 group_size: array_length(enemies),
-                enemies: enemies
+                enemies: enemies,
+                zone_used: sim.zone,
+                biome_used: sim.overland_biome,
+                dungeon_type_used: sim.dungeon_type
             };
         }
 
@@ -143,7 +248,10 @@ function sim_make_combat_encounter(sim, party_power) {
                 party_power: party_power,
                 ratio: (scaled_attempt.total / max(1, party_power)),
                 group_size: array_length(scaled_attempt.enemies),
-                enemies: scaled_attempt.enemies
+                enemies: scaled_attempt.enemies,
+                zone_used: sim.zone,
+                biome_used: sim.overland_biome,
+                dungeon_type_used: sim.dungeon_type
             };
         }
 
@@ -175,7 +283,10 @@ function sim_make_combat_encounter(sim, party_power) {
             party_power: party_power,
             ratio: bestfit_under_cap.ratio,
             group_size: array_length(bestfit_under_cap.enemies),
-            enemies: bestfit_under_cap.enemies
+            enemies: bestfit_under_cap.enemies,
+            zone_used: sim.zone,
+            biome_used: sim.overland_biome,
+            dungeon_type_used: sim.dungeon_type
         };
     }
 
@@ -204,7 +315,10 @@ function sim_make_combat_encounter(sim, party_power) {
                 party_power: party_power,
                 ratio: (scaled_fallback.total / max(1, party_power)),
                 group_size: array_length(scaled_fallback.enemies),
-                enemies: scaled_fallback.enemies
+                enemies: scaled_fallback.enemies,
+                zone_used: sim.zone,
+                biome_used: sim.overland_biome,
+                dungeon_type_used: sim.dungeon_type
             };
         }
     }
@@ -222,6 +336,9 @@ function sim_make_combat_encounter(sim, party_power) {
         party_power: party_power,
         ratio: 0,
         group_size: 0,
-        enemies: []
+        enemies: [],
+        zone_used: sim.zone,
+        biome_used: sim.overland_biome,
+        dungeon_type_used: sim.dungeon_type
     };
 }

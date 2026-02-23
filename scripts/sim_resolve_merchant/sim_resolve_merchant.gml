@@ -29,10 +29,35 @@ function sim_resolve_merchant(sim) {
 
     var gold_band = clamp(floor(sim.gold_total / 30), 0, 5);
     var tier_target = clamp(1 + floor(sim.difficulty / 2) + floor(gold_band / 2), 1, 10);
-    var offer = loot_generate_item(sim, { source: "merchant", zone: sim.zone, tier_target: tier_target });
+
+    var merchant_zone = sim.zone;
+    var merchant_intro = "🧳 A local merchant waves the party over.";
+    if (merchant_zone == "Wilderness") {
+        merchant_intro = "🧭 A traveling trader from the " + sim.overland_biome + " wilds opens dusty packs.";
+    } else if (merchant_zone == "Dungeon") {
+        var odd_brokers = [
+            "🕯 A mystic broker appears between broken pillars, offering strange wares.",
+            "⛓ A bound spirit offers cursed bargains in a whisper.",
+            "🌘 A shadow peddler unfolds goods from the dark."
+        ];
+        merchant_intro = odd_brokers[sim_rand_range(sim, 0, array_length(odd_brokers) - 1)];
+    }
+    sim_log_tag(sim, "MERCHANT_OFFER", merchant_intro);
+
+    var offer_zone_for_loot = merchant_zone;
+    if (merchant_zone == "Dungeon") offer_zone_for_loot = "Wilderness";
+
+    var offer = loot_generate_item(sim, { source: "merchant", zone: offer_zone_for_loot, tier_target: tier_target });
 
     if (is_struct(offer) && variable_struct_exists(offer, "type") && offer.type == "treasure") {
-        offer = loot_generate_item(sim, { source: "merchant", zone: sim.zone, tier_target: tier_target });
+        offer = loot_generate_item(sim, { source: "merchant", zone: offer_zone_for_loot, tier_target: tier_target });
+    }
+
+    if (merchant_zone == "Dungeon") {
+        for (var odd_reroll = 0; odd_reroll < 3; odd_reroll++) {
+            if (offer.type == "consumable" || offer.type == "trinket") break;
+            offer = loot_generate_item(sim, { source: "merchant", zone: offer_zone_for_loot, tier_target: tier_target });
+        }
     }
 
     var list_price = (is_struct(offer) && variable_struct_exists(offer, "buy_price"))
@@ -66,7 +91,7 @@ function sim_resolve_merchant(sim) {
         var THRESH = 2.0;
         if (delta < THRESH) {
             sim_log_tag(sim, "MERCHANT_OFFER",
-                "🧳 Offer: " + offer.name + " for " + string(cost) + "g [minor upgrade]."
+                "🧳 " + merchant_zone + " offer: " + offer.name + " for " + string(cost) + "g [minor upgrade]."
             );
             if (!outcome_emitted) { sim_log_tag(sim, "MERCHANT_DECLINE", "🧳 Decline: not useful enough; saving gold for a better find."); outcome_emitted = true; }
             return;
@@ -74,7 +99,7 @@ function sim_resolve_merchant(sim) {
     }
 
     sim_log_tag(sim, "MERCHANT_OFFER",
-        "🧳 Offer: " + offer.name + " (" + string(list_price) + "g, asking " + string(cost) + "g)."
+        "🧳 " + merchant_zone + " offer: " + offer.name + " (" + string(list_price) + "g, asking " + string(cost) + "g)."
     );
 
     if (sim.gold_total < cost) {

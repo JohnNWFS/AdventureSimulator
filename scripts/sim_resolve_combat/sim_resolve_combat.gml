@@ -70,6 +70,15 @@ function sim_resolve_combat(sim) {
     var party_power = sim_calc_party_power(sim);
     var enc = sim_make_combat_encounter(sim, party_power);
 
+    if (!variable_struct_exists(sim, "debug_encounter_pool_logs")) sim.debug_encounter_pool_logs = 0;
+    if (sim.debug_encounter_pool_logs < 3) {
+        var encounter_area = enc.zone_used;
+        if (enc.zone_used == "Wilderness") encounter_area += " biome=" + enc.biome_used;
+        else if (enc.zone_used == "Dungeon") encounter_area += " dungeon_type=" + enc.dungeon_type_used;
+        sim_log(sim, "[DEBUG] encounter_pool " + encounter_area + " -> enemies=" + enc.names);
+        sim.debug_encounter_pool_logs += 1;
+    }
+
     sim.stats.encounters_over_budget_prevented += enc.prevented;
     sim.stats.rerolls_count += enc.rerolls;
     sim.stats.encounter_attempts += enc.attempts;
