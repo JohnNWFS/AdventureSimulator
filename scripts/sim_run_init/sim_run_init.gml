@@ -254,6 +254,8 @@ function sim_run_init(sim, seed, beats_target) {
     sim.prev_zone = sim.zone;
     sim.cine_opening_emitted = false;
     sim.cine_roster_emitted_for_city_depart = -1;
+    sim.cine_start_beats_emitted = false;
+    sim.cine_tremor_cooldown = 0;
 
     sim.log = [];
     if (variable_global_exists("debug_enabled") && global.debug_enabled) {
@@ -308,26 +310,30 @@ function sim_run_init(sim, seed, beats_target) {
             "The party regroups after a battle.",
             "The party arrives by ship and takes rooms near the docks."
         ];
-        var prologue_idx = sim_rand_range(sim, 0, array_length(prologue_options) - 1);
-        sim_log_tag(sim, "ADVENTURE_START", prologue_options[prologue_idx]);
+        if (!variable_struct_exists(sim, "cine_start_beats_emitted")) sim.cine_start_beats_emitted = false;
+        if (!sim.cine_start_beats_emitted) {
+            var prologue_idx = sim_rand_range(sim, 0, array_length(prologue_options) - 1);
+            sim_log_tag(sim, "ADVENTURE_START", prologue_options[prologue_idx]);
 
-        var tank_name = "Unknown";
-        var thief_name = "Unknown";
-        var mage_name = "Unknown";
-        var healer_name = "Unknown";
+            var tank_name = "Unknown";
+            var thief_name = "Unknown";
+            var mage_name = "Unknown";
+            var healer_name = "Unknown";
 
-        for (var j = 0; j < array_length(sim.party); j++) {
-            var member = sim.party[j];
-            if (member.role == "Tank") tank_name = member.name;
-            else if (member.role == "Thief") thief_name = member.name;
-            else if (member.role == "Mage") mage_name = member.name;
-            else if (member.role == "Healer") healer_name = member.name;
+            for (var j = 0; j < array_length(sim.party); j++) {
+                var member = sim.party[j];
+                if (member.role == "Tank") tank_name = member.name;
+                else if (member.role == "Thief") thief_name = member.name;
+                else if (member.role == "Mage") mage_name = member.name;
+                else if (member.role == "Healer") healer_name = member.name;
+            }
+
+            sim_log_tag(sim, "PARTY_ROSTER",
+                "Tank=" + tank_name + "; Thief=" + thief_name + "; Mage=" + mage_name + "; Healer=" + healer_name + "."
+            );
+            sim.cine_start_beats_emitted = true;
+            sim.cine_opening_emitted = true;
         }
-
-        sim_log_tag(sim, "PARTY_ROSTER",
-            "Tank=" + tank_name + "; Thief=" + thief_name + "; Mage=" + mage_name + "; Healer=" + healer_name + "."
-        );
-        sim.cine_opening_emitted = true;
         sim.adventure_initialized = true;
     }
 

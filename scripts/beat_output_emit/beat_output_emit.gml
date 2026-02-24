@@ -71,9 +71,17 @@ function beat_output_emit(tag, text, data)
         to_beat = (route != "debug");
     }
 
-    // Beat log contract: only lines that begin with '[' may be emitted there.
-    if (!text_starts_tagged && line != "" && string_char_at(line, 1) != "[") {
+    // Beat log contract: only canonical beat-tagged lines should be emitted there.
+    if (line == "" || string_char_at(line, 1) != "[") {
         to_beat = false;
+    }
+    if (string_pos("[SIM]", line) == 1) {
+        to_beat = false;
+        to_debug = true;
+    }
+    if (string_pos("[DEBUG]", line) == 1 || string_pos("[CALIB]", line) == 1) {
+        to_beat = false;
+        to_debug = true;
     }
 
     // ---- On-screen buffer (existing behavior) ----
