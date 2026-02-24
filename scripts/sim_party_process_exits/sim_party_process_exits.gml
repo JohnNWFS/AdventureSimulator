@@ -28,8 +28,13 @@ function sim_party_process_exits(sim, ev) {
 }
 
 function sim_resolve_city_scene(sim) {
+    if (variable_struct_exists(sim, "city_phase_executed") && sim.city_phase_executed) {
+        return;
+    }
+
     sim.city_scene_pending = false;
     sim.city_scene_played = true;
+    sim.city_phase_executed = true;
 
     sim_log_tag(sim, "CITY_ARRIVE",
         "🏙 The party returns to the city to recover, honor the fallen, and make hard decisions."
@@ -75,7 +80,7 @@ function sim_resolve_city_scene(sim) {
             sim_party_apply_legacy(sim, p, "death");
         }
 
-        if (!p.dead && !p.retired && p.injury_lingering) {
+        if (sim_party_is_active(p) && p.injury_lingering) {
             var recover_cost = max(8, floor((p.base_max_hp + p.base_atk * 3) * 0.20));
             if (sim.gold_total >= recover_cost) {
                 sim.gold_total -= recover_cost;
@@ -90,7 +95,7 @@ function sim_resolve_city_scene(sim) {
             }
         }
 
-        if (!p.dead && !p.retired && p.injury_flag) {
+        if (sim_party_is_active(p) && p.injury_flag) {
             var linger = sim_chance(sim, 40);
             if (p.injury_lingering) linger = true;
 
@@ -127,7 +132,7 @@ function sim_resolve_city_scene(sim) {
             }
         }
 
-        if (!p.dead && !p.retired && p.exit_flagged && p.exit_mode == "retire") {
+        if (sim_party_is_active(p) && p.exit_flagged && p.exit_mode == "retire") {
             p.retired = true;
             p.status_state = "retired";
 
@@ -141,7 +146,7 @@ function sim_resolve_city_scene(sim) {
             sim_party_apply_legacy(sim, p, "retire");
         }
 
-        if (!p.dead && !p.retired) {
+        if (sim_party_is_active(p)) {
             var wound_heal = min(2, p.wounds);
             var before_wounds = p.wounds;
             p.wounds -= wound_heal;
@@ -164,7 +169,7 @@ function sim_resolve_city_scene(sim) {
 
     for (var j = 0; j < array_length(sim.party); j++) {
         var out = sim.party[j];
-        var forced_dismissal = (!out.dead && !out.retired && out.city_pressure_marks >= 3);
+        var forced_dismissal = (sim_party_is_active(out) && out.city_pressure_marks >= 3);
         if (forced_dismissal) {
             out.retired = true;
             out.status_state = "retired";
@@ -211,7 +216,7 @@ function sim_resolve_city_scene(sim) {
     } else if (event_roll == 2) {
         for (var b = 0; b < array_length(sim.party); b++) {
             var pb = sim.party[b];
-            if (!pb.dead && !pb.retired) pb.hp = min(pb.max_hp, pb.hp + floor(pb.max_hp * 0.15));
+            if (sim_party_is_active(pb)) pb.hp = min(pb.max_hp, pb.hp + floor(pb.max_hp * 0.15));
         }
         sim_log_tag(sim, "FACTION_EVENT", "⛪ Temple blessing bolsters the party before departure.");
     } else {
@@ -249,5 +254,8 @@ function sim_resolve_city_scene(sim) {
     sim.retreat_to_city = false;
     sim.retreat_beats_left = 0;
     sim.director.retreat_bridge_left = 0;
+    sim.city_phase_executed = false;
+    sim.adventure_initialized = false;
+    sim.starter_kit_applied = false;
     sim.episode_index += 1;
 }

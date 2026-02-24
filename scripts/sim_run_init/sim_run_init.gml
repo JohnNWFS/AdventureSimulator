@@ -96,6 +96,11 @@ function sim_run_init(sim, seed, beats_target) {
     sim.finished = false;
     if (!variable_struct_exists(sim, "episode_begun_logged")) sim.episode_begun_logged = false;
 
+    sim.route_generated = false;
+    sim.city_phase_executed = false;
+    sim.adventure_initialized = false;
+    sim.starter_kit_applied = false;
+
     // ---- Episode flags reset (must reset each run; sim struct is reused) ----
     if (!variable_struct_exists(sim, "flags") || !is_struct(sim.flags)) sim.flags = {};
     sim.flags.hook_emitted = false;
@@ -143,6 +148,7 @@ function sim_run_init(sim, seed, beats_target) {
         { zone: "Dungeon", biome: "", dungeon_type: dungeon_type }
     ];
     sim.route_index = 0;
+    sim.route_generated = true;
 
     var seg0 = sim.route_segments[0];
     sim.zone = seg0.zone;
@@ -265,17 +271,20 @@ function sim_run_init(sim, seed, beats_target) {
     sim.party[3] = sim_make_party_member("Healer", sim_name_pick(sim, "healer"), 42, 28,  6, 3);
 
     // Flavor starter strings (safe to keep)
-    sim.party[0].armor = "Iron Shield";
-    sim.party[1].weapon = "Charcoal Wand";
-    sim.party[2].trinket = "Lockpick Kit";
-    sim.party[3].trinket = "Prayer Beads";
+    if (!sim.starter_kit_applied) {
+        sim.party[0].armor = "Iron Shield";
+        sim.party[1].weapon = "Charcoal Wand";
+        sim.party[2].trinket = "Lockpick Kit";
+        sim.party[3].trinket = "Prayer Beads";
+        sim.starter_kit_applied = true;
+    }
 
     // Guarantee equip schema + derived stats exist on all members
     for (var i = 0; i < array_length(sim.party); i++) {
         sim_recalc_derived(sim.party[i]);
     }
 
-    if (!sim.cine_opening_emitted) {
+    if (!sim.adventure_initialized) {
         var prologue_options = [
             "The party meets in an inn.",
             "The party convenes at the Adventurers' Guild.",
@@ -305,6 +314,7 @@ function sim_run_init(sim, seed, beats_target) {
             "Tank=" + tank_name + "; Thief=" + thief_name + "; Mage=" + mage_name + "; Healer=" + healer_name + "."
         );
         sim.cine_opening_emitted = true;
+        sim.adventure_initialized = true;
     }
 
     // Stats (ensure combats exists)

@@ -41,6 +41,7 @@ function sim_make_party_member(role, name, max_hp, max_mp, atk, def) {
         // NEW death/retire system
         dead: false,
         retired: false,
+        inactive: false,
 
         // Legacy-ish state string (kept in sync)
         status_state: "alive",
