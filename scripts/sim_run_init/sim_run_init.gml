@@ -166,6 +166,15 @@ function sim_run_init(sim, seed, beats_target) {
     sim.city_scene_pending = false;
     sim.city_scene_played = false;
 
+    if (!variable_struct_exists(sim, "episode_index")) sim.episode_index = 1;
+    if (!variable_struct_exists(sim, "city_reputation")) sim.city_reputation = 0;
+    if (!variable_struct_exists(sim, "city_favor")) sim.city_favor = 0;
+    if (!variable_struct_exists(sim, "city_reputation_tier")) sim.city_reputation_tier = "neutral";
+    if (!variable_struct_exists(sim, "city_merchant_price_mult")) sim.city_merchant_price_mult = 1.0;
+    if (!variable_struct_exists(sim, "city_merchant_effect_pending")) sim.city_merchant_effect_pending = false;
+    if (!variable_struct_exists(sim, "city_ambush_bonus_next")) sim.city_ambush_bonus_next = 0;
+    if (!variable_struct_exists(sim, "city_tension_threshold_shift")) sim.city_tension_threshold_shift = 0;
+
     sim.director = {
         merchant_cd: 0,
         chest_cd: 0,

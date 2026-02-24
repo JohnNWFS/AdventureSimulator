@@ -53,6 +53,15 @@ function sim_recalc_derived(p) {
     p.atk = p.base_atk + atk_bonus;
     p.def = max(0, (p.base_def + def_bonus) - wound_def_pen);
 
+    if (variable_struct_exists(p, "injury_lingering") && p.injury_lingering) {
+        var pen = variable_struct_exists(p, "injury_penalty_pct") ? p.injury_penalty_pct : 10;
+        var mult = max(0.5, 1.0 - pen / 100.0);
+        var stat = variable_struct_exists(p, "injury_stat") ? p.injury_stat : "";
+        if (stat == "atk") p.atk = max(1, floor(p.atk * mult));
+        else if (stat == "def") p.def = max(0, floor(p.def * mult));
+        else if (stat == "max_hp") p.max_hp = max(10, floor(p.max_hp * mult));
+    }
+
     // Clamp current resources to maxima
     p.hp = clamp(p.hp, -p.max_hp * 2, p.max_hp); // allow negatives for overkill checks
     p.mp = clamp(p.mp, 0, p.max_mp);

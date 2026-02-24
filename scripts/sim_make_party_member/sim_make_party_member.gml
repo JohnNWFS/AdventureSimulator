@@ -52,6 +52,14 @@ function sim_make_party_member(role, name, max_hp, max_mp, atk, def) {
         cracking_flag: false,
 
         exit_flagged: false,
-        exit_mode: "none"
+        exit_mode: "none",
+
+        injury_flag: false,
+        injury_lingering: false,
+        injury_stat: "",
+        injury_penalty_pct: 0,
+        dropped_below_30: false,
+        city_underperform_flag: false,
+        city_pressure_marks: 0
     };
 }
