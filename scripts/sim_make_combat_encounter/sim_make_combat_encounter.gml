@@ -207,9 +207,9 @@ function sim_make_combat_encounter(sim, party_power) {
             var roll = sim_rand_range(sim, 1, total_w);
             var running = 0;
             var chosen = picks[0];
-            for (var pi = 0; pi < array_length(picks); pi++) {
-                running += max(1, floor(picks[pi].w * 100));
-                if (roll <= running) { chosen = picks[pi]; break; }
+            for (var pick_i = 0; pick_i < array_length(picks); pick_i++) {
+                running += max(1, floor(picks[pick_i].w * 100));
+                if (roll <= running) { chosen = picks[pick_i]; break; }
             }
 
             total += chosen.threat;

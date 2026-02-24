@@ -149,6 +149,7 @@ function sim_run_init(sim, seed, beats_target) {
     ];
     sim.route_index = 0;
     sim.route_generated = true;
+    sim.cine_dungeon_enter_emitted = false;
 
     var seg0 = sim.route_segments[0];
     sim.zone = seg0.zone;
