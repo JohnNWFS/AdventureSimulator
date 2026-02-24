@@ -27,7 +27,14 @@ function sim_beat_animation_map_table()
             ADVENTURE_START:{ anim_id: "adventure_start", lane: "scene" },
             PARTY_ROSTER:   { anim_id: "party_roster_pose", lane: "overlay" },
             CITY_ARRIVE:    { anim_id: "city_arrive", lane: "scene" },
-            CITY_DEPART:    { anim_id: "city_depart", lane: "scene" }
+            CITY_DEPART:    { anim_id: "city_depart", lane: "scene" },
+            CITY_REPUTATION_UPDATE:{ anim_id: "city_reputation", lane: "ui" },
+            INJURY_LINGERS: { anim_id: "injury_lingers", lane: "overlay" },
+            INJURY_RECOVERED:{ anim_id: "injury_recovered", lane: "overlay" },
+            VOLUNTARY_RETIREMENT:{ anim_id: "retire_decision", lane: "scene" },
+            NEW_RECRUIT:    { anim_id: "recruit_join", lane: "scene" },
+            FACTION_EVENT:  { anim_id: "faction_event", lane: "scene" },
+            CITY_EFFECT_APPLIED:{ anim_id: "city_effect", lane: "ui" }
         };
     }
 

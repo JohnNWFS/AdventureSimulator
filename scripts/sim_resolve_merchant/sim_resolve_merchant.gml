@@ -79,6 +79,14 @@ function sim_resolve_merchant(sim) {
         : max(10, floor(offer.value * 1.10));
 
     var cost = list_price;
+    if (variable_struct_exists(sim, "city_merchant_effect_pending") && sim.city_merchant_effect_pending) {
+        cost = max(1, floor(cost * sim.city_merchant_price_mult));
+        sim.city_merchant_effect_pending = false;
+        sim_log_tag(sim, "CITY_EFFECT_APPLIED",
+            "🏷 City momentum adjusts prices for this merchant stop (x" + string_format(sim.city_merchant_price_mult, 1, 2) + ")."
+        );
+    }
+
     if (sim.stats.merchants_bought == 0 && sim.gold_total > 0) {
         cost = min(cost, max(8, floor(sim.gold_total * 0.75)));
     }

@@ -124,6 +124,10 @@ function sim_check_party_health(sim) {
         }
 
         var hp_pct = p.hp / max(1, p.max_hp);
+        if (hp_pct < 0.30) {
+            p.dropped_below_30 = true;
+            p.injury_flag = true;
+        }
 
         if (hp_pct < 0.20) {
             if (!p.near_death_flag) {

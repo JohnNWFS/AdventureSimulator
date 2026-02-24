@@ -54,7 +54,9 @@ function sim_director_schedule_from_zone_profile(sim, route_mod) {
 function sim_director_next_event(sim) {
     // Big beats
     if (sim.beat == 0) return "intro";
-    if (!sim.flags.boss_begun && sim.tension_current >= sim.tension_threshold) return "boss";
+    var threshold_shift = variable_struct_exists(sim, "city_tension_threshold_shift") ? sim.city_tension_threshold_shift : 0;
+    var effective_threshold = max(10, sim.tension_threshold + threshold_shift);
+    if (!sim.flags.boss_begun && sim.tension_current >= effective_threshold) return "boss";
 
     if (!variable_struct_exists(sim.director, "beats_since_relief")) {
         sim.director.beats_since_relief = 0;
@@ -102,6 +104,12 @@ function sim_director_next_event(sim) {
 
     if (sim.city_scene_pending) {
         return "city_scene";
+    }
+
+    if (variable_struct_exists(sim, "city_ambush_bonus_next") && sim.city_ambush_bonus_next > 0 && sim_chance(sim, 20 * sim.city_ambush_bonus_next)) {
+        sim.city_ambush_bonus_next = max(0, sim.city_ambush_bonus_next - 1);
+        sim_log_tag(sim, "CITY_EFFECT_APPLIED", "🕶 Rival pressure triggers an ambush beat.");
+        return "combat";
     }
 
     var recent_len = is_array(sim.recent_beats) ? array_length(sim.recent_beats) : 0;
