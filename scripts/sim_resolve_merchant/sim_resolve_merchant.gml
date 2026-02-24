@@ -47,7 +47,21 @@ function sim_resolve_merchant(sim) {
     var offer_zone_for_loot = merchant_zone;
     if (merchant_zone == "Dungeon") offer_zone_for_loot = "Wilderness";
 
+    var profile = sim_get_zone_profile(sim);
+    var merchant_pool = profile.merchant_pool;
+
     var offer = loot_generate_item(sim, { source: "merchant", zone: offer_zone_for_loot, tier_target: tier_target });
+    for (var bias_roll = 0; bias_roll < 3; bias_roll++) {
+        var match = false;
+        for (var mp = 0; mp < array_length(merchant_pool); mp++) {
+            if (offer.type == merchant_pool[mp]) {
+                match = true;
+                break;
+            }
+        }
+        if (match) break;
+        offer = loot_generate_item(sim, { source: "merchant", zone: offer_zone_for_loot, tier_target: tier_target });
+    }
 
     if (is_struct(offer) && variable_struct_exists(offer, "type") && offer.type == "treasure") {
         offer = loot_generate_item(sim, { source: "merchant", zone: offer_zone_for_loot, tier_target: tier_target });

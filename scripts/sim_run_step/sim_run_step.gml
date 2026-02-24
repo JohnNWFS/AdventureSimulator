@@ -59,6 +59,7 @@ function sim_run_step(sim) {
     sim.zone = active_seg.zone;
     sim.overland_biome = active_seg.biome;
     sim.dungeon_type = active_seg.dungeon_type;
+    sim.zone_profile = sim_get_zone_profile(sim);
 
     var route_label = sim.zone;
     if (sim.zone == "Wilderness") route_label = "Wilderness (" + sim.overland_biome + ")";

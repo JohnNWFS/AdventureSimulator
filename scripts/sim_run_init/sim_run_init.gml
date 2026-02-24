@@ -1,3 +1,69 @@
+function sim_get_zone_profile(sim) {
+    var key = "Town";
+    if (sim.zone == "Wilderness") {
+        if (sim.overland_biome == "Fields") key = "Wilderness: Fields";
+        else if (sim.overland_biome == "Woods") key = "Wilderness: Woods";
+        else key = "Wilderness: Fields";
+    } else if (sim.zone == "Dungeon") {
+        if (sim.dungeon_type == "Cursed Temple") key = "Dungeon: Cursed Temple";
+        else key = "Dungeon: Cursed Temple";
+    }
+
+    var profiles = {
+        "Town": {
+            enemy_weights: { "Brigand Captain": 1.0, "Shieldbearer Veteran": 1.0, "Plague Rat Pack": 0.9 },
+            hazard_weights: { spore: 0.35, collapse: 0.40 },
+            social_weights: { whispers: 1.35, rivals: 1.40 },
+            merchant_pool: ["consumable", "trinket", "armor"],
+            tension_modifier: 0.85
+        },
+        "Wilderness: Fields": {
+            enemy_weights: {
+                "Raider Scout": 1.35,
+                "Mounted Bandit": 1.25,
+                "Spear Militia": 1.20,
+                "Field Cultist": 1.25,
+                "War Hound": 1.20,
+                "Bog Leech": 1.10
+            },
+            hazard_weights: { spore: 0.90, collapse: 1.15 },
+            social_weights: { whispers: 1.00, rivals: 0.85 },
+            merchant_pool: ["weapon", "armor", "consumable"],
+            tension_modifier: 1.05
+        },
+        "Wilderness: Woods": {
+            enemy_weights: {
+                "Briar Stalker": 1.35,
+                "Forest Warden": 1.20,
+                "Poison Archer": 1.35,
+                "Moss Golem": 1.10,
+                "Shrieking Crow Swarm": 1.25,
+                "Root Snare Entity": 1.30
+            },
+            hazard_weights: { spore: 1.35, collapse: 0.95 },
+            social_weights: { whispers: 1.10, rivals: 0.95 },
+            merchant_pool: ["trinket", "consumable", "weapon"],
+            tension_modifier: 1.10
+        },
+        "Dungeon: Cursed Temple": {
+            enemy_weights: {
+                "Bone Sentinel": 1.30,
+                "Ritual Adept": 1.25,
+                "Chain Thrall": 1.30,
+                "Echo Wraith": 1.20,
+                "Temple Guardian Idol": 1.10,
+                "Ash Revenant": 1.25
+            },
+            hazard_weights: { spore: 1.20, collapse: 1.30 },
+            social_weights: { whispers: 0.95, rivals: 0.75 },
+            merchant_pool: ["trinket", "consumable", "armor"],
+            tension_modifier: 1.18
+        }
+    };
+
+    return variable_struct_get(profiles, key);
+}
+
 function sim_run_init(sim, seed, beats_target) {
     var short_mode = (variable_global_exists("debug_short_mode") && global.debug_short_mode);
     var very_short_mode = (variable_global_exists("debug_very_short_mode") && global.debug_very_short_mode);
@@ -64,6 +130,7 @@ function sim_run_init(sim, seed, beats_target) {
     sim.zone = seg0.zone;
     sim.overland_biome = seg0.biome;
     sim.dungeon_type = seg0.dungeon_type;
+    sim.zone_profile = sim_get_zone_profile(sim);
 
     sim.route_milestone_1 = 2;
     sim.route_milestone_2 = max(sim.route_milestone_1 + 1, floor(sim.beats_target / 3));
