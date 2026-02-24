@@ -34,7 +34,8 @@ function sim_beat_animation_map_table()
             VOLUNTARY_RETIREMENT:{ anim_id: "retire_decision", lane: "scene" },
             NEW_RECRUIT:    { anim_id: "recruit_join", lane: "scene" },
             FACTION_EVENT:  { anim_id: "faction_event", lane: "scene" },
-            CITY_EFFECT_APPLIED:{ anim_id: "city_effect", lane: "ui" }
+            CITY_EFFECT_APPLIED:{ anim_id: "city_effect", lane: "ui" },
+            DUNGEON_ENTER:  { anim_id: "dungeon_enter", lane: "scene" }
         };
     }
 
