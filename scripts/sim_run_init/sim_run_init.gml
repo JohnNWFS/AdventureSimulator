@@ -18,6 +18,12 @@ function sim_get_zone_profile(sim) {
             tension_modifier: 0.85
         },
         "Wilderness: Fields": {
+            beat_weights: {
+                combat: 60,
+                exploration: 20,
+                merchant: 10,
+                social: 10
+            },
             enemy_weights: {
                 "Raider Scout": 1.35,
                 "Mounted Bandit": 1.25,
@@ -32,6 +38,12 @@ function sim_get_zone_profile(sim) {
             tension_modifier: 1.05
         },
         "Wilderness: Woods": {
+            beat_weights: {
+                combat: 45,
+                hazard: 20,
+                social: 20,
+                exploration: 15
+            },
             enemy_weights: {
                 "Briar Stalker": 1.35,
                 "Forest Warden": 1.20,
@@ -46,6 +58,12 @@ function sim_get_zone_profile(sim) {
             tension_modifier: 1.10
         },
         "Dungeon: Cursed Temple": {
+            beat_weights: {
+                combat: 55,
+                hazard: 25,
+                relief: 10,
+                social: 10
+            },
             enemy_weights: {
                 "Bone Sentinel": 1.30,
                 "Ritual Adept": 1.25,
@@ -195,6 +213,12 @@ function sim_run_init(sim, seed, beats_target) {
         relief: 0,
         merchant: 0,
         retreat: 0
+    };
+
+    sim.zone_beat_counts = {
+        "Wilderness: Fields": { combat: 0, exploration: 0, social: 0, hazard: 0, merchant: 0, relief: 0 },
+        "Wilderness: Woods": { combat: 0, exploration: 0, social: 0, hazard: 0, merchant: 0, relief: 0 },
+        "Dungeon: Cursed Temple": { combat: 0, exploration: 0, social: 0, hazard: 0, merchant: 0, relief: 0 }
     };
 
     sim.recent_beats = [];

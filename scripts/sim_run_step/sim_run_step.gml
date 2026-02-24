@@ -88,6 +88,23 @@ function sim_run_step(sim) {
         }
     }
 
+    var zone_key = "";
+    if (sim.zone == "Wilderness") {
+        if (sim.overland_biome == "Fields") zone_key = "Wilderness: Fields";
+        else if (sim.overland_biome == "Woods") zone_key = "Wilderness: Woods";
+    } else if (sim.zone == "Dungeon") {
+        if (sim.dungeon_type == "Cursed Temple") zone_key = "Dungeon: Cursed Temple";
+    }
+
+    var coverage_before = {
+        exploration: sim.coverage.exploration,
+        social: sim.coverage.social,
+        hazard: sim.coverage.hazard,
+        merchant: sim.coverage.merchant,
+        relief: sim.coverage.relief,
+        combat: sim.coverage.combat
+    };
+
     // Director picks the next beat event
     var ev = sim_director_next_event(sim);
 
@@ -193,6 +210,16 @@ function sim_run_step(sim) {
     if (ev == "retreat_bridge") sim.coverage.retreat += 1;
     if (ev == "merchant") sim.coverage.merchant += 1;
     if (ev == "relief") sim.coverage.relief += 1;
+
+    if (zone_key != "" && variable_struct_exists(sim, "zone_beat_counts") && variable_struct_exists(sim.zone_beat_counts, zone_key)) {
+        var zone_counts = variable_struct_get(sim.zone_beat_counts, zone_key);
+        zone_counts.combat += max(0, sim.coverage.combat - coverage_before.combat);
+        zone_counts.exploration += max(0, sim.coverage.exploration - coverage_before.exploration);
+        zone_counts.social += max(0, sim.coverage.social - coverage_before.social);
+        zone_counts.hazard += max(0, sim.coverage.hazard - coverage_before.hazard);
+        zone_counts.merchant += max(0, sim.coverage.merchant - coverage_before.merchant);
+        zone_counts.relief += max(0, sim.coverage.relief - coverage_before.relief);
+    }
 
     // Process retirements/deaths and recruit replacements
     sim_party_process_exits(sim, ev);

@@ -41,6 +41,24 @@ function sim_run_finalize(sim) {
         " | Downed-loop interventions=" + string(sim.director.downed_loop_interventions)
     );
 
+    if (variable_struct_exists(sim, "zone_beat_counts") && is_struct(sim.zone_beat_counts)) {
+        var zone_names = ["Wilderness: Fields", "Wilderness: Woods", "Dungeon: Cursed Temple"];
+        for (var zi = 0; zi < array_length(zone_names); zi++) {
+            var zone_name = zone_names[zi];
+            if (!variable_struct_exists(sim.zone_beat_counts, zone_name)) continue;
+            var zone_counts = variable_struct_get(sim.zone_beat_counts, zone_name);
+            sim_log(sim,
+                "[DEBUG] Zone beat counts " + zone_name +
+                " | Combat=" + string(zone_counts.combat) +
+                " | Exploration=" + string(zone_counts.exploration) +
+                " | Social=" + string(zone_counts.social) +
+                " | Hazard=" + string(zone_counts.hazard) +
+                " | Merchant=" + string(zone_counts.merchant) +
+                " | Relief=" + string(zone_counts.relief)
+            );
+        }
+    }
+
     var encounter_outcome_total = sim.stats.encounter_accepted + sim.stats.encounter_scaled_down + sim.stats.encounter_degraded;
     sim_log(sim,
         "📊 Encounter budget: attempts=" + string(sim.stats.encounter_attempts) +
