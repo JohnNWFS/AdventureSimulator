@@ -6,6 +6,7 @@ function sim_run_step(sim) {
     if (!variable_struct_exists(sim, "adventure_initialized")) sim.adventure_initialized = false;
     if (!variable_struct_exists(sim, "city_phase_executed")) sim.city_phase_executed = false;
     if (!variable_struct_exists(sim, "route_generated")) sim.route_generated = is_array(sim.route_segments);
+    if (!variable_struct_exists(sim, "cine_tremor_cooldown")) sim.cine_tremor_cooldown = 0;
 
     // End condition
     if (sim.beat >= sim.beats_target) {
@@ -57,6 +58,8 @@ function sim_run_step(sim) {
     // Difficulty ramps
     if (sim.beat > 0 && sim.beat % 20 == 0) sim.difficulty += 1;
 
+    if (sim.cine_tremor_cooldown > 0) sim.cine_tremor_cooldown -= 1;
+
     // Passive MP recovery for casters each beat
     for (var i = 0; i < array_length(sim.party); i++) {
         var p = sim.party[i];
@@ -94,7 +97,10 @@ function sim_run_step(sim) {
             " biome=" + sim.overland_biome +
             " route_index=" + string(sim.route_index) + ")"
         );
-        sim_log_tag(sim, "COMPLICATION", "A distant tremor hints the lair is near, but not yet.");
+        if (sim.cine_tremor_cooldown <= 0) {
+            sim_log_tag(sim, "COMPLICATION", "A distant tremor hints the lair is near, but not yet.");
+            sim.cine_tremor_cooldown = 6;
+        }
         ev = "adventure";
     }
 
