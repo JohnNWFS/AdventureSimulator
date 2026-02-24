@@ -2,7 +2,9 @@ function sim_run_step(sim) {
     if (sim.finished) return;
     if (!variable_struct_exists(sim, "flags") || !is_struct(sim.flags)) sim.flags = {};
     if (!variable_struct_exists(sim.flags, "boss_begun")) sim.flags.boss_begun = false;
-    if (!variable_struct_exists(sim, "cine_opening_emitted")) sim.cine_opening_emitted = false;
+    if (!variable_struct_exists(sim, "adventure_initialized")) sim.adventure_initialized = false;
+    if (!variable_struct_exists(sim, "city_phase_executed")) sim.city_phase_executed = false;
+    if (!variable_struct_exists(sim, "route_generated")) sim.route_generated = is_array(sim.route_segments);
 
     // End condition
     if (sim.beat >= sim.beats_target) {
@@ -10,36 +12,8 @@ function sim_run_step(sim) {
         return;
     }
 
-    if (!sim.cine_opening_emitted) {
-        var prologue_options = [
-            "The party meets in an inn.",
-            "The party convenes at the Adventurers' Guild.",
-            "The party gathers in the town center.",
-            "The party receives a blessing at the local church.",
-            "The party consults a priest at the temple.",
-            "The party regroups after a battle.",
-            "The party arrives by ship and takes rooms near the docks."
-        ];
-        var prologue_idx = sim_rand_range(sim, 0, array_length(prologue_options) - 1);
-        sim_log_tag(sim, "ADVENTURE_START", prologue_options[prologue_idx]);
-
-        var tank_name = "Unknown";
-        var thief_name = "Unknown";
-        var mage_name = "Unknown";
-        var healer_name = "Unknown";
-
-        for (var roster_i = 0; roster_i < array_length(sim.party); roster_i++) {
-            var member = sim.party[roster_i];
-            if (member.role == "Tank") tank_name = member.name;
-            else if (member.role == "Thief") thief_name = member.name;
-            else if (member.role == "Mage") mage_name = member.name;
-            else if (member.role == "Healer") healer_name = member.name;
-        }
-
-        sim_log_tag(sim, "PARTY_ROSTER",
-            "Tank=" + tank_name + "; Thief=" + thief_name + "; Mage=" + mage_name + "; Healer=" + healer_name + "."
-        );
-        sim.cine_opening_emitted = true;
+    if (!sim.route_generated || !is_array(sim.route_segments) || array_length(sim.route_segments) <= 0) {
+        return;
     }
 
     var next_route_index = sim.route_index;
@@ -79,7 +53,7 @@ function sim_run_step(sim) {
     // Passive MP recovery for casters each beat
     for (var i = 0; i < array_length(sim.party); i++) {
         var p = sim.party[i];
-        if (p.dead || p.retired) continue;
+        if (!sim_party_is_active(p)) continue;
 
         if (p.role == "Mage") {
             p.mp = min(p.max_mp, p.mp + 2);

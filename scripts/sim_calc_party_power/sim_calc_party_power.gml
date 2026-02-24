@@ -3,7 +3,7 @@ function sim_calc_party_power(sim) {
 
     for (var i = 0; i < array_length(sim.party); i++) {
         var p = sim.party[i];
-        if (p.dead || p.retired) continue;
+        if (!sim_party_is_active(p)) continue;
 
         sim_recalc_derived(p);
 

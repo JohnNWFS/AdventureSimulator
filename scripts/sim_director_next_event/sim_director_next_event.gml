@@ -103,7 +103,8 @@ function sim_director_next_event(sim) {
     }
 
     if (sim.city_scene_pending) {
-        return "city_scene";
+        if (!variable_struct_exists(sim, "city_phase_executed") || !sim.city_phase_executed) return "city_scene";
+        sim.city_scene_pending = false;
     }
 
     if (variable_struct_exists(sim, "city_ambush_bonus_next") && sim.city_ambush_bonus_next > 0 && sim_chance(sim, 20 * sim.city_ambush_bonus_next)) {
@@ -129,7 +130,7 @@ function sim_director_next_event(sim) {
 
     for (var i = 0; i < array_length(sim.party); i++) {
         var p = sim.party[i];
-        if (p.dead || p.retired) continue;
+        if (!sim_party_is_active(p)) continue;
 
         var pct = p.hp / max(1, p.max_hp);
         if (pct < worst_hp_pct) worst_hp_pct = pct;
