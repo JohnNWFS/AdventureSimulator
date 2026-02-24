@@ -12,7 +12,8 @@ function sim_resolve_adventure(sim) {
     var whispers_mult = variable_struct_get(profile.social_weights, "whispers");
     var rivals_mult = variable_struct_get(profile.social_weights, "rivals");
 
-    var beat = loot_pick_weighted(sim, [
+    var focus = variable_struct_exists(sim.director, "adventure_focus") ? sim.director.adventure_focus : "";
+    var beat_options = [
         { w: 14, v: 0 },
         { w: floor(12 * hazard_mult), v: 1 },
         { w: 12, v: 2 },
@@ -21,7 +22,31 @@ function sim_resolve_adventure(sim) {
         { w: 12, v: 5 },
         { w: floor(12 * rivals_mult), v: 6 },
         { w: 10, v: 7 }
-    ]);
+    ];
+
+    if (focus == "hazard") {
+        beat_options = [
+            { w: floor(14 * hazard_mult), v: 1 },
+            { w: floor(12 * collapse_mult), v: 4 },
+            { w: 5, v: 0 }
+        ];
+    } else if (focus == "social") {
+        beat_options = [
+            { w: floor(13 * whispers_mult), v: 3 },
+            { w: floor(13 * rivals_mult), v: 6 },
+            { w: 4, v: 2 }
+        ];
+    } else if (focus == "exploration") {
+        beat_options = [
+            { w: 14, v: 0 },
+            { w: 12, v: 2 },
+            { w: 12, v: 5 },
+            { w: 10, v: 7 }
+        ];
+    }
+
+    sim.director.adventure_focus = "";
+    var beat = loot_pick_weighted(sim, beat_options);
 
     if (variable_struct_exists(sim.director, "last_adventure_beat") && beat == sim.director.last_adventure_beat) {
         beat = loot_pick_weighted(sim, [

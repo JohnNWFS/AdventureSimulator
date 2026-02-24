@@ -9,6 +9,48 @@ function sim_director_recent_count(sim, ev_name, window) {
     return count;
 }
 
+function sim_director_schedule_from_zone_profile(sim, route_mod) {
+    var profile = sim_get_zone_profile(sim);
+    if (!is_struct(profile) || !variable_struct_exists(profile, "beat_weights")) return "";
+
+    var weights = profile.beat_weights;
+    var options = [];
+
+    var combat_w = variable_struct_exists(weights, "combat") ? variable_struct_get(weights, "combat") : 0;
+    if (combat_w > 0) array_push(options, { w: combat_w, v: "combat" });
+
+    var exploration_w = variable_struct_exists(weights, "exploration") ? variable_struct_get(weights, "exploration") : 0;
+    if (exploration_w > 0) array_push(options, { w: floor(exploration_w * route_mod.loot_mult), v: "exploration" });
+
+    var merchant_w = variable_struct_exists(weights, "merchant") ? variable_struct_get(weights, "merchant") : 0;
+    if (merchant_w > 0 && sim.director.merchant_cd == 0 && sim.director.merchants_this_zone < 2) {
+        array_push(options, { w: floor(merchant_w * route_mod.loot_mult), v: "merchant" });
+    }
+
+    var social_w = variable_struct_exists(weights, "social") ? variable_struct_get(weights, "social") : 0;
+    if (social_w > 0) array_push(options, { w: floor(social_w * route_mod.social_mult), v: "social" });
+
+    var hazard_w = variable_struct_exists(weights, "hazard") ? variable_struct_get(weights, "hazard") : 0;
+    if (hazard_w > 0) array_push(options, { w: floor(hazard_w * route_mod.hazard_mult), v: "hazard" });
+
+    var relief_w = variable_struct_exists(weights, "relief") ? variable_struct_get(weights, "relief") : 0;
+    if (relief_w > 0) array_push(options, { w: floor(relief_w * route_mod.relief_mult), v: "relief" });
+
+    if (array_length(options) <= 0) return "";
+
+    var pick = loot_pick_weighted(sim, options);
+    if (pick == "merchant") return "merchant";
+    if (pick == "relief") return "relief";
+    if (pick == "combat") return "combat";
+
+    if (pick == "exploration" || pick == "social" || pick == "hazard") {
+        sim.director.adventure_focus = pick;
+        return "adventure";
+    }
+
+    return "";
+}
+
 function sim_director_next_event(sim) {
     // Big beats
     if (sim.beat == 0) return "intro";
@@ -108,44 +150,26 @@ function sim_director_next_event(sim) {
         return "relief";
     }
 
-    // Merchant: respect cooldown and per-zone cap.
+    var scheduled = sim_director_schedule_from_zone_profile(sim, route_mod);
+    if (scheduled == "merchant" && last_two_merchant) {
+        sim.director.repeat_prevented += 1;
+        sim.director.adventure_focus = "exploration";
+        sim_log_tag(sim, "DIRECTOR_REROUTE", "🧠 reason=merchant_recent_repeat from=merchant to=adventure");
+        return "adventure";
+    }
+    if (scheduled != "") return scheduled;
+
+    // Fallback pacing for zones without beat_weights configured.
     if (sim.director.merchant_cd == 0 && sim.director.merchants_this_zone < 2 && sim_chance(sim, floor(13 * route_mod.loot_mult))) {
-        if (last_two_merchant) {
-            sim.director.repeat_prevented += 1;
-
-            var reroute_merchant = "combat";
-            if (sim.director.chest_cd == 0) {
-                sim.director.chest_cd = 4;
-                reroute_merchant = "chest";
-            } else if (sim.director.adventure_cd == 0) {
-                sim.director.adventure_cd = 1;
-                reroute_merchant = "adventure";
-            } else if (sim.director.beats_since_relief >= relief_gap) {
-                reroute_merchant = "relief";
-            }
-
-            sim_log_tag(sim, "DIRECTOR_REROUTE", "🧠 reason=merchant_recent_repeat from=merchant to=" + reroute_merchant);
-            return reroute_merchant;
-        }
-
         return "merchant";
     }
-
-    // Chest: respect cooldown.
     if (sim.director.chest_cd == 0 && sim_chance(sim, floor(12 * route_mod.loot_mult))) {
         sim.director.chest_cd = 4;
         return "chest";
     }
-
-    // Adventure beats actively compete with combat.
     if (sim.director.adventure_cd == 0) {
-        var adv_pressure = 34;
-        if (sim.tension > 70) adv_pressure += 10;
-        if (sim.zone == "Wilderness" || sim.zone == "Dungeon") adv_pressure += 8;
-        adv_pressure = floor(adv_pressure * route_mod.social_mult);
-
+        var adv_pressure = floor(28 * route_mod.social_mult);
         if (sim_chance(sim, adv_pressure)) {
-            sim.director.adventure_cd = 1;
             return "adventure";
         }
     }
