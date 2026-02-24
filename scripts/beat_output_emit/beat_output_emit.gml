@@ -54,13 +54,25 @@ function beat_output_emit(tag, text, data)
     if (!is_string(text)) text = string(text);
 
     // Normalize final line
-    var line = "[" + tag + "] " + text;
+    var text_starts_tagged = (string_length(text) > 0 && string_char_at(text, 1) == "[");
+    var line = text_starts_tagged ? text : ("[" + tag + "] " + text);
 
     var route = (is_struct(data) && variable_struct_exists(data, "route")) ? string(data.route) : "both";
     var to_debug = (route != "beat");
     var to_beat = (route != "debug");
 
-    if (tag == "DEBUG" || tag == "CALIB" || tag == "SIM") {
+    if (tag == "DEBUG" || tag == "CALIB") {
+        to_beat = false;
+    }
+
+    // If caller already provided a tagged beat line (e.g. "[EPISODE_HOOK] ..."),
+    // allow beat routing and keep the tag at column 1 with no extra prefix.
+    if (tag == "SIM" && text_starts_tagged) {
+        to_beat = (route != "debug");
+    }
+
+    // Beat log contract: only lines that begin with '[' may be emitted there.
+    if (!text_starts_tagged && line != "" && string_char_at(line, 1) != "[") {
         to_beat = false;
     }
 
