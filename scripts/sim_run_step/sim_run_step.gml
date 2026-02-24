@@ -2,6 +2,7 @@ function sim_run_step(sim) {
     if (sim.finished) return;
     if (!variable_struct_exists(sim, "flags") || !is_struct(sim.flags)) sim.flags = {};
     if (!variable_struct_exists(sim.flags, "boss_begun")) sim.flags.boss_begun = false;
+    if (!variable_struct_exists(sim, "cine_dungeon_enter_emitted")) sim.cine_dungeon_enter_emitted = false;
     if (!variable_struct_exists(sim, "adventure_initialized")) sim.adventure_initialized = false;
     if (!variable_struct_exists(sim, "city_phase_executed")) sim.city_phase_executed = false;
     if (!variable_struct_exists(sim, "route_generated")) sim.route_generated = is_array(sim.route_segments);
@@ -27,6 +28,12 @@ function sim_run_step(sim) {
             " at beat=" + string(sim.beat)
         );
         sim.route_index = next_route_index;
+
+        var transitioned_seg = sim.route_segments[sim.route_index];
+        if (transitioned_seg.zone == "Dungeon" && !sim.cine_dungeon_enter_emitted) {
+            sim_log_tag(sim, "DUNGEON_ENTER", "The party enters the " + transitioned_seg.dungeon_type + ".");
+            sim.cine_dungeon_enter_emitted = true;
+        }
     }
 
     var active_seg = sim.route_segments[sim.route_index];
@@ -81,6 +88,16 @@ function sim_run_step(sim) {
 
     // Director picks the next beat event
     var ev = sim_director_next_event(sim);
+
+    if (ev == "boss" && sim.zone != "Dungeon") {
+        sim_log(sim,
+            "[DEBUG] Boss delayed: not in Dungeon (zone=" + sim.zone +
+            " biome=" + sim.overland_biome +
+            " route_index=" + string(sim.route_index) + ")"
+        );
+        sim_log_tag(sim, "COMPLICATION", "A distant tremor hints the lair is near, but not yet.");
+        ev = "adventure";
+    }
 
     if (ev == "merchant" && sim.director.merchant_cd > 0) {
         sim.director.repeat_prevented += 1;
