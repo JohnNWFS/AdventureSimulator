@@ -138,6 +138,8 @@ function sim_run_init(sim, seed, beats_target) {
 
     sim.difficulty = 1;
     sim.tension = 10;
+    sim.tension_current = 0;
+    sim.tension_threshold = sim_rand_range(sim, 28, 45);
     sim.gold_total = 0;
 
     sim.wound_retreat_threshold = very_short_mode ? 2 : (short_mode ? 2 : 3);
@@ -282,6 +284,7 @@ function sim_run_init(sim, seed, beats_target) {
         merchants_bought: 0,
         rares_found: 0,
         boss_defeated: false,
+        boss_trigger_beat: -1,
         downed_events: 0,
         tank_downed_count: 0,
         total_downed_count: 0,

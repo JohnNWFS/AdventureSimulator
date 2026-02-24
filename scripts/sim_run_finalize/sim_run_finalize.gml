@@ -18,6 +18,10 @@ function sim_run_finalize(sim) {
         " | Near-deaths=" + string(sim.stats.near_deaths) +
         " | Boss=" + (sim.stats.boss_defeated ? "DEFEATED" : "NO"));
 
+    sim_log(sim, "[DEBUG] tension_current=" + string(sim.tension_current) +
+        " | threshold=" + string(sim.tension_threshold) +
+        " | boss_trigger_beat=" + string(sim.stats.boss_trigger_beat));
+
     sim_log(sim, "📊 Party avg HP%: " + string(round(avg_hp_pct * 100)) + "%");
     sim_log(sim,
         "📊 Beat counts: Combat=" + string(sim.coverage.combat) +

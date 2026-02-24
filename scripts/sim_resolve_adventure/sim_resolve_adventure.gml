@@ -1,4 +1,6 @@
 function sim_resolve_adventure(sim) {
+    sim.last_adventure_tension_outcome = "none";
+
     var area_label = sim.zone;
     if (sim.zone == "Wilderness") area_label = sim.overland_biome + " wilderness";
     else if (sim.zone == "Dungeon") area_label = sim.dungeon_type;
@@ -49,22 +51,26 @@ function sim_resolve_adventure(sim) {
             break;
         case 1:
             sim.coverage.hazard += 1;
+            sim.last_adventure_tension_outcome = "hazard";
             sim_log_tag(sim, "HAZARD", "🌫 In the " + area_label + ", a spore pocket bursts from the walls.");
             sim_apply_party_damage(sim, sim_rand_range(sim, 2, 5));
             break;
         case 2:
             sim.coverage.discovery += 1;
+            sim.last_adventure_tension_outcome = "discovery";
             sim_log_tag(sim, "DISCOVERY", "🗺 In the " + area_label + ", faded route marks reveal a hidden bypass used by prior travelers.");
             sim.tension = clamp(sim.tension - 7, 0, 100);
             break;
         case 3:
             sim.coverage.social += 1;
+            sim.last_adventure_tension_outcome = "social_positive";
             sim_log_tag(sim, "SOCIAL", "🕯 Whispers ride through the " + area_label + "; the party catches a password and a warning.");
             sim_log_tag(sim, "RUMOR", "" + area_label + " ahead is trapped, but a side path avoids the kill-box.");
             sim.intel.trap_warning = true;
             break;
         case 4:
             sim.coverage.hazard += 1;
+            sim.last_adventure_tension_outcome = "hazard";
             sim_log_tag(sim, "HAZARD", "🪨 A partial collapse in the " + area_label + " forces the party to drag gear through rubble.");
             sim.tension = clamp(sim.tension + floor(5 * profile.tension_modifier), 0, 100);
             if (sim_chance(sim, 35)) sim_apply_party_damage(sim, sim_rand_range(sim, 1, 4));
@@ -94,6 +100,7 @@ function sim_resolve_adventure(sim) {
                 sim.tension = clamp(sim.tension + floor(6 * profile.tension_modifier), 0, 100);
                 sim_log_tag(sim, "RIVALS_AMBUSH", "Talks are a feint; crossbows snap from the dark before the rivals disengage.");
             } else if (rivals_roll < 75) {
+                sim.last_adventure_tension_outcome = "social_positive";
                 sim.tension = clamp(sim.tension - 3, 0, 100);
                 sim_log_tag(sim, "RIVALS_INFO", "A tense map-side exchange reveals a trapped corridor and a cleaner flank route.");
             } else if (!variable_struct_exists(sim.director, "rivals_stall_seen") || !sim.director.rivals_stall_seen) {
@@ -101,6 +108,7 @@ function sim_resolve_adventure(sim) {
                 sim.tension = clamp(sim.tension + floor(4 * profile.tension_modifier), 0, 100);
                 sim_log_tag(sim, "TRADE", "Negotiations stall; both groups leave wary and armed.");
             } else {
+                sim.last_adventure_tension_outcome = "social_positive";
                 sim.tension = clamp(sim.tension - 5, 0, 100);
                 sim_log_tag(sim, "RIVALS_ALLIANCE", "Neither side trusts the other, but they coordinate patrol lanes to avoid a mutual wipe.");
             }
