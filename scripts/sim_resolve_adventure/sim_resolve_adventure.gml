@@ -4,9 +4,28 @@ function sim_resolve_adventure(sim) {
     else if (sim.zone == "Dungeon") area_label = sim.dungeon_type;
     else if (sim.zone == "Town") area_label = "town streets";
 
-    var beat = sim_rand_range(sim, 0, 7);
+    var profile = sim_get_zone_profile(sim);
+    var hazard_mult = variable_struct_get(profile.hazard_weights, "spore");
+    var collapse_mult = variable_struct_get(profile.hazard_weights, "collapse");
+    var whispers_mult = variable_struct_get(profile.social_weights, "whispers");
+    var rivals_mult = variable_struct_get(profile.social_weights, "rivals");
+
+    var beat = loot_pick_weighted(sim, [
+        { w: 14, v: 0 },
+        { w: floor(12 * hazard_mult), v: 1 },
+        { w: 12, v: 2 },
+        { w: floor(12 * whispers_mult), v: 3 },
+        { w: floor(10 * collapse_mult), v: 4 },
+        { w: 12, v: 5 },
+        { w: floor(12 * rivals_mult), v: 6 },
+        { w: 10, v: 7 }
+    ]);
+
     if (variable_struct_exists(sim.director, "last_adventure_beat") && beat == sim.director.last_adventure_beat) {
-        beat = sim_rand_range(sim, 0, 7);
+        beat = loot_pick_weighted(sim, [
+            { w: 10, v: 0 }, { w: 10, v: 1 }, { w: 10, v: 2 }, { w: 10, v: 3 },
+            { w: 10, v: 4 }, { w: 10, v: 5 }, { w: 10, v: 6 }, { w: 10, v: 7 }
+        ]);
     }
     sim.director.last_adventure_beat = beat;
 
@@ -20,7 +39,7 @@ function sim_resolve_adventure(sim) {
                 sim_log_tag(sim, "NAV_RESULT", "The party sprints the ledge and recovers dropped coin caches.");
             } else if (nav_roll < 75) {
                 sim_apply_route_modifier(sim, "safe");
-                sim.tension = clamp(sim.tension + 3, 0, 100);
+                sim.tension = clamp(sim.tension + floor(3 * profile.tension_modifier), 0, 100);
                 sim_log_tag(sim, "NAV_RESULT", "They take the safer tunnel and trade speed for control.");
             } else {
                 sim_apply_route_modifier(sim, "backtrack");
@@ -47,7 +66,7 @@ function sim_resolve_adventure(sim) {
         case 4:
             sim.coverage.hazard += 1;
             sim_log_tag(sim, "HAZARD", "🪨 A partial collapse in the " + area_label + " forces the party to drag gear through rubble.");
-            sim.tension = clamp(sim.tension + 5, 0, 100);
+            sim.tension = clamp(sim.tension + floor(5 * profile.tension_modifier), 0, 100);
             if (sim_chance(sim, 35)) sim_apply_party_damage(sim, sim_rand_range(sim, 1, 4));
             break;
         case 5:
@@ -72,14 +91,14 @@ function sim_resolve_adventure(sim) {
                 sim_log_tag(sim, "RIVALS_TRADE", "The party trades clean water for spell salts and catches their breath.");
             } else if (rivals_roll < 50) {
                 sim_apply_party_damage(sim, sim_rand_range(sim, 1, 3));
-                sim.tension = clamp(sim.tension + 6, 0, 100);
+                sim.tension = clamp(sim.tension + floor(6 * profile.tension_modifier), 0, 100);
                 sim_log_tag(sim, "RIVALS_AMBUSH", "Talks are a feint; crossbows snap from the dark before the rivals disengage.");
             } else if (rivals_roll < 75) {
                 sim.tension = clamp(sim.tension - 3, 0, 100);
                 sim_log_tag(sim, "RIVALS_INFO", "A tense map-side exchange reveals a trapped corridor and a cleaner flank route.");
             } else if (!variable_struct_exists(sim.director, "rivals_stall_seen") || !sim.director.rivals_stall_seen) {
                 sim.director.rivals_stall_seen = true;
-                sim.tension = clamp(sim.tension + 4, 0, 100);
+                sim.tension = clamp(sim.tension + floor(4 * profile.tension_modifier), 0, 100);
                 sim_log_tag(sim, "TRADE", "Negotiations stall; both groups leave wary and armed.");
             } else {
                 sim.tension = clamp(sim.tension - 5, 0, 100);
