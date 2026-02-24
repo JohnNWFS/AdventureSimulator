@@ -141,7 +141,12 @@ function sim_run_step(sim) {
         default:             sim_resolve_combat(sim); break;
     }
 
-    if (ev == "boss") sim.flags.boss_begun = true;
+    if (ev == "boss") {
+        sim.flags.boss_begun = true;
+        if (variable_struct_exists(sim, "stats") && variable_struct_exists(sim.stats, "boss_trigger_beat") && sim.stats.boss_trigger_beat < 0) {
+            sim.stats.boss_trigger_beat = sim.beat;
+        }
+    }
 
     var middle_start = floor(sim.beats_target / 3);
     var middle_end = floor((sim.beats_target * 2) / 3);
@@ -153,6 +158,29 @@ function sim_run_step(sim) {
         sim.flags.complication_emitted = true;
         sim_log(sim, "[COMPLICATION] A sudden blockade forces the party to burn supplies just to stay on schedule.");
     }
+
+    var tension_delta = 0;
+    switch (ev) {
+        case "combat":
+            tension_delta = sim_rand_range(sim, 3, 6);
+            break;
+        case "merchant":
+            tension_delta = -1;
+            break;
+        case "relief":
+            tension_delta = -5;
+            break;
+        case "adventure":
+            if (variable_struct_exists(sim, "last_adventure_tension_outcome")) {
+                switch (sim.last_adventure_tension_outcome) {
+                    case "hazard": tension_delta = sim_rand_range(sim, 2, 4); break;
+                    case "social_positive": tension_delta = -2; break;
+                    case "discovery": tension_delta = 1; break;
+                }
+            }
+            break;
+    }
+    sim.tension_current = max(0, sim.tension_current + tension_delta);
 
     if (ev == "relief") {
         sim.director.beats_since_relief = 0;

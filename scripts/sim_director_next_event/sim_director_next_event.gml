@@ -12,7 +12,7 @@ function sim_director_recent_count(sim, ev_name, window) {
 function sim_director_next_event(sim) {
     // Big beats
     if (sim.beat == 0) return "intro";
-    if (sim.beat >= sim.beats_target - 1) return "boss";
+    if (!sim.flags.boss_begun && sim.tension_current >= sim.tension_threshold) return "boss";
 
     if (!variable_struct_exists(sim.director, "beats_since_relief")) {
         sim.director.beats_since_relief = 0;
