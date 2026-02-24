@@ -41,14 +41,28 @@ function sim_run_finalize(sim) {
         " | Downed-loop interventions=" + string(sim.director.downed_loop_interventions)
     );
 
-    if (variable_struct_exists(sim, "zone_beat_counts") && is_struct(sim.zone_beat_counts)) {
-        var zone_names = ["Wilderness: Fields", "Wilderness: Woods", "Dungeon: Cursed Temple"];
-        for (var zi = 0; zi < array_length(zone_names); zi++) {
-            var zone_name = zone_names[zi];
-            if (!variable_struct_exists(sim.zone_beat_counts, zone_name)) continue;
-            var zone_counts = variable_struct_get(sim.zone_beat_counts, zone_name);
+    if (is_array(sim.route_segments) && variable_struct_exists(sim, "zone_beat_counts") && is_struct(sim.zone_beat_counts)) {
+        var zone_summary_keys = [];
+        for (var zi = 0; zi < array_length(sim.route_segments); zi++) {
+            var seg = sim.route_segments[zi];
+            var zone_name = seg.zone;
+            if (seg.zone == "Wilderness") zone_name = "Wilderness: " + seg.biome;
+            else if (seg.zone == "Dungeon") zone_name = "Dungeon: " + seg.dungeon_type;
+
+            if (array_contains(zone_summary_keys, zone_name)) continue;
+            array_push(zone_summary_keys, zone_name);
+        }
+
+        for (var zk = 0; zk < array_length(zone_summary_keys); zk++) {
+            var summary_zone_name = zone_summary_keys[zk];
+            if (!variable_struct_exists(sim.zone_beat_counts, summary_zone_name)) continue;
+
+            var zone_counts = variable_struct_get(sim.zone_beat_counts, summary_zone_name);
+            var row_total = zone_counts.combat + zone_counts.exploration + zone_counts.social + zone_counts.hazard + zone_counts.merchant + zone_counts.relief;
+            if (row_total <= 0) continue;
+
             sim_log(sim,
-                "[DEBUG] Zone beat counts " + zone_name +
+                "[DEBUG] Zone beat counts " + summary_zone_name +
                 " | Combat=" + string(zone_counts.combat) +
                 " | Exploration=" + string(zone_counts.exploration) +
                 " | Social=" + string(zone_counts.social) +

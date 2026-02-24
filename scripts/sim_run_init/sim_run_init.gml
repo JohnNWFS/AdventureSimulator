@@ -231,11 +231,24 @@ function sim_run_init(sim, seed, beats_target) {
         retreat: 0
     };
 
-    sim.zone_beat_counts = {
-        "Wilderness: Fields": { combat: 0, exploration: 0, social: 0, hazard: 0, merchant: 0, relief: 0 },
-        "Wilderness: Woods": { combat: 0, exploration: 0, social: 0, hazard: 0, merchant: 0, relief: 0 },
-        "Dungeon: Cursed Temple": { combat: 0, exploration: 0, social: 0, hazard: 0, merchant: 0, relief: 0 }
-    };
+    sim.zone_beat_counts = {};
+    for (var zone_i = 0; zone_i < array_length(sim.route_segments); zone_i++) {
+        var zone_seg = sim.route_segments[zone_i];
+        var zone_key = zone_seg.zone;
+        if (zone_seg.zone == "Wilderness") zone_key = "Wilderness: " + zone_seg.biome;
+        else if (zone_seg.zone == "Dungeon") zone_key = "Dungeon: " + zone_seg.dungeon_type;
+
+        if (!variable_struct_exists(sim.zone_beat_counts, zone_key)) {
+            variable_struct_set(sim.zone_beat_counts, zone_key, {
+                combat: 0,
+                exploration: 0,
+                social: 0,
+                hazard: 0,
+                merchant: 0,
+                relief: 0
+            });
+        }
+    }
 
     sim.recent_beats = [];
     sim.prev_zone = sim.zone;

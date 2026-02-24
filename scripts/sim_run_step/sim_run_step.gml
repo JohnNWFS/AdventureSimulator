@@ -69,12 +69,11 @@ function sim_run_step(sim) {
         }
     }
 
-    var zone_key = "";
+    var zone_key = sim.zone;
     if (sim.zone == "Wilderness") {
-        if (sim.overland_biome == "Fields") zone_key = "Wilderness: Fields";
-        else if (sim.overland_biome == "Woods") zone_key = "Wilderness: Woods";
+        zone_key = "Wilderness: " + sim.overland_biome;
     } else if (sim.zone == "Dungeon") {
-        if (sim.dungeon_type == "Cursed Temple") zone_key = "Dungeon: Cursed Temple";
+        zone_key = "Dungeon: " + sim.dungeon_type;
     }
 
     var coverage_before = {
@@ -202,7 +201,18 @@ function sim_run_step(sim) {
     if (ev == "merchant") sim.coverage.merchant += 1;
     if (ev == "relief") sim.coverage.relief += 1;
 
-    if (zone_key != "" && variable_struct_exists(sim, "zone_beat_counts") && variable_struct_exists(sim.zone_beat_counts, zone_key)) {
+    if (zone_key != "" && variable_struct_exists(sim, "zone_beat_counts")) {
+        if (!variable_struct_exists(sim.zone_beat_counts, zone_key)) {
+            variable_struct_set(sim.zone_beat_counts, zone_key, {
+                combat: 0,
+                exploration: 0,
+                social: 0,
+                hazard: 0,
+                merchant: 0,
+                relief: 0
+            });
+        }
+
         var zone_counts = variable_struct_get(sim.zone_beat_counts, zone_key);
         zone_counts.combat += max(0, sim.coverage.combat - coverage_before.combat);
         zone_counts.exploration += max(0, sim.coverage.exploration - coverage_before.exploration);
