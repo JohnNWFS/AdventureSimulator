@@ -9,6 +9,17 @@ function _debug_start_run()
     global.run_log_text = "";
     clipboard_set_text("");
 
+    // Reset beat buffers so every new run starts with a clean slate, regardless of
+    // autosave state.  Without this, any sim_run_init call that fired earlier in
+    // the same frame (e.g. obj_sim_controller's own R-key handler calling
+    // sim_run_restart_same_seed before obj_debug_console's handler runs)
+    // would leave its EPISODE_BEGIN / ADVENTURE_START / PARTY_ROSTER lines in
+    // canonical_beats, causing them to appear twice at the top of every log file.
+    if (!variable_global_exists("canonical_beats"))  global.canonical_beats  = [];
+    if (!variable_global_exists("debug_only_lines")) global.debug_only_lines = [];
+    global.canonical_beats  = [];
+    global.debug_only_lines = [];
+
     // Seed the RNG
     rng_seed_init(global.debug_seed);
 
