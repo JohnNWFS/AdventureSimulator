@@ -3,6 +3,8 @@ function sim_beat_animation_map_table()
     if (!variable_global_exists("sim_beat_anim_map")) {
         global.sim_beat_anim_map = {
             EPISODE_HOOK:   { anim_id: "episode_hook", lane: "scene" },
+            EPISODE_BEGIN:  { anim_id: "episode_hook", lane: "scene" },
+            EPISODE_END:    { anim_id: "city_depart", lane: "scene" },
             COMPLICATION:   { anim_id: "complication", lane: "scene" },
             BEAT_SOURCE:    { anim_id: "beat_source", lane: "overlay" },
             ENCOUNTER:      { anim_id: "encounter_start", lane: "scene" },

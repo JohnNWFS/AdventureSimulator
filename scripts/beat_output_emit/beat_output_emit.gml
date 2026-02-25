@@ -25,6 +25,12 @@ function beat_output_emit(tag, text, data)
     if (!variable_global_exists("debug_log_text")) {
         global.debug_log_text = "";
     }
+    if (!variable_global_exists("canonical_beats")) {
+        global.canonical_beats = [];
+    }
+    if (!variable_global_exists("debug_only_lines")) {
+        global.debug_only_lines = [];
+    }
 
     // Optional: autosave-to-file (off by default)
     if (!variable_global_exists("debug_autosave")) {
@@ -53,9 +59,17 @@ function beat_output_emit(tag, text, data)
     if (!is_string(tag) || tag == "") tag = "UNTAGGED";
     if (!is_string(text)) text = string(text);
 
+    // Belt + suspenders: trim UTF-8 BOM from incoming text before tag parsing.
+    if (string_length(text) > 0 && ord(string_char_at(text, 1)) == $FEFF) {
+        text = string_delete(text, 1, 1);
+    }
+
     // Normalize final line
     var text_starts_tagged = (string_length(text) > 0 && string_char_at(text, 1) == "[");
     var line = text_starts_tagged ? text : ("[" + tag + "] " + text);
+    if (string_length(line) > 0 && ord(string_char_at(line, 1)) == $FEFF) {
+        line = string_delete(line, 1, 1);
+    }
 
     var route = (is_struct(data) && variable_struct_exists(data, "route")) ? string(data.route) : "both";
     var to_debug = (route != "beat");
@@ -63,6 +77,10 @@ function beat_output_emit(tag, text, data)
 
     if (tag == "DEBUG" || tag == "CALIB") {
         to_beat = false;
+    }
+    if (tag == "BEAT_SOURCE") {
+        to_beat = false;
+        to_debug = true;
     }
 
     // If caller already provided a tagged beat line (e.g. "[EPISODE_HOOK] ..."),
@@ -95,22 +113,19 @@ function beat_output_emit(tag, text, data)
     // Keep it simple: append with newline; caller can clear at run start.
     global.run_log_text += line + "\n";
 
-    if (to_debug) global.debug_log_text += line + "\n";
-    if (to_beat) global.beat_log_text += line + "\n";
+    if (to_beat) {
+        array_push(global.canonical_beats, line);
+        global.beat_log_text += line + "\n";
+    }
+    if (to_debug && !to_beat) {
+        array_push(global.debug_only_lines, line);
+        global.debug_log_text += line + "\n";
+    }
 
-    // ---- Autosave-to-file (Expectation #3) ----
-    // Only writes if autosave is enabled AND a log path has been set.
-    // Uses batching to avoid heavy I/O.
+    // ---- Autosave-to-file ----
+    // Files are rebuilt from canonical arrays to guarantee deterministic ordering.
     if (global.debug_autosave) {
-        if (to_debug && is_string(global.debug_log_path) && global.debug_log_path != "") {
-            global.debug_log_pending += line + "\n";
-            global.debug_log_pending_lines += 1;
-        }
-        if (to_beat && is_string(global.beat_log_path) && global.beat_log_path != "") {
-            global.beat_log_pending += line + "\n";
-            global.beat_log_pending_lines += 1;
-        }
-        if (global.debug_log_pending_lines >= 25 || global.beat_log_pending_lines >= 25) {
+        if (is_string(global.debug_log_path) && global.debug_log_path != "" && is_string(global.beat_log_path) && global.beat_log_path != "") {
             debug_log_flush();
         }
     }
