@@ -267,8 +267,8 @@ function sim_run_init(sim, seed, beats_target) {
         clipboard_set_text("");
     }
     if (!sim.episode_begin_emitted) {
-        sim_log_tag(sim, "EPISODE_BEGIN", "📺 Episode begins. seed=" + string(sim.seed) + " zone=" + sim.zone);
         sim.episode_begin_emitted = true;
+        sim_log_tag(sim, "EPISODE_BEGIN", "📺 Episode begins. seed=" + string(sim.seed) + " zone=" + sim.zone);
     }
     if (!sim.episode_begun_logged) {
         var verbose = variable_global_exists("debug_verbose") ? global.debug_verbose : false;
