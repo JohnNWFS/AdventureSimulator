@@ -92,11 +92,14 @@ function sim_run_step(sim) {
     var ev = sim_director_next_event(sim);
 
     if (ev == "boss" && sim.zone != "Dungeon") {
-        sim_log(sim,
-            "[DEBUG] Boss delayed: not in Dungeon (zone=" + sim.zone +
-            " biome=" + sim.overland_biome +
-            " route_index=" + string(sim.route_index) + ")"
-        );
+        var boss_context_relevant = (sim.route_index >= 2);
+        if (boss_context_relevant) {
+            sim_log(sim,
+                "[DEBUG] Boss delayed: not in Dungeon (zone=" + sim.zone +
+                " biome=" + sim.overland_biome +
+                " route_index=" + string(sim.route_index) + ")"
+            );
+        }
         if (sim.cine_tremor_cooldown <= 0) {
             sim_log_tag(sim, "COMPLICATION", "A distant tremor hints the lair is near, but not yet.");
             sim.cine_tremor_cooldown = 6;

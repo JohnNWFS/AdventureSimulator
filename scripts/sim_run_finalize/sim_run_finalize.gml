@@ -131,6 +131,10 @@ function sim_run_finalize(sim) {
         top_name_3 + "(" + string(top_count_3) + ")"
     );
 
-	  debug_log_flush();
-	  
+    if (!variable_struct_exists(sim, "episode_end_emitted") || !sim.episode_end_emitted) {
+        sim_log_tag(sim, "EPISODE_END", "🎬 Episode ends. seed=" + string(sim.seed) + " zone=" + sim.zone);
+        sim.episode_end_emitted = true;
+    }
+
+    debug_log_flush();
 }
