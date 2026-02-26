@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"sim_resolve_merchant",
   "parent":{
-    "name":"SCRIPTS",
-    "path":"folders/SCRIPTS.yy",
+    "name":"RESOLVE",
+    "path":"folders/SCRIPTS/RESOLVE.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

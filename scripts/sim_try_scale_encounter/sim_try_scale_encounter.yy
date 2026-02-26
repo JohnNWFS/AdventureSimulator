@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"sim_try_scale_encounter",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"sim_try_scale_encounter",
+  "parent":{
+    "name":"SCRIPTS",
+    "path":"folders/SCRIPTS.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"sim_name_pick",
   "parent":{
-    "name":"SCRIPTS",
-    "path":"folders/SCRIPTS.yy",
+    "name":"PARTY",
+    "path":"folders/SCRIPTS/PARTY.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

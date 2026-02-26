@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"sim_make_party_member",
   "parent":{
-    "name":"SCRIPTS",
-    "path":"folders/SCRIPTS.yy",
+    "name":"PARTY",
+    "path":"folders/SCRIPTS/PARTY.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

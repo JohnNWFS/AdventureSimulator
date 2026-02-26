@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"loot_pick_item_type",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"loot_pick_item_type",
+  "parent":{
+    "name":"LOOT",
+    "path":"folders/SCRIPTS/LOOT.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

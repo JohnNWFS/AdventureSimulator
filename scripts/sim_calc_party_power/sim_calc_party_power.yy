@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"sim_calc_party_power",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"sim_calc_party_power",
+  "parent":{
+    "name":"PARTY",
+    "path":"folders/SCRIPTS/PARTY.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

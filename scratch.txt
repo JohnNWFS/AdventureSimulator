@@ -1,0 +1,538 @@
+[DEBUG] Short mode: 0
+[DEBUG] Short mode: 1
+[DEBUG] Seed -> 100003
+[DEBUG] Run started. Seed=100003
+🌟 Episode begins. Seed=100003 Zone=Dungeon
+[BEAT_SOURCE] 🗺 The party advances deeper.
+🧭 The party advances into the Dungeon.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Warg from the encounter.
+[ENCOUNTER] ⚔ Combat: Goblin (threat 3) NORMAL.
+[COMBAT_EXCHANGE] ⚔ Goblin strikes: Taliel takes 18 (70→52).
+[FLANK_HIT] 🪓 Flanking blow! Ilyx the Scarred takes 8 (42→34).
+[THIEF_HIT] 🗡 Selen slips in: 25 damage.
+[MAGE_HIT] ✨ Brum of Dockside casts for 39. [MP 30→27]
+[HEAL] 🩹 Healer restores Taliel +17 HP (52→69).
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Warg from the encounter.
+[ENCOUNTER] ⚔ Combat: Cult Acolyte (threat 7) NORMAL.
+[AMBUSH_HIT] 🕳 AMBUSH → Brum of Dockside takes 6 (40→34).
+[COMBAT_EXCHANGE] ⚔ Cult Acolyte strikes: Taliel takes 49 (69→20).
+[THIEF_HIT] 🗡 Selen slips in: 24 damage.
+[MAGE_HIT] ✨ Brum of Dockside casts for 68. [MP 29→25]
+[HEAL] 🩹 Healer restores Taliel +15 HP (20→35).
+[BEAT_SOURCE] 🧭 Expedition: the route itself forces a decision.
+[SOCIAL] 🕯 Cult whispers echo nearby; the party catches a password and a warning.
+[RUMOR] Dungeon ahead is trapped, but a side hall avoids the kill-box.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Bandit from the encounter.
+[ENCOUNTER] ⚔ Combat: Goblin, Warg (threat 9) NORMAL.
+[COMBAT_EXCHANGE] ⚔ Goblin, Warg strikes: Taliel takes 78 (35→-43).
+[THIEF_EXEC] 🗡 Selen smells blood: 32 damage.
+[MAGE_CRIT] ✨ Brum of Dockside casts for 198 (CRIT!). [MP 29→24]
+[HEAL] 🩹 Healer restores Taliel +20 HP (-43→-23).
+[DOWNED] ⚠ Taliel is downed and stabilized at 1 HP.
+[WOUND] 🩸 Wounded: Taliel gains a wound (1). DEF now 5.
+[NEAR_DEATH] 🚨 Near-death: Taliel is under 20% HP!
+[WOUND] 🩸 Taliel carries another lasting wound (2).
+[TACTIC] 🏃 [TACTIC] Controlled withdrawal initiated: next encounters will be lighter.
+[BEAT_SOURCE] 🧳 Encounter: a traveling merchant appears.
+[MERCHANT_OFFER] 🧳 Offer: Iron Wand (280g, asking 280g).
+[MERCHANT_DISCOUNT] 🏷 The merchant marks down stock for battered travelers.
+[MERCHANT_OFFER] 🧳 Revised asking price: 98g.
+[BEAT_SOURCE] 🛖 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: abandoned outpost. The party regroups.
+[GROUP_HEAL] ✨ Party heals +16 (group).
+[HP_DELTA]   ❤️ Taliel HP 1→17.
+[HP_DELTA]   ❤️ Brum of Dockside HP 34→40.
+[HP_DELTA]   ❤️ Selen HP 45→45.
+[HP_DELTA]   ❤️ Ilyx the Scarred HP 34→42.
+[GROUP_MP] 🔷 Party restores MP +11 (group).
+[MP_DELTA]   🔷 Taliel MP 5→5.
+[MP_DELTA]   🔷 Brum of Dockside MP 28→30.
+[MP_DELTA]   🔷 Selen MP 10→10.
+[MP_DELTA]   🔷 Ilyx the Scarred MP 28→28.
+[WOUND_HEAL] 🩺 Relief treatment: Taliel recovers 1 wound(s).
+[STAT_DEF] 🟦 DEF 4→5 (wounds 2→1).
+[BEAT_SOURCE] 🧭 Expedition: the route itself forces a decision.
+[SOCIAL] 🕯 Cult whispers echo nearby; the party catches a password and a warning.
+[RUMOR] Dungeon ahead is trapped, but a side hall avoids the kill-box.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🧪 Budget scale-down applied a light non-boss weakening to keep threat fair.
+[ENCOUNTER] ⚔ Combat: Slime (threat 1) NORMAL.
+[TACTIC] 🏃 [TACTIC] Controlled withdrawal active: disengagement posture lowers pressure.
+[COMBAT_EXCHANGE] ⚔ Slime strikes: Taliel takes 4 (17→13).
+[THIEF_HIT] 🗡 Selen slips in: 24 damage.
+[MAGE_HIT] ✨ Brum of Dockside casts for 20. [MP 30→28]
+[HEAL] 🩹 Healer restores Taliel +-2 HP (13→11).
+[TACTIC] 🧱 [TACTIC] Choke point secured: incoming accuracy reduced for 2 beats.
+[BEAT_SOURCE] 🏃 Withdrawal: the party falls back through dangerous ground.
+[RETREAT_ROUTE] 🪜 They retrace marked passages while rear guards hold chokepoints.
+[BEAT_SOURCE] 🔎 Exploration find: the party spots something ahead.
+[CHEST_OPEN] 🧰 Chest found.
+[LOOT_FOUND] 🎁 Loot found: Royal Relic (rare).
+[CHEST_RARE] 🧰 Chest: RARE find! Royal Relic.
+[TREASURE] 💰 Treasure: Royal Relic converts to +251 gold.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Bandit from the encounter.
+[ENCOUNTER] ⚔ Combat: Slime, Goblin (threat 8) NORMAL.
+[TACTIC] 🧱 [TACTIC] Choke point/cover active: enemy accuracy reduced.
+[TACTIC] 🏃 [TACTIC] Controlled withdrawal active: disengagement posture lowers pressure.
+[AMBUSH_HIT] 🕳 AMBUSH → Selen takes 6 (45→39).
+[COMBAT_EXCHANGE] ⚔ Slime, Goblin strikes: Taliel takes 45 (11→-34).
+[THIEF_EXEC] 🗡 Selen smells blood: 34 damage.
+[MAGE_HIT] ✨ Brum of Dockside casts for 83. [MP 30→25]
+[HEAL] 🩹 Healer restores Taliel +10 HP (-34→-24).
+[DOWNED] ⚠ Taliel is downed and stabilized at 1 HP.
+[WOUND] 🩸 Wounded: Taliel gains a wound (2). DEF now 4.
+[RETREAT_CALL] ⚠ The party breaks off and heads to the city before someone dies.
+[TACTIC] 🏃 [TACTIC] Controlled withdrawal initiated: next encounters will be lighter.
+[BEAT_SOURCE] 🏃 Withdrawal: the party falls back through dangerous ground.
+[RETREAT_DECISION] 🏳 The party votes to pull out before the next push turns fatal.
+[BEAT_SOURCE] 🏙 Return: the party pivots back to city streets.
+[CITY_ARRIVE] 🏙 The party returns to the city to recover, honor the fallen, and make hard decisions.
+[CITY_SHOP] 🛠 Taliel receives treatment and repairs (wounds 2→0).
+[CITY_DEPART] 🚪 The party departs the city and returns to the crawl.
+[BEAT_SOURCE] 🛖 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: quiet corridor. The party regroups.
+[GROUP_HEAL] ✨ Party heals +17 (group).
+[HP_DELTA]   ❤️ Taliel HP 2→19.
+[HP_DELTA]   ❤️ Brum of Dockside HP 40→40.
+[HP_DELTA]   ❤️ Selen HP 39→45.
+[HP_DELTA]   ❤️ Ilyx the Scarred HP 42→42.
+[GROUP_MP] 🔷 Party restores MP +12 (group).
+[MP_DELTA]   🔷 Taliel MP 5→5.
+[MP_DELTA]   🔷 Brum of Dockside MP 30→30.
+[MP_DELTA]   🔷 Selen MP 10→10.
+[MP_DELTA]   🔷 Ilyx the Scarred MP 28→28.
+[BEAT_SOURCE] 👁 Ominous presence: the air shifts. Something huge is near.
+[BOSS_TELEGRAPH] 🌩 [BOSS] The ground shakes before the enemy appears.
+[BOSS_SPAWN] 👑 [BOSS] Hollow Ogre emerges!
+[BOSS_SMASH] ⚔ Hollow Ogre smashes: Taliel takes 29 (19→-10).
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~2).
+[BRACE_FAIL] 🪦 Taliel is down and can't brace.
+[THIEF_EXEC] 🗡 Selen smells blood: 18 damage.
+[MAGE_HIT] ✨ Brum of Dockside detonates a full cast: 60 damage. [MP 30→24]
+[HEAL] 🩹 Healer restores Taliel +11 HP (-10→1).
+[FINISHER] 💥 FINISHER → Brum of Dockside's blast breaks the Hollow Ogre! (60)
+[BOSS_DEFEATED] 🏆 Boss defeated! +52 gold.
+[TROPHY_DROP] 🎁 Trophy drop: Slate Band.
+[EQUIP] 📦 EQUIP → Taliel equips (trinket): Slate Band [Δ43.0].
+[EQUIP_CHANGE] 📦 Taliel equips Slate Band.
+[STAT_ATK] 🟩 ATK 8→10.
+[STAT_DEF] 🟦 DEF 6→8 (base 6→6).
+📺 Episode ends. Gold=303 | Chests=1 | Merchants=1 | Rares=1 | Near-deaths=1 | Boss=DEFEATED
+📊 Party avg HP%: 75%
+📊 Beat counts: Combat=5 | Expedition=3 | Social=2 | Merchant=1 | Relief=2 | Discovery=0 | Hazard=0
+📊 Downed events=2 | Tank downed=2 | Over-budget prevented=5 | Encounter rerolls=0 | Repeat prevented=1 | Downed-loop interventions=0
+📊 Encounter budget: attempts=5 | accepted=0 | rerolled=0 | scaled=5 | degraded=0 | bestfit=0 | outcomes_total=5
+[DEBUG] Seed -> 100004
+[DEBUG] Run started. Seed=100004
+🌟 Episode begins. Seed=100004 Zone=Dungeon
+[BEAT_SOURCE] 🗺 The party advances deeper.
+🧭 The party advances into the Dungeon.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Ogre Brute from the encounter.
+[ENCOUNTER] ⚔ Combat: Ogre Brute (threat 11) NORMAL.
+[COMBAT_EXCHANGE] ⚔ Ogre Brute strikes: Talann the Scarred takes 81 (70→-11).
+[FLANK_HIT] 🪓 Flanking blow! Ilira of Dockside takes 27 (40→13).
+[THIEF_EXEC_CRIT] 🗡 Brira of Dockside smells blood: 70 damage (CRIT!).
+[MAGE_HIT] ✨ Ilira of Dockside casts for 102. [MP 30→24]
+[HEAL] 🩹 Healer restores Talann the Scarred +10 HP (-11→-1).
+[DOWNED] ⚠ Talann the Scarred is downed and stabilized at 1 HP.
+[WOUND] 🩸 Wounded: Talann the Scarred gains a wound (1). DEF now 5.
+[NEAR_DEATH] 🚨 Near-death: Talann the Scarred is under 20% HP!
+[WOUND] 🩸 Talann the Scarred carries another lasting wound (2).
+[TACTIC] 🧱 [TACTIC] Choke point secured: incoming accuracy reduced for 2 beats.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Goblin from the encounter.
+[ENCOUNTER] ⚔ Combat: Goblin, Warg (threat 10) NORMAL.
+[TACTIC] 🧱 [TACTIC] Choke point/cover active: enemy accuracy reduced.
+[COMBAT_EXCHANGE] ⚔ Goblin, Warg strikes: Talann the Scarred takes 59 (1→-58).
+[THIEF_EXEC_CRIT] 🗡 Brira of Dockside smells blood: 68 damage (CRIT!).
+[MAGE_CRIT] ✨ Ilira of Dockside casts for 170 (CRIT!). [MP 26→21]
+[HEAL] 🩹 Healer restores Talann the Scarred +72 HP (-58→14).
+[TACTIC] 🏃 [TACTIC] Controlled withdrawal initiated: next encounters will be lighter.
+[BEAT_SOURCE] 🧭 Expedition: the route itself forces a decision.
+[SOCIAL] 🕯 Cult whispers echo nearby; the party catches a password and a warning.
+[RUMOR] Dungeon ahead is trapped, but a side hall avoids the kill-box.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Bandit from the encounter.
+[ENCOUNTER] ⚔ Combat: Cult Acolyte (threat 8) NORMAL.
+[TACTIC] 🧱 [TACTIC] Choke point/cover active: enemy accuracy reduced.
+[TACTIC] 🏃 [TACTIC] Controlled withdrawal active: disengagement posture lowers pressure.
+[AMBUSH_HIT] 🕳 AMBUSH → Ileth of the West Road takes 7 (42→35).
+[COMBAT_EXCHANGE] ⚔ Cult Acolyte strikes: Talann the Scarred takes 52 (14→-38).
+[FLANK_HIT] 🪓 Flanking blow! Brira of Dockside takes 21 (45→24).
+[THIEF_EXEC] 🗡 Brira of Dockside smells blood: 30 damage.
+[MAGE_CRIT] ✨ Ilira of Dockside casts for 164 (CRIT!). [MP 25→20]
+[HEAL] 🩹 Healer restores Talann the Scarred +16 HP (-38→-22).
+[DOWNED] ⚠ Talann the Scarred is downed and stabilized at 1 HP.
+[WOUND] 🩸 Wounded: Talann the Scarred gains a wound (3). DEF now 3.
+[RETREAT_CALL] ⚠ The party breaks off and heads to the city before someone dies.
+[TACTIC] 🧱 [TACTIC] Choke point secured: incoming accuracy reduced for 2 beats.
+[BEAT_SOURCE] 🧳 Encounter: a traveling merchant appears.
+[MERCHANT_OFFER] 🧳 Offer: Fine Onyx Charm (101g, asking 101g).
+[MERCHANT_DISCOUNT] 🏷 The merchant marks down stock for battered travelers.
+[MERCHANT_OFFER] 🧳 Revised asking price: 35g.
+[BEAT_SOURCE] 🏃 Withdrawal: the party falls back through dangerous ground.
+[GATE_VERDICT] 🚑 At the outer gate, a healer orders immediate treatment and city return.
+[BEAT_SOURCE] 🛖 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: abandoned outpost. The party regroups.
+[GROUP_HEAL] ✨ Party heals +16 (group).
+[HP_DELTA]   ❤️ Talann the Scarred HP 1→17.
+[HP_DELTA]   ❤️ Ilira of Dockside HP 13→29.
+[HP_DELTA]   ❤️ Brira of Dockside HP 24→40.
+[HP_DELTA]   ❤️ Ileth of the West Road HP 35→42.
+[GROUP_MP] 🔷 Party restores MP +14 (group).
+[MP_DELTA]   🔷 Talann the Scarred MP 5→5.
+[MP_DELTA]   🔷 Ilira of Dockside MP 26→30.
+[MP_DELTA]   🔷 Brira of Dockside MP 10→10.
+[MP_DELTA]   🔷 Ileth of the West Road MP 28→28.
+[WOUND_HEAL] 🩺 Relief treatment: Talann the Scarred recovers 1 wound(s).
+[STAT_DEF] 🟦 DEF 3→4 (wounds 3→2).
+[BEAT_SOURCE] 🏃 Withdrawal: the party falls back through dangerous ground.
+[GATE_VERDICT] 🚑 At the outer gate, a healer orders immediate treatment and city return.
+[BEAT_SOURCE] 🏙 Return: the party pivots back to city streets.
+[CITY_ARRIVE] 🏙 The party returns to the city to recover, honor the fallen, and make hard decisions.
+[CITY_SHOP] 🛠 Talann the Scarred receives treatment and repairs (wounds 2→0).
+[CITY_DEPART] 🚪 The party departs the city and returns to the crawl.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Cult Acolyte from the encounter.
+[ENCOUNTER] ⚔ Combat: Bandit (threat 8) NORMAL.
+[TACTIC] 🧱 [TACTIC] Choke point/cover active: enemy accuracy reduced.
+[TACTIC] 🏃 [TACTIC] Controlled withdrawal active: disengagement posture lowers pressure.
+[COMBAT_EXCHANGE] ⚔ Bandit strikes: Talann the Scarred takes 37 (17→-20).
+[THIEF_EXEC] 🗡 Brira of Dockside smells blood: 27 damage.
+[MAGE_CRIT] ✨ Ilira of Dockside casts for 160 (CRIT!). [MP 30→26]
+[HEAL] 🩹 Healer restores Talann the Scarred +16 HP (-20→-4).
+[DOWNED] ⚠ Talann the Scarred is downed and stabilized at 1 HP.
+[WOUND] 🩸 Wounded: Talann the Scarred gains a wound (1). DEF now 5.
+[RETREAT_VOTE] 🗳 [RETREAT_VOTE] Ileth of the West Road calls for a withdrawal after repeated knockdowns.
+[RETREAT_CALL] 🏃 Repeated knockdowns force an escape call before the fight spirals.
+[RETREAT_COST] ⚖ Retreat consequence: lost time.
+[TACTIC] 🏃 [TACTIC] Controlled withdrawal initiated: next encounters will be lighter.
+[BEAT_SOURCE] 🏃 Withdrawal: the party falls back through dangerous ground.
+[GATE_VERDICT] 🚑 At the outer gate, a healer orders immediate treatment and city return.
+[BEAT_SOURCE] 🛖 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: quiet corridor. The party regroups.
+[GROUP_HEAL] ✨ Party heals +12 (group).
+[HP_DELTA]   ❤️ Talann the Scarred HP 1→13.
+[HP_DELTA]   ❤️ Ilira of Dockside HP 29→40.
+[HP_DELTA]   ❤️ Brira of Dockside HP 40→45.
+[HP_DELTA]   ❤️ Ileth of the West Road HP 42→42.
+[GROUP_MP] 🔷 Party restores MP +9 (group).
+[MP_DELTA]   🔷 Talann the Scarred MP 5→5.
+[MP_DELTA]   🔷 Ilira of Dockside MP 30→30.
+[MP_DELTA]   🔷 Brira of Dockside MP 10→10.
+[MP_DELTA]   🔷 Ileth of the West Road MP 28→28.
+[WOUND_HEAL] 🩺 Relief treatment: Talann the Scarred recovers 1 wound(s).
+[STAT_DEF] 🟦 DEF 5→6 (wounds 1→0).
+[BEAT_SOURCE] 🛖 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: healing shrine. The party regroups.
+[GROUP_HEAL] ✨ Party heals +17 (group).
+[HP_DELTA]   ❤️ Talann the Scarred HP 13→30.
+[HP_DELTA]   ❤️ Ilira of Dockside HP 40→40.
+[HP_DELTA]   ❤️ Brira of Dockside HP 45→45.
+[HP_DELTA]   ❤️ Ileth of the West Road HP 42→42.
+[GROUP_MP] 🔷 Party restores MP +11 (group).
+[MP_DELTA]   🔷 Talann the Scarred MP 5→5.
+[MP_DELTA]   🔷 Ilira of Dockside MP 30→30.
+[MP_DELTA]   🔷 Brira of Dockside MP 10→10.
+[MP_DELTA]   🔷 Ileth of the West Road MP 28→28.
+[BEAT_SOURCE] 🔎 Exploration find: the party spots something ahead.
+[CHEST_OPEN] 🧰 Chest found.
+[LOOT_FOUND] 💰 Loot found: 17 gold.
+[CHEST_GOLD] 🧰 Chest: +17 gold.
+[BEAT_SOURCE] 👁 Ominous presence: the air shifts. Something huge is near.
+[BOSS_TELEGRAPH] 🌩 [BOSS] The ground shakes before the enemy appears.
+[BOSS_SPAWN] 👑 [BOSS] Hollow Ogre emerges!
+[BOSS_SMASH] ⚔ Hollow Ogre smashes: Talann the Scarred takes 23 (30→7).
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~4).
+[SPLASH_HIT] ☠ SPLASH → Ilira of Dockside takes 3 (40→37).
+[SPLASH_HIT] ☠ SPLASH → Brira of Dockside takes 2 (45→43).
+[SPLASH_HIT] ☠ SPLASH → Ileth of the West Road takes 1 (42→41).
+[BRACE] 🛡 Talann the Scarred braces and holds the line.
+[THIEF_EXEC] 🗡 Brira of Dockside smells blood: 15 damage.
+[MAGE_CRIT] ✨ Ilira of Dockside detonates a full cast: 112 damage (CRIT!). [MP 30→24]
+[HEAL] 🩹 Healer restores Talann the Scarred +6 HP (7→13).
+[FINISHER] 💥 FINISHER → Ilira of Dockside's blast breaks the Hollow Ogre! (112)
+[BOSS_DEFEATED] 🏆 Boss defeated! +81 gold.
+[TROPHY_DROP] 🎁 Trophy drop: Runed Onyx Ring.
+[EQUIP] 📦 EQUIP → Ilira of Dockside equips (trinket): Runed Onyx Ring [Δ129.9].
+[EQUIP_CHANGE] 📦 Ilira of Dockside equips Runed Onyx Ring.
+[STAT_ATK] 🟩 ATK 12→16.
+[STAT_DEF] 🟦 DEF 2→6 (base 2→2).
+[STAT_HP] ❤️ MAX HP 40→61.
+[STAT_MP] 🔷 MAX MP 30→51.
+📺 Episode ends. Gold=98 | Chests=1 | Merchants=1 | Rares=0 | Near-deaths=1 | Boss=DEFEATED
+📊 Party avg HP%: 68%
+📊 Beat counts: Combat=4 | Expedition=2 | Social=1 | Merchant=1 | Relief=3 | Discovery=0 | Hazard=0
+📊 Downed events=3 | Tank downed=3 | Over-budget prevented=4 | Encounter rerolls=0 | Repeat prevented=0 | Downed-loop interventions=1
+📊 Encounter budget: attempts=4 | accepted=0 | rerolled=0 | scaled=4 | degraded=0 | bestfit=0 | outcomes_total=4
+[DEBUG] Seed -> 100005
+[DEBUG] Run started. Seed=100005
+🌟 Episode begins. Seed=100005 Zone=Dungeon
+[BEAT_SOURCE] 🗺 The party advances deeper.
+🧭 The party advances into the Dungeon.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Warg from the encounter.
+[ENCOUNTER] ⚔ Combat: Goblin (threat 3) NORMAL.
+[COMBAT_EXCHANGE] ⚔ Goblin strikes: Talda the Scarred takes 33 (70→37).
+[CHAOS] 💢 Chaos erupts in the scrum.
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~1).
+[THIEF_CRIT] 🗡 Selos slips in: 52 damage (CRIT!).
+[MAGE_HIT] ✨ Feneth the Scarred casts for 48. [MP 30→27]
+[HEAL] 🩹 Healer restores Talda the Scarred +14 HP (37→51).
+[BEAT_SOURCE] 🧭 Expedition: the route itself forces a decision.
+[NAV_CHOICE] 🧭 Two routes split ahead: a fast ledge path, a safer tunnel, or a backtrack.
+[NAV_STATE] 🧭 Route modifier active: fast ledge for 3 beats.
+[NAV_RESULT] The party sprints the ledge and recovers dropped coin caches.
+[BEAT_SOURCE] 🧳 Encounter: a traveling merchant appears.
+[MERCHANT_OFFER] 🧳 Offer: Slate Dagger (94g, asking 8g).
+[MERCHANT_BUY] 🧳 Selos buys Slate Dagger for 8g (10→2).
+[EQUIP_CHANGE] 📦 Selos equips Slate Dagger (weapon).
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🧪 Budget scale-down applied a light non-boss weakening to keep threat fair.
+[ENCOUNTER] ⚔ Combat: Cult Acolyte (threat 6) NORMAL.
+[COMBAT_EXCHANGE] ⚔ Cult Acolyte strikes: Talda the Scarred takes 48 (51→3).
+[THIEF_HIT] 🗡 Selos slips in: 26 damage.
+[MAGE_HIT] ✨ Feneth the Scarred casts for 71. [MP 30→26]
+[HEAL] 🩹 Healer restores Talda the Scarred +16 HP (3→19).
+[TACTIC] 🛡 [TACTIC] Defensive stance called: reduced damage taken for 2 beats.
+[NAV_STATE] 🧭 Route modifier fades; selection weights normalize.
+[BEAT_SOURCE] 🧭 Expedition: the route itself forces a decision.
+[NAV_CHOICE] 🧭 Two routes split ahead: a fast ledge path, a safer tunnel, or a backtrack.
+[NAV_STATE] 🧭 Route modifier active: fast ledge for 3 beats.
+[NAV_RESULT] The party sprints the ledge and recovers dropped coin caches.
+[BEAT_SOURCE] 🧳 Encounter: a traveling merchant appears.
+[SCAVENGER] 🧿 A scavenger offers rumor and salvage instead of trade.
+[BEAT_SOURCE] 🛖 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: healing shrine. The party regroups.
+[GROUP_HEAL] ✨ Party heals +12 (group).
+[HP_DELTA]   ❤️ Talda the Scarred HP 19→31.
+[HP_DELTA]   ❤️ Feneth the Scarred HP 40→40.
+[HP_DELTA]   ❤️ Selos HP 45→45.
+[HP_DELTA]   ❤️ Qulen HP 42→42.
+[GROUP_MP] 🔷 Party restores MP +15 (group).
+[MP_DELTA]   🔷 Talda the Scarred MP 5→5.
+[MP_DELTA]   🔷 Feneth the Scarred MP 30→30.
+[MP_DELTA]   🔷 Selos MP 10→10.
+[MP_DELTA]   🔷 Qulen MP 28→28.
+[NAV_STATE] 🧭 Route modifier fades; selection weights normalize.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Slime from the encounter.
+[ENCOUNTER] ⚔ Combat: Slime (threat 4) NORMAL.
+[TACTIC] 🛡 [TACTIC] Defensive stance active: incoming damage reduced this beat.
+[COMBAT_EXCHANGE] ⚔ Slime strikes: Talda the Scarred takes 13 (31→18).
+[THIEF_HIT] 🗡 Selos slips in: 19 damage.
+[MAGE_HIT] ✨ Feneth the Scarred casts for 38. [MP 30→27]
+[HEAL] 🩹 Healer restores Talda the Scarred +18 HP (18→36).
+[BEAT_SOURCE] 🏃 Withdrawal: the party falls back through dangerous ground.
+[GATE_VERDICT] 🚑 At the outer gate, a healer orders immediate treatment and city return.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Ogre Brute from the encounter.
+[ENCOUNTER] ⚔ Combat: Cult Acolyte, Slime (threat 11) NORMAL.
+[TACTIC] 🛡 [TACTIC] Defensive stance active: incoming damage reduced this beat.
+[COMBAT_EXCHANGE] ⚔ Cult Acolyte, Slime strikes: Talda the Scarred takes 55 (36→-19).
+[THIEF_EXEC] 🗡 Selos smells blood: 23 damage.
+[MAGE_CRIT] ✨ Feneth the Scarred casts for 160 (CRIT!). [MP 30→22]
+[HEAL] 🩹 Healer restores Talda the Scarred +13 HP (-19→-6).
+[DOWNED] ⚠ Talda the Scarred is downed and stabilized at 1 HP.
+[WOUND] 🩸 Wounded: Talda the Scarred gains a wound (1). DEF now 5.
+[NEAR_DEATH] 🚨 Near-death: Talda the Scarred is under 20% HP!
+[WOUND] 🩸 Talda the Scarred carries another lasting wound (2).
+[TACTIC] 🏃 [TACTIC] Controlled withdrawal initiated: next encounters will be lighter.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Ogre Brute from the encounter.
+[ENCOUNTER] ⚔ Combat: Cult Acolyte (threat 6) NORMAL.
+[TACTIC] 🏃 [TACTIC] Controlled withdrawal active: disengagement posture lowers pressure.
+[COMBAT_EXCHANGE] ⚔ Cult Acolyte strikes: Talda the Scarred takes 34 (1→-33).
+[FLANK_HIT] 🪓 Flanking blow! Feneth the Scarred takes 11 (40→29).
+[THIEF_EXEC_CRIT] 🗡 Selos smells blood: 60 damage (CRIT!).
+[MAGE_HIT] ✨ Feneth the Scarred casts for 55. [MP 24→20]
+[HEAL] 🩹 Healer restores Talda the Scarred +46 HP (-33→13).
+[TACTIC] 🧱 [TACTIC] Choke point secured: incoming accuracy reduced for 2 beats.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Ogre Brute from the encounter.
+[ENCOUNTER] ⚔ Combat: Bandit (threat 6) NORMAL.
+[TACTIC] 🧱 [TACTIC] Choke point/cover active: enemy accuracy reduced.
+[TACTIC] 🏃 [TACTIC] Controlled withdrawal active: disengagement posture lowers pressure.
+[COMBAT_EXCHANGE] ⚔ Bandit strikes: Talda the Scarred takes 53 (13→-40).
+[CHAOS] 💢 Chaos erupts in the scrum.
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~0).
+[THIEF_EXEC] 🗡 Selos smells blood: 34 damage.
+[MAGE_HIT] ✨ Feneth the Scarred casts for 73. [MP 22→18]
+[HEAL] 🩹 Healer restores Talda the Scarred +11 HP (-40→-29).
+[DOWNED] ⚠ Talda the Scarred is downed and stabilized at 1 HP.
+[WOUND] 🩸 Wounded: Talda the Scarred gains a wound (3). DEF now 3.
+[RETREAT_CALL] ⚠ The party breaks off and heads to the city before someone dies.
+[TACTIC] 🏃 [TACTIC] Controlled withdrawal initiated: next encounters will be lighter.
+[BEAT_SOURCE] 🏃 Withdrawal: the party falls back through dangerous ground.
+[RETREAT_DECISION] 🏳 The party votes to pull out before the next push turns fatal.
+[BEAT_SOURCE] 🏙 Return: the party pivots back to city streets.
+[CITY_ARRIVE] 🏙 The party returns to the city to recover, honor the fallen, and make hard decisions.
+[CITY_SHOP] 🛠 Talda the Scarred receives treatment and repairs (wounds 3→1).
+[CITY_DEPART] 🚪 The party departs the city and returns to the crawl.
+[BEAT_SOURCE] 👁 Ominous presence: the air shifts. Something huge is near.
+[BOSS_TELEGRAPH] 🌩 [BOSS] The ground shakes before the enemy appears.
+[BOSS_SPAWN] 👑 [BOSS] Hollow Ogre emerges!
+[BOSS_SMASH] ⚔ Hollow Ogre smashes: Talda the Scarred takes 29 (2→-27).
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~2).
+[BRACE_FAIL] 🪦 Talda the Scarred is down and can't brace.
+[THIEF_EXEC] 🗡 Selos smells blood: 14 damage.
+[MAGE_HIT] ✨ Feneth the Scarred detonates a full cast: 60 damage. [MP 24→18]
+[HEAL] 🩹 Healer restores Talda the Scarred +16 HP (-27→-11).
+[RETREAT_CALL] ⚠ The party breaks off and heads to the city before someone dies.
+[FINISHER] 💥 FINISHER → Feneth the Scarred's blast breaks the Hollow Ogre! (60)
+[BOSS_DEFEATED] 🏆 Boss defeated! +63 gold.
+[TROPHY_DROP] 🎁 Trophy drop: Bone Wand.
+[EQUIP] 📦 EQUIP → Feneth the Scarred equips (weapon): Bone Wand [Δ117.3].
+[EQUIP_CHANGE] 📦 Feneth the Scarred equips Bone Wand.
+[STAT_ATK] 🟩 ATK 12→22.
+📺 Episode ends. Gold=76 | Chests=0 | Merchants=1 | Rares=0 | Near-deaths=1 | Boss=DEFEATED
+📊 Party avg HP%: 68%
+📊 Beat counts: Combat=6 | Expedition=2 | Social=0 | Merchant=2 | Relief=1 | Discovery=0 | Hazard=0
+📊 Downed events=3 | Tank downed=3 | Over-budget prevented=6 | Encounter rerolls=0 | Repeat prevented=1 | Downed-loop interventions=0
+📊 Encounter budget: attempts=6 | accepted=0 | rerolled=0 | scaled=6 | degraded=0 | bestfit=0 | outcomes_total=6
+[DEBUG] Seed -> 100006
+[DEBUG] Run started. Seed=100006
+🌟 Episode begins. Seed=100006 Zone=Dungeon
+[BEAT_SOURCE] 🗺 The party advances deeper.
+🧭 The party advances into the Dungeon.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Warg from the encounter.
+[ENCOUNTER] ⚔ Combat: Goblin (threat 6) [HARD].
+[COMBAT_EXCHANGE] ⚔ Goblin strikes: Talrek the Scarred takes 37 (70→33).
+[THIEF_HIT] 🗡 Koros slips in: 22 damage.
+[MAGE_HIT] ✨ Brrek the Scarred casts for 61. [MP 30→26]
+[HEAL] 🩹 Healer restores Talrek the Scarred +10 HP (33→43).
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🧪 Budget scale-down applied a light non-boss weakening to keep threat fair.
+[ENCOUNTER] ⚔ Combat: Bandit (threat 4) [HARD].
+[COMBAT_EXCHANGE] ⚔ Bandit strikes: Talrek the Scarred takes 39 (43→4).
+[CHAOS] 💢 Chaos erupts in the scrum.
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~2).
+[SPLASH_HIT] ☠ SPLASH → Brrek the Scarred takes 1 (40→39).
+[THIEF_HIT] 🗡 Koros slips in: 26 damage.
+[MAGE_HIT] ✨ Brrek the Scarred casts for 58. [MP 28→24]
+[HEAL] 🩹 Healer restores Talrek the Scarred +20 HP (4→24).
+[TACTIC] 🛡 [TACTIC] Defensive stance called: reduced damage taken for 2 beats.
+[BEAT_SOURCE] 🧭 Expedition: the route itself forces a decision.
+[SOCIAL] ⚔ A rival party crosses paths and offers terms: trade supplies for intel.
+🔷 Party restores MP +5 (group).
+[TRADE] The party trades clean water for spell salts and catches their breath.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Warg from the encounter.
+[ENCOUNTER] ⚔ Combat: Goblin (threat 5) NORMAL.
+[TACTIC] 🛡 [TACTIC] Defensive stance active: incoming damage reduced this beat.
+[COMBAT_EXCHANGE] ⚔ Goblin strikes: Talrek the Scarred takes 30 (24→-6).
+[THIEF_EXEC] 🗡 Koros smells blood: 24 damage.
+[MAGE_HIT] ✨ Brrek the Scarred casts for 46. [MP 30→26]
+[HEAL] 🩹 Healer restores Talrek the Scarred +19 HP (-6→13).
+[NEAR_DEATH] 🚨 Near-death: Talrek the Scarred is under 20% HP!
+[WOUND] 🩸 Talrek the Scarred carries another lasting wound (1).
+[TACTIC] 🧱 [TACTIC] Choke point secured: incoming accuracy reduced for 2 beats.
+[BEAT_SOURCE] 🧳 Encounter: a traveling merchant appears.
+[MERCHANT_OFFER] 🧳 Offer: Holy Vial (104g, asking 104g).
+[MERCHANT_TRADE] 🔁 A barter swap nets the party a practical consumable.
+[EQUIP] 📦 EQUIP → Talrek the Scarred equips (armor): Sturdy Bone Cuirass [Δ28.1].
+[EQUIP_CHANGE] 📦 Talrek the Scarred equips Sturdy Bone Cuirass.
+[STAT_DEF] 🟦 DEF 5→7 (base 6→6).
+[BEAT_SOURCE] 🔎 Exploration find: the party spots something ahead.
+[CHEST_OPEN] 🧰 Chest found.
+[LOOT_FOUND] 💰 Loot found: 10 gold.
+[CHEST_GOLD] 🧰 Chest: +10 gold.
+[BEAT_SOURCE] 🛖 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: campfire. The party regroups.
+[GROUP_HEAL] ✨ Party heals +13 (group).
+[HP_DELTA]   ❤️ Talrek the Scarred HP 13→26.
+[HP_DELTA]   ❤️ Brrek the Scarred HP 39→40.
+[HP_DELTA]   ❤️ Koros HP 45→45.
+[HP_DELTA]   ❤️ Qulen the Unlucky HP 42→42.
+[GROUP_MP] 🔷 Party restores MP +11 (group).
+[MP_DELTA]   🔷 Talrek the Scarred MP 5→5.
+[MP_DELTA]   🔷 Brrek the Scarred MP 30→30.
+[MP_DELTA]   🔷 Koros MP 10→10.
+[MP_DELTA]   🔷 Qulen the Unlucky MP 28→28.
+[WOUND_HEAL] 🩺 Relief treatment: Talrek the Scarred recovers 1 wound(s).
+[STAT_DEF] 🟦 DEF 7→8 (wounds 1→0).
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Ogre Brute from the encounter.
+[ENCOUNTER] ⚔ Combat: Skeleton (threat 6) NORMAL.
+[TACTIC] 🛡 [TACTIC] Defensive stance active: incoming damage reduced this beat.
+[TACTIC] 🧱 [TACTIC] Choke point/cover active: enemy accuracy reduced.
+[COMBAT_EXCHANGE] ⚔ Skeleton strikes: Talrek the Scarred takes 22 (26→4).
+[THIEF_HIT] 🗡 Koros slips in: 20 damage.
+[MAGE_HIT] ✨ Brrek the Scarred casts for 52. [MP 30→26]
+[HEAL] 🩹 Healer restores Talrek the Scarred +12 HP (4→16).
+[TACTIC] 🏃 [TACTIC] Controlled withdrawal initiated: next encounters will be lighter.
+[BEAT_SOURCE] 🏃 Withdrawal: the party falls back through dangerous ground.
+[RETREAT_DECISION] 🏳 The party votes to pull out before the next push turns fatal.
+[BEAT_SOURCE] 🔎 Exploration find: the party spots something ahead.
+[CHEST_OPEN] 🧰 Chest found.
+[LOOT_FOUND] 💰 Loot found: 27 gold.
+[CHEST_GOLD] 🧰 Chest: +27 gold.
+[BEAT_SOURCE] 🧭 Expedition: the route itself forces a decision.
+[HAZARD] 🌫 A spore pocket bursts from the walls.
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~4).
+[SPLASH_HIT] ☠ SPLASH → Brrek the Scarred takes 3 (40→37).
+[SPLASH_HIT] ☠ SPLASH → Koros takes 1 (45→44).
+[SPLASH_HIT] ☠ SPLASH → Qulen the Unlucky takes 2 (42→40).
+[BEAT_SOURCE] 🧭 Expedition: the route itself forces a decision.
+[DISCOVERY] 📜 Wall runes describe the boss's old rituals and weak points.
+[BEAT_SOURCE] 🧭 Danger: movement in the shadows.
+[ENCOUNTER_SHIFT] 🪓 Budget scale-down removed Ogre Brute from the encounter.
+[ENCOUNTER] ⚔ Combat: Goblin, Bandit (threat 10) NORMAL.
+[TACTIC] 🧱 [TACTIC] Choke point/cover active: enemy accuracy reduced.
+[TACTIC] 🏃 [TACTIC] Controlled withdrawal active: disengagement posture lowers pressure.
+[COMBAT_EXCHANGE] ⚔ Goblin, Bandit strikes: Talrek the Scarred takes 50 (16→-34).
+[THIEF_EXEC] 🗡 Koros smells blood: 34 damage.
+[MAGE_HIT] ✨ Brrek the Scarred casts for 90. [MP 30→25]
+[HEAL] 🩹 Healer restores Talrek the Scarred +18 HP (-34→-16).
+[DOWNED] ⚠ Talrek the Scarred is downed and stabilized at 1 HP.
+[WOUND] 🩸 Wounded: Talrek the Scarred gains a wound (1). DEF now 5.
+[TACTIC] 🧱 [TACTIC] Choke point secured: incoming accuracy reduced for 2 beats.
+[BEAT_SOURCE] 🛖 Rest stop: the party finds a safe pocket to regroup.
+[RELIEF_START] 🕯 Relief: abandoned outpost. The party regroups.
+[GROUP_HEAL] ✨ Party heals +12 (group).
+[HP_DELTA]   ❤️ Talrek the Scarred HP 1→13.
+[HP_DELTA]   ❤️ Brrek the Scarred HP 37→40.
+[HP_DELTA]   ❤️ Koros HP 44→45.
+[HP_DELTA]   ❤️ Qulen the Unlucky HP 40→42.
+[GROUP_MP] 🔷 Party restores MP +14 (group).
+[MP_DELTA]   🔷 Talrek the Scarred MP 5→5.
+[MP_DELTA]   🔷 Brrek the Scarred MP 27→30.
+[MP_DELTA]   🔷 Koros MP 10→10.
+[MP_DELTA]   🔷 Qulen the Unlucky MP 27→28.
+[WOUND_HEAL] 🩺 Relief treatment: Talrek the Scarred recovers 1 wound(s).
+[STAT_DEF] 🟦 DEF 5→8 (wounds 1→0).
+[BEAT_SOURCE] 👁 Ominous presence: the air shifts. Something huge is near.
+[BOSS_TELEGRAPH] 🌩 [BOSS] The ground shakes before the enemy appears.
+[BOSS_SPAWN] 👑 [BOSS] Hollow Ogre emerges!
+[BOSS_SMASH] ⚔ Hollow Ogre smashes: Talrek the Scarred takes 29 (13→-16).
+[SPLASH_BEGIN] ☠ Splash damage begins (base ~5).
+[SPLASH_HIT] ☠ SPLASH → Brrek the Scarred takes 2 (40→38).
+[SPLASH_HIT] ☠ SPLASH → Koros takes 3 (45→42).
+[SPLASH_HIT] ☠ SPLASH → Qulen the Unlucky takes 2 (42→40).
+[BRACE_FAIL] 🪦 Talrek the Scarred is down and can't brace.
+[THIEF_EXEC] 🗡 Koros smells blood: 13 damage.
+[MAGE_HIT] ✨ Brrek the Scarred detonates a full cast: 60 damage. [MP 30→24]
+[HEAL] 🩹 Healer restores Talrek the Scarred +33 HP (-16→17).
+[FINISHER] 💥 FINISHER → Brrek the Scarred's blast breaks the Hollow Ogre! (60)
+[BOSS_DEFEATED] 🏆 Boss defeated! +76 gold.
+[TROPHY_DROP] 🎁 Trophy drop: Onyx Ring.
+[EQUIP] 📦 EQUIP → Talrek the Scarred equips (trinket): Onyx Ring [Δ61.3].
+[EQUIP_CHANGE] 📦 Talrek the Scarred equips Onyx Ring.
+[STAT_ATK] 🟩 ATK 8→10.
+[STAT_DEF] 🟦 DEF 8→10 (base 6→6).
+[STAT_HP] ❤️ MAX HP 70→84.
+[CITY_ARRIVE] 🏙 The party returns to the city to recover, honor the fallen, and make hard decisions.
+[CITY_DEPART] 🚪 The party departs the city and returns to the crawl.
+📺 Episode ends. Gold=113 | Chests=2 | Merchants=1 | Rares=0 | Near-deaths=1 | Boss=DEFEATED
+📊 Party avg HP%: 76%
+📊 Beat counts: Combat=5 | Expedition=5 | Social=1 | Merchant=1 | Relief=2 | Discovery=1 | Hazard=1
+📊 Downed events=1 | Tank downed=1 | Over-budget prevented=5 | Encounter rerolls=0 | Repeat prevented=1 | Downed-loop interventions=0
+📊 Encounter budget: attempts=5 | accepted=0 | rerolled=0 | scaled=5 | degraded=0 | bestfit=0 | outcomes_total=5
+Pause event has been registered for this frame
+Pause event has been unregistered

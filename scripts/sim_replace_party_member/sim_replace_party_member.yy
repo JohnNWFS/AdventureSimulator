@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"sim_replace_party_member",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"sim_replace_party_member",
+  "parent":{
+    "name":"PARTY",
+    "path":"folders/SCRIPTS/PARTY.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

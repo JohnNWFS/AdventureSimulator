@@ -25,27 +25,29 @@ for (var i = 0; i < array_length(sim.party); i++) {
     "  HP " + string(p.hp) + "/" + string(p.max_hp) +
     "  MP " + string(p.mp) + "/" + string(p.max_mp) +
     "  ATK " + string(p.atk) + " DEF " + string(p.def) +
-    "  Wounds " + string(p.wounds) +
-    "  W:" + (p.weapon == "" ? "-" : p.weapon) +
-    "  A:" + (p.armor == "" ? "-" : p.armor) +
-    "  T:" + (p.trinket == "" ? "-" : p.trinket);
+    "  Wounds " + string(p.wounds);
+	
+	var eq = (variable_struct_exists(p, "equip") && is_struct(p.equip))
+    ? p.equip
+    : { weapon: undefined, armor: undefined, trinket: undefined };
+	
+	line += "  W:" + sim_item_name(eq.weapon) +
+	        "  A:" + sim_item_name(eq.armor) +
+	        "  T:" + sim_item_name(eq.trinket);
 
     draw_text(gui_x, gui_y, line);
     gui_y += 18;
 }
 
-
-
-
-
-
-y += 8;
-draw_text(x, y, "Controls: ENTER=new seed | R=replay seed | SPACE=toggle run | N=step (when paused)");
-y += 22;
+gui_y += 8;
+draw_text(gui_x, gui_y,
+    "Controls: ENTER=new seed | R=replay seed | T=toggle short | V=toggle very short | Q=4-seed short test | SPACE=toggle run | N=step (paused)"
+);
+gui_y += 22;
 
 // Log (last N lines)
 var start = max(0, array_length(sim.log) - ui_max_lines);
 for (var j = start; j < array_length(sim.log); j++) {
-    draw_text(x, y, sim.log[j]);
-    y += 16;
+    draw_text(gui_x, gui_y, sim.log[j]);
+    gui_y += 16;
 }

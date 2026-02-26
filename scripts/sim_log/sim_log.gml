@@ -1,7 +1,8 @@
 function sim_log(sim, text) {
-    // Keep in-memory
+    // Keep in sim's own log (for on-screen display)
     array_push(sim.log, text);
 
-    // Also dump to Output console for sharing back
-    show_debug_message(text);
+    // Route through beat_output_emit for: debug_lines, file writing, console
+    // sim_log lines are diagnostics/chatter, so force debug-only routing.
+    beat_output_emit("SIM", text, { route : "debug" });
 }

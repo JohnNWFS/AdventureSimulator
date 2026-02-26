@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"sim_log",
   "parent":{
-    "name":"SCRIPTS",
-    "path":"folders/SCRIPTS.yy",
+    "name":"OTHER and DEBUG",
+    "path":"folders/SCRIPTS/OTHER and DEBUG.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

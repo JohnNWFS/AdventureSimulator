@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"sim_name_generate",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"sim_name_generate",
+  "parent":{
+    "name":"PARTY",
+    "path":"folders/SCRIPTS/PARTY.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

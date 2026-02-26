@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"loot_build_name",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"loot_build_name",
+  "parent":{
+    "name":"LOOT",
+    "path":"folders/SCRIPTS/LOOT.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
