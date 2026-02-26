@@ -72,6 +72,7 @@ function beat_output_emit(tag, text, data)
     }
 
     var route = (is_struct(data) && variable_struct_exists(data, "route")) ? string(data.route) : "both";
+    var sim = (is_struct(data) && variable_struct_exists(data, "sim") && is_struct(data.sim)) ? data.sim : undefined;
     var to_debug = (route != "beat");
     var to_beat = (route != "debug");
 
@@ -102,6 +103,42 @@ function beat_output_emit(tag, text, data)
         to_debug = true;
     }
 
+    var gate_checked = (tag == "EPISODE_BEGIN" || tag == "EPISODE_END");
+    var gate_allowed = true;
+    var gate_source = "none";
+
+    if (gate_checked && to_beat) {
+        if (is_struct(sim)) {
+            if (!variable_struct_exists(sim, "flags") || !is_struct(sim.flags)) sim.flags = {};
+
+            var flag_name = (tag == "EPISODE_BEGIN") ? "episode_begin_emitted" : "episode_end_emitted";
+            var already_emitted = (variable_struct_exists(sim.flags, flag_name) && variable_struct_get(sim.flags, flag_name));
+            if (already_emitted) {
+                gate_allowed = false;
+                gate_source = "sim.flags";
+            } else {
+                variable_struct_set(sim.flags, flag_name, true);
+                gate_source = "sim.flags";
+            }
+        }
+
+        if (gate_allowed) {
+            for (var episode_i = 0; episode_i < array_length(global.canonical_beats); episode_i++) {
+                if (string_pos("[" + tag + "]", global.canonical_beats[episode_i]) == 1) {
+                    gate_allowed = false;
+                    if (gate_source == "none") gate_source = "canonical_beats";
+                    break;
+                }
+            }
+            if (gate_source == "none") gate_source = "canonical_beats";
+        }
+
+        if (!gate_allowed) {
+            to_beat = false;
+            to_debug = true;
+        }
+    }
+
     // ---- On-screen buffer (existing behavior) ----
     array_push(global.debug_lines, line);
     var cap = global.debug_line_cap;
@@ -120,6 +157,22 @@ function beat_output_emit(tag, text, data)
     if (to_debug && !to_beat) {
         array_push(global.debug_only_lines, line);
         global.debug_log_text += line + "\n";
+    }
+
+    if (gate_checked && variable_global_exists("debug_verbose") && global.debug_verbose) {
+        var phase = "unknown";
+        if (is_struct(sim)) {
+            if (variable_struct_exists(sim, "zone") && is_string(sim.zone)) phase = sim.zone;
+            if (variable_struct_exists(sim, "beat")) phase += "@beat=" + string(sim.beat);
+        }
+        var gate_line = "[DEBUG] [EPISODE_TAG_GATE] tag=" + tag +
+            " allowed=" + string(gate_allowed) +
+            " source=" + gate_source +
+            " phase=" + phase;
+        array_push(global.debug_only_lines, gate_line);
+        global.debug_log_text += gate_line + "\n";
+        global.run_log_text += gate_line + "\n";
+        show_debug_message(gate_line);
     }
 
     // ---- Autosave-to-file ----
