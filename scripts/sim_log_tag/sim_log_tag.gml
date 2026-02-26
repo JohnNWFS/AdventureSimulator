@@ -3,5 +3,5 @@ function sim_log_tag(sim, tag, msg) {
     array_push(sim.log, "[" + string(tag) + "] " + msg);
 
     // Route through beat_output_emit for file + console
-    beat_output_emit(tag, msg, undefined);
+    beat_output_emit(tag, msg, { sim: sim });
 }

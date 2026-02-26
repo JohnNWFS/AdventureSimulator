@@ -95,15 +95,11 @@ function sim_run_init(sim, seed, beats_target) {
     sim.beats_target = min(beats_target, target_cap);
     sim.finished = false;
     if (!variable_struct_exists(sim, "episode_begun_logged")) sim.episode_begun_logged = false;
-    if (!variable_struct_exists(sim, "episode_begin_emitted")) sim.episode_begin_emitted = false;
-    if (!variable_struct_exists(sim, "episode_end_emitted")) sim.episode_end_emitted = false;
 
     sim.route_generated = false;
     sim.city_phase_executed = false;
     sim.adventure_initialized = false;
     sim.starter_kit_applied = false;
-    sim.episode_begin_emitted = false;
-    sim.episode_end_emitted = false;
 
     // ---- Episode flags reset (must reset each run; sim struct is reused) ----
     if (!variable_struct_exists(sim, "flags") || !is_struct(sim.flags)) sim.flags = {};
@@ -111,6 +107,8 @@ function sim_run_init(sim, seed, beats_target) {
     sim.flags.complication_emitted = false;
     sim.flags.boss_begun = false;
     sim.flags.adventure_start_emitted = false;
+    sim.flags.episode_begin_emitted = false;
+    sim.flags.episode_end_emitted = false;
 
     sim.intel = {
         trap_warning: false,
@@ -266,10 +264,7 @@ function sim_run_init(sim, seed, beats_target) {
         global.run_log_text = "";
         clipboard_set_text("");
     }
-    if (!sim.episode_begin_emitted) {
-        sim.episode_begin_emitted = true;
-        sim_log_tag(sim, "EPISODE_BEGIN", "📺 Episode begins. seed=" + string(sim.seed) + " zone=" + sim.zone);
-    }
+    sim_log_tag(sim, "EPISODE_BEGIN", "📺 Episode begins. seed=" + string(sim.seed) + " zone=" + sim.zone);
     if (!sim.episode_begun_logged) {
         var verbose = variable_global_exists("debug_verbose") ? global.debug_verbose : false;
         if (verbose) sim_log_tag(sim, "NEAR_DEATH_DEF", "near_death is tracked as HP <= 35% max HP.");
