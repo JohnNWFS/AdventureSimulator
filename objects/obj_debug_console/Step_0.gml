@@ -109,6 +109,14 @@ if (keyboard_check_pressed(vk_f9)) {
     }
 }
 
+if (keyboard_check_pressed(vk_f11)) {
+    global.debug_output_enabled = !global.debug_output_enabled;
+    if (!global.debug_output_enabled) {
+        global.debug_lines = [];
+    }
+    beat_output_emit("DEBUG", "Debug output: " + string(global.debug_output_enabled) + " (beats remain ON)", undefined);
+}
+
 if (keyboard_check_pressed(vk_f10)) {
     global.debug_batch_mode = "runs";
     macro_active = true;

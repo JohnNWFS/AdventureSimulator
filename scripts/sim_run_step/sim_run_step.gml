@@ -101,7 +101,21 @@ function sim_run_step(sim) {
             );
         }
         if (sim.cine_tremor_cooldown <= 0) {
-            sim_log_tag(sim, "COMPLICATION", "A distant tremor hints the lair is near, but not yet.");
+            var tremor_variants = [
+                "A distant tremor hints the lair is near, but not yet.",
+                "Stone dust drifts from above; something massive stirs ahead.",
+                "A low quake rolls through the corridor, then goes quiet.",
+                "The floor shivers once, like a warning from deeper tunnels.",
+                "Loose pebbles skitter across the path as the lair breathes nearby.",
+                "A deep rumble echoes through the walls, then fades.",
+                "The air tightens with a far-off shockwave from below.",
+                "Chains and old beams rattle somewhere beyond sight.",
+                "A heavy thud carries through the stone, close enough to feel.",
+                "The passage groans; whatever waits ahead is awake.",
+                "A brief jolt ripples underfoot and the party pauses to listen.",
+                "The ground mutters with distant movement near the boss den."
+            ];
+            sim_log_tag(sim, "COMPLICATION", tremor_variants[0], "", tremor_variants);
             sim.cine_tremor_cooldown = 6;
         }
         ev = "adventure";
@@ -172,7 +186,21 @@ function sim_run_step(sim) {
     && sim.beat < middle_end
     && !sim.flags.boss_begun) {
         sim.flags.complication_emitted = true;
-        sim_log(sim, "[COMPLICATION] A sudden blockade forces the party to burn supplies just to stay on schedule.");
+        var blockade_variants = [
+            "A sudden blockade forces the party to burn supplies just to stay on schedule.",
+            "Collapsed scaffolding seals the lane, costing rations and rope to clear.",
+            "A jammed choke point eats time and supplies before the team can pass.",
+            "Broken carts and debris force a hard detour that drains provisions.",
+            "An improvised barricade stalls momentum and burns through spare kits.",
+            "A narrow kill-lane gets clogged; the party spends tools to reopen it.",
+            "A cave-in pinches the route, demanding costly manual clearance.",
+            "The corridor buckles, and progress comes at the price of supplies.",
+            "A blocked span forces the group to consume gear to keep pace.",
+            "A wrecked passage turns into a supply sink before movement resumes.",
+            "A jammed corridor grinds progress down until the party pays to push through.",
+            "A stonefall barrier stalls the expedition and strips spare resources."
+        ];
+        sim_log_tag(sim, "COMPLICATION", blockade_variants[0], "", blockade_variants);
     }
 
     var tension_delta = 0;
@@ -256,7 +284,21 @@ function sim_run_step(sim) {
                 ttl: 0,
                 label: ""
             };
-            sim_log_tag(sim, "NAV_STATE", "🧭 Route modifier fades; selection weights normalize.");
+            var nav_fade_variants = [
+                "🧭 Route modifier fades; selection weights normalize.",
+                "🧭 The route edge wears off; movement returns to baseline.",
+                "🧭 Travel momentum settles and path bias drops to normal.",
+                "🧭 Route pressure clears; choices rebalance.",
+                "🧭 The temporary route posture expires and pacing evens out.",
+                "🧭 Path advantage dissipates; default selection returns.",
+                "🧭 The team exits the temporary route state.",
+                "🧭 Course conditions normalize as the modifier expires.",
+                "🧭 Route tuning ends and default flow resumes.",
+                "🧭 The altered route stance fades back to standard.",
+                "🧭 Navigation bias drops off; options rebalance.",
+                "🧭 Temporary route effects conclude; normal weighting restored."
+            ];
+            sim_log_tag(sim, "NAV_STATE", nav_fade_variants[0], "", nav_fade_variants);
         }
     }
 

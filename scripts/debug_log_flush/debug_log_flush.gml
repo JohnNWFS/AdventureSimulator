@@ -9,7 +9,7 @@ function debug_log_flush()
         file_text_close(f_beat);
     }
 
-    if (variable_global_exists("debug_log_path") && is_string(global.debug_log_path) && global.debug_log_path != "") {
+    if (variable_global_exists("debug_output_enabled") && global.debug_output_enabled && variable_global_exists("debug_log_path") && is_string(global.debug_log_path) && global.debug_log_path != "") {
         var header_lines = variable_global_exists("debug_log_header_lines") ? global.debug_log_header_lines : [];
         var beat_lines2 = variable_global_exists("canonical_beats") ? global.canonical_beats : [];
         var footer_lines = variable_global_exists("debug_only_lines") ? global.debug_only_lines : [];
