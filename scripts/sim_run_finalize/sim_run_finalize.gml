@@ -133,5 +133,7 @@ function sim_run_finalize(sim) {
 
     sim_log_tag(sim, "EPISODE_END", "🎬 Episode ends. seed=" + string(sim.seed) + " zone=" + sim.zone);
 
+    beat_output_validate_no_consecutive_duplicates(5);
+
     debug_log_flush();
 }
