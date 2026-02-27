@@ -13,12 +13,12 @@ function sim_party_process_exits(sim, ev) {
         }
 
         if (!p.retired && !p.dead && p.retire_notice && safe_stop) {
-            var wound_push = max(0, (p.wounds - 3) * 10);
-            var near_death_push = p.near_death_count * 8;
+            var wound_push = max(0, (p.wounds - 2) * 12);
+            var near_death_push = p.near_death_count * 10;
             var resolve_pull = max(0, (70 - p.resolve));
-            var pressure_score = clamp(20 + wound_push + near_death_push + resolve_pull, 20, 95);
+            var pressure_score = clamp(35 + wound_push + near_death_push + resolve_pull, 35, 97);
 
-            if (pressure_score >= 55) {
+            if (pressure_score >= 50) {
                 p.exit_flagged = true;
                 p.exit_mode = "retire";
                 sim.city_scene_pending = true;

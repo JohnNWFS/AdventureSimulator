@@ -13,6 +13,57 @@ function sim_resolve_adventure(sim) {
     var rivals_mult = variable_struct_get(profile.social_weights, "rivals");
 
     var focus = variable_struct_exists(sim.director, "adventure_focus") ? sim.director.adventure_focus : "";
+    if (!variable_struct_exists(sim.director, "chests_this_zone")) sim.director.chests_this_zone = 0;
+
+    if (focus == "exploration" && sim.director.chest_cd == 0 && sim.director.chests_this_zone < 2) {
+        var chest_trigger_chance = (sim.director.chests_this_zone <= 0) ? 34 : 20;
+        if (sim_chance(sim, chest_trigger_chance)) {
+            sim.director.adventure_focus = "";
+            sim.director.chests_this_zone += 1;
+            sim.director.chest_cd = 3;
+            sim.coverage.discovery += 1;
+            sim.last_adventure_tension_outcome = "discovery";
+
+            if (sim_chance(sim, 35)) {
+                var treasure_variants = [
+                    "💎 A collapsed alcove in the " + area_label + " reveals a sealed treasure cache.",
+                    "💎 Behind cracked stone in the " + area_label + ", the party uncovers a buried treasure coffer.",
+                    "💎 A hidden cavity in the " + area_label + " yields a long-forgotten treasure stash.",
+                    "💎 In the " + area_label + ", a false wall gives way to a dust-heavy treasure cache.",
+                    "💎 The party pries open a hidden lockbox in the " + area_label + " and finds a treasure trove.",
+                    "💎 A sunken chest compartment in the " + area_label + " spills out a preserved treasure cache.",
+                    "💎 Beneath loose flagstones in the " + area_label + ", a concealed treasure coffer appears.",
+                    "💎 A buried supply nook in the " + area_label + " turns out to be a treasure reserve.",
+                    "💎 A cracked reliquary in the " + area_label + " hides an untouched treasure compartment.",
+                    "💎 A map notch in the " + area_label + " leads to a concealed treasure chamber.",
+                    "💎 A forgotten route-marker in the " + area_label + " points to a buried treasure lockbox.",
+                    "💎 The party cracks a hidden panel in the " + area_label + " and recovers a treasure stash."
+                ];
+                sim_log_tag(sim, "TREASURE_FOUND", treasure_variants[0], "", treasure_variants);
+                sim_log_tag(sim, "TREASURE_OPEN", "🪙 The cache is split open and sorted under torchlight.");
+            } else {
+                var chest_variants = [
+                    "🧰 A side passage in the " + area_label + " ends at a dust-covered chest.",
+                    "🧰 In the " + area_label + ", the party spots an ironbound chest wedged behind rubble.",
+                    "🧰 A hidden nook in the " + area_label + " conceals a locked chest.",
+                    "🧰 The team uncovers a chest tucked behind broken masonry in the " + area_label + ".",
+                    "🧰 In the " + area_label + ", a faded marker points to a half-buried chest.",
+                    "🧰 A collapsed shelf in the " + area_label + " gives way to a sealed chest.",
+                    "🧰 The party finds a banded chest hidden under torn expedition cloth in the " + area_label + ".",
+                    "🧰 A shallow dig in the " + area_label + " turns up an old chest with intact clasps.",
+                    "🧰 The " + area_label + " yields a trapped-looking chest under loose stone.",
+                    "🧰 A forgotten recess in the " + area_label + " holds a locked adventurer chest.",
+                    "🧰 A cracked waypoint in the " + area_label + " reveals a chest compartment.",
+                    "🧰 In the " + area_label + ", a hidden shelf slides open to reveal a chest."
+                ];
+                sim_log_tag(sim, "CHEST_FOUND", chest_variants[0], "", chest_variants);
+            }
+
+            sim_resolve_chest(sim);
+            return;
+        }
+    }
+
     var beat_options = [
         { w: 14, v: 0 },
         { w: floor(12 * hazard_mult), v: 1 },
