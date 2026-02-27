@@ -36,8 +36,19 @@ function sim_apply_route_modifier(sim, mode) {
         };
     }
 
-    sim_log_tag(sim, "NAV_STATE",
-        "🧭 Route modifier active: " + sim.director.route_mod.label +
-        " for " + string(ttl) + " beats."
-    );
+    var nav_state_variants = [
+        "🧭 Route modifier active: " + sim.director.route_mod.label + " for " + string(ttl) + " beats.",
+        "🧭 The route shifts to " + sim.director.route_mod.label + "; this edge lasts " + string(ttl) + " beats.",
+        "🧭 Party momentum changes: " + sim.director.route_mod.label + " carries for " + string(ttl) + " beats.",
+        "🧭 New travel posture set to " + sim.director.route_mod.label + " (" + string(ttl) + " beats).",
+        "🧭 Pathing bias engaged: " + sim.director.route_mod.label + ", duration " + string(ttl) + " beats.",
+        "🧭 The map line bends toward " + sim.director.route_mod.label + " for " + string(ttl) + " beats.",
+        "🧭 Formation updates to " + sim.director.route_mod.label + "; expected to hold " + string(ttl) + " beats.",
+        "🧭 Tempo set: " + sim.director.route_mod.label + " for the next " + string(ttl) + " beats.",
+        "🧭 The party commits to " + sim.director.route_mod.label + " for " + string(ttl) + " beats.",
+        "🧭 Travel conditions now favor " + sim.director.route_mod.label + " (" + string(ttl) + " beats).",
+        "🧭 Course correction: " + sim.director.route_mod.label + " remains in effect for " + string(ttl) + " beats.",
+        "🧭 Route pressure settles into " + sim.director.route_mod.label + " for " + string(ttl) + " beats."
+    ];
+    sim_log_tag(sim, "NAV_STATE", nav_state_variants[0], "", nav_state_variants);
 }

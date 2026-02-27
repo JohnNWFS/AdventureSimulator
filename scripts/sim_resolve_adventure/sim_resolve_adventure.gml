@@ -58,7 +58,21 @@ function sim_resolve_adventure(sim) {
 
     switch (beat) {
         case 0:
-            sim_log_tag(sim, "NAV_CHOICE", "🧭 Two routes split ahead: a fast ledge path, a safer tunnel, or a backtrack.");
+            var nav_choice_variants = [
+                "🧭 Two routes split ahead: a fast ledge path, a safer tunnel, or a backtrack.",
+                "🧭 A three-way fork opens: exposed ledge, cautious tunnel, or fallback trail.",
+                "🧭 The corridor branches into speed, safety, or a reset loop behind them.",
+                "🧭 Ahead lies a hard choice: gamble the ledge, thread the tunnel, or rewind.",
+                "🧭 The map breaks into three lines—quick and risky, slow and stable, or backtrack.",
+                "🧭 At the junction, the party weighs pace against control and retreat space.",
+                "🧭 A forked hall offers a sprint lane, a defensive lane, and a reverse lane.",
+                "🧭 Footprints split at a choke point: push fast, move safe, or reset route.",
+                "🧭 Their path divides between an aggressive cut, a guarded crawl, and a step back.",
+                "🧭 Three route calls present themselves: press, protect, or pull back.",
+                "🧭 The trail fractures into a ledge gamble, a stable tunnel, and a retreat path.",
+                "🧭 A fork in the dark forces a choice between tempo, safety, and repositioning."
+            ];
+            sim_log_tag(sim, "NAV_CHOICE", nav_choice_variants[0], "", nav_choice_variants);
             var nav_roll = sim_rand_range(sim, 0, 99);
             if (nav_roll < 40) {
                 sim_apply_route_modifier(sim, "fast");
@@ -83,7 +97,21 @@ function sim_resolve_adventure(sim) {
         case 2:
             sim.coverage.discovery += 1;
             sim.last_adventure_tension_outcome = "discovery";
-            sim_log_tag(sim, "DISCOVERY", "🗺 In the " + area_label + ", faded route marks reveal a hidden bypass used by prior travelers.");
+            var discovery_bypass_variants = [
+                "🗺 In the " + area_label + ", faded route marks reveal a hidden bypass used by prior travelers.",
+                "🗺 Scored markings in the " + area_label + " uncover a bypass lane tucked behind rubble.",
+                "🗺 Old chalk arrows in the " + area_label + " point to a quiet side route.",
+                "🗺 Weathered signs in the " + area_label + " expose a narrow bypass corridor.",
+                "🗺 The party spots worn trail cuts in the " + area_label + " leading around danger.",
+                "🗺 Hidden waymarks in the " + area_label + " reveal a cleaner route forward.",
+                "🗺 Scratched symbols in the " + area_label + " map out an overlooked flank path.",
+                "🗺 Faint guide marks in the " + area_label + " connect to an old smuggler bypass.",
+                "🗺 A sequence of carved cues in the " + area_label + " opens a concealed shortcut.",
+                "🗺 Layered trail marks in the " + area_label + " identify a safer hidden branch.",
+                "🗺 Dust-covered markers in the " + area_label + " trace a forgotten bypass line.",
+                "🗺 Prior expedition glyphs in the " + area_label + " reveal a tucked-away route."
+            ];
+            sim_log_tag(sim, "DISCOVERY", discovery_bypass_variants[0], "", discovery_bypass_variants);
             sim.tension = clamp(sim.tension - 7, 0, 100);
             break;
         case 3:
@@ -104,12 +132,26 @@ function sim_resolve_adventure(sim) {
             if (!sim.director.discovery_courier_seen) {
                 sim.director.discovery_courier_seen = true;
                 sim.coverage.discovery += 1;
-                sim_log_tag(sim, "DISCOVERY", "🧷 A wounded courier is found in the " + area_label + " with a sealed map fragment.");
+                var discovery_courier_variants = [
+                    "🧷 A wounded courier is found in the " + area_label + " with a sealed map fragment.",
+                    "🧷 In the " + area_label + ", the party finds a courier clutching a bloodstained map scrap.",
+                    "🧷 A collapsed courier in the " + area_label + " offers a sealed fragment before passing out.",
+                    "🧷 The team discovers an injured runner in the " + area_label + " carrying route intel.",
+                    "🧷 A courier survivor in the " + area_label + " yields a stitched map segment.",
+                    "🧷 Beneath broken gear in the " + area_label + ", a courier hands over a marked fragment.",
+                    "🧷 A barely conscious messenger in the " + area_label + " reveals a protected map piece.",
+                    "🧷 The party recovers a courier in the " + area_label + " with sealed path notes.",
+                    "🧷 In the " + area_label + ", an injured courier trades a map shard for escort.",
+                    "🧷 A fallen route-runner in the " + area_label + " reveals a fragment with bypass marks.",
+                    "🧷 A courier pinned in the " + area_label + " passes over a wax-sealed path strip.",
+                    "🧷 The party finds a wounded courier in the " + area_label + " guarding a critical map piece."
+                ];
+                sim_log_tag(sim, "DISCOVERY", discovery_courier_variants[0], "", discovery_courier_variants);
                 sim.gold_total += sim_rand_range(sim, 4, 10);
                 sim_log_tag(sim, "DISCOVERY", "The courier shares a shortcut and a small payment for escort.");
             } else {
                 sim.director.repeat_prevented += 1;
-                sim_log_tag(sim, "DISCOVERY_PREVENTED", "🧷 Courier discovery suppressed (once per episode). The party finds old camp notes instead.");
+                sim_log(sim, "[DEBUG] Courier discovery suppressed (once per episode).");
                 sim.tension = clamp(sim.tension - 2, 0, 100);
             }
             break;
@@ -142,12 +184,26 @@ function sim_resolve_adventure(sim) {
             if (!sim.director.discovery_major_seen) {
                 sim.director.discovery_major_seen = true;
                 sim.coverage.discovery += 1;
-                sim_log_tag(sim, "DISCOVERY", "📜 Clues in the " + area_label + " describe the boss's old rituals and weak points.");
+                var discovery_major_variants = [
+                    "📜 Clues in the " + area_label + " describe the boss's old rituals and weak points.",
+                    "📜 Ritual notes in the " + area_label + " expose a weakness pattern in the boss.",
+                    "📜 Inscriptions in the " + area_label + " detail how prior hunters cracked the lair defense.",
+                    "📜 Ancient records in the " + area_label + " reveal where the boss overcommits.",
+                    "📜 The party deciphers lore in the " + area_label + " pointing to exploitable boss habits.",
+                    "📜 Fragmented tablets in the " + area_label + " outline a weakness in the boss cadence.",
+                    "📜 Old rite markings in the " + area_label + " identify a vulnerable phase in the fight.",
+                    "📜 Notes hidden in the " + area_label + " map out the boss's brittle timing window.",
+                    "📜 A recovered journal in the " + area_label + " records the boss's failed ritual cycle.",
+                    "📜 Etched warnings in the " + area_label + " reveal where the boss can be baited.",
+                    "📜 Prior expedition logs in the " + area_label + " describe a reliable break point.",
+                    "📜 Sealed lore from the " + area_label + " reveals pressure points in the boss routine."
+                ];
+                sim_log_tag(sim, "DISCOVERY", discovery_major_variants[0], "", discovery_major_variants);
                 sim.intel.boss_weakness_known = true;
                 sim.tension = clamp(sim.tension - 4, 0, 100);
             } else {
                 sim.director.repeat_prevented += 1;
-                sim_log_tag(sim, "DISCOVERY_PREVENTED", "📜 Major discovery already logged this episode; details are noted without another breakthrough beat.");
+                sim_log(sim, "[DEBUG] Major discovery suppressed (already logged this episode).");
             }
             break;
     }

@@ -133,6 +133,25 @@ function sim_run_finalize(sim) {
 
     sim_log_tag(sim, "EPISODE_END", "🎬 Episode ends. seed=" + string(sim.seed) + " zone=" + sim.zone);
 
+    var boss_result = "NOT_SPAWNED";
+    if (sim.stats.boss_defeated) boss_result = "DEFEATED";
+    else if (variable_struct_exists(sim.flags, "boss_begun") && sim.flags.boss_begun) boss_result = "ESCAPED";
+
+    sim_log_tag(sim, "STINGER_BEGIN", "📊 Episode stats");
+    sim_log_tag(sim, "STINGER_ROW", "| Metric | Value |");
+    sim_log_tag(sim, "STINGER_ROW", "|---|---|");
+    sim_log_tag(sim, "STINGER_ROW", "| Seed | " + string(sim.seed) + " |");
+    sim_log_tag(sim, "STINGER_ROW", "| Zone | " + sim.zone + " |");
+    sim_log_tag(sim, "STINGER_ROW", "| Boss | " + boss_result + " |");
+    sim_log_tag(sim, "STINGER_ROW", "| Party deaths | " + string(sim.stats.deaths) + " |");
+    sim_log_tag(sim, "STINGER_ROW", "| Gold | " + string(sim.gold_total) + " |");
+    sim_log_tag(sim, "STINGER_ROW", "| Combats | " + string(sim.stats.combats) + " |");
+    sim_log_tag(sim, "STINGER_ROW", "| Chests opened | " + string(sim.stats.chests_opened) + " |");
+    sim_log_tag(sim, "STINGER_ROW", "| Merchants seen | " + string(sim.stats.merchants_seen) + " |");
+    sim_log_tag(sim, "STINGER_ROW", "| Rares found | " + string(sim.stats.rares_found) + " |");
+    sim_log_tag(sim, "STINGER_ROW", "| Retirements | " + string(sim.stats.retirements) + " |");
+    sim_log_tag(sim, "STINGER_END", "✅");
+
     beat_output_validate_no_consecutive_duplicates(5);
 
     debug_log_flush();

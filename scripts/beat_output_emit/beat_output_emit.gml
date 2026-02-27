@@ -31,6 +31,9 @@ function beat_output_emit(tag, text, data)
     if (!variable_global_exists("debug_only_lines")) {
         global.debug_only_lines = [];
     }
+    if (!variable_global_exists("debug_output_enabled")) {
+        global.debug_output_enabled = true;
+    }
 
     if (!variable_global_exists("last_emitted_line")) {
         global.last_emitted_line = "";
@@ -85,10 +88,24 @@ function beat_output_emit(tag, text, data)
     }
 
     var route = (is_struct(data) && variable_struct_exists(data, "route")) ? string(data.route) : "both";
+    var tag_upper = string_upper(tag);
+    var suppression_tag = (string_pos("_SUPPRESSED", tag_upper) > 0 || string_pos("_PREVENTED", tag_upper) > 0);
+    if (suppression_tag) {
+        if (global.debug_output_enabled) {
+            route = "debug";
+        } else {
+            return false;
+        }
+    }
+
     var sim = (is_struct(data) && variable_struct_exists(data, "sim") && is_struct(data.sim)) ? data.sim : undefined;
     var source = (is_struct(data) && variable_struct_exists(data, "source")) ? string(data.source) : "";
     var to_debug = (route != "beat");
     var to_beat = (route != "debug");
+
+    if (!global.debug_output_enabled) {
+        to_debug = false;
+    }
 
     if (tag == "DEBUG" || tag == "CALIB") {
         to_beat = false;
@@ -96,6 +113,10 @@ function beat_output_emit(tag, text, data)
     if (tag == "BEAT_SOURCE") {
         to_beat = false;
         to_debug = true;
+    }
+
+    if (!global.debug_output_enabled) {
+        to_debug = false;
     }
 
     // If caller already provided a tagged beat line (e.g. "[EPISODE_HOOK] ..."),
@@ -172,17 +193,19 @@ function beat_output_emit(tag, text, data)
             array_push(global.debug_only_lines, duplicate_line);
             global.debug_log_text += duplicate_line + "\n";
             global.run_log_text += duplicate_line + "\n";
-            show_debug_message(duplicate_line);
+            if (global.debug_output_enabled) show_debug_message(duplicate_line);
         }
 
         return false;
     }
 
     // ---- On-screen buffer (existing behavior) ----
-    array_push(global.debug_lines, line);
-    var cap = global.debug_line_cap;
-    while (array_length(global.debug_lines) > cap) {
-        array_delete(global.debug_lines, 0, 1);
+    if (global.debug_output_enabled) {
+        array_push(global.debug_lines, line);
+        var cap = global.debug_line_cap;
+        while (array_length(global.debug_lines) > cap) {
+            array_delete(global.debug_lines, 0, 1);
+        }
     }
 
     // ---- Full run capture (safe, additive) ----
@@ -211,7 +234,7 @@ function beat_output_emit(tag, text, data)
         array_push(global.debug_only_lines, gate_line);
         global.debug_log_text += gate_line + "\n";
         global.run_log_text += gate_line + "\n";
-        show_debug_message(gate_line);
+        if (global.debug_output_enabled) show_debug_message(gate_line);
     }
 
     // ---- Autosave-to-file ----
@@ -226,6 +249,6 @@ function beat_output_emit(tag, text, data)
     global.last_emitted_line = line;
     global.last_emitted_tag = tag;
     global.last_emitted_source = source;
-    show_debug_message(line);
+    if (global.debug_output_enabled) show_debug_message(line);
     return true;
 }
