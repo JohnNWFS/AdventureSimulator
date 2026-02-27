@@ -33,6 +33,7 @@
     {"id":{"name":"_debug_start_run","path":"scripts/_debug_start_run/_debug_start_run.yy",},},
     {"id":{"name":"_zero_pad","path":"scripts/_zero_pad/_zero_pad.yy",},},
     {"id":{"name":"beat_output_emit","path":"scripts/beat_output_emit/beat_output_emit.yy",},},
+    {"id":{"name":"beat_output_validate_no_consecutive_duplicates","path":"scripts/beat_output_validate_no_consecutive_duplicates/beat_output_validate_no_consecutive_duplicates.yy",},},
     {"id":{"name":"debug_functions","path":"scripts/debug_functions/debug_functions.yy",},},
     {"id":{"name":"debug_log_append_line","path":"scripts/debug_log_append_line/debug_log_append_line.yy",},},
     {"id":{"name":"debug_log_end_file","path":"scripts/debug_log_end_file/debug_log_end_file.yy",},},

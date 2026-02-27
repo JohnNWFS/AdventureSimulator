@@ -115,32 +115,32 @@ function sim_run_step(sim) {
     // Playback: why this beat is happening (source cue)
     switch (ev) {
         case "chest":
-            sim_log_tag(sim, "BEAT_SOURCE", "🔎 Exploration find: the party spots something ahead in " + route_label + ".");
+            sim_log_tag(sim, "BEAT_SOURCE", "🔎 Exploration find: the party spots something ahead in " + route_label + ".", "sim_run_step:source_chest");
             break;
         case "adventure":
-            sim_log_tag(sim, "BEAT_SOURCE", "🧭 Expedition: the " + route_label + " route itself forces a decision.");
+            sim_log_tag(sim, "BEAT_SOURCE", "🧭 Expedition: the " + route_label + " route itself forces a decision.", "sim_run_step:source_adventure");
             break;
         case "merchant":
-            sim_log_tag(sim, "BEAT_SOURCE", "🧳 Encounter: a merchant appears on the " + route_label + " route.");
+            sim_log_tag(sim, "BEAT_SOURCE", "🧳 Encounter: a merchant appears on the " + route_label + " route.", "sim_run_step:source_merchant");
             break;
         case "relief":
-            sim_log_tag(sim, "BEAT_SOURCE", "🛖 Rest stop: the party finds a safe pocket to regroup in " + route_label + ".");
+            sim_log_tag(sim, "BEAT_SOURCE", "🛖 Rest stop: the party finds a safe pocket to regroup in " + route_label + ".", "sim_run_step:source_relief");
             break;
         case "city_scene":
-            sim_log_tag(sim, "BEAT_SOURCE", "🏙 Return: the party pivots back to city streets before rejoining " + route_label + ".");
+            sim_log_tag(sim, "BEAT_SOURCE", "🏙 Return: the party pivots back to city streets before rejoining " + route_label + ".", "sim_run_step:source_city_scene");
             break;
         case "boss":
-            sim_log_tag(sim, "BEAT_SOURCE", "👁 Ominous presence: the air shifts near " + route_label + ". Something huge is near.");
+            sim_log_tag(sim, "BEAT_SOURCE", "👁 Ominous presence: the air shifts near " + route_label + ". Something huge is near.", "sim_run_step:source_boss");
             break;
         case "retreat_bridge":
-            sim_log_tag(sim, "BEAT_SOURCE", "🏃 Withdrawal: the party falls back through dangerous ground in " + route_label + ".");
+            sim_log_tag(sim, "BEAT_SOURCE", "🏃 Withdrawal: the party falls back through dangerous ground in " + route_label + ".", "sim_run_step:source_retreat_bridge");
             break;
         case "intro":
-            sim_log_tag(sim, "BEAT_SOURCE", "🗺 The party advances deeper into " + route_label + ".");
+            sim_log_tag(sim, "BEAT_SOURCE", "🗺 The party advances deeper into " + route_label + ".", "sim_run_step:source_intro");
             break;
         case "combat":
         default:
-            sim_log_tag(sim, "BEAT_SOURCE", "🧭 Danger: movement in the shadows of " + route_label + ".");
+            sim_log_tag(sim, "BEAT_SOURCE", "🧭 Danger: movement in the shadows of " + route_label + ".", "sim_run_step:source_combat");
             break;
     }
 

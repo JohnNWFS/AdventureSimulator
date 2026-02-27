@@ -32,6 +32,19 @@ function beat_output_emit(tag, text, data)
         global.debug_only_lines = [];
     }
 
+    if (!variable_global_exists("last_emitted_line")) {
+        global.last_emitted_line = "";
+    }
+    if (!variable_global_exists("last_emitted_tag")) {
+        global.last_emitted_tag = "";
+    }
+    if (!variable_global_exists("last_emitted_source")) {
+        global.last_emitted_source = "";
+    }
+    if (!variable_global_exists("duplicate_suppressed_count")) {
+        global.duplicate_suppressed_count = 0;
+    }
+
     // Optional: autosave-to-file (off by default)
     if (!variable_global_exists("debug_autosave")) {
         global.debug_autosave = false;
@@ -73,6 +86,7 @@ function beat_output_emit(tag, text, data)
 
     var route = (is_struct(data) && variable_struct_exists(data, "route")) ? string(data.route) : "both";
     var sim = (is_struct(data) && variable_struct_exists(data, "sim") && is_struct(data.sim)) ? data.sim : undefined;
+    var source = (is_struct(data) && variable_struct_exists(data, "source")) ? string(data.source) : "";
     var to_debug = (route != "beat");
     var to_beat = (route != "debug");
 
@@ -139,6 +153,31 @@ function beat_output_emit(tag, text, data)
         }
     }
 
+    var duplicate_attempt = (line == global.last_emitted_line);
+    if (duplicate_attempt) {
+        global.duplicate_suppressed_count += 1;
+
+        var duplicate_debug_enabled = variable_global_exists("debug_verbose") && global.debug_verbose;
+        if (duplicate_debug_enabled) {
+            var duplicate_source = source;
+            if (duplicate_source == "" && is_struct(sim)) {
+                duplicate_source = "sim_run_step@beat=" + string(sim.beat);
+            }
+            if (duplicate_source == "") duplicate_source = "unknown";
+
+            var duplicate_line = "[DEBUG] [DUPLICATE_SUPPRESSED] tag=" + tag +
+                " source=" + duplicate_source +
+                " attempted=\"" + line + "\"" +
+                " previous=\"" + global.last_emitted_line + "\"";
+            array_push(global.debug_only_lines, duplicate_line);
+            global.debug_log_text += duplicate_line + "\n";
+            global.run_log_text += duplicate_line + "\n";
+            show_debug_message(duplicate_line);
+        }
+
+        return false;
+    }
+
     // ---- On-screen buffer (existing behavior) ----
     array_push(global.debug_lines, line);
     var cap = global.debug_line_cap;
@@ -184,5 +223,9 @@ function beat_output_emit(tag, text, data)
     }
 
     // ---- Output / console (existing behavior) ----
+    global.last_emitted_line = line;
+    global.last_emitted_tag = tag;
+    global.last_emitted_source = source;
     show_debug_message(line);
+    return true;
 }

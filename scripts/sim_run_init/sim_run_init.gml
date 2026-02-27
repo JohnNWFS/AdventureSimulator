@@ -260,6 +260,10 @@ function sim_run_init(sim, seed, beats_target) {
     sim.cine_tremor_cooldown = 0;
 
     sim.log = [];
+    global.last_emitted_line = "";
+    global.last_emitted_tag = "";
+    global.last_emitted_source = "";
+    global.duplicate_suppressed_count = 0;
     if (variable_global_exists("debug_enabled") && global.debug_enabled) {
         global.run_log_text = "";
         clipboard_set_text("");
