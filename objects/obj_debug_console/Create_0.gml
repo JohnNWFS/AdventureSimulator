@@ -3,7 +3,7 @@
 // (Town -> Wilderness biome A -> Wilderness biome B -> Dungeon type).
 // Debug logs include [DEBUG] route segments, route_index advances, and early encounter pool picks.
 global.debug_enabled = true;
-global.debug_output_enabled = true;
+global.debug_output_enabled = false;
 
 // Deterministic debug seed controls
 global.debug_seed = 100001;      // pick a seed you like

@@ -50,6 +50,7 @@ function sim_run_step(sim) {
     // Reset per-zone merchant cap
     if (sim.zone != sim.prev_zone) {
         sim.director.merchants_this_zone = 0;
+        sim.director.chests_this_zone = 0;
         sim.prev_zone = sim.zone;
     }
 

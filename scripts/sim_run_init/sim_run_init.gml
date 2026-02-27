@@ -188,6 +188,7 @@ function sim_run_init(sim, seed, beats_target) {
         merchant_cd: 0,
         chest_cd: 0,
         merchants_this_zone: 0,
+        chests_this_zone: 0,
         beats_since_relief: 0,
         adventure_cd: 0,
         relief_min_gap: 4,
@@ -264,7 +265,7 @@ function sim_run_init(sim, seed, beats_target) {
     global.last_emitted_tag = "";
     global.last_emitted_source = "";
     global.duplicate_suppressed_count = 0;
-    if (!variable_global_exists("debug_output_enabled")) global.debug_output_enabled = true;
+    if (!variable_global_exists("debug_output_enabled")) global.debug_output_enabled = false;
     if (variable_global_exists("debug_enabled") && global.debug_enabled) {
         global.run_log_text = "";
         clipboard_set_text("");

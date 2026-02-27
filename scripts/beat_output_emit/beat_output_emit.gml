@@ -32,7 +32,7 @@ function beat_output_emit(tag, text, data)
         global.debug_only_lines = [];
     }
     if (!variable_global_exists("debug_output_enabled")) {
-        global.debug_output_enabled = true;
+        global.debug_output_enabled = false;
     }
 
     if (!variable_global_exists("last_emitted_line")) {

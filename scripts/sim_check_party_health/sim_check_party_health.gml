@@ -14,7 +14,9 @@ function sim_check_party_health(sim) {
             continue;
         }
 
-        if (p.hp <= -p.max_hp) {
+        var fatal_floor = -max(6, floor(p.max_hp * 0.25));
+
+        if (p.hp <= fatal_floor) {
             p.dead = true;
             p.status_state = "dead";
             p.pending_honor = true;
