@@ -60,3 +60,49 @@ key_prev_hash = false;
 
 // A small banner so you know it's alive
 beat_output_emit("DEBUG", "Debug console online (4-zone route debug enabled). Seed=" + string(global.debug_seed), undefined);
+
+
+if (!variable_global_exists("tuner_active")) global.tuner_active = false;
+if (!variable_global_exists("tuner_session") || !is_struct(global.tuner_session)) {
+    global.tuner_session = {
+        episodes: 0,
+        sum_combats: 0,
+        sum_chests: 0,
+        sum_merchants: 0,
+        sum_rares: 0,
+        sum_retirements: 0,
+        sum_deaths: 0,
+        sum_gold: 0,
+        boss_defeated_count: 0
+    };
+}
+
+if (!variable_global_exists("tuning") || !is_struct(global.tuning)) global.tuning = {};
+if (!variable_struct_exists(global.tuning, "merchant_chance_base")) global.tuning.merchant_chance_base = 13;
+if (!variable_struct_exists(global.tuning, "chest_chance_base")) global.tuning.chest_chance_base = 12;
+if (!variable_struct_exists(global.tuning, "merchants_per_zone_cap")) global.tuning.merchants_per_zone_cap = 2;
+if (!variable_struct_exists(global.tuning, "chests_per_zone_cap")) global.tuning.chests_per_zone_cap = 2;
+if (!variable_struct_exists(global.tuning, "merchant_cd_turns")) global.tuning.merchant_cd_turns = 3;
+if (!variable_struct_exists(global.tuning, "chest_cd_turns")) global.tuning.chest_cd_turns = 4;
+if (!variable_struct_exists(global.tuning, "exploration_chest_first_pct")) global.tuning.exploration_chest_first_pct = 34;
+if (!variable_struct_exists(global.tuning, "exploration_chest_next_pct")) global.tuning.exploration_chest_next_pct = 20;
+if (!variable_struct_exists(global.tuning, "encounter_rate_scalar")) global.tuning.encounter_rate_scalar = 1.0;
+if (!variable_struct_exists(global.tuning, "monster_power_scalar")) global.tuning.monster_power_scalar = 1.0;
+if (!variable_struct_exists(global.tuning, "dmg_scalar")) global.tuning.dmg_scalar = 1.0;
+if (!variable_struct_exists(global.tuning, "heal_scalar")) global.tuning.heal_scalar = 1.0;
+
+slider_index = 0;
+tuner_sliders = [
+    { key: "merchant_chance_base", label: "merchant_chance_base", min: 0, max: 40, step: 1, big_step: 5, decimals: 0 },
+    { key: "chest_chance_base", label: "chest_chance_base", min: 0, max: 40, step: 1, big_step: 5, decimals: 0 },
+    { key: "merchants_per_zone_cap", label: "merchants_per_zone_cap", min: 0, max: 6, step: 1, big_step: 1, decimals: 0 },
+    { key: "chests_per_zone_cap", label: "chests_per_zone_cap", min: 0, max: 6, step: 1, big_step: 1, decimals: 0 },
+    { key: "merchant_cd_turns", label: "merchant_cd_turns", min: 0, max: 8, step: 1, big_step: 1, decimals: 0 },
+    { key: "chest_cd_turns", label: "chest_cd_turns", min: 0, max: 8, step: 1, big_step: 1, decimals: 0 },
+    { key: "exploration_chest_first_pct", label: "exploration_chest_first_pct", min: 0, max: 80, step: 1, big_step: 5, decimals: 0 },
+    { key: "exploration_chest_next_pct", label: "exploration_chest_next_pct", min: 0, max: 60, step: 1, big_step: 5, decimals: 0 },
+    { key: "encounter_rate_scalar", label: "encounter_rate_scalar", min: 0.25, max: 2.50, step: 0.05, big_step: 0.20, decimals: 2 },
+    { key: "monster_power_scalar", label: "monster_power_scalar", min: 0.50, max: 2.00, step: 0.05, big_step: 0.20, decimals: 2 },
+    { key: "dmg_scalar", label: "dmg_scalar", min: 0.85, max: 1.25, step: 0.01, big_step: 0.05, decimals: 2 },
+    { key: "heal_scalar", label: "heal_scalar", min: 0.85, max: 1.25, step: 0.01, big_step: 0.05, decimals: 2 }
+];

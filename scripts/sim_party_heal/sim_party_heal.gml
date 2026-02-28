@@ -1,7 +1,6 @@
 function sim_party_heal(sim, amount) {
-    if (variable_global_exists("balance") && is_struct(global.balance) && variable_struct_exists(global.balance, "heal_scalar")) {
-        amount = floor(amount * global.balance.heal_scalar);
-    }
+    var heal_scalar = (variable_global_exists("tuning") && is_struct(global.tuning) && variable_struct_exists(global.tuning, "heal_scalar")) ? global.tuning.heal_scalar : 1.0;
+    amount = floor(amount * heal_scalar);
     amount = max(1, amount);
     for (var i = 0; i < array_length(sim.party); i++) {
         var p = sim.party[i];

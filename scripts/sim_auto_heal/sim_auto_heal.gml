@@ -21,9 +21,8 @@ function sim_auto_heal(sim) {
         var target = sim.party[best_i];
 
         var heal_raw  = sim_rand_range(sim, 8, 18) + sim.difficulty * 2;
-        if (variable_global_exists("balance") && is_struct(global.balance) && variable_struct_exists(global.balance, "heal_scalar")) {
-            heal_raw = floor(heal_raw * global.balance.heal_scalar);
-        }
+        var heal_scalar = (variable_global_exists("tuning") && is_struct(global.tuning) && variable_struct_exists(global.tuning, "heal_scalar")) ? global.tuning.heal_scalar : 1.0;
+        heal_raw = floor(heal_raw * heal_scalar);
         heal_raw = max(1, heal_raw);
         var before_hp = target.hp;
 

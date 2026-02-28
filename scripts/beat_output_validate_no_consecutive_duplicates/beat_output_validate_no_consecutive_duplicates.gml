@@ -1,6 +1,6 @@
 function beat_output_validate_no_consecutive_duplicates(max_examples) {
-    var debug_mode = variable_global_exists("debug_verbose") && global.debug_verbose;
-    if (!debug_mode) return;
+    var dbg_mode = variable_global_exists("debug_verbose") && global.debug_verbose;
+    if (!dbg_mode) return;
 
     if (!variable_global_exists("debug_only_lines")) global.debug_only_lines = [];
     if (!variable_global_exists("debug_log_text")) global.debug_log_text = "";

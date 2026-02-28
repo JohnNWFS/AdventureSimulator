@@ -15,12 +15,17 @@ function sim_resolve_adventure(sim) {
     var focus = variable_struct_exists(sim.director, "adventure_focus") ? sim.director.adventure_focus : "";
     if (!variable_struct_exists(sim.director, "chests_this_zone")) sim.director.chests_this_zone = 0;
 
-    if (focus == "exploration" && sim.director.chest_cd == 0 && sim.director.chests_this_zone < 2) {
-        var chest_trigger_chance = (sim.director.chests_this_zone <= 0) ? 34 : 20;
+    var chests_per_zone_cap = (variable_global_exists("tuning") && is_struct(global.tuning) && variable_struct_exists(global.tuning, "chests_per_zone_cap")) ? floor(global.tuning.chests_per_zone_cap) : 2;
+    var chest_first_pct = (variable_global_exists("tuning") && is_struct(global.tuning) && variable_struct_exists(global.tuning, "exploration_chest_first_pct")) ? global.tuning.exploration_chest_first_pct : 34;
+    var chest_next_pct = (variable_global_exists("tuning") && is_struct(global.tuning) && variable_struct_exists(global.tuning, "exploration_chest_next_pct")) ? global.tuning.exploration_chest_next_pct : 20;
+    var chest_cd_turns = (variable_global_exists("tuning") && is_struct(global.tuning) && variable_struct_exists(global.tuning, "chest_cd_turns")) ? floor(global.tuning.chest_cd_turns) : 4;
+
+    if (focus == "exploration" && sim.director.chest_cd == 0 && sim.director.chests_this_zone < chests_per_zone_cap) {
+        var chest_trigger_chance = (sim.director.chests_this_zone <= 0) ? chest_first_pct : chest_next_pct;
         if (sim_chance(sim, chest_trigger_chance)) {
             sim.director.adventure_focus = "";
             sim.director.chests_this_zone += 1;
-            sim.director.chest_cd = 3;
+            sim.director.chest_cd = chest_cd_turns;
             sim.coverage.discovery += 1;
             sim.last_adventure_tension_outcome = "discovery";
 
