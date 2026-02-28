@@ -21,6 +21,10 @@ function sim_auto_heal(sim) {
         var target = sim.party[best_i];
 
         var heal_raw  = sim_rand_range(sim, 8, 18) + sim.difficulty * 2;
+        if (variable_global_exists("balance") && is_struct(global.balance) && variable_struct_exists(global.balance, "heal_scalar")) {
+            heal_raw = floor(heal_raw * global.balance.heal_scalar);
+        }
+        heal_raw = max(1, heal_raw);
         var before_hp = target.hp;
 
         if (target.status_state == "downed") {

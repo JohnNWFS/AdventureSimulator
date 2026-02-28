@@ -223,6 +223,24 @@ function sim_run_init(sim, seed, beats_target) {
 
     sim.debug_short_mode = short_mode;
     sim.debug_very_short_mode = very_short_mode;
+
+    // Global balance knobs (small deltas, deterministic).
+    if (!variable_global_exists("balance") || !is_struct(global.balance)) global.balance = {};
+    if (!variable_struct_exists(global.balance, "dmg_scalar")) global.balance.dmg_scalar = 1.06;
+    if (!variable_struct_exists(global.balance, "crit_scalar")) global.balance.crit_scalar = 1.03;
+    if (!variable_struct_exists(global.balance, "heal_scalar")) global.balance.heal_scalar = 0.98;
+    if (!variable_struct_exists(global.balance, "downed_bleed_chance")) global.balance.downed_bleed_chance = 0.06;
+    if (!variable_struct_exists(global.balance, "downed_bleed_dmg")) global.balance.downed_bleed_dmg = 1;
+
+    beat_output_emit("CALIB",
+        "Balance: dmg_scalar=" + string(global.balance.dmg_scalar) +
+        " crit_scalar=" + string(global.balance.crit_scalar) +
+        " heal_scalar=" + string(global.balance.heal_scalar) +
+        " downed_bleed_chance=" + string(global.balance.downed_bleed_chance) +
+        " downed_bleed_dmg=" + string(global.balance.downed_bleed_dmg),
+        { route: "debug", source: "balance_run_start", sim: sim }
+    );
+
     sim.coverage = {
         combat: 0,
         exploration: 0,

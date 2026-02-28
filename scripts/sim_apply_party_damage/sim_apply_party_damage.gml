@@ -13,6 +13,9 @@ function sim_apply_party_damage(sim, base_dmg) {
 
         // Vary damage slightly per member
         var dmg = max(0, base_dmg + sim_rand_range(sim, -1, 1) - p.def);
+        if (variable_global_exists("balance") && is_struct(global.balance) && variable_struct_exists(global.balance, "dmg_scalar")) {
+            dmg = floor(dmg * global.balance.dmg_scalar);
+        }
         var before = p.hp;
 
         p.hp -= dmg;
