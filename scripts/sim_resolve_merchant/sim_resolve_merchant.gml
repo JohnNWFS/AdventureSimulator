@@ -24,7 +24,8 @@ function sim_resolve_merchant(sim) {
     }
 
     sim.stats.merchants_seen += 1;
-    sim.director.merchant_cd = 3;
+    var merchant_cd_turns = (variable_global_exists("tuning") && is_struct(global.tuning) && variable_struct_exists(global.tuning, "merchant_cd_turns")) ? floor(global.tuning.merchant_cd_turns) : 3;
+    sim.director.merchant_cd = merchant_cd_turns;
     sim.director.merchants_this_zone += 1;
 
     var gold_band = clamp(floor(sim.gold_total / 30), 0, 5);

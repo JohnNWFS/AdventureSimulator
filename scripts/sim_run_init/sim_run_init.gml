@@ -224,6 +224,20 @@ function sim_run_init(sim, seed, beats_target) {
     sim.debug_short_mode = short_mode;
     sim.debug_very_short_mode = very_short_mode;
 
+    if (!variable_global_exists("tuning") || !is_struct(global.tuning)) global.tuning = {};
+    if (!variable_struct_exists(global.tuning, "merchant_chance_base")) global.tuning.merchant_chance_base = 13;
+    if (!variable_struct_exists(global.tuning, "chest_chance_base")) global.tuning.chest_chance_base = 12;
+    if (!variable_struct_exists(global.tuning, "merchants_per_zone_cap")) global.tuning.merchants_per_zone_cap = 2;
+    if (!variable_struct_exists(global.tuning, "chests_per_zone_cap")) global.tuning.chests_per_zone_cap = 2;
+    if (!variable_struct_exists(global.tuning, "merchant_cd_turns")) global.tuning.merchant_cd_turns = 3;
+    if (!variable_struct_exists(global.tuning, "chest_cd_turns")) global.tuning.chest_cd_turns = 4;
+    if (!variable_struct_exists(global.tuning, "exploration_chest_first_pct")) global.tuning.exploration_chest_first_pct = 34;
+    if (!variable_struct_exists(global.tuning, "exploration_chest_next_pct")) global.tuning.exploration_chest_next_pct = 20;
+    if (!variable_struct_exists(global.tuning, "encounter_rate_scalar")) global.tuning.encounter_rate_scalar = 1.0;
+    if (!variable_struct_exists(global.tuning, "monster_power_scalar")) global.tuning.monster_power_scalar = 1.0;
+    if (!variable_struct_exists(global.tuning, "dmg_scalar")) global.tuning.dmg_scalar = 1.0;
+    if (!variable_struct_exists(global.tuning, "heal_scalar")) global.tuning.heal_scalar = 1.0;
+
     // Global balance knobs (small deltas, deterministic).
     if (!variable_global_exists("balance") || !is_struct(global.balance)) global.balance = {};
     if (!variable_struct_exists(global.balance, "dmg_scalar")) global.balance.dmg_scalar = 1.06;
@@ -289,6 +303,18 @@ function sim_run_init(sim, seed, beats_target) {
         clipboard_set_text("");
     }
     sim_log_tag(sim, "EPISODE_BEGIN", "📺 Episode begins. seed=" + string(sim.seed) + " zone=" + sim.zone);
+    if (variable_global_exists("tuner_active") && global.tuner_active && variable_global_exists("tuning") && is_struct(global.tuning)) {
+        sim_log(sim,
+            "[CALIB] tuning merchant=" + string(global.tuning.merchant_chance_base) +
+            " chest=" + string(global.tuning.chest_chance_base) +
+            " merchant_cap=" + string(global.tuning.merchants_per_zone_cap) +
+            " chest_cap=" + string(global.tuning.chests_per_zone_cap) +
+            " encounter_rate=" + string_format(global.tuning.encounter_rate_scalar, 1, 2) +
+            " monster_power=" + string_format(global.tuning.monster_power_scalar, 1, 2) +
+            " dmg=" + string_format(global.tuning.dmg_scalar, 1, 2) +
+            " heal=" + string_format(global.tuning.heal_scalar, 1, 2)
+        );
+    }
     if (!sim.episode_begun_logged) {
         var verbose = variable_global_exists("debug_verbose") ? global.debug_verbose : false;
         if (verbose) sim_log_tag(sim, "NEAR_DEATH_DEF", "near_death is tracked as HP <= 35% max HP.");

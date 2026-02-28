@@ -53,9 +53,10 @@ function sim_resolve_combat(sim) {
     sim.stats.combats += 1;
 
     beat_output_emit("CALIB",
-        "Combat balance: dmg_scalar=" + string(variable_global_exists("balance") && is_struct(global.balance) && variable_struct_exists(global.balance, "dmg_scalar") ? global.balance.dmg_scalar : 1.0) +
-        " heal_scalar=" + string(variable_global_exists("balance") && is_struct(global.balance) && variable_struct_exists(global.balance, "heal_scalar") ? global.balance.heal_scalar : 1.0),
-        { route: "debug", source: "balance_combat_start", sim: sim }
+        "Combat tuning: dmg_scalar=" + string(variable_global_exists("tuning") && is_struct(global.tuning) && variable_struct_exists(global.tuning, "dmg_scalar") ? global.tuning.dmg_scalar : 1.0) +
+        " heal_scalar=" + string(variable_global_exists("tuning") && is_struct(global.tuning) && variable_struct_exists(global.tuning, "heal_scalar") ? global.tuning.heal_scalar : 1.0) +
+        " monster_power=" + string(variable_global_exists("tuning") && is_struct(global.tuning) && variable_struct_exists(global.tuning, "monster_power_scalar") ? global.tuning.monster_power_scalar : 1.0),
+        { route: "debug", source: "tuning_combat_start", sim: sim }
     );
 
     // ---- Cinematic combat shape (deterministic) ----
@@ -164,8 +165,10 @@ function sim_resolve_combat(sim) {
 
     // Optional micro-modifier for variety (combat-only)
     var _mod = sim_roll_encounter_mod(sim);
-    var threat = enc.total;
+    var threat_scalar = (variable_global_exists("tuning") && is_struct(global.tuning) && variable_struct_exists(global.tuning, "monster_power_scalar")) ? global.tuning.monster_power_scalar : 1.0;
+    var threat = floor(enc.total * threat_scalar);
     if (is_struct(_mod)) threat += _mod.threat_add;
+    threat = max(1, threat);
 
     // Party roles (canonical order)
     var tank   = sim.party[0];
@@ -268,9 +271,8 @@ function sim_resolve_combat(sim) {
 
         var pre_raw = sim_rand_range(sim, 3, 9) + floor(threat / 2) - v.def;
         var pre_dmg = floor(pre_raw * dmg_taken_mult);
-        if (variable_global_exists("balance") && is_struct(global.balance) && variable_struct_exists(global.balance, "dmg_scalar")) {
-            pre_dmg = floor(pre_dmg * global.balance.dmg_scalar);
-        }
+        var dmg_scalar = (variable_global_exists("tuning") && is_struct(global.tuning) && variable_struct_exists(global.tuning, "dmg_scalar")) ? global.tuning.dmg_scalar : 1.0;
+        pre_dmg = floor(pre_dmg * dmg_scalar);
         pre_dmg = max(1, pre_dmg);
 
         var vb = v.hp;
@@ -298,9 +300,8 @@ function sim_resolve_combat(sim) {
 
     var eff_def = floor(tank.def * def_mult);
     dmg_to_tank = max(0, base_dmg - eff_def);
-    if (variable_global_exists("balance") && is_struct(global.balance) && variable_struct_exists(global.balance, "dmg_scalar")) {
-        dmg_to_tank = floor(dmg_to_tank * global.balance.dmg_scalar);
-    }
+    var dmg_scalar = (variable_global_exists("tuning") && is_struct(global.tuning) && variable_struct_exists(global.tuning, "dmg_scalar")) ? global.tuning.dmg_scalar : 1.0;
+    dmg_to_tank = floor(dmg_to_tank * dmg_scalar);
     var per_hit_cap = floor(tank.max_hp * 0.55);
     if (enc.tag != "BOSS") dmg_to_tank = min(dmg_to_tank, per_hit_cap);
 
@@ -335,9 +336,8 @@ function sim_resolve_combat(sim) {
         var off_target = sim.party[off_i];
         if (!off_target.dead && !off_target.retired && off_target.status_state != "downed") {
             var flank_dmg = floor(((base_dmg * sim_rand_range(sim, 30, 50)) / 100) * dmg_taken_mult) - floor(off_target.def * 0.5);
-            if (variable_global_exists("balance") && is_struct(global.balance) && variable_struct_exists(global.balance, "dmg_scalar")) {
-                flank_dmg = floor(flank_dmg * global.balance.dmg_scalar);
-            }
+            var flank_scalar = (variable_global_exists("tuning") && is_struct(global.tuning) && variable_struct_exists(global.tuning, "dmg_scalar")) ? global.tuning.dmg_scalar : 1.0;
+            flank_dmg = floor(flank_dmg * flank_scalar);
             flank_dmg = max(1, flank_dmg);
             var before_off = off_target.hp;
             off_target.hp -= flank_dmg;

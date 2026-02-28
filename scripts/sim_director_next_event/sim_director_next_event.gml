@@ -16,14 +16,17 @@ function sim_director_schedule_from_zone_profile(sim, route_mod) {
     var weights = profile.beat_weights;
     var options = [];
 
+    var encounter_scalar = (variable_global_exists("tuning") && is_struct(global.tuning) && variable_struct_exists(global.tuning, "encounter_rate_scalar")) ? global.tuning.encounter_rate_scalar : 1.0;
+    var merchant_cap = (variable_global_exists("tuning") && is_struct(global.tuning) && variable_struct_exists(global.tuning, "merchants_per_zone_cap")) ? floor(global.tuning.merchants_per_zone_cap) : 2;
+
     var combat_w = variable_struct_exists(weights, "combat") ? variable_struct_get(weights, "combat") : 0;
-    if (combat_w > 0) array_push(options, { w: combat_w, v: "combat" });
+    if (combat_w > 0) array_push(options, { w: max(1, floor(combat_w * encounter_scalar)), v: "combat" });
 
     var exploration_w = variable_struct_exists(weights, "exploration") ? variable_struct_get(weights, "exploration") : 0;
     if (exploration_w > 0) array_push(options, { w: floor(exploration_w * route_mod.loot_mult), v: "exploration" });
 
     var merchant_w = variable_struct_exists(weights, "merchant") ? variable_struct_get(weights, "merchant") : 0;
-    if (merchant_w > 0 && sim.director.merchant_cd == 0 && sim.director.merchants_this_zone < 2) {
+    if (merchant_w > 0 && sim.director.merchant_cd == 0 && sim.director.merchants_this_zone < merchant_cap) {
         array_push(options, { w: floor(merchant_w * route_mod.loot_mult), v: "merchant" });
     }
 
@@ -169,11 +172,18 @@ function sim_director_next_event(sim) {
     if (scheduled != "") return scheduled;
 
     // Fallback pacing for zones without beat_weights configured.
-    if (sim.director.merchant_cd == 0 && sim.director.merchants_this_zone < 2 && sim_chance(sim, floor(13 * route_mod.loot_mult))) {
+    var merchant_chance_base = (variable_global_exists("tuning") && is_struct(global.tuning) && variable_struct_exists(global.tuning, "merchant_chance_base")) ? global.tuning.merchant_chance_base : 13;
+    var chest_chance_base = (variable_global_exists("tuning") && is_struct(global.tuning) && variable_struct_exists(global.tuning, "chest_chance_base")) ? global.tuning.chest_chance_base : 12;
+    var merchant_cd_turns = (variable_global_exists("tuning") && is_struct(global.tuning) && variable_struct_exists(global.tuning, "merchant_cd_turns")) ? floor(global.tuning.merchant_cd_turns) : 3;
+    var chest_cd_turns = (variable_global_exists("tuning") && is_struct(global.tuning) && variable_struct_exists(global.tuning, "chest_cd_turns")) ? floor(global.tuning.chest_cd_turns) : 4;
+    var merchants_per_zone_cap = (variable_global_exists("tuning") && is_struct(global.tuning) && variable_struct_exists(global.tuning, "merchants_per_zone_cap")) ? floor(global.tuning.merchants_per_zone_cap) : 2;
+
+    if (sim.director.merchant_cd == 0 && sim.director.merchants_this_zone < merchants_per_zone_cap && sim_chance(sim, floor(merchant_chance_base * route_mod.loot_mult))) {
+        sim.director.merchant_cd = merchant_cd_turns;
         return "merchant";
     }
-    if (sim.director.chest_cd == 0 && sim_chance(sim, floor(12 * route_mod.loot_mult))) {
-        sim.director.chest_cd = 4;
+    if (sim.director.chest_cd == 0 && sim_chance(sim, floor(chest_chance_base * route_mod.loot_mult))) {
+        sim.director.chest_cd = chest_cd_turns;
         return "chest";
     }
     if (sim.director.adventure_cd == 0) {
@@ -197,14 +207,14 @@ function sim_director_next_event(sim) {
             sim.director.adventure_cd = 1;
             reroute_combat = "adventure";
         } else if (sim.director.chest_cd == 0 && sim_chance(sim, floor(70 * route_mod.loot_mult))) {
-            sim.director.chest_cd = 4;
+            sim.director.chest_cd = chest_cd_turns;
             reroute_combat = "chest";
         } else if (sim.director.beats_since_relief < relief_gap) {
             if (sim.director.adventure_cd == 0) {
                 sim.director.adventure_cd = 1;
                 reroute_combat = "adventure";
             } else if (sim.director.chest_cd == 0) {
-                sim.director.chest_cd = 4;
+                sim.director.chest_cd = chest_cd_turns;
                 reroute_combat = "chest";
             }
         }

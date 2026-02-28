@@ -8,6 +8,54 @@ var k_o = keyboard_check(ord("O")); // toggle autosave-to-file
 var k_hash = keyboard_check(vk_f7); // Randomize Seed (F7)
 
 
+if (keyboard_check_pressed(vk_f2)) {
+    global.tuner_active = !global.tuner_active;
+    if (global.tuner_active) {
+        global.tuner_session = {
+            episodes: 0,
+            sum_combats: 0,
+            sum_chests: 0,
+            sum_merchants: 0,
+            sum_rares: 0,
+            sum_retirements: 0,
+            sum_deaths: 0,
+            sum_gold: 0,
+            boss_defeated_count: 0
+        };
+        beat_output_emit("DEBUG", "Fine Tuner overlay: ON (session reset)", undefined);
+    } else {
+        beat_output_emit("DEBUG", "Fine Tuner overlay: OFF", undefined);
+    }
+}
+
+if (global.tuner_active && is_array(tuner_sliders) && array_length(tuner_sliders) > 0) {
+    if (keyboard_check_pressed(vk_up)) {
+        slider_index = max(0, slider_index - 1);
+    }
+    if (keyboard_check_pressed(vk_down)) {
+        slider_index = min(array_length(tuner_sliders) - 1, slider_index + 1);
+    }
+
+    var shift_down = keyboard_check(vk_shift);
+    var step_dir = 0;
+    if (keyboard_check_pressed(vk_left)) step_dir = -1;
+    if (keyboard_check_pressed(vk_right)) step_dir = 1;
+
+    if (step_dir != 0) {
+        var row = tuner_sliders[slider_index];
+        var current = variable_struct_get(global.tuning, row.key);
+        var step_amt = shift_down ? row.big_step : row.step;
+        var next_val = clamp(current + (step_amt * step_dir), row.min, row.max);
+        if (row.decimals <= 0) next_val = floor(next_val + 0.0001);
+        else {
+            var snap = power(10, row.decimals);
+            next_val = round(next_val * snap) / snap;
+        }
+        variable_struct_set(global.tuning, row.key, next_val);
+    }
+}
+
+
 if (k_c && !key_prev_c) {
     global.debug_lines = [];
     global.debug_beats_emitted = 0;

@@ -137,6 +137,33 @@ function sim_run_finalize(sim) {
     if (sim.stats.boss_defeated) boss_result = "DEFEATED";
     else if (variable_struct_exists(sim.flags, "boss_begun") && sim.flags.boss_begun) boss_result = "ESCAPED";
 
+
+    if (variable_global_exists("tuner_active") && global.tuner_active) {
+        if (!variable_global_exists("tuner_session") || !is_struct(global.tuner_session)) {
+            global.tuner_session = {
+                episodes: 0,
+                sum_combats: 0,
+                sum_chests: 0,
+                sum_merchants: 0,
+                sum_rares: 0,
+                sum_retirements: 0,
+                sum_deaths: 0,
+                sum_gold: 0,
+                boss_defeated_count: 0
+            };
+        }
+
+        global.tuner_session.episodes += 1;
+        global.tuner_session.sum_combats += sim.stats.combats;
+        global.tuner_session.sum_chests += sim.stats.chests_opened;
+        global.tuner_session.sum_merchants += sim.stats.merchants_seen;
+        global.tuner_session.sum_rares += sim.stats.rares_found;
+        global.tuner_session.sum_retirements += sim.stats.retirements;
+        global.tuner_session.sum_deaths += sim.stats.deaths;
+        global.tuner_session.sum_gold += sim.gold_total;
+        if (sim.stats.boss_defeated) global.tuner_session.boss_defeated_count += 1;
+    }
+
     sim_log_tag(sim, "STINGER_BEGIN", "📊 Episode stats");
     sim_log_tag(sim, "STINGER_ROW", "| Metric | Value |");
     sim_log_tag(sim, "STINGER_ROW", "|---|---|");
