@@ -32,6 +32,9 @@ function sim_resolve_boss(sim) {
     // --- BOSS: smash tank ---
     var boss_hit = floor((sim.difficulty * 6 + sim_rand_range(sim, 10, 22)) * (boss_threat / max(1, party_power)));
     var dmg_tank = max(0, boss_hit - tank.def);
+    if (variable_global_exists("balance") && is_struct(global.balance) && variable_struct_exists(global.balance, "dmg_scalar")) {
+        dmg_tank = floor(dmg_tank * global.balance.dmg_scalar);
+    }
 
     var before_hp = tank.hp;
     tank.hp -= dmg_tank;

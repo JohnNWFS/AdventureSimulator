@@ -16,6 +16,19 @@ function sim_check_party_health(sim) {
 
         var fatal_floor = -max(6, floor(p.max_hp * 0.25));
 
+
+        if ((p.status_state == "downed" || p.hp <= 0) && p.hp > fatal_floor) {
+            if (variable_global_exists("balance") && is_struct(global.balance)) {
+                var bleed_chance = variable_struct_exists(global.balance, "downed_bleed_chance") ? global.balance.downed_bleed_chance : 0;
+                var bleed_dmg = variable_struct_exists(global.balance, "downed_bleed_dmg") ? global.balance.downed_bleed_dmg : 0;
+                if (bleed_chance > 0 && bleed_dmg > 0) {
+                    if (sim_rand_range(sim, 0, 9999) < floor(bleed_chance * 10000)) {
+                        p.hp -= bleed_dmg;
+                    }
+                }
+            }
+        }
+
         if (p.hp <= fatal_floor) {
             p.dead = true;
             p.status_state = "dead";
