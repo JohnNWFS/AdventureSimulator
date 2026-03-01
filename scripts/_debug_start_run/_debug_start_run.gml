@@ -39,7 +39,8 @@ function _debug_start_run()
 
     if (object_exists(obj_sim_controller)) {
         with (obj_sim_controller) {
-            sim_run_new(sim, episode_beats_target, global.debug_seed);
+            var run_target = global.debug_very_short_mode ? episode_beats_target_very_short : (global.debug_short_mode ? episode_beats_target_short : episode_beats_target);
+            sim_run_new(sim, run_target, global.debug_seed);
         }
     }
 }

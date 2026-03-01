@@ -8,7 +8,7 @@ global.debug_output_enabled = false;
 // Deterministic debug seed controls
 global.debug_seed = 100001;      // pick a seed you like
 global.debug_seed_step = 1;      // how much "Next Seed" increments
-global.debug_short_mode = true;  // short runs by default
+global.debug_short_mode = false; // full-length runs by default
 
 // Output buffer
 global.debug_lines = [];
@@ -57,6 +57,7 @@ key_prev_c = false;
 key_prev_v = false;
 key_prev_o = false;
 key_prev_hash = false;
+key_prev_f8 = false;
 
 // A small banner so you know it's alive
 beat_output_emit("DEBUG", "Debug console online (4-zone route debug enabled). Seed=" + string(global.debug_seed), undefined);
