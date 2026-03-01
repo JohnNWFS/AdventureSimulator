@@ -19,9 +19,12 @@ function sim_resolve_adventure(sim) {
     var chest_first_pct = (variable_global_exists("tuning") && is_struct(global.tuning) && variable_struct_exists(global.tuning, "exploration_chest_first_pct")) ? global.tuning.exploration_chest_first_pct : 34;
     var chest_next_pct = (variable_global_exists("tuning") && is_struct(global.tuning) && variable_struct_exists(global.tuning, "exploration_chest_next_pct")) ? global.tuning.exploration_chest_next_pct : 20;
     var chest_cd_turns = (variable_global_exists("tuning") && is_struct(global.tuning) && variable_struct_exists(global.tuning, "chest_cd_turns")) ? floor(global.tuning.chest_cd_turns) : 4;
+    var chest_chance_base = (variable_global_exists("tuning") && is_struct(global.tuning) && variable_struct_exists(global.tuning, "chest_chance_base")) ? global.tuning.chest_chance_base : 12;
+    var chest_freq_mult = clamp(chest_chance_base / 12, 0.15, 3.0);
 
     if (focus == "exploration" && sim.director.chest_cd == 0 && sim.director.chests_this_zone < chests_per_zone_cap) {
         var chest_trigger_chance = (sim.director.chests_this_zone <= 0) ? chest_first_pct : chest_next_pct;
+        chest_trigger_chance = clamp(round(chest_trigger_chance * chest_freq_mult), 0, 100);
         if (sim_chance(sim, chest_trigger_chance)) {
             sim.director.adventure_focus = "";
             sim.director.chests_this_zone += 1;
