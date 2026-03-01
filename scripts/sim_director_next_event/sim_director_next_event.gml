@@ -18,16 +18,21 @@ function sim_director_schedule_from_zone_profile(sim, route_mod) {
 
     var encounter_scalar = (variable_global_exists("tuning") && is_struct(global.tuning) && variable_struct_exists(global.tuning, "encounter_rate_scalar")) ? global.tuning.encounter_rate_scalar : 1.0;
     var merchant_cap = (variable_global_exists("tuning") && is_struct(global.tuning) && variable_struct_exists(global.tuning, "merchants_per_zone_cap")) ? floor(global.tuning.merchants_per_zone_cap) : 2;
+    var merchant_chance_base = (variable_global_exists("tuning") && is_struct(global.tuning) && variable_struct_exists(global.tuning, "merchant_chance_base")) ? global.tuning.merchant_chance_base : 13;
+    var chest_chance_base = (variable_global_exists("tuning") && is_struct(global.tuning) && variable_struct_exists(global.tuning, "chest_chance_base")) ? global.tuning.chest_chance_base : 12;
+
+    var merchant_freq_mult = clamp(merchant_chance_base / 13, 0.15, 3.0);
+    var exploration_freq_mult = clamp(chest_chance_base / 12, 0.15, 3.0);
 
     var combat_w = variable_struct_exists(weights, "combat") ? variable_struct_get(weights, "combat") : 0;
-    if (combat_w > 0) array_push(options, { w: max(1, floor(combat_w * encounter_scalar)), v: "combat" });
+    if (combat_w > 0) array_push(options, { w: max(1, round(combat_w * encounter_scalar * encounter_scalar)), v: "combat" });
 
     var exploration_w = variable_struct_exists(weights, "exploration") ? variable_struct_get(weights, "exploration") : 0;
-    if (exploration_w > 0) array_push(options, { w: floor(exploration_w * route_mod.loot_mult), v: "exploration" });
+    if (exploration_w > 0) array_push(options, { w: max(1, round(exploration_w * route_mod.loot_mult * exploration_freq_mult)), v: "exploration" });
 
     var merchant_w = variable_struct_exists(weights, "merchant") ? variable_struct_get(weights, "merchant") : 0;
     if (merchant_w > 0 && sim.director.merchant_cd == 0 && sim.director.merchants_this_zone < merchant_cap) {
-        array_push(options, { w: floor(merchant_w * route_mod.loot_mult), v: "merchant" });
+        array_push(options, { w: max(1, round(merchant_w * route_mod.loot_mult * merchant_freq_mult)), v: "merchant" });
     }
 
     var social_w = variable_struct_exists(weights, "social") ? variable_struct_get(weights, "social") : 0;
@@ -177,6 +182,7 @@ function sim_director_next_event(sim) {
     var merchant_cd_turns = (variable_global_exists("tuning") && is_struct(global.tuning) && variable_struct_exists(global.tuning, "merchant_cd_turns")) ? floor(global.tuning.merchant_cd_turns) : 3;
     var chest_cd_turns = (variable_global_exists("tuning") && is_struct(global.tuning) && variable_struct_exists(global.tuning, "chest_cd_turns")) ? floor(global.tuning.chest_cd_turns) : 4;
     var merchants_per_zone_cap = (variable_global_exists("tuning") && is_struct(global.tuning) && variable_struct_exists(global.tuning, "merchants_per_zone_cap")) ? floor(global.tuning.merchants_per_zone_cap) : 2;
+    var encounter_rate_scalar = (variable_global_exists("tuning") && is_struct(global.tuning) && variable_struct_exists(global.tuning, "encounter_rate_scalar")) ? global.tuning.encounter_rate_scalar : 1.0;
 
     if (sim.director.merchant_cd == 0 && sim.director.merchants_this_zone < merchants_per_zone_cap && sim_chance(sim, floor(merchant_chance_base * route_mod.loot_mult))) {
         sim.director.merchant_cd = merchant_cd_turns;
@@ -187,7 +193,7 @@ function sim_director_next_event(sim) {
         return "chest";
     }
     if (sim.director.adventure_cd == 0) {
-        var adv_pressure = floor(28 * route_mod.social_mult);
+        var adv_pressure = floor((28 / max(0.25, encounter_rate_scalar)) * route_mod.social_mult);
         if (sim_chance(sim, adv_pressure)) {
             return "adventure";
         }
@@ -223,6 +229,8 @@ function sim_director_next_event(sim) {
         return reroute_combat;
     }
 
-    // Default
-    return "combat";
+    // Default fallback reacts strongly to encounter tuning.
+    var default_combat_chance = clamp(round(55 * encounter_rate_scalar), 15, 95);
+    if (sim_chance(sim, default_combat_chance)) return "combat";
+    return "adventure";
 }

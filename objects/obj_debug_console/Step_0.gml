@@ -53,6 +53,28 @@ if (global.tuner_active && is_array(tuner_sliders) && array_length(tuner_sliders
         }
         variable_struct_set(global.tuning, row.key, next_val);
     }
+
+    if (mouse_check_button_pressed(mb_left)) {
+        var mx = device_mouse_x_to_gui(0);
+        var my = device_mouse_y_to_gui(0);
+
+        var ox = 20;
+        var oy = 80;
+        var row_y = oy + 36;
+        var btn_x = ox + 12;
+        var btn_w = 20;
+        var btn_h = 16;
+
+        for (var bi = 0; bi < array_length(tuner_sliders); bi++) {
+            if (mx >= btn_x && mx <= btn_x + btn_w && my >= row_y && my <= row_y + btn_h) {
+                var help_key = tuner_sliders[bi].key;
+                if (tuner_selected_help_key == help_key) tuner_selected_help_key = "";
+                else tuner_selected_help_key = help_key;
+                break;
+            }
+            row_y += 24;
+        }
+    }
 }
 
 
