@@ -6,6 +6,7 @@ var k_c = keyboard_check(ord("C")); // clear console
 var k_v = keyboard_check(ord("V")); // copy run log
 var k_o = keyboard_check(ord("O")); // toggle autosave-to-file
 var k_hash = keyboard_check(vk_f7); // Randomize Seed (F7)
+var k_f8 = keyboard_check(vk_f8); // toggle very short mode (F8)
 
 
 if (keyboard_check_pressed(vk_f2)) {
@@ -53,6 +54,28 @@ if (global.tuner_active && is_array(tuner_sliders) && array_length(tuner_sliders
         }
         variable_struct_set(global.tuning, row.key, next_val);
     }
+
+    if (mouse_check_button_pressed(mb_left)) {
+        var mx = device_mouse_x_to_gui(0);
+        var my = device_mouse_y_to_gui(0);
+
+        var ox = 20;
+        var oy = 80;
+        var row_y = oy + 36;
+        var btn_x = ox + 12;
+        var btn_w = 20;
+        var btn_h = 16;
+
+        for (var bi = 0; bi < array_length(tuner_sliders); bi++) {
+            if (mx >= btn_x && mx <= btn_x + btn_w && my >= row_y && my <= row_y + btn_h) {
+                var help_key = tuner_sliders[bi].key;
+                if (tuner_selected_help_key == help_key) tuner_selected_help_key = "";
+                else tuner_selected_help_key = help_key;
+                break;
+            }
+            row_y += 24;
+        }
+    }
 }
 
 
@@ -82,7 +105,16 @@ if (k_hash && !key_prev_hash) {
 
 if (k_s && !key_prev_s) {
     global.debug_short_mode = !global.debug_short_mode;
-    beat_output_emit("DEBUG", "Short mode: " + string(global.debug_short_mode), undefined);
+    if (!global.debug_short_mode) global.debug_very_short_mode = false;
+    beat_output_emit("DEBUG", "Short mode: " + string(global.debug_short_mode) + " | Very short: " + string(global.debug_very_short_mode), undefined);
+    _debug_start_run();
+}
+
+if (k_f8 && !key_prev_f8) {
+    global.debug_very_short_mode = !global.debug_very_short_mode;
+    if (global.debug_very_short_mode) global.debug_short_mode = true;
+    beat_output_emit("DEBUG", "Very short mode: " + string(global.debug_very_short_mode) + " | Short: " + string(global.debug_short_mode), undefined);
+    _debug_start_run();
 }
 
 if (k_n && !key_prev_n) {
@@ -186,3 +218,4 @@ key_prev_c = k_c;
 key_prev_v = k_v;
 key_prev_o = k_o;
 key_prev_hash = k_hash;
+key_prev_f8 = k_f8;
