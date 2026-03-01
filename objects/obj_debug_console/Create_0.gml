@@ -78,12 +78,12 @@ if (!variable_global_exists("tuner_session") || !is_struct(global.tuner_session)
 }
 
 if (!variable_global_exists("tuning") || !is_struct(global.tuning)) global.tuning = {};
-if (!variable_struct_exists(global.tuning, "merchant_chance_base")) global.tuning.merchant_chance_base = 13;
-if (!variable_struct_exists(global.tuning, "chest_chance_base")) global.tuning.chest_chance_base = 12;
+if (!variable_struct_exists(global.tuning, "merchant_chance_base")) global.tuning.merchant_chance_base = 40;
+if (!variable_struct_exists(global.tuning, "chest_chance_base")) global.tuning.chest_chance_base = 40;
 if (!variable_struct_exists(global.tuning, "merchants_per_zone_cap")) global.tuning.merchants_per_zone_cap = 2;
-if (!variable_struct_exists(global.tuning, "chests_per_zone_cap")) global.tuning.chests_per_zone_cap = 2;
-if (!variable_struct_exists(global.tuning, "merchant_cd_turns")) global.tuning.merchant_cd_turns = 3;
-if (!variable_struct_exists(global.tuning, "chest_cd_turns")) global.tuning.chest_cd_turns = 4;
+if (!variable_struct_exists(global.tuning, "chests_per_zone_cap")) global.tuning.chests_per_zone_cap = 6;
+if (!variable_struct_exists(global.tuning, "merchant_cd_turns")) global.tuning.merchant_cd_turns = 0;
+if (!variable_struct_exists(global.tuning, "chest_cd_turns")) global.tuning.chest_cd_turns = 0;
 if (!variable_struct_exists(global.tuning, "exploration_chest_first_pct")) global.tuning.exploration_chest_first_pct = 34;
 if (!variable_struct_exists(global.tuning, "exploration_chest_next_pct")) global.tuning.exploration_chest_next_pct = 20;
 if (!variable_struct_exists(global.tuning, "encounter_rate_scalar")) global.tuning.encounter_rate_scalar = 1.0;
