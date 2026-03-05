@@ -13,9 +13,19 @@ if (!variable_global_exists("debug_short_mode")) global.debug_short_mode = false
 if (!variable_global_exists("debug_very_short_mode")) global.debug_very_short_mode = false;
 if (!variable_global_exists("debug_verbose")) global.debug_verbose = false;
 if (!variable_global_exists("debug_multi_seed_count")) global.debug_multi_seed_count = 4;
+if (!variable_global_exists("debug_blockout_playback")) global.debug_blockout_playback = false;
 
 var run_target = global.debug_very_short_mode ? episode_beats_target_very_short : (global.debug_short_mode ? episode_beats_target_short : episode_beats_target);
 sim_run_new(sim, run_target, global.debug_seed);
+
+blockout_seen_log_count = array_length(sim.log);
+blockout_shot = {
+    beat_tag: "IDLE",
+    anim_id: "idle",
+    lane: "scene",
+    duration_ms: 900,
+    start_ms: current_time
+};
 
 //loot_debug_dump(sim, 20, { source: "chest", zone: "Dungeon", tier_target: 2 });
 //loot_debug_dump(sim, 10, { source: "merchant", zone: "Town", tier_target: 4 });
